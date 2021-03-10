@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drag Movile</title>
+  <!--
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  -->
+ 
+ 
+ 
+  <script src="/mobileD/demo/demo.js"></script>
+  <link rel="stylesheet" href="/mobileD/release/default.css">
+  <link rel="stylesheet" href="/mobileD/release/icons.css">
+  <link rel="stylesheet" href="/mobileD/release/debug.css">
+ <script src="/mobileD/release/index.min.js"></script>
+  <script src="/mobileD/release/scroll-behaviour.min.js"></script>
+  <style>
+ .contenedor-Img-Drag{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.fondo-Reactivo{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+    width: 100px;
+    height:30px;
+    /*padding: 10px;*/
+    background-color:lightgrey;
+    opacity: 0.2;
+
+}
+
+.contenido-Reactivo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    color: white;
+    background-color: transparent;
+    margin: 0;
+   /*padding: 10px;*/
+    opacity: 1;
+
+    width: 100px;
+    height: 30px;
+
+
+
+}
+
+.reactivoDrop{
+  position: absolute;
+    top: 0;
+    left: 0;
+
+  width: 100px;
+  height:30px;
+}
+
+  </style>
+
+</head>
+<body>
+
+  <button id="crear"  >crear</button>
+
+ 
+<div class="retornable">
+  <p  class="arrastrable" style="color: rgb(11, 122, 104);">Respuesta Arrastrable</p>
+  <p  class="arrastrable" style="color: rgb(11, 122, 104);">R Arrastrable 2</p>
+  <p  class="arrastrable" style="color: rgb(11, 122, 104);">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, totam, voluptates natus culpa eum praesentium vel aliquid alias labore, illum commodi amet itaque dolorem! Tempora et eligendi dolor quis tempore?</p>
+</div>
+ 
+
+
+
+
+
+<h3>Referencia</h3>
+Alto: <input type="number"  id="alto">
+Ancho: <input type="number" id="ancho">
+ <button onclick="moverDiv()">Mover</button>
+<h3>Imagen Js</h3>
+<div class="contenedor-Img-Drag">
+  <img  id="imagenP"src="image/62fc97272d352c63969bbc73a72e4364.jpeg"  alt="">
+  <div class="reactivoDrop"  ondrop="drop(event,this)"  width="100px;"
+  height="30px;" >
+    <p class="contenido-Reactivo ">Texto</p>
+    <div class="fondo-Reactivo"></div>
+    <input type="hidden" class="respuestaDrag" name="respuestaN">
+  </div>
+ 
+  
+  <!--
+  <div class="text2"><p>Oscuro Sobre Fondo Transparente 2</p> </div>
+<div class="background2 "></div>
+-->
+</div>
+
+
+<div <!--class="reactivoDrop Experimental"-->  ondrop="drop(event,this)"style="border: solid black; padding: 10px; width: 30%;" >
+  <p >Experimental</p>
+<input type="hidden" value="false">
+</div>
+<div <!--class="reactivoDrop"--> style="border: solid black; padding: 10px; width: 30%;" >
+  <p >Texto a Reemplazar</p>
+<input type="hidden" value="false">
+</div>
+<div <!--class="reactivoDrop"--></div> style="border: solid black; padding: 10px; width: 30%;" >
+  <p >Texto a Reemplazar</p>
+  <input type="hidden" value="false">
+</div>
+
+
+<script src="/mobileD/mobile.js"></script>
+
+<script src="/js/funcionesExamen.js" type="text/javascript"></script>
+ <script>
+
+function moverDiv(){
+    var alto=document.getElementById("alto").value;
+    var ancho=document.getElementById("ancho").value;
+    var img=document.getElementById("imagenP");
+
+    console.log(ancho+"   "+alto);
+    console.log(img.width+"   "+img.height);
+
+    //Captura de los elementos reactivo
+    var divMovil=document.getElementsByClassName("reactivoDrop");
+    var textoMovil=document.getElementsByClassName("contenido-Reactivo");
+
+    var limiteAncho=img.width-100;
+
+    var limiteAlto=img.height-30;
+
+    if(ancho>limiteAncho){
+        ancho=limiteAncho;
+    }
+    
+    if(alto>limiteAlto){
+        alto=limiteAlto;
+    }
+
+    divMovil[0].style.left=ancho+"px";
+    divMovil[0].style.top=alto+"px";
+
+    textoMovil[0].style.left=ancho+"px";
+    textoMovil[0].style.top=alto+"px";
+
+   
+  
+
+}
+
+   /*
+  var arrastrable=document.querySelectorAll(".arrastrable");
+  var elemento=arrastrable[0];
+  elemento.setAttribute('draggable', 'true');
+ 
+  
+ // var perrito=document.querySelectorAll(".perrito")[0];
+  
+  addEvent(elemento, 'dragstart', function (e) {
+                console.log('dragstart');
+
+                e.dataTransfer.effectAllowed = 'copy';
+
+                //TODO fails on desktop safari because drag is immediately aborted
+//                this.style.display = "none";
+
+                console.log('setting data: ' + this.id);
+
+                e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
+            });
+
+  /*
+    addEvent(perrito, 'dragover', function (e) {
+    console.log('apperture dragover');
+
+    e.preventDefault(); // allows us to drop
+    e.stopPropagation(); // stop it here to prevent it bubble up
+
+    e.dataTransfer.dropEffect = 'copy';
+});
+
+  addEvent(perrito, 'drop', function (e) {
+            console.log('apperture drop');
+            e.preventDefault(); // allows us to drop
+            e.stopPropagation(); // stop it here to prevent it bubble up
+         
+            var el = document.getElementById(e.dataTransfer.getData('Text'));
+
+            alert("Wof!");
+            el.remove();
+            
+        });
+        function muerePerrito(){
+          perrito.remove();
+        }
+
+        */
+
+      
+ </script>
+</body>
+</html>
