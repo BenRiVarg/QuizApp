@@ -354,7 +354,7 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
   const materiasBD = await Materia.find({});
 
   var x;
-
+  //asdas
   var materias = [];
 
 
