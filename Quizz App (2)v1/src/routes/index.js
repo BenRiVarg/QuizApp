@@ -291,11 +291,37 @@ router.get('/docentes/editar', (req, res) => {
 
 });
 
-router.get('/docentes/resultados', (req, res) => {
-  res.render('docente/resultados');
+router.get('/docentes/resultados',(req,res)=>{
+   res.render('docente/falt');
 
 });
 
+router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token',(req,res)=>{
+  
+  //Profesor Anonymous 604843e2742078293555c1d6
+  //Registro de Grado { id: 'hQyk-Fhaq', nombre: '1º PRIMERO', nivel: '-AyDbZdUW' },
+  /*Registro de Materias 
+    {
+      id: 'T9iIq2yO-',
+      nombre: 'LENGUA MATERNA 1',
+      portada: 'https://f1.s1.jenios.mx/uploads/3o7nT6wIY.png',
+      grado: 'hQyk-Fhaq',
+      tipo: 'lm1'
+    },
+  */
+ //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
+ //Registro de Bloque { id: 'dSnrbcbS1', nombre: 'BLOQUE 1', materia: 'T9iIq2yO-' },
+ /*Registro de Secuencia
+    {
+      id: 'HU-dW413R',
+      nombre: 'TARJETAS DE IDENTIDAD',
+      bloque: 'dSnrbcbS1'
+    },
+ */
+  API.Find("secuencias");
+  res.send(req.params.idgrupo+" "+req.params.idmaestro+req.params.idsecuencia+req.params.idmateria+req.params.token  );
+
+});
 
 //----Alumnos------------------
 //MiddleWare aplicado
@@ -336,10 +362,9 @@ router.get('/alumnos', async (req, res) => {
 
 
 
-
-  //API.alumnos();
-  const Quizzes = await Quizz.find({});
-  res.render('alumnos/index', { quizzes: Quizzes, materias });
+  
+   const Quizzes=await Quizz.find({ });
+   res.render('alumnos/index',{quizzes: Quizzes,materias});
 
 });
 
@@ -490,6 +515,9 @@ router.post('/alumnos/correccion', async (req, res) => {
 
 //Boomer "5fce761f2e2106439e852306"
 
+ router.get('/pruebaAJAX',(req, res)=>{
+  res.json({"estatus":"funciona"})
+})
 
 
 router.get('/cuarto', (req, res) => {
@@ -515,10 +543,8 @@ router.get('/cuarto', (req, res) => {
   });
 
 
-});
-
-router.get('/cuarto2', (req, res) => {
-  res.render('laboratorioDrag', { color: "#ffff99" });
+ router.get('/cuarto2',(req, res)=>{
+  res.render('cuartoPruebas2',{color:"#ffff99"});
 })
 
 router.get('/plantillaRevision', (req, res) => {

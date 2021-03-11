@@ -11,9 +11,12 @@ const cuestionario=Schema({
 });
 
 var modeloQuizz = Schema ({
-    nivel:{type: 'String', enum:['Primaria','Secundaria','Preparatoria']},
-    grado:{type: 'Number'},
-    claveMateria:{type: String},
+    nivel:{type: String},
+    grado:{type: String},
+    materia:{type: String},
+    bloque:{type: String},
+    secuencia:{type: String},
+
     nombreQuizz:{type: String},
     estado:{type: 'String', enum:['revisado','por revisar'], default:"por revisar"},
     cuestionario:[cuestionario]
