@@ -1,100 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Bienvenido</title>
     <style>
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
-        
-        td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
-        }
-        
-        tr:nth-child(even) {
-          background-color: #dddddd;
-        }
-        </style>
-</head>
-<body>
-   <a href="/logout" class="btn btn-danger">Cerrar sesión</a>
-    <h1>Dashboard alumnos</h1>
-    <h1>Hola Alumno</h1>
-    <p>Contendrá la información de todos los examenes para realizar, mostrado por algún filtro(materia, grado etc)</p>
-    <p>Y opciones para ir a dicho examen</p>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
 
-    <% for (var i = 0; i<materias.length; i++) {%>
-      <% switch (materias[i].materia) {
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
 
-        case "español" : %>
-        <h1 style="color: #CE002B"><%= materias[i].materia %></h1>
-       
-                <% break; 
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
 
-        case "química" : %>
-        <h1 style="color:#A06600"><%= materias[i].materia %></h1>
-        
-                <% break;
-        case "Development" : %>
-        <h1><%= materias[i].materia %></h1>
-        
-                <% break;  
-         } 
-         
-        %>
-           
-                <table>
-            <% for (var j = 0; j<materias[i].registros.length; j++) {%>
+  <body>
+    <div class="cointainer my-5">
 
-          
-                <tr>
-                  <td><%= materias[i].registros[j].nombre %></td>
-         
-                   <td> 
-                    <a href="/alumnos/examen/<%=  materias[i].registros[j].id %>">Realizar Quizz</a>
-                  </td>
-              </tr>  
-        
-            
-            <% } 
-            
-            %>
-          </table>
-    <% } 
-    
-    %>
-    <table>
-      <h1>Sin Filtro</h1>
-        <tr>
-          <th>Nombre del Quizz</th>
-        </tr>
-            <% 
-            quizzes.forEach (function (quizzes){ %>
+      <!-- <div class="row justify-content-end">
+        <div class="col-2"><a href="/logout" class="btn btn-danger btn-block">Cerrar sesión</a></div>
+      </div> -->
+
+      <div class="row justify-content-center">
+        <div class="col-5 text-center">
+          <h1>Quizz</h1>
+        </div>
+      </div>
+
+      <div class="row my-3 justify-content-lg-between">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4 border shadow mx-5 offset-3" style="border-radius: 15px;">
+          <h3>
+            Infromacion:
+          </h3>
+          <h5 class="border-bottom">
+            Materia: <%= data.nombreMateria %>
+          </h5>
+          <h5 class="border-bottom">
+            Grupo: <%= data.grupo %>
+          </h5>
+          <h5 class="border-bottom">
+            Nombre del alumno: <%= data.alumno %>
+          </h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-6 text-center my-2">
+          <h3 class="text-center font-weight-bold">Lista de Examenes</h3>
+        </div>
+        <div class="col-8 my-2">
+          <table class="table">
+
             <tr>
-                <td><%= quizzes.nombreQuizz %></td>
-       
-                 <td> 
-                  <a href="/alumnos/examen/<%= quizzes._id %>">Realizar Quizz</a>
+              <th class="text-center">Quizz</th>
+              <th class="text-center">Estado</th>
+              <th class="text-center">Calificación</th>
+              <th class="text-center">Acción</th>
+            </tr>
+            <% for (var j=0; j < datosCuestionario.length; j++) {%>
+              <tr>
+                <td class="text-center">
+                  <%= datosCuestionario[j].nombre %>
                 </td>
-            </tr>            
 
-                <% }); 
-            %>
-           
-        
-    
-      </table>
+
+                <td class="text-center">
+                  <%= datosCuestionario[j].estado %>
+                </td>
+
+                <td class="text-center">
+                  <%= datosCuestionario[j].calificacion %>
+                </td>
+
+                <td class="text-center">
+                  <a class="btn btn-info" href="/alumnos/examen/" style="text-decoration: none;">Iniciar Intento</a>
+                </td>
+              </tr>
+
+
+              <% } %>
+          </table>
+        </div>
+      </div>
+
       <!--
     <a href="/alumnos/examen">Hacer examen</a><br>
         -->
-    <a href="/alumnos/registro">Historial de Exámenes</a>
+      <!-- <a href="/alumnos/registro">Historial de Exámenes</a> -->
+    </div>
 
-   
-</body>
+  </body>
+
 </html>

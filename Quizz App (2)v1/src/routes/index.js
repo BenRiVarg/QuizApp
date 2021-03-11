@@ -291,13 +291,13 @@ router.get('/docentes/editar', (req, res) => {
 
 });
 
-router.get('/docentes/resultados',(req,res)=>{
-   res.render('docente/falt');
+router.get('/docentes/resultados', (req, res) => {
+  res.render('docente/falt');
 
 });
 
-router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token',(req,res)=>{
-  
+router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', (req, res) => {
+
   //Profesor Anonymous 604843e2742078293555c1d6
   //Registro de Grado { id: 'hQyk-Fhaq', nombre: '1º PRIMERO', nivel: '-AyDbZdUW' },
   /*Registro de Materias 
@@ -309,17 +309,17 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
       tipo: 'lm1'
     },
   */
- //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
- //Registro de Bloque { id: 'dSnrbcbS1', nombre: 'BLOQUE 1', materia: 'T9iIq2yO-' },
- /*Registro de Secuencia
-    {
-      id: 'HU-dW413R',
-      nombre: 'TARJETAS DE IDENTIDAD',
-      bloque: 'dSnrbcbS1'
-    },
- */
+  //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
+  //Registro de Bloque { id: 'dSnrbcbS1', nombre: 'BLOQUE 1', materia: 'T9iIq2yO-' },
+  /*Registro de Secuencia
+     {
+       id: 'HU-dW413R',
+       nombre: 'TARJETAS DE IDENTIDAD',
+       bloque: 'dSnrbcbS1'
+     },
+  */
   API.Find("secuencias");
-  res.send(req.params.idgrupo+" "+req.params.idmaestro+req.params.idsecuencia+req.params.idmateria+req.params.token  );
+  res.send(req.params.idgrupo + " " + req.params.idmaestro + req.params.idsecuencia + req.params.idmateria + req.params.token);
 
 });
 
@@ -362,57 +362,53 @@ router.get('/alumnos', async (req, res) => {
 
 
 
-  
-   const Quizzes=await Quizz.find({ });
-   res.render('alumnos/index',{quizzes: Quizzes,materias});
+
+
+  const Quizzes = await Quizz.find({});
+  res.render('alumnos/index', { quizzes: Quizzes, materias });
 
 });
-
 
 //----Alumnos------------------
 //MiddleWare aplicado
 //router.get('/alumnos',isAuthenticated,async (req,res)=>{
 router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
 
-
-
-  const materiasBD = await Materia.find({});
-
-  var x;
+  var sec = req.params.idsecuencia;
+  var estado = 'Pendiente de Revisión';
+  var data = {
+    nombreMateria: '',
+    grupo: '',
+    alumno: ''
+  };
+  var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
+  var datosCuestionario = [];
   //asdas
-  var materias = [];
-
-
-  for (x in materiasBD) {
-
-    var cuestionarios = await Quizz.find({ claveMateria: materiasBD[x]._id }).exec();
-    var datosCuestionario = [];
-
-    for (y in cuestionarios) {
-      var datos = {
-        id: cuestionarios[y]._id,
-        nombre: cuestionarios[y].nombreQuizz
-      };
-      datosCuestionario.push(datos);
+  for (y in cuestionarios) {
+    if (cuestionarios[y].estado !== 'por revisar') {
+      estado = cuestionarios[y].estado;
+      calificacion = cuestionarios[y].calificacion + '/10';
+    } else {
+      calificacion = 'Calificacion Pendiente';
     }
 
 
-    var materiasObj = {
-      materia: materiasBD[x].nombre,
-      registros: datosCuestionario
-    }
-
-    materias.push(materiasObj);
+    var datos = {
+      id: cuestionarios[y]._id,
+      nombre: cuestionarios[y].nombreQuizz,
+      estado: estado,
+      calificacion: calificacion
+    };
+    datosCuestionario.push(datos);
+    data.nombreMateria = cuestionarios[y].materia;
   }
-
-
-
+  console.log(datosCuestionario);
 
 
 
   //API.alumnos();
   const Quizzes = await Quizz.find({});
-  res.render('alumnosQuizz/index', { quizzes: Quizzes, materias });
+  res.render('alumnosQuizz/index', { quizzes: Quizzes, data, datosCuestionario });
 
 });
 
@@ -515,8 +511,8 @@ router.post('/alumnos/correccion', async (req, res) => {
 
 //Boomer "5fce761f2e2106439e852306"
 
- router.get('/pruebaAJAX',(req, res)=>{
-  res.json({"estatus":"funciona"})
+router.get('/pruebaAJAX', (req, res) => {
+  res.json({ "estatus": "funciona" })
 })
 
 
@@ -543,8 +539,10 @@ router.get('/cuarto', (req, res) => {
   });
 
 
- router.get('/cuarto2',(req, res)=>{
-  res.render('cuartoPruebas2',{color:"#ffff99"});
+});
+
+router.get('/cuarto2', (req, res) => {
+  res.render('cuartoPruebas2', { color: "#ffff99" });
 })
 
 router.get('/plantillaRevision', (req, res) => {
