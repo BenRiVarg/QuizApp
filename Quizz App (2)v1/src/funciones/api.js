@@ -57,9 +57,11 @@ const { stringify } = require('querystring');
    
   }
 
-  exports.findByID=function(recurso,recursoID){
+  exports.findByID= async function(recurso,recursoID){
+   
     var urlRecurso
     var modificador;
+    var resultado;
     switch(recurso){
         case "grados":
           modificador="grades";
@@ -82,12 +84,16 @@ const { stringify } = require('querystring');
         urlRecurso=URLbase+"/sequences";
         break;
     }
-
+    
+    console.log("Ya se ejecuto la función");
+    resultado= await new Promise((resolve, reject) => {
     https.get(urlRecurso,options,(res)=>{
+     
       let data = '';
       
       // Un fragmento de datos ha sido recibido.
       res.on('data', (chunk) => {
+        
         data += chunk;
       });
     
@@ -95,18 +101,23 @@ const { stringify } = require('querystring');
       res.on('end', () => {
           var registro;
        var registros=JSON.parse(data);
-       
+       console.log(recursoID);
       for(var i=0; i<registros[modificador].length;i++){
-
-          if(registros[modificador][i].id==(recursoID)){
+        //console.log(registros[modificador][i].id);
+        
+          if(registros[modificador][i].id===recursoID){
               registro=registros[modificador][i];
-              //console.log(registro)
-            
+             // console.log(registro)
+            //  resolve(registro);
+            break;
           }
          
       }
+      console.log("Registro Caputado: ");
+      console.log(registro);
 
-      return registro
+      resolve( registro);
+     // return registro
       
       });
     
@@ -116,115 +127,15 @@ const { stringify } = require('querystring');
       console.log("Error: " + err.message);
     });
 
-
+  });
    
+  console.log("Primero");
+  console.log(resultado);
+  //resultado="wtf"
+  return resultado;
   }
 
 
-  /*
-  exports.secuencias= async function(){
-  
-    https.get(URLbase+"/sequences",options,(res)=>{
-        let data = '';
-        
-        // Un fragmento de datos ha sido recibido.
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-      
-        // Toda la respuesta ha sido recibida. Imprimir el resultado.
-        res.on('end', () => {
-
-         var secuenciasAPI=JSON.parse(data)
-         return secuenciasAPI.sequences;
-        });
-      
-        
-      
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-      });
-
-     
-  
-  }
-  */
-/*
- exports.gruposFindBYID= async function(idGrado){
-  
-  https.get(URLbase+"/grades",options,(res)=>{
-      let data = '';
-      
-      // Un fragmento de datos ha sido recibido.
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
-    
-      // Toda la respuesta ha sido recibida. Imprimir el resultado.
-      res.on('end', () => {
-          var registro;
-       var grados=JSON.parse(data);
-       console.log(grados["grades"][0]);
-       /*
-      for(var i=0; i<grados.grades.length;i++){
-
-          if(grados.grades[i].id==(idGrado)){
-              registro=grados.grades[i];
-              console.log(registro)
-            
-          }
-         
-      }
-
-      return registro
-      
-      });
-    
-      
-    
-  }).on("error", (err) => {
-      console.log("Error: " + err.message);
-    });
-
-}
-
-  exports.secuenciasFindBYID= async function(idSecuencia){
-  
-    https.get(URLbase+"/sequences",options,(res)=>{
-        let data = '';
-        
-        // Un fragmento de datos ha sido recibido.
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-      
-        // Toda la respuesta ha sido recibida. Imprimir el resultado.
-        res.on('end', () => {
-            var registro;
-         var secuenciasAPI=JSON.parse(data)
-        for(var i=0; i<secuenciasAPI.sequences.length;i++){
-
-            if(secuenciasAPI.sequences[i].id==(idSecuencia)){
-                registro=secuenciasAPI.sequences[i];
-                console.log(registro)
-              
-            }
-           
-        }
-
-        return registro
-      
-        });
-      
-        
-      
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-      });
-
-  }
-  
-  */
   exports.alumnos=function(){
  
 
@@ -271,5 +182,3 @@ const { stringify } = require('querystring');
     req.end();
     
   }
-
-  
