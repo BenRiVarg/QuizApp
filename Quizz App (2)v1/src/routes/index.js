@@ -376,20 +376,28 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
 
   var sec = req.params.idsecuencia;
   var estado = 'Pendiente de Revisión';
+
   var data = {
     nombreMateria: '',
     grupo: '',
     alumno: ''
   };
+
   var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
   var datosCuestionario = [];
   //asdas
+
   for (y in cuestionarios) {
+
     if (cuestionarios[y].estado !== 'por revisar') {
+
       estado = cuestionarios[y].estado;
       calificacion = cuestionarios[y].calificacion + '/10';
+
     } else {
+
       calificacion = 'Calificacion Pendiente';
+
     }
 
 
@@ -399,9 +407,12 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
       estado: estado,
       calificacion: calificacion
     };
+
     datosCuestionario.push(datos);
     data.nombreMateria = cuestionarios[y].materia;
+
   }
+
   console.log(datosCuestionario);
 
 
