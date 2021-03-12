@@ -61,8 +61,10 @@ const Registros = require('../modelos/registros.js');
 
 //--JS Back--//
 
-const Revisor = require("../funciones/revisor.js")
-const API = require("../funciones/api.js")
+const Revisor=require("../funciones/revisor.js")
+const API=require("../funciones/api.js");
+const materia = require('../modelos/materia.js');
+const { resolve } = require('path');
 
 // ------------||  R U T A S  ||----------------//
 
@@ -291,13 +293,38 @@ router.get('/docentes/editar', (req, res) => {
 
 });
 
-router.get('/docentes/resultados', (req, res) => {
-  res.render('docente/falt');
+router.get('/docentes/resultados',(req,res)=>{
+   res.render('docente/estadisticas');
 
 });
 
-router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', (req, res) => {
+router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token',async (req,res)=>{
+  res.send(req.params.idgrupo+" "+req.params.idmaestro+req.params.idsecuencia+req.params.idmateria+req.params.token  );
+  
+  var materia=req.params.idmateria;
+  //console.log(materia);
 
+  var subject= await API.findByID("materias",materia);
+  console.log("Segundo");
+ // API.findByID("materias",req.params.idmateria);
+  console.log("Rutero: ");
+  console.log(subject);
+  
+  /*
+  var grado;
+  var maestro;
+  var secuencia;
+  var alumnos;
+
+  var datosVista={
+    grado: grado,
+    materia: subject,
+    maestro: maestro,
+    secuencia: secuencia,
+    alumnos: alumnos
+  }
+  
+  console.log(datosVista);
   //Profesor Anonymous 604843e2742078293555c1d6
   //Registro de Grado { id: 'hQyk-Fhaq', nombre: '1º PRIMERO', nivel: '-AyDbZdUW' },
   /*Registro de Materias 
@@ -309,18 +336,18 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
       tipo: 'lm1'
     },
   */
-  //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
-  //Registro de Bloque { id: 'dSnrbcbS1', nombre: 'BLOQUE 1', materia: 'T9iIq2yO-' },
-  /*Registro de Secuencia
-     {
-       id: 'HU-dW413R',
-       nombre: 'TARJETAS DE IDENTIDAD',
-       bloque: 'dSnrbcbS1'
-     },
-  */
-  API.Find("secuencias");
-  res.send(req.params.idgrupo + " " + req.params.idmaestro + req.params.idsecuencia + req.params.idmateria + req.params.token);
-
+ //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
+ //Registro de Bloque { id: 'dSnrbcbS1', nombre: 'BLOQUE 1', materia: 'T9iIq2yO-' },
+ /*Registro de Secuencia
+    {
+      id: 'HU-dW413R',
+      nombre: 'TARJETAS DE IDENTIDAD',
+      bloque: 'dSnrbcbS1'
+    },
+ */
+  //API.Find("secuencias");
+  //res.send(req.params.idgrupo+" "+req.params.idmaestro+req.params.idsecuencia+req.params.idmateria+req.params.token  );
+    res.end();
 });
 
 //----Alumnos------------------
@@ -465,12 +492,18 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
 router.get('/alumnos/examen/:id', async (req, res) => {
 
+   
+   const quizz=await Quizz.findById(req.params.id);
+   
+   /*
+   var materia=quizz.claveMateria;
+   var color=await Materia.findById(materia)
+   color=color.color;
+  */
+   console.log(quizz);
+   //res.render('alumnos/examen2',{ quizz,color });
 
-  const quizz = await Quizz.findById(req.params.id);
-
-  var materia = quizz.claveMateria;
-  var color = await Materia.findById(materia)
-  color = color.color;
+   
 
   res.render('alumnos/examen2', { quizz, color });
 
