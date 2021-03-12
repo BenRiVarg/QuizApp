@@ -44,7 +44,16 @@
       </div>
 
       <div class="row my-3 justify-content-around">
-        <div class="col-10 col-sm-8 col-md-6 col-lg-4 border shadow mx-5 offset-3"
+
+
+      </div>
+
+      <div class="row justify-content-center">
+
+        <!--<div class="col-6 text-center my-2">
+          <h3 class="text-center font-weight-bold">Lista de Examenes</h3>
+        </div>-->
+        <div class="col-11 col-sm-10 col-md-5 col-lg-3 my-3 my-md-auto border shadow my-auto"
              style="border-radius: 15px;">
           <h3>
             Informacion:
@@ -62,20 +71,9 @@
                 %>
           </h5>
         </div>
-        <div class="col-10 col-sm-8 col-md-6 col-lg-4 border shadow mx-5 offset-3"
-             style="border-radius: 15px;">
-          <img src="<%= data.urlImg %>"
-               class="img-thumbnail"
-               alt="">
-        </div>
-      </div>
 
-      <div class="row justify-content-center">
-        <div class="col-6 text-center my-2">
-          <h3 class="text-center font-weight-bold">Lista de Examenes</h3>
-        </div>
-        <div class="col-8 my-2">
-          <table class="table">
+        <div class="col-11 col-sm-10 col-md-5 col-lg-5 my-3 my-md-auto ">
+          <table class="table shadow">
 
             <tr>
               <th class="text-center">Quizz</th>
@@ -105,7 +103,7 @@
 
                 <td class="text-center">
                   <a class="btn btn-info"
-                     href="/alumnos/examen/"
+                     href="/alumnos/examen/<%=datosCuestionario[j].id%>"
                      style="text-decoration: none;">Iniciar Intento</a>
                 </td>
               </tr>
@@ -114,6 +112,14 @@
               <% }
                  %>
           </table>
+        </div>
+
+        <div class="col-11 col-sm-10 col-md-5 col-lg-3 my-3 my-md-auto border shadow text-center"
+             style="border-radius: 15px; max-height:20vh ;">
+          <img src="<%= data.urlImg %>"
+               style="max-height:20vh ;"
+               class="img-fluid py-3"
+               alt="">
         </div>
       </div>
 

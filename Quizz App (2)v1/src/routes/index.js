@@ -414,8 +414,6 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
   var sec = req.params.idsecuencia;
   var estado = 'Pendiente de Revisión';
   var subject = await API.findByID("materias", materia);
-  console.log('Respuesta ');
-  console.log(subject);
   data.nombreMateria = subject.nombre;
   data.urlImg = subject.portada;
 
