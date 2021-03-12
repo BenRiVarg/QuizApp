@@ -403,14 +403,7 @@ router.get('/alumnos/examen/:id',async(req,res)=>{
 
    
    const quizz=await Quizz.findById(req.params.id);
-   
-   /*
-   var materia=quizz.claveMateria;
-   var color=await Materia.findById(materia)
-   color=color.color;
-  */
-   console.log(quizz);
-   //res.render('alumnos/examen2',{ quizz,color });
+   res.render('alumnos/examen2',{ quizz });
 
    
 
@@ -499,7 +492,7 @@ router.get('/plantillaRevision',(req, res)=>{
 })
 
 router.get('/plantillaQuizz',(req, res)=>{
-  res.render('plantillaQuizz',{color:"#ffff99"});
+  res.render('plantillaQuizzFinal',{color:"#ffff99"});
 })
 
 // @route POST /upload
