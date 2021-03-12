@@ -208,6 +208,7 @@ router.post('/editores/crear',upload.array('imagenes'),(req,res)=>{
   req.files
   console.log(req.body);
   
+  
  	var contadorImagenes=0;
 
   var i;
@@ -254,10 +255,17 @@ router.post('/editores/crear',upload.array('imagenes'),(req,res)=>{
    //guardado en la BD
    Quizz.create( 
       {
+
+       
+
+
         nivel:req.body.nivel,
        grado:req.body.grado,
-       claveMateria: req.body.claveMateria,
+       materia: req.body.claveMateria,
+       bloque:req.body.bloque,
+       secuencia:req.body.secuencia,
        nombreQuizz: req.body.nombreQuizz,
+       creador: req.body.creador,
        cuestionario:cuestionario
        
        }
@@ -293,23 +301,44 @@ router.get('/docentes/editar',(req,res)=>{
 
 });
 
-router.get('/docentes/resultados',(req,res)=>{
-   res.render('docente/estadisticas');
 
-});
 
 router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token',async (req,res)=>{
-  res.send(req.params.idgrupo+" "+req.params.idmaestro+req.params.idsecuencia+req.params.idmateria+req.params.token  );
   
-  var materia=req.params.idmateria;
-  //console.log(materia);
 
-  var subject= await API.findByID("materias",materia);
-  console.log(subject);
-  //var autentication= await API.autenticacion("ABCDEFGH");
-  
-    res.end();
+  var grupo=req.params.idgrupo;
+  var materia=await API.findByID("materias",req.params.idmateria);
+  var secuencia=await API.findByID("secuencias",req.params.idsecuencia);
+  //var alumnos=await API.alumnos(req.params.idgrupo);
+
+  var grado=await API.findByID("grados",materia.grado);
+  var nivel=await API.findByID("niveles",grado.nivel);
+
+  var datosVista={
+    nivel:nivel,
+    grado:grado,
+    materia: materia,
+    secuencia: secuencia,
+    usuario: req.params.idmaestro,
+   // alumnos: alumnos
+  }
+
+  res.render('docente/index',{datosVista});
 });
+
+router.post('/docentes/crear',async (req,res)=>{
+ 
+  var datosNQuizz=req.body;
+  console.log(datosNQuizz.creador);
+  res.render('docente/crear',{datosNQuizz});
+
+});
+
+router.get('/docentes/secuencias',(req,res)=>{
+  res.render('docente/estadisticas');
+
+});
+
 
 //----Alumnos------------------
 //MiddleWare aplicado
@@ -410,7 +439,7 @@ router.get('/alumnos/examen/:id',async(req,res)=>{
    color=color.color;
   */
    console.log(quizz);
-   //res.render('alumnos/examen2',{ quizz,color });
+   res.render('alumnos/examen',{ quizz });
 
    
 
@@ -425,7 +454,7 @@ router.get('/alumnos/respuestas',(req,res)=>{
 
 router.post('/alumnos/correccion',async (req,res)=>{
 //Boomer 5fce761f2e2106439e852306
-
+// alumno Ignacio BP32G1BF  grupo RX87YY9E
 /* console.log(req.body);
 Revisor.revisar("5fce761f2e2106439e852306",req);
 
@@ -433,7 +462,7 @@ Revisor.revisar("5fce761f2e2106439e852306",req);
 */
 
 console.log(req.body);
-var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
+var examencalificado= await Revisor.revisar("BP32G1BF",req);
 
 //Para Guardar en la BD
 
@@ -450,7 +479,7 @@ var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
  */ 
 
 
- //Registros.create(examencalificado);
+ Registros.create(examencalificado);
    res.render('alumnos/correccion');
 
 });

@@ -101,7 +101,7 @@ const { stringify } = require('querystring');
       res.on('end', () => {
           var registro;
        var registros=JSON.parse(data);
-       console.log(recursoID);
+       
       for(var i=0; i<registros[modificador].length;i++){
         
           if(registros[modificador][i].id===recursoID){
