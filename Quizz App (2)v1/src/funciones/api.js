@@ -1,5 +1,6 @@
 'use strict'
 const https = require('https');
+const { resolve } = require('path');
 const { stringify } = require('querystring');
 
   var options={
@@ -85,7 +86,6 @@ const { stringify } = require('querystring');
         break;
     }
     
-    console.log("Ya se ejecuto la función");
     resultado= await new Promise((resolve, reject) => {
     https.get(urlRecurso,options,(res)=>{
      
@@ -103,21 +103,14 @@ const { stringify } = require('querystring');
        var registros=JSON.parse(data);
        console.log(recursoID);
       for(var i=0; i<registros[modificador].length;i++){
-        //console.log(registros[modificador][i].id);
         
           if(registros[modificador][i].id===recursoID){
               registro=registros[modificador][i];
-             // console.log(registro)
-            //  resolve(registro);
             break;
           }
          
       }
-      console.log("Registro Caputado: ");
-      console.log(registro);
-
       resolve( registro);
-     // return registro
       
       });
     
@@ -129,22 +122,16 @@ const { stringify } = require('querystring');
 
   });
    
-  console.log("Primero");
-  console.log(resultado);
-  //resultado="wtf"
   return resultado;
   }
 
 
-  exports.alumnos=function(){
+  exports.alumnos= async function(IDgrupo){
  
-
-   const postData = JSON.stringify(
-    {"group_id": "RX87YY9E"} 
-    );
-    
-    console.log(postData);
-
+    const postData = JSON.stringify(
+      {"group_id": IDgrupo} 
+      );
+      
   const optionsPOST = {
     method: 'POST',
    // agent: false,  // Create a new agent just for this one request
@@ -155,18 +142,25 @@ const { stringify } = require('querystring');
     }
   };
 
+  var resultado;
+  
+  resultado= await new Promise((resolve,reject)=>{
+
     const req = https.request("https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox/students",optionsPOST, (res) => {
      
-
-    console.log(`STATUS: ${res.statusCode}`);
-      console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+    let data="";
+    //console.log(`STATUS: ${res.statusCode}`);
+     // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
+        data += chunk;
         //console.log(`BODY: ${chunk}`);
-        console.log(JSON.parse(chunk));
+        //console.log(JSON.parse(chunk));
       });
       res.on('end', () => {
-        console.log('No more data in response.');
+        var respuestaURL=JSON.parse(data);
+        var alumnos=respuestaURL.students;
+        resolve(alumnos)
       });
     });
     
@@ -181,4 +175,75 @@ const { stringify } = require('querystring');
     
     req.end();
     
+
+
+
+  });
+      
+    return resultado;
+  }
+
+  exports.autenticacion= async function(JWTtoken ){
+ 
+    const postData = JSON.stringify(
+      {"token": JWTtoken} 
+      );
+    
+
+      console.log(postData);
+  const optionsPOST = {
+    method: 'POST',
+   // agent: false,  // Create a new agent just for this one request
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'EBE v75zcs3rOEGE0bbJWv54qw!kKafTPFyzUizquudsvIWHA¡SUcVfO-IfUaXXNeVpmv9ug!2pOGsJwu_U65pfUiYQVFMw¡WvEiGh-eyEaO725Xpt_-XwNeVpmv9ug!2pOG'
+      
+    }
+  };
+
+  var resultado;
+  
+  resultado= await new Promise((resolve,reject)=>{
+
+    const req = https.request("https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox/verify/token",optionsPOST, (res) => {
+     
+    let data="";
+    var estatus=res.statusCode;
+    if(estatus==200){
+      //autenticacion aprobada
+      resolve(true);
+    }
+    else{
+      //Autenticación Fallida
+      resolve(false);
+    }
+     // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+      res.setEncoding('utf8');
+      res.on('data', (chunk) => {
+        data += chunk;
+        //console.log(`BODY: ${chunk}`);
+        //console.log(JSON.parse(chunk));
+      });
+      res.on('end', () => {
+        //var respuestaURL=JSON.parse(data); //Capturar los datos recibidos como respuesta de la URL
+      });
+    });
+    
+    req.on('error', (e) => {
+      console.error(`problem with request: ${e.message}`);
+    });
+    
+  
+     
+      
+    req.write(postData);
+    
+    req.end();
+    
+
+
+
+  });
+      
+  return resultado;
   }
