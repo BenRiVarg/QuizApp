@@ -3,9 +3,12 @@
 
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
     <title>Bienvenido</title>
     <style>
       table {
@@ -41,22 +44,29 @@
       </div>
 
       <div class="row my-3 justify-content-around">
-        <div class="col-10 col-sm-8 col-md-6 col-lg-4 border shadow mx-5 offset-3" style="border-radius: 15px;">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4 border shadow mx-5 offset-3"
+             style="border-radius: 15px;">
           <h3>
             Informacion:
           </h3>
           <h5 class="border-bottom">
-            Materia: <%= data.nombreMateria %>
+            Materia: <%= data.nombreMateria
+                %>
           </h5>
           <h5 class="border-bottom">
-            Grupo: <%= data.grupo %>
+            Grupo: <%= data.grupo
+                %>
           </h5>
           <h5 class="border-bottom">
-            Nombre del alumno: <%= data.alumno %>
+            Nombre del alumno: <%= data.alumno
+                %>
           </h5>
         </div>
-        <div class="col-10 col-sm-8 col-md-6 col-lg-4 border shadow mx-5 offset-3" style="border-radius: 15px;">
-          <img src="" alt="">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4 border shadow mx-5 offset-3"
+             style="border-radius: 15px;">
+          <img src="<%= data.urlImg %>"
+               class="img-thumbnail"
+               alt="">
         </div>
       </div>
 
@@ -70,31 +80,39 @@
             <tr>
               <th class="text-center">Quizz</th>
               <th class="text-center">Estado</th>
-              <th class="text-center">Calificación</th>
               <th class="text-center">Acción</th>
             </tr>
-            <% for (var j=0; j < datosCuestionario.length; j++) {%>
+            <% for
+               (var
+               j=0;
+               j
+               <
+               datosCuestionario.length;
+               j++)
+               {%>
               <tr>
                 <td class="text-center">
-                  <%= datosCuestionario[j].nombre %>
+                  <%= datosCuestionario[j].nombre
+                      %>
                 </td>
 
 
                 <td class="text-center">
-                  <%= datosCuestionario[j].estado %>
+                  <%= datosCuestionario[j].estado
+                      %>
                 </td>
 
-                <td class="text-center">
-                  <%= datosCuestionario[j].calificacion %>
-                </td>
 
                 <td class="text-center">
-                  <a class="btn btn-info" href="/alumnos/examen/" style="text-decoration: none;">Iniciar Intento</a>
+                  <a class="btn btn-info"
+                     href="/alumnos/examen/"
+                     style="text-decoration: none;">Iniciar Intento</a>
                 </td>
               </tr>
 
 
-              <% } %>
+              <% }
+                 %>
           </table>
         </div>
       </div>
