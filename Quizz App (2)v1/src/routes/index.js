@@ -304,50 +304,11 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
   var materia = req.params.idmateria;
   //console.log(materia);
 
-  var subject = await API.findByID("materias", materia);
-  console.log("Segundo");
-  // API.findByID("materias",req.params.idmateria);
-  console.log("Rutero: ");
+  var subject= await API.findByID("materias",materia);
   console.log(subject);
-
-  /*
-  var grado;
-  var maestro;
-  var secuencia;
-  var alumnos;
-
-  var datosVista={
-    grado: grado,
-    materia: subject,
-    maestro: maestro,
-    secuencia: secuencia,
-    alumnos: alumnos
-  }
+  //var autentication= await API.autenticacion("ABCDEFGH");
   
-  console.log(datosVista);
-  //Profesor Anonymous 604843e2742078293555c1d6
-  //Registro de Grado { id: 'hQyk-Fhaq', nombre: '1º PRIMERO', nivel: '-AyDbZdUW' },
-  /*Registro de Materias 
-    {
-      id: 'T9iIq2yO-',
-      nombre: 'LENGUA MATERNA 1',
-      portada: 'https://f1.s1.jenios.mx/uploads/3o7nT6wIY.png',
-      grado: 'hQyk-Fhaq',
-      tipo: 'lm1'
-    },
-  */
-  //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
-  //Registro de Bloque { id: 'dSnrbcbS1', nombre: 'BLOQUE 1', materia: 'T9iIq2yO-' },
-  /*Registro de Secuencia
-     {
-       id: 'HU-dW413R',
-       nombre: 'TARJETAS DE IDENTIDAD',
-       bloque: 'dSnrbcbS1'
-     },
-  */
-  //API.Find("secuencias");
-  //res.send(req.params.idgrupo+" "+req.params.idmaestro+req.params.idsecuencia+req.params.idmateria+req.params.token  );
-  res.end();
+    res.end();
 });
 
 //----Alumnos------------------
