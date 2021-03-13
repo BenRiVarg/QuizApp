@@ -365,6 +365,7 @@ router.get('/docentes/secuencia',async (req,res)=>{
   for(var i=0;i<alumnosGrupo.length;i++){
  
     var progreso=0;
+
   //Por cada Quizz en la secuencia
   
       for(x in quizzesSecuencia){
@@ -397,7 +398,12 @@ router.get('/docentes/secuencia',async (req,res)=>{
      
    }
    console.log(alumnosProgreso)
-  res.render('docente/estadisticas',{ datosDocenteSesion,alumnosProgreso,alumnos});
+  res.render('docente/secuencias',{ datosDocenteSesion,alumnosProgreso,alumnos});
+
+});
+
+router.get('/docentes/estadisticas/:id',(req,res)=>{
+  res.render('docente/estadisticas');
 
 });
 
