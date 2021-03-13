@@ -1,11 +1,11 @@
 'use strict'
 
-const mongoose=require('mongoose');
-const Schema= mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 
-const cuestionario=Schema({
-    tipo:{type: 'String'},
+const cuestionario = Schema({
+    tipo: { type: 'String' },
     pregunta: Array,
     respuesta: Array
 });
@@ -25,4 +25,4 @@ var modeloQuizz = Schema ({
 
 
 module.exports =
- mongoose.model('Quizz',modeloQuizz);
+    mongoose.model('Quizz', modeloQuizz);
