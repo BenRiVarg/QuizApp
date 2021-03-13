@@ -304,11 +304,11 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
   var materia = req.params.idmateria;
   //console.log(materia);
 
-  var subject= await API.findByID("materias",materia);
+  var subject = await API.findByID("materias", materia);
   console.log(subject);
   //var autentication= await API.autenticacion("ABCDEFGH");
-  
-    res.end();
+
+  res.end();
 });
 
 //----Alumnos------------------
@@ -371,15 +371,25 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
     urlImg: ''
   };
 
-  var materia = req.params.idmateria;
-  var sec = req.params.idsecuencia;
-  var estado = 'Pendiente de Revisión';
+  var materia = req.params.idmateria; // variable de extraccion de id de materia de url
+  var sec = req.params.idsecuencia; // cariable de extraccion de id de secuencia de url
+  var idgrupo = req.params.idgrupo; // variable de extraccion de id de grupo
+  var idAlumno = req.params.idalumno;
+  var estado = 'Pendiente de Revisión'; // variable por defecto para el estado de un quizz 
   var subject = await API.findByID("materias", materia);
+  var grupo = await API.alumnos(idgrupo);
+  var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
+  var datosCuestionario = [];
   data.nombreMateria = subject.nombre;
   data.urlImg = subject.portada;
 
-  var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
-  var datosCuestionario = [];
+  for (let i = 0; i < grupo.length; i++) {
+    if (grupo[i].id === idAlumno) {
+      data.alumno = grupo[i].nombre;
+    }
+
+  }
+  console.log(data);
   //asdas
 
   for (y in cuestionarios) {
@@ -456,11 +466,11 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
 router.get('/alumnos/examen/:id', async (req, res) => {
 
-   
-   const quizz=await Quizz.findById(req.params.id);
-   res.render('alumnos/examen2',{ quizz });
 
   const quizz = await Quizz.findById(req.params.id);
+  res.render('alumnos/examen2', { quizz });
+
+  //const quizz = await Quizz.findById(req.params.id);
 
   /*
   var materia=quizz.claveMateria;
@@ -472,7 +482,7 @@ router.get('/alumnos/examen/:id', async (req, res) => {
 
 
 
-  res.render('alumnos/examen2', { quizz, color });
+  res.render('alumnos/examen2', { quizz });
 
 
 
@@ -560,8 +570,8 @@ router.get('/plantillaRevision', (req, res) => {
   res.render('plantillaRevision', { color: "#ffff99" });
 })
 
-router.get('/plantillaQuizz',(req, res)=>{
-  res.render('plantillaQuizzFinal',{color:"#ffff99"});
+router.get('/plantillaQuizz', (req, res) => {
+  res.render('plantillaQuizzFinal', { color: "#ffff99" });
 })
 
 // @route POST /upload

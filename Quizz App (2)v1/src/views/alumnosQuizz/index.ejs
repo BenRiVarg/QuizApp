@@ -62,10 +62,10 @@
             Materia: <%= data.nombreMateria
                 %>
           </h5>
-          <h5 class="border-bottom">
+          <!-- <h5 class="border-bottom">
             Grupo: <%= data.grupo
                 %>
-          </h5>
+          </h5> -->
           <h5 class="border-bottom">
             Nombre del alumno: <%= data.alumno
                 %>
@@ -80,13 +80,11 @@
               <th class="text-center">Estado</th>
               <th class="text-center">Acción</th>
             </tr>
-            <% for
-               (var
+            <% for(var
                j=0;
                j
                <
-               datosCuestionario.length;
-               j++)
+               datosCuestionario.length;j++)
                {%>
               <tr>
                 <td class="text-center">

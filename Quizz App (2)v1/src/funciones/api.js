@@ -61,6 +61,7 @@ exports.Find = function (recurso) {
 }
 
 exports.findByID = async function (recurso, recursoID) {
+
   var urlRecurso
   var modificador;
   var resultado;
@@ -86,40 +87,10 @@ exports.findByID = async function (recurso, recursoID) {
       urlRecurso = URLbase + "/sequences";
       break;
   }
+
   resultado = await new Promise((resolve, reject) => {
     https.get(urlRecurso, options, (res) => {
 
-  exports.findByID= async function(recurso,recursoID){
-   
-    var urlRecurso
-    var modificador;
-    var resultado;
-    switch(recurso){
-        case "grados":
-          modificador="grades";
-         urlRecurso=URLbase+"/grades";
-        break;
-        case "materias":
-          modificador="subjects";
-        urlRecurso=URLbase+"/subjects";
-        break;
-        case "niveles":
-          modificador="levels"
-        urlRecurso=URLbase+"/levels";
-        break;
-        case "bloques":
-          modificador="blocks";
-        urlRecurso=URLbase+"/blocks";
-        break;
-        case "secuencias":
-          modificador="sequences";
-        urlRecurso=URLbase+"/sequences";
-        break;
-    }
-    
-    resultado= await new Promise((resolve, reject) => {
-    https.get(urlRecurso,options,(res)=>{
-     
       let data = '';
 
       // Un fragmento de datos ha sido recibido.
@@ -130,19 +101,19 @@ exports.findByID = async function (recurso, recursoID) {
 
       // Toda la respuesta ha sido recibida. Imprimir el resultado.
       res.on('end', () => {
-          var registro;
-       var registros=JSON.parse(data);
-       console.log(recursoID);
-      for(var i=0; i<registros[modificador].length;i++){
-        
-          if(registros[modificador][i].id===recursoID){
-              registro=registros[modificador][i];
+        var registro;
+        var registros = JSON.parse(data);
+        console.log(recursoID);
+        for (var i = 0; i < registros[modificador].length; i++) {
+
+          if (registros[modificador][i].id === recursoID) {
+            registro = registros[modificador][i];
             break;
           }
-         
-      }
-      resolve( registro);
-      
+
+        }
+        resolve(registro);
+
       });
 
 
@@ -152,76 +123,17 @@ exports.findByID = async function (recurso, recursoID) {
     });
 
   });
-   
+
   return resultado;
 }
 
 
-  exports.alumnos= async function(IDgrupo){
- 
-    const postData = JSON.stringify(
-      {"group_id": IDgrupo} 
-      );
-      
-  const optionsPOST = {
-    method: 'POST',
-   // agent: false,  // Create a new agent just for this one request
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'EBE v75zcs3rOEGE0bbJWv54qw!kKafTPFyzUizquudsvIWHA¡SUcVfO-IfUaXXNeVpmv9ug!2pOGsJwu_U65pfUiYQVFMw¡WvEiGh-eyEaO725Xpt_-XwNeVpmv9ug!2pOG'
-      
-    }
-  };
+exports.alumnos = async function (IDgrupo) {
 
-  var resultado;
-  
-  resultado= await new Promise((resolve,reject)=>{
+  const postData = JSON.stringify(
+    { "group_id": IDgrupo }
+  );
 
-    const req = https.request("https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox/students",optionsPOST, (res) => {
-     
-    let data="";
-    //console.log(`STATUS: ${res.statusCode}`);
-     // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-      res.setEncoding('utf8');
-      res.on('data', (chunk) => {
-        data += chunk;
-        //console.log(`BODY: ${chunk}`);
-        //console.log(JSON.parse(chunk));
-      });
-      res.on('end', () => {
-        var respuestaURL=JSON.parse(data);
-        var alumnos=respuestaURL.students;
-        resolve(alumnos)
-      });
-    });
-    
-    req.on('error', (e) => {
-      console.error(`problem with request: ${e.message}`);
-    });
-    
-  
-     
-      
-    req.write(postData);
-    
-    req.end();
-    
-
-
-
-  });
-      
-    return resultado;
-  }
-
-  exports.autenticacion= async function(JWTtoken ){
- 
-    const postData = JSON.stringify(
-      {"token": JWTtoken} 
-      );
-    
-
-      console.log(postData);
   const optionsPOST = {
     method: 'POST',
     // agent: false,  // Create a new agent just for this one request
@@ -233,22 +145,82 @@ exports.findByID = async function (recurso, recursoID) {
   };
 
   var resultado;
-  
-  resultado= await new Promise((resolve,reject)=>{
 
-    const req = https.request("https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox/verify/token",optionsPOST, (res) => {
-     
-    let data="";
-    var estatus=res.statusCode;
-    if(estatus==200){
-      //autenticacion aprobada
-      resolve(true);
+  resultado = await new Promise((resolve, reject) => {
+
+    const req = https.request("https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox/students", optionsPOST, (res) => {
+
+      let data = "";
+      //console.log(`STATUS: ${res.statusCode}`);
+      // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+      res.setEncoding('utf8');
+      res.on('data', (chunk) => {
+        data += chunk;
+        //console.log(`BODY: ${chunk}`);
+        //console.log(JSON.parse(chunk));
+      });
+      res.on('end', () => {
+        var respuestaURL = JSON.parse(data);
+        var alumnos = respuestaURL.students;
+        console.log(alumnos);
+        resolve(alumnos)
+      });
+    });
+
+    req.on('error', (e) => {
+      console.error(`problem with request: ${e.message}`);
+    });
+
+
+
+
+    req.write(postData);
+
+    req.end();
+
+
+
+
+  });
+
+  return resultado;
+}
+
+exports.autenticacion = async function (JWTtoken) {
+
+  const postData = JSON.stringify(
+    { "token": JWTtoken }
+  );
+
+
+  console.log(postData);
+  const optionsPOST = {
+    method: 'POST',
+    // agent: false,  // Create a new agent just for this one request
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'EBE v75zcs3rOEGE0bbJWv54qw!kKafTPFyzUizquudsvIWHA¡SUcVfO-IfUaXXNeVpmv9ug!2pOGsJwu_U65pfUiYQVFMw¡WvEiGh-eyEaO725Xpt_-XwNeVpmv9ug!2pOG'
+
     }
-    else{
-      //Autenticación Fallida
-      resolve(false);
-    }
-     // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+  };
+
+  var resultado;
+
+  resultado = await new Promise((resolve, reject) => {
+
+    const req = https.request("https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox/verify/token", optionsPOST, (res) => {
+
+      let data = "";
+      var estatus = res.statusCode;
+      if (estatus == 200) {
+        //autenticacion aprobada
+        resolve(true);
+      }
+      else {
+        //Autenticación Fallida
+        resolve(false);
+      }
+      // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
         data += chunk;
@@ -259,21 +231,22 @@ exports.findByID = async function (recurso, recursoID) {
         //var respuestaURL=JSON.parse(data); //Capturar los datos recibidos como respuesta de la URL
       });
     });
-    res.on('end', () => {
-      console.log('No more data in response.');
+
+    req.on('error', (e) => {
+      console.error(`problem with request: ${e.message}`);
     });
-    
-  
-     
-      
+
+
+
+
     req.write(postData);
-    
+
     req.end();
-    
+
 
 
 
   });
-      
+
   return resultado;
-  }
+}
