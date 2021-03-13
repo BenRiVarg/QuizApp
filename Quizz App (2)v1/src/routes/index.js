@@ -551,9 +551,6 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
 router.get('/alumnos/examen/:id', async (req, res) => {
 
-   
-   const quizz=await Quizz.findById(req.params.id);
-   
    /*
    var materia=quizz.claveMateria;
    var color=await Materia.findById(materia)
