@@ -456,6 +456,9 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
 router.get('/alumnos/examen/:id', async (req, res) => {
 
+   
+   const quizz=await Quizz.findById(req.params.id);
+   res.render('alumnos/examen2',{ quizz });
 
   const quizz = await Quizz.findById(req.params.id);
 
@@ -557,8 +560,8 @@ router.get('/plantillaRevision', (req, res) => {
   res.render('plantillaRevision', { color: "#ffff99" });
 })
 
-router.get('/plantillaQuizz', (req, res) => {
-  res.render('plantillaQuizz', { color: "#ffff99" });
+router.get('/plantillaQuizz',(req, res)=>{
+  res.render('plantillaQuizzFinal',{color:"#ffff99"});
 })
 
 // @route POST /upload
