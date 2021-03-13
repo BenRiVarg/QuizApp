@@ -129,11 +129,13 @@ document.getElementById("mySidebar").style.display = "none";
       
     <form action="/editores/crear"  id="formularioQuizz" method="POST" enctype="multipart/form-data" align="center">
 
-        <input type="hidden" name="nivel" value="<%=datosNQuizz.nivel %>">
-        <input type="hidden" name="grado" value="<%=datosNQuizz.grado %>">
-        <input type="hidden" name="creador" value="<%=datosNQuizz.creador %>">
-        <input type="hidden" name="materia" value="<%=datosNQuizz.materia %>">
-        <input type="hidden" name="secuencia" value="<%=datosNQuizz.secuencia %>">
+        <input type="hidden" name="nivel"     value="<%= datosDocenteSesion.nivel.id %>">
+        <input type="hidden" name="grado"    value="<%= datosDocenteSesion.grado.id %>" >
+        <input type="hidden" name="bloque"    value="<%= datosDocenteSesion.bloque.id %>" >
+        <input type="hidden" name="materia"   value="<%= datosDocenteSesion.materia.id %>">
+        <input type="hidden" name="secuencia" value="<%= datosDocenteSesion.secuencia.id %>">
+        <input type="hidden" name="creador"   value="<%= datosDocenteSesion.usuario %>">
+
 
             <div class="text-center">
               <p class="display-6">Nombre del Quizz:</p>

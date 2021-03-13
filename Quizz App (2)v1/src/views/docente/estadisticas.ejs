@@ -14,55 +14,52 @@
 <body>
 	<div class="col-md-9">
 		<h2>Nombre de la secuencia: </h2>
-		<h3>Nombre Secuencia</h3><br>
+		<h3><%=  datosDocenteSesion.secuencia.nombre%></h3><br>
 	</div>
 	<div class="container">
   <div class="row">
-    <div class="col border border-info">Id Grado:</div>
-    <div class="col border border-info">id Grupo:</div>
-    <div class="col border border-info">Id nivel:</div>
-    <div class="col border border-info">Id Secuencia:</div>
+    <div class="col border border-info"> <p><b>Grado: </b><%=  datosDocenteSesion.grado.nombre%></p>	</div>
+    <div class="col border border-info"> <p><b>Grupo: </b><%=  datosDocenteSesion.grupo %></p>	</div>
+    <div class="col border border-info"> <p><b>Nivel: </b><%=  datosDocenteSesion.nivel.nombre%></p>	</div>
+    <div class="col border border-info"> <p><b>Secuencia: </b><%=  datosDocenteSesion.secuencia.nombre%></p>		</div>
   </div>
   <div class="row">
-    <div class="col-8 border border-info">Id Bloque:</div>
-    <div class="col-4 border border-info">Id Maestro:</div>
+    <div class="col-8 border border-info"><p><b>Bloque: </b><%=  datosDocenteSesion.bloque.nombre%></p></div>
+    <div class="col-4 border border-info"><p><b>Maestro: </b><%=  datosDocenteSesion.usuario%></p></div>
   </div>
 </div>
 	<div class="row justify-content-center mt-5 pt-5">	
-		
+
 		<div class="col-md-11">
 			<h2 align="center">Alumnos que ya respondieron</h2>
 				<table class="table table-info table-hover table-striped">
-			  <thead>
-			    <tr>
-			      <th scope="col">#</th>
-			      <th scope="col">Apellidos</th>
-			      <th scope="col">Nombre</th>
-			      <th scope="col"></th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <th scope="row">1</th>
-			      <td>Sanches Piña</td>
-			      <td>Marco Aurelio</td>
-			      <td><button type="button" class="btn btn-primary">Revisar</button></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">2</th>
-			      <td>Casas Adame</td>
-			      <td>Herculano</td>
-			      <td><button type="button" class="btn btn-primary">Revisar</button></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">3</th>
-			      <td colspan="2">Este wey</td>
-			      <td><button type="button" class="btn btn-primary">Revisar</button></td>
-			    </tr>
-			  </tbody>
-			</table>
-		</div>
+							<thead>
+								<tr>
+								<th scope="col">#</th>
+								<th scope="col">Nombre</th>
+								<th scope="col">Progreso</th>
+								<th scope="col"></th>
+								</tr>
+							</thead>
+							
+							<% 
+							for(var i=0; i<alumnosProgreso.length; i++){ %>
+							
+							<tr>
+								<th scope="row"><%= i+1 %></th>
+								<td><%= alumnosProgreso[i].alumno.nombre %></td>
+								<td><%= alumnosProgreso[i].progreso %></td>
+								<td><a class="btn btn-primary" href="#" role="button">Revisar</a></td>
+							  </tr>
+
+								
+
+								<% } 
+							%>	
+				</table>
+			</div>
 	</div>	
+
 	<div class="row justify-content-center mt-5 pt-5">	
 		
 		<div class="col-md-11">
@@ -71,32 +68,30 @@
 			  <thead>
 			    <tr>
 			      <th scope="col">#</th>
-			      <th scope="col">Apellidos</th>
 			      <th scope="col">Nombre</th>
-			      <th scope="col"></th>
 			    </tr>
 			  </thead>
 			  <tbody>
-			    <tr>
-			      <th scope="row">1</th>
-			      <td>Sanches Piña</td>
-			      <td>Marco Aurelio</td>
-			      <td><button type="button" class="btn btn-danger">Funar</button></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">2</th>
-			      <td>Casas Adame</td>
-			      <td>Herculano</td>
-			      <td><button type="button" class="btn btn-danger">Funar</button></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">3</th>
-			      <td colspan="2">Este wey</td>
-			      <td><button type="button" class="btn btn-danger">Funar</button></td>
-			    </tr>
+				
+				<% 
+							for(var i=0; i<alumnos.length; i++){ %>
+							
+							<tr>
+								<th scope="row"><%= i+1 %></th>
+								<td><%= alumnos[i].alumno.nombre %></td>
+							  </tr>
+
+								
+
+								<% } 
+							%>	
+			   
+			    
 			  </tbody>
 			</table>
 		</div>
-	</div>		
+	</div>	
+
+			
 </body>
 </html>

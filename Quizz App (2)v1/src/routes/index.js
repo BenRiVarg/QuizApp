@@ -10,8 +10,7 @@ const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const passport=require('passport');
 
-//const touchMovil=require('mobile-drag-drop');
-const {isAuthenticated}=require('../auth/auth.js');
+
 
 //Configuración del Body Parser
 router.use(bodyParser.urlencoded({extendend:true}));
@@ -58,6 +57,10 @@ const Usuario=require('../modelos/usuario.js');
 const Quizz=require('../modelos/quizz.js');
 const Materia=require('../modelos/materia.js');
 const Registros=require('../modelos/registros.js');
+
+//---------MIDDLEWARES---------//
+
+const {isAuthenticated}=require('../auth/auth.js');
 
 //--JS Back--//
 
@@ -290,52 +293,111 @@ router.get('/docentes',(req,res)=>{
 });
 
 
-
-router.get('/docentes/crear',(req,res)=>{
-   res.render('docente/crear');
-
-});
-
 router.get('/docentes/editar',(req,res)=>{
    res.render('docente/editar');
 
 });
 
-
+//Creación de una variable global para tener información disponible para las vistas de docentes
+global.datosDocenteSesion={};
 
 router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token',async (req,res)=>{
   
 
   var grupo=req.params.idgrupo;
   var materia=await API.findByID("materias",req.params.idmateria);
+  
   var secuencia=await API.findByID("secuencias",req.params.idsecuencia);
-  //var alumnos=await API.alumnos(req.params.idgrupo);
-
+  var bloque=await API.findByID("bloques",secuencia.bloque);
   var grado=await API.findByID("grados",materia.grado);
   var nivel=await API.findByID("niveles",grado.nivel);
+  var quizzesSecuencia;
 
-  var datosVista={
+  var datosSesion={
     nivel:nivel,
     grado:grado,
+    grupo:grupo,
     materia: materia,
+    bloque: bloque,
     secuencia: secuencia,
     usuario: req.params.idmaestro,
-   // alumnos: alumnos
+    quizzesSecuencia: quizzesSecuencia
   }
 
-  res.render('docente/index',{datosVista});
+  datosDocenteSesion=datosSesion;
+  console.log("Datos Docente");
+  console.log(datosDocenteSesion);
+  res.render('docente/index',{"datosVista": datosSesion});
 });
 
-router.post('/docentes/crear',async (req,res)=>{
+router.get('/docentes/crear',async (req,res)=>{
+  console.log("Invocado desde Crear");
+ console.log(datosDocenteSesion);
+
+  res.render('docente/crear');
+
+});
+
+router.get('/docentes/secuencia',async (req,res)=>{
  
-  var datosNQuizz=req.body;
-  console.log(datosNQuizz.creador);
-  res.render('docente/crear',{datosNQuizz});
+  var alumnosGrupo=await API.alumnos(datosDocenteSesion.grupo);
 
-});
+  
+  //console.log(datosDocenteSesion.secuencia.id);
+  var quizzesSecuencia= await Quizz.find({ secuencia: { $eq: datosDocenteSesion.secuencia.id } },{nombreQuizz:1}).exec();
+  var totalQuizzes=quizzesSecuencia.length;
 
-router.get('/docentes/secuencias',(req,res)=>{
-  res.render('docente/estadisticas');
+  var idQuizzSecuencia=[];
+  //for para obtener todos los id de los quizzes de la secuencia
+  for(q in quizzesSecuencia){
+   
+    idQuizzSecuencia.push(quizzesSecuencia[q]);
+  }
+
+  //Captura de los 
+  datosDocenteSesion.quizzesSecuencia=idQuizzSecuencia;
+
+  var alumnosProgreso=[];
+  //alumno sin progreso alguno en la secuencia
+  var alumnos=[];
+
+  var x
+  for(var i=0;i<alumnosGrupo.length;i++){
+ 
+    var progreso=0;
+  //Por cada Quizz en la secuencia
+  
+      for(x in quizzesSecuencia){
+        
+
+        var quizzI=quizzesSecuencia[x];
+
+        //Buscamos si ha contestado el alumno por lo menos una vez el quizz x
+        var quizzContestado=await Registros.find({$and: [{ alumno: alumnosGrupo[i].id }, { quizz: quizzI.id }] });
+         if(quizzContestado.length>=1){
+          progreso=progreso+1;
+         }
+        
+      }
+      //Si hay algún progreso
+      if(progreso>=1){
+        var resultadoAlumno={
+          alumno: alumnosGrupo[i],
+          progreso: (progreso+"/"+totalQuizzes)
+        }
+
+        alumnosProgreso.push(resultadoAlumno);
+      }
+      else{ 
+        var resultadoAlumno={
+          alumno: alumnosGrupo[i],
+        }
+        alumnos.push(resultadoAlumno);
+      }
+     
+   }
+   console.log(alumnosProgreso)
+  res.render('docente/estadisticas',{ datosDocenteSesion,alumnosProgreso,alumnos});
 
 });
 
