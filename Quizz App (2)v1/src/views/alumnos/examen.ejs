@@ -26,19 +26,22 @@
   <form action="/alumnos/correccion" method="POST" id=quizz>
     <input type="hidden" name="quizz" value="<%= quizz._id %>">
     <% for(var i=0; i<quizz.cuestionario.length ; i++) {%>
-      <% switch (quizz.cuestionario[i].tipo) { case "tipoT" : %>
-        <div class="container-fluid ">
-          <div class="row justify-content-center">
-            <div class="container col-md-10">
-              <div class="container col-md-10 text-center bg-light rounded-0">
-                <h4 class="display-7">
-                  <%= quizz.cuestionario[i].pregunta %>
-                </h4>
-                <div class="container col-md-10 pb-3">
-                  <input type="text" class="form-control pb-3" placeholder="Respuesta" aria-label="Respuesta"
-                    name="respuesta<%= i %>">
+      <% switch (quizz.cuestionario[i].tipo) { 
+        case "tipoT" : %>
+            <!--P Texto-->
+            <div class="d-flex justify-content-center ">
+              <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
+                
+                <div class="card-body border border-1 ">
+                  <h4 class="display-7" ><% <!--= quizz.cuestionario[i].pregunta -->%><%= quizz.cuestionario[i].pregunta %></h4><br>
+                  <input type="text" class="form-control pb-3" placeholder="Respuesta" aria-label="Respuesta" name="respuesta<%= i %>">
                   <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
-                  <% break; case "tipoR" : %>
+                                      
+                </div>
+              </div>
+            </div>
+            <!--Termina P Texto-->
+       <% break; case "tipoR" : %>
                 </div>
               </div>
               <br>
@@ -119,19 +122,7 @@
                           </div>
                           <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
                           <% break; case "tipoIT" : %>
-                            <!--
-                      <h4 align="center"><%= quizz.cuestionario[i].pregunta[1] %></h4>
-                        <div class="grid-contenedor" id="main">
-                        
-                        <div>
-                           <img src="/image/<%= quizz.cuestionario[i].pregunta[0] %>" alt="perrito de la victoria" >
-                        </div>
-                        <div>
-                        <input type="text" class="form-control" placeholder="Respuesta" aria-label="Respuesta" name="respuesta1">
-                        </div>
-                        <div></div>
-                        </div>
-                      -->
+                           
                             <!--pregunta IT-->
                             <div class="d-flex justify-content-center">
                               <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
@@ -156,9 +147,9 @@
                                 </div>
                               </div>
                             </div>
-                            <!--pregunta IT-->
+                           
                             <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
-
+                             <!--Termina Pregunta-->
                             <% break; case "tipoM" : %>
                               <div id="main">
                                 <h4 class="text-center">Resuelve la siguiente expresión</h4>
