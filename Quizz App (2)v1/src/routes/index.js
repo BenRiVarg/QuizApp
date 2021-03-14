@@ -468,17 +468,12 @@ router.get('/alumnos/examen/:id', async (req, res) => {
 
 
   const quizz = await Quizz.findById(req.params.id);
-  res.render('alumnos/examen2', { quizz });
+  res.render('plantillaQuizzFinal2', { quizz });
 
-  //const quizz = await Quizz.findById(req.params.id);
+  
 
-  /*
-  var materia=quizz.claveMateria;
-  var color=await Materia.findById(materia)
-  color=color.color;
- */
+  
   console.log(quizz);
-  //res.render('alumnos/examen2',{ quizz,color });
 
 
 
@@ -522,7 +517,7 @@ router.post('/alumnos/correccion', async (req, res) => {
   */
 
 
-  //Registros.create(examencalificado);
+ // Registros.create(examencalificado);
   res.render('alumnos/correccion');
 
 });
