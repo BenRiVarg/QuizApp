@@ -68,6 +68,7 @@ const Revisor = require("../funciones/revisor.js")
 const API = require("../funciones/api.js");
 const materia = require('../modelos/materia.js');
 const { resolve } = require('path');
+const { json } = require('body-parser');
 
 // ------------||  R U T A S  ||----------------//
 
@@ -299,7 +300,10 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
   var bloque=await API.findByID("bloques",secuencia.bloque);
   var grado=await API.findByID("grados",materia.grado);
   var nivel=await API.findByID("niveles",grado.nivel);
+  //Variable para conocer los ids de los quizzes  de una secuencia
   var quizzesSecuencia;
+  //Variable para guardar los alumnos que tienen un progreso dentro de la secuencia
+  var alumnos
 
   var datosSesion={
     nivel:nivel,
@@ -309,7 +313,8 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
     bloque: bloque,
     secuencia: secuencia,
     usuario: req.params.idmaestro,
-    quizzesSecuencia: quizzesSecuencia
+    quizzesSecuencia: quizzesSecuencia,
+    alumnos: alumnos
   }
 
   datosDocenteSesion=datosSesion;
@@ -319,8 +324,6 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
 });
 
 router.get('/docentes/crear',async (req,res)=>{
-  console.log("Invocado desde Crear");
- console.log(datosDocenteSesion);
 
   res.render('docente/crear');
 
@@ -342,7 +345,7 @@ router.get('/docentes/secuencia',async (req,res)=>{
     idQuizzSecuencia.push(quizzesSecuencia[q]);
   }
 
-  //Captura de los 
+  //Captura de los ids quizz secuencia
   datosDocenteSesion.quizzesSecuencia=idQuizzSecuencia;
 
   var alumnosProgreso=[];
@@ -385,13 +388,58 @@ router.get('/docentes/secuencia',async (req,res)=>{
       }
      
    }
-   console.log(alumnosProgreso)
+   datosDocenteSesion.alumnos=alumnosProgreso;
   res.render('docente/secuencias',{ datosDocenteSesion,alumnosProgreso,alumnos});
 
 });
 
-router.get('/docentes/estadisticas/:id',(req,res)=>{
-  res.render('docente/estadisticas');
+router.get('/docentes/estadisticas/:idalumno',async (req,res)=>{
+
+  var alumnoAnalizado;
+
+  //Extracción del alumno
+  for(var i=0;i<datosDocenteSesion.alumnos.length;i++){
+    if((req.params.idalumno)==(datosDocenteSesion.alumnos[i].alumno.id)){
+      alumnoAnalizado=datosDocenteSesion.alumnos[i];
+      break;
+    }
+  }
+
+ 
+  var datosIntentos=[];
+
+
+  for(var i=0;i<datosDocenteSesion.quizzesSecuencia.length;i++){
+      var quizzI=datosDocenteSesion.quizzesSecuencia[i];
+      var Intentos=await Registros.find({$and: [{ alumno: req.params.idalumno }, { quizz: quizzI.id }] });
+
+      //Variable para juntar todos los intentos por Quizz
+      var apartado=[];
+
+      for(x in Intentos){
+        var intentoPorQuizz=Intentos[x];
+        apartado.push(intentoPorQuizz);
+      }
+
+      /*
+      var claveQuizz="quizz"+i;
+      datosIntentos[claveQuizz]={
+        nombre: quizzI.nombreQuizz,
+        intentos:apartado
+      }
+      */
+
+      var  datosIntento={
+        nombre: quizzI.nombreQuizz,
+        intentos:apartado
+      }
+
+      datosIntentos.push(datosIntento);
+  }
+  //console.log(datosIntentos);
+  //datosIntentos2=JSON.parse(datosIntentos);
+  console.log(datosIntentos);
+  res.render('docente/estadisticas',{datosDocenteSesion,alumnoAnalizado,datosIntentos});
 
 });
 
@@ -551,30 +599,11 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
 router.get('/alumnos/examen/:id', async (req, res) => {
 
-   /*
-   var materia=quizz.claveMateria;
-   var color=await Materia.findById(materia)
-   color=color.color;
-  */
-   console.log(quizz);
-   res.render('alumnos/examen',{ quizz });
 
   const quizz = await Quizz.findById(req.params.id);
-  res.render('alumnos/examen2', { quizz });
+  res.render('alumnos/examen', { quizz });
 
-  //const quizz = await Quizz.findById(req.params.id);
-
-  /*
-  var materia=quizz.claveMateria;
-  var color=await Materia.findById(materia)
-  color=color.color;
- */
-  console.log(quizz);
-  //res.render('alumnos/examen2',{ quizz,color });
-
-
-
-  res.render('alumnos/examen2', { quizz });
+  
 
 
 
@@ -611,7 +640,7 @@ var examencalificado= await Revisor.revisar("BP32G1BF",req);
   
   console.log(examencalificado);
   */
-
+ var examencalificado= await Revisor.revisar("BP32G1BF",req);
 
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
