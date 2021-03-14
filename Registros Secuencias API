@@ -30,7 +30,8 @@ Este es un ejemplo de como responde la API de e-be y tiene un registro congruent
     { id: 'XT1GX44R', nombre: 'AGUSTIN' }
   ]
   
+  //Ruta de maestros con Profesor Anonymous como usuario(profesor)
  localhost:8443/grupo/RX87YY9E/maestro/604843e2742078293555c1d6/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/token
  
- 
- /grupo/RX87YY9E/alumno/BP32G1BF/materia/T9iIq2yO-/secuencia/T9iIq2yO-/jwt/Token
+ //Ruta alumnos con Ignacio como usuario (alumno)
+ http://localhost:8443/grupo/RX87YY9E/alumno/BP32G1BF/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/Token
