@@ -468,7 +468,7 @@ router.get('/alumnos/examen/:id', async (req, res) => {
 
 
   const quizz = await Quizz.findById(req.params.id);
-  res.render('plantillaQuizzFinal2', { quizz });
+  res.render('alumnos/Quizz', { quizz });
 
   
 
