@@ -409,8 +409,7 @@ router.get('/alumnos/examen/:id',async(req,res)=>{
    var color=await Materia.findById(materia)
    color=color.color;
   */
-   console.log(quizz);
-   //res.render('alumnos/examen2',{ quizz,color });
+   res.render('alumnos/examen',{ quizz });
 
    
 
@@ -501,6 +500,10 @@ router.get('/plantillaRevision',(req, res)=>{
 router.get('/plantillaQuizz',(req, res)=>{
   res.render('plantillaQuizz',{color:"#ffff99"});
 })
+
+router.get("/plantillaQuizzFinal", (req, res) => {
+  res.render("plantillaQuizzFinal", { color: "#ffff99" });
+});
 
 // @route POST /upload
 // @desc  Uploads file to DB

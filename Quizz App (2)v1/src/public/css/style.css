@@ -1,6 +1,7 @@
 @media (min-width: 720px) {
   img {
-    width: 50%;
+    width: 250px;
+    margin: 0 auto !important;
   }
   html h1, h2, h3, h4 {
     color: Black;
@@ -150,6 +151,19 @@
   body.examen {
     justify-content: center;
   }
+  .imagenResp {
+    width: 700px;
+    height: auto;
+    margin: 0 auto !important;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1400px) {
+  .imagenResp {
+    width: 700px;
+    height: auto;
+    margin: 0 auto !important;
+  }
 }
 
 .div1 {
@@ -181,4 +195,16 @@
   border-radius: 10px;
   font-size: 1.2rem;
   background-color: white;
+}
+
+.imagenes {
+  width: 200px;
+  height: 30px;
+  margin: 0 auto;
+}
+
+.imagenResp {
+  width: 700px;
+  height: auto;
+  margin: 0 auto;
 }
