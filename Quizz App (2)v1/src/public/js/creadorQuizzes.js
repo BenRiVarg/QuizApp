@@ -278,12 +278,11 @@ function palabras() {
 
     var list = document.getElementsByClassName("palabraid");
     for (var j = 0; j < palabraPartida.length; j++) {
-      list[j].id = "drag" + ++j;
+      list[j].id = "drag" + (j+1);
     }  
   
   comprobarDrag();
 }
-
 
 function comprobarDrag(event) {
   var arr = [];
@@ -365,30 +364,12 @@ function comprobarDrag(event) {
   });
 }
 
-function cuadros() {
-  var strVar = "";  
-  var cantidad = document.querySelector("#caRe").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar += ' <div class="col">';
-    strVar +=
-      '                                            <div class="div1 widget" id=" "></div>';
-    strVar += "                                  </div>";
-    
-    
-    document.getElementById("cuadros").innerHTML = strVar;
-    var list = document.getElementsByClassName("div1");
-    for (var j = 0; j < cantidad.length; j++) {
-      list[j].id = ("cuadro" + (++j));
-    }
-    
-    
-  }
-
+function arrastrable() {
   $(".widget").draggable({
     scroll: false,
     containment: "#bg-container",
 
-   /*  start: function (event, ui) {
+    /* start: function (event, ui) {
       console.log("start top is :" + ui.position.top);
       console.log("start left is :" + ui.position.left);
     },
@@ -402,7 +383,18 @@ function cuadros() {
       alert("left:" + ui.position.left + " top:" + ui.position.top);
     }, */
   });
+}
+
+function cuadros() {
+  var cantidad = document.querySelector("#caRe").value;
   
+  for (var i = 0; i < cantidad; i++) {
+    
+    var strVar = '  <div id="cuadro'+(i+1)+'" class="div1 widget"></div>';
+    var cuadro = document.getElementById("cuadros");
+    cuadro.insertAdjacentHTML("beforeend", strVar);
+  }
+  arrastrable();
 }
 
 function flechaHoDerecha() {
@@ -413,25 +405,7 @@ function flechaHoDerecha() {
   }
   
   document.getElementById("flechasHoDer").innerHTML = strVar;
-
-  $(".widget").draggable({
-    scroll: false,
-    containment: "#bg-container",
-
-    /*  start: function (event, ui) {
-      console.log("start top is :" + ui.position.top);
-      console.log("start left is :" + ui.position.left);
-    },
-    drag: function (event, ui) {
-      console.log("draging.....");
-    },
-    stop: function (event, ui) {
-      console.log("stop top is :" + ui.position.top);
-      console.log("stop left is :" + ui.position.left);
-
-      alert("left:" + ui.position.left + " top:" + ui.position.top);
-    }, */
-  });
+  arrastrable();
 }
 
 function flechaHoIzquierda() {
@@ -442,25 +416,55 @@ function flechaHoIzquierda() {
   }
 
   document.getElementById("flechasHoIz").innerHTML = strVar;
+  arrastrable();
+}
 
-  $(".widget").draggable({
-    scroll: false,
-    containment: "#bg-container",
+function flechaDiaDerecha() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar +=
+      '<img class="widget diagonal" src="/img/flechadiaderecha.png" alt="">';
+  }
 
-      start: function (event, ui) {
-      console.log("start top is :" + ui.position.top);
-      console.log("start left is :" + ui.position.left);
-    },
-    drag: function (event, ui) {
-      console.log("draging.....");
-    },
-    stop: function (event, ui) {
-      console.log("stop top is :" + ui.position.top);
-      console.log("stop left is :" + ui.position.left);
+  document.getElementById("flechasDiaDer").innerHTML = strVar;
+  arrastrable();
+}
 
-      alert("left:" + ui.position.left + " top:" + ui.position.top);
-    }, 
-  });
+function flechaDiaIzquierda() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar +=
+      '<img class="widget diagonal" src="/img/flechadigaiz.png" alt="">';
+  }
+
+  document.getElementById("flechasDiaIz").innerHTML = strVar;
+  arrastrable();
+}
+
+function flechaDiaDerechaInv() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar +=
+      '<img class="widget diagonal" src="/img/diagonalderinvertida.png" alt="">';
+  }
+
+  document.getElementById("flechasDiaDerInv").innerHTML = strVar;
+  arrastrable();
+}
+
+function flechaDiaIzquierdaInv() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar +=
+      '<img class="widget diagonal" src="/img/diagonalizinvertida.png" alt="">';
+  }
+
+  document.getElementById("flechasDiaIzInv").innerHTML = strVar;
+  arrastrable();
 }
 
 function quitarReactivoRelacional(obj){
