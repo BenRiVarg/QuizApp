@@ -101,13 +101,13 @@ exports.findByID = async function (recurso, recursoID) {
 
       // Toda la respuesta ha sido recibida. Imprimir el resultado.
       res.on('end', () => {
-        var registro;
-        var registros = JSON.parse(data);
-        console.log(recursoID);
-        for (var i = 0; i < registros[modificador].length; i++) {
-
-          if (registros[modificador][i].id === recursoID) {
-            registro = registros[modificador][i];
+          var registro;
+       var registros=JSON.parse(data);
+       
+      for(var i=0; i<registros[modificador].length;i++){
+        
+          if(registros[modificador][i].id===recursoID){
+              registro=registros[modificador][i];
             break;
           }
 
