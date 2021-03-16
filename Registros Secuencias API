@@ -1,0 +1,37 @@
+Este es un ejemplo de como responde la API de e-be y tiene un registro congruente de su estructura en la BD
+
+//Profesor Anonymous 604843e2742078293555c1d6 //--- Está en nuestra Base de datos 
+//Alumno Boomer 5fce761f2e2106439e852306      //--- Está en nuestra Base de datos 
+
+  //Registro de Grado { id: 'hQyk-Fhaq', nombre: '1º PRIMERO', nivel: '-AyDbZdUW' },
+  /*Registro de Materias 
+    {
+      id: 'T9iIq2yO-',
+      nombre: 'LENGUA MATERNA 1',
+      portada: 'https://f1.s1.jenios.mx/uploads/3o7nT6wIY.png',
+      grado: 'hQyk-Fhaq',
+      tipo: 'lm1'
+    },
+  */
+ //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
+ //Registro de Bloque { id: 'dSnrbcbS1', nombre: 'BLOQUE 1', materia: 'T9iIq2yO-' },
+ /*Registro de Secuencia
+    {
+      id: 'HU-dW413R',
+      nombre: 'TARJETAS DE IDENTIDAD',
+      bloque: 'dSnrbcbS1'
+    },
+ */
+  //El único grupo que conocemos "group_id": "RX87YY9E"
+    grupo: 'RX87YY9E',
+  alumnos: [
+    { id: 'BP32G1BF', nombre: 'IGNACIO' },
+    { id: '8BNG2HLG', nombre: 'MANUEL' },
+    { id: 'XT1GX44R', nombre: 'AGUSTIN' }
+  ]
+  
+  //Ruta de maestros con Profesor Anonymous como usuario(profesor)
+ localhost:8443/grupo/RX87YY9E/maestro/604843e2742078293555c1d6/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/token
+ 
+ //Ruta alumnos con Ignacio como usuario (alumno)
+ http://localhost:8443/grupo/RX87YY9E/alumno/BP32G1BF/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/Token

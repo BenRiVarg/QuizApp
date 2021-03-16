@@ -1,6 +1,6 @@
-const express= require('express');
-const router=express.Router();
-const bodyParser= require('body-parser');
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
 const path = require('path');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
@@ -8,22 +8,22 @@ const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
-const passport=require('passport');
+const passport = require('passport');
 
 //const touchMovil=require('mobile-drag-drop');
-const {isAuthenticated}=require('../auth/auth.js');
+const { isAuthenticated } = require('../auth/auth.js');
 
 //Configuración del Body Parser
-router.use(bodyParser.urlencoded({extendend:true}));
+router.use(bodyParser.urlencoded({ extendend: true }));
 router.use(bodyParser.json());
 
 
 //Motor de envío de Imágenes
 Grid.mongo = mongoose.mongo;
 
- conn=mongoose.connection;
+conn = mongoose.connection;
 
- // Init gfs
+// Init gfs
 let gfs;
 
 conn.once('open', () => {
@@ -34,297 +34,311 @@ conn.once('open', () => {
 
 // Create storage engine
 const storage = new GridFsStorage({
-   url: 'mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority',
-   file: (req, file) => {
-     return new Promise((resolve, reject) => {
-       crypto.randomBytes(16, (err, buf) => {
-         if (err) {
-           return reject(err);
-         }
-         const filename = buf.toString('hex') + path.extname(file.originalname);
-         const fileInfo = {
-           filename: filename,
-           bucketName: 'uploads'
-         };
-         resolve(fileInfo);
-       });
-     });
-   }
- });
- const upload = multer({ storage });
+  url: 'mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority',
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
 
 //----M O D E L O S-----//
-const Usuario=require('../modelos/usuario.js');
-const Quizz=require('../modelos/quizz.js');
-const Materia=require('../modelos/materia.js');
-const Registros=require('../modelos/registros.js');
+const Usuario = require('../modelos/usuario.js');
+const Quizz = require('../modelos/quizz.js');
+const Materia = require('../modelos/materia.js');
+const Registros = require('../modelos/registros.js');
 
 //--JS Back--//
 
-const Revisor=require("../funciones/revisor.js")
-const API=require("../funciones/api.js")
+const Revisor = require("../funciones/revisor.js")
+const API = require("../funciones/api.js");
+const materia = require('../modelos/materia.js');
+const { resolve } = require('path');
 
 // ------------||  R U T A S  ||----------------//
 
-router.get('/',(req,res)=>{
-    res.render('index');
+router.get('/', (req, res) => {
+  res.render('index');
 
- });
+});
 
 
- //login
- router.post('/',passport.authenticate('local',{
-   successRedirect: '/alumnos',
-   failureRedirect: '/',
-   failureFlash: false
+//login
+router.post('/', passport.authenticate('local', {
+  successRedirect: '/alumnos',
+  failureRedirect: '/',
+  failureFlash: false
 
-   
- }));
- 
-   
- router.get('/logout',(req,res)=>{
+
+}));
+
+
+router.get('/logout', (req, res) => {
   req.logOut();
   res.redirect("/");
 });
 
 
 //---------ADMINISTRADORES
- 
+
 
 //Dashboard
-router.get('/administrador',async (req,res)=>{
-   const usuarios=await Usuario.find({});
- 
-   res.render('administrador/index',{user: usuarios});
- 
+router.get('/administrador', async (req, res) => {
+  const usuarios = await Usuario.find({});
+
+  res.render('administrador/index', { user: usuarios });
+
 });
 
 
 //Crear
-router.get('/administrador/crear',(req,res)=>{
-   res.render('administrador/crear');
- 
+router.get('/administrador/crear', (req, res) => {
+  res.render('administrador/crear');
+
 });
 
-router.post('/administrador/crear',(req,res)=>{
-  
-  
-  
+router.post('/administrador/crear', (req, res) => {
 
-   Usuario.create(req.body,(error,usuario)=>{
 
-   });
-   res.redirect('/administrador');
+
+
+  Usuario.create(req.body, (error, usuario) => {
+
+  });
+  res.redirect('/administrador');
 });
 
 //Editar
 
 // vista del formulario con datos actuales del usuario a editar
-router.get('/administrador/editar/:id',async(req,res)=>{
-   const user=await Usuario.findById(req.params.id);
+router.get('/administrador/editar/:id', async (req, res) => {
+  const user = await Usuario.findById(req.params.id);
 
-   res.render('administrador/editar',{user});
- 
+  res.render('administrador/editar', { user });
+
 });
 
 
 
 //envío por post para guardar los cambios
-router.post('/administrador/editar',(req,res)=>{
-  
-       
-         const idUsuario=req.body.id;
+router.post('/administrador/editar', (req, res) => {
 
-         Usuario.findByIdAndUpdate(idUsuario,{
-             nombre:req.body.nombre,
-             rol: req.body.rol,
-             apPaterno: req.body.apPaterno,
-             apMaterno: req.body.apMaterno,
-             correoElectronico: req.body.correoElectronico,
-             telefono: req.body.telefono,
-             estatus:req.body.estatus
-          },(error,user)=>{
-             console.log(error,idUsuario);
-             res.redirect('/administrador');
-          } 
-            );
-     
+
+  const idUsuario = req.body.id;
+
+  Usuario.findByIdAndUpdate(idUsuario, {
+    nombre: req.body.nombre,
+    rol: req.body.rol,
+    apPaterno: req.body.apPaterno,
+    apMaterno: req.body.apMaterno,
+    correoElectronico: req.body.correoElectronico,
+    telefono: req.body.telefono,
+    estatus: req.body.estatus
+  }, (error, user) => {
+    console.log(error, idUsuario);
+    res.redirect('/administrador');
+  }
+  );
+
 });
 
 
-router.post('/administrador/borrar',(req,res)=>{
-   const idUsuario=req.body.id;
- 
+router.post('/administrador/borrar', (req, res) => {
+  const idUsuario = req.body.id;
 
-   Usuario.findByIdAndRemove(idUsuario, function(err){
-      if(err){
-         res.send(err);
-      }
-      else{
-         res.redirect("/administrador");
-      }
-   })
+
+  Usuario.findByIdAndRemove(idUsuario, function (err) {
+    if (err) {
+      res.send(err);
+    }
+    else {
+      res.redirect("/administrador");
+    }
+  })
 
 });
 
 //----------EDITORES
 
-router.get('/editores',async (req,res)=>{
-  const materia=await Materia.find({});
+router.get('/editores', async (req, res) => {
+  const materia = await Materia.find({});
 
-  res.render('editor/index',{materia: materia});
-
-});
-
-
-
-router.post('/materias',async(req,res)=>{
-  Materia.create({nombre: req.body.nombre});
-    res.redirect("/editores");
- 
-});
-
-
-
-
-router.get('/editores/aprobar',(req,res)=>{
-   res.render('editor/aprobar');
+  res.render('editor/index', { materia: materia });
 
 });
 
-router.get('/editores/crear',async (req,res)=>{
-  const materia=await Materia.find({});
 
-  res.render('editor/crear',{materia: materia});
+
+router.post('/materias', async (req, res) => {
+  Materia.create({ nombre: req.body.nombre });
+  res.redirect("/editores");
 
 });
 
 
 
 
-router.post('/editores/crear',upload.array('imagenes'),(req,res)=>{
+router.get('/editores/aprobar', (req, res) => {
+  res.render('editor/aprobar');
+
+});
+
+router.get('/editores/crear', async (req, res) => {
+  const materia = await Materia.find({});
+
+  res.render('editor/crear', { materia: materia });
+
+});
+
+
+
+
+router.post('/editores/crear', upload.array('imagenes'), (req, res) => {
   req.files
   console.log(req.body);
-  
- 	var contadorImagenes=0;
+
+  var contadorImagenes = 0;
 
   var i;
   //variable para construir el cuestionario como un array
-  var cuestionario= [
+  var cuestionario = [
   ];
 
-  
-//Procesamiento de cada pregunta por la request
+
+  //Procesamiento de cada pregunta por la request
   for (i = 0; i < req.body.numeroPreguntas; i++) {
-      var tipo="tipo"+(i+1);
-      var pregunta="pregunta"+(i+1);
-      var respuesta="respuesta"+(i+1);
+    var tipo = "tipo" + (i + 1);
+    var pregunta = "pregunta" + (i + 1);
+    var respuesta = "respuesta" + (i + 1);
 
-      //filtro para relacionar preguntas e imágenes
-        if (req.body[tipo]=="tipoIT"){
+    //filtro para relacionar preguntas e imágenes
+    if (req.body[tipo] == "tipoIT") {
 
-          //apertura de un espacio en el array de preguntas
-          var preguntaImagen=req.body[pregunta];
-          //asignación de un archivo en ese primer espacio
-          preguntaImagen[0]=req.files[contadorImagenes].filename;
-          //Movimiento del contador para asignar correctamente imagenes.
-          contadorImagenes=contadorImagenes+1;
-   
-
-      }
+      //apertura de un espacio en el array de preguntas
+      var preguntaImagen = req.body[pregunta];
+      //asignación de un archivo en ese primer espacio
+      preguntaImagen[0] = req.files[contadorImagenes].filename;
+      //Movimiento del contador para asignar correctamente imagenes.
+      contadorImagenes = contadorImagenes + 1;
 
 
-      //Construcción de documentos de cuestionarios de manera iterativa
-      var contenidoCuestionario={
-        tipo:req.body[tipo],
-        pregunta:  req.body[pregunta],
-        respuesta: req.body[respuesta]
-      }
+    }
 
-     
-  
 
-    
+    //Construcción de documentos de cuestionarios de manera iterativa
+    var contenidoCuestionario = {
+      tipo: req.body[tipo],
+      pregunta: req.body[pregunta],
+      respuesta: req.body[respuesta]
+    }
 
-     cuestionario.push(contenidoCuestionario);
-  } 
-  
-   //guardado en la BD
-   Quizz.create( 
-      {
-        nivel:req.body.nivel,
-       grado:req.body.grado,
-       claveMateria: req.body.claveMateria,
-       nombreQuizz: req.body.nombreQuizz,
-       cuestionario:cuestionario
-       
-       }
-    
-    );
-      
+
+
+
+
+
+    cuestionario.push(contenidoCuestionario);
+  }
+
+  //guardado en la BD
+  Quizz.create(
+    {
+      nivel: req.body.nivel,
+      grado: req.body.grado,
+      claveMateria: req.body.claveMateria,
+      nombreQuizz: req.body.nombreQuizz,
+      cuestionario: cuestionario
+
+    }
+
+  );
+
   res.redirect("/editores/crear");
 });
 
 
-router.get('/editores/editar',(req,res)=>{
-   res.render('editor/editar');
+router.get('/editores/editar', (req, res) => {
+  res.render('editor/editar');
 
 });
 
 
 //---- DOCENTES
 
-router.get('/docentes',(req,res)=>{
-   res.render('docente/index');
+router.get('/docentes', (req, res) => {
+  res.render('docente/index');
 
 });
 
 
 
-router.get('/docentes/crear',(req,res)=>{
-   res.render('docente/crear');
+router.get('/docentes/crear', (req, res) => {
+  res.render('docente/crear');
 
 });
 
-router.get('/docentes/editar',(req,res)=>{
-   res.render('docente/editar');
+router.get('/docentes/editar', (req, res) => {
+  res.render('docente/editar');
 
 });
 
-router.get('/docentes/resultados',(req,res)=>{
-   res.render('docente/resultados');
+router.get('/docentes/resultados', (req, res) => {
+  res.render('docente/estadisticas');
 
 });
 
+router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
+  res.send(req.params.idgrupo + " " + req.params.idmaestro + req.params.idsecuencia + req.params.idmateria + req.params.token);
+
+  var materia = req.params.idmateria;
+  //console.log(materia);
+
+  var subject = await API.findByID("materias", materia);
+  console.log(subject);
+  //var autentication= await API.autenticacion("ABCDEFGH");
+
+  res.end();
+});
 
 //----Alumnos------------------
 //MiddleWare aplicado
 //router.get('/alumnos',isAuthenticated,async (req,res)=>{
-  router.get('/alumnos',async (req,res)=>{
+router.get('/alumnos', async (req, res) => {
 
 
 
-  const materiasBD=await Materia.find({});
-  
+  const materiasBD = await Materia.find({});
+
   var x;
-  var materias=[];
+  var materias = [];
 
 
-  for(x in materiasBD){
+  for (x in materiasBD) {
 
-    var cuestionarios= await Quizz.find({claveMateria: materiasBD[x]._id}).exec();
-    var datosCuestionario=[];
+    var cuestionarios = await Quizz.find({ claveMateria: materiasBD[x]._id }).exec();
+    var datosCuestionario = [];
 
-    for(y in cuestionarios){
-        var datos= {
-            id: cuestionarios[y]._id,
-            nombre: cuestionarios[y].nombreQuizz
-        };
-        datosCuestionario.push(datos);
+    for (y in cuestionarios) {
+      var datos = {
+        id: cuestionarios[y]._id,
+        nombre: cuestionarios[y].nombreQuizz
+      };
+      datosCuestionario.push(datos);
     }
-    
-   
-    var materiasObj={
+
+
+    var materiasObj = {
       materia: materiasBD[x].nombre,
       registros: datosCuestionario
     }
@@ -334,235 +348,307 @@ router.get('/docentes/resultados',(req,res)=>{
 
 
 
- 
+
+
+
+
+  const Quizzes = await Quizz.find({});
+  res.render('alumnos/index', { quizzes: Quizzes, materias });
+
+});
+
+//----Alumnos------------------
+//MiddleWare aplicado
+//router.get('/alumnos',isAuthenticated,async (req,res)=>{
+
+router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
+
+  //data que se envia a la siguiente vista para ser mostrada
+  var data = {
+    nombreMateria: '',
+    grupo: '',
+    alumno: '',
+    urlImg: ''
+  };
+
+  var materia = req.params.idmateria; // variable de extraccion de id de materia de url
+  var sec = req.params.idsecuencia; // cariable de extraccion de id de secuencia de url
+  var idgrupo = req.params.idgrupo; // variable de extraccion de id de grupo
+  var idAlumno = req.params.idalumno;
+  var estado = 'Pendiente de Revisión'; // variable por defecto para el estado de un quizz 
+  var subject = await API.findByID("materias", materia);
+  var grupo = await API.alumnos(idgrupo);
+  var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
+  var datosCuestionario = [];
+  data.nombreMateria = subject.nombre;
+  data.urlImg = subject.portada;
+
+  for (let i = 0; i < grupo.length; i++) {
+    if (grupo[i].id === idAlumno) {
+      data.alumno = grupo[i].nombre;
+    }
+
+  }
+  console.log(data);
+  //asdas
+
+  for (y in cuestionarios) {
+
+    if (cuestionarios[y].estado !== 'por revisar') {
+
+      estado = cuestionarios[y].estado;
+      calificacion = cuestionarios[y].calificacion + '/10';
+
+    } else {
+
+      calificacion = 'Calificacion Pendiente';
+
+    }
+
+    var datos = {
+      id: cuestionarios[y]._id,
+      nombre: cuestionarios[y].nombreQuizz,
+      estado: estado
+    };
+
+    datosCuestionario.push(datos);
+
+  }
+
+
 
 
   //API.alumnos();
-   const Quizzes=await Quizz.find({ });
-   res.render('alumnos/index',{quizzes: Quizzes,materias});
+  const Quizzes = await Quizz.find({});
+  res.render('alumnosQuizz/index', { quizzes: Quizzes, data, datosCuestionario });
 
 });
 
-
-
-router.get('/alumnos/registro',async(req,res)=>{
+router.get('/alumnos/registro', async (req, res) => {
 
   //Boomer "5fce761f2e2106439e852306"
-  var registros=await Registros.find({alumno: "5fce761f2e2106439e852306"},{"quizz":1,"_id":1}).exec();
+  var registros = await Registros.find({ alumno: "5fce761f2e2106439e852306" }, { "quizz": 1, "_id": 1 }).exec();
 
   //Variable solo con los nombres del Quizz
-  nombreQuizz=[];
-  quizzNombreBD=await Quizz.find({_id:registros[0].quizz}).exec();
-  
-
-  var materiasBD=await Materia.find({});
+  nombreQuizz = [];
+  quizzNombreBD = await Quizz.find({ _id: registros[0].quizz }).exec();
 
 
-  for(var i=0;i<registros.length;i++){
-    quizzNombreBD=await Quizz.find({_id:registros[i].quizz},{"nombreQuizz":1,"_id":0}).exec();
+  var materiasBD = await Materia.find({});
+
+
+  for (var i = 0; i < registros.length; i++) {
+    quizzNombreBD = await Quizz.find({ _id: registros[i].quizz }, { "nombreQuizz": 1, "_id": 0 }).exec();
 
     nombreQuizz.push(quizzNombreBD[0].nombreQuizz);
   }
-  
-  
-res.render('alumnos/registro',{registros,nombreQuizz,materiasBD});
-  
- 
+
+
+  res.render('alumnos/registro', { registros, nombreQuizz, materiasBD });
+
+
 });
 
-router.get('/alumnos/revision/:id',async(req,res)=>{
+router.get('/alumnos/revision/:id', async (req, res) => {
 
   //Recuperamos el registro del alumno que vamos a revisar
-  var respuestaAlumnoElegida=await Registros.find({_id: req.params.id}).exec();
+  var respuestaAlumnoElegida = await Registros.find({ _id: req.params.id }).exec();
 
   //Recuperamos el quizz que contestó
-  var quizz=await Quizz.findById(respuestaAlumnoElegida[0].quizz);
+  var quizz = await Quizz.findById(respuestaAlumnoElegida[0].quizz);
 
-  console.log(respuestaAlumnoElegida [0].respuestas[0].respuestaA);
-  console.log(respuestaAlumnoElegida [0].respuestas[0].revision);
-  
-   res.render('alumnos/revisionRespuestas',{quizz, respuestaAlumnoElegida });
- 
-});
+  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
-router.get('/alumnos/examen/:id',async(req,res)=>{
-
-   
-   const quizz=await Quizz.findById(req.params.id);
-   
-   var materia=quizz.claveMateria;
-   var color=await Materia.findById(materia)
-   color=color.color;
-
-   res.render('alumnos/examen2',{ quizz,color });
-
-   
+  res.render('alumnos/revisionRespuestas', { quizz, respuestaAlumnoElegida });
 
 });
 
+router.get('/alumnos/examen/:id', async (req, res) => {
 
 
-router.get('/alumnos/respuestas',(req,res)=>{
-   res.render('alumnos/respuestas');
+  const quizz = await Quizz.findById(req.params.id);
+  res.render('alumnos/Quizz', { quizz });
 
-});
-
-router.post('/alumnos/correccion',async (req,res)=>{
-//Boomer 5fce761f2e2106439e852306
-
-/* console.log(req.body);
-Revisor.revisar("5fce761f2e2106439e852306",req);
-
-
-*/
-
-console.log(req.body);
-var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-
-//Para Guardar en la BD
-
-
-//var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-//var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
- 
-//console.log(examencalificado);
-
- /*  //Para Guardar en la BD
-  var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
- 
- console.log(examencalificado);
- */ 
-
-
- //Registros.create(examencalificado);
-   res.render('alumnos/correccion');
-
-});
-
-
- //----------Cuarto de pruebas------------///
-
- //Boomer "5fce761f2e2106439e852306"
-
-
-
- router.get('/cuarto', (req, res) => {
-
-   gfs.files.find().toArray((err, files) => {
-     // Check if files
-     if (!files || files.length === 0) {
-       res.render('index', { files: false });
-     } else {
-       files.map(file => {
-         if (
-           file.contentType === 'image/jpeg' ||
-           file.contentType === 'image/png'
-         ) {
-           file.isImage = true;
-         } else {
-           file.isImage = false;
-         }
-       });
-       //console.log(files)
-       res.render('cuartoPruebas',{ files: files });
-     }
-   });
   
 
- });
+  
+  console.log(quizz);
 
- router.get('/cuarto2',(req, res)=>{
-  res.render('laboratorioDrag',{color:"#ffff99"});
+
+
+  res.render('alumnos/examen2', { quizz });
+
+
+
+});
+
+
+
+router.get('/alumnos/respuestas', (req, res) => {
+  res.render('alumnos/respuestas');
+
+});
+
+router.post('/alumnos/correccion', async (req, res) => {
+  //Boomer 5fce761f2e2106439e852306
+
+  /* console.log(req.body);
+  Revisor.revisar("5fce761f2e2106439e852306",req);
+  
+  
+  */
+
+  console.log(req.body);
+  var examencalificado = await Revisor.revisar("5fce761f2e2106439e852306", req);
+
+  //Para Guardar en la BD
+
+
+  //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
+  //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
+
+  //console.log(examencalificado);
+
+  /*  //Para Guardar en la BD
+   var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
+  
+  console.log(examencalificado);
+  */
+
+
+ // Registros.create(examencalificado);
+  res.render('alumnos/correccion');
+
+});
+
+
+//----------Cuarto de pruebas------------///
+
+//Boomer "5fce761f2e2106439e852306"
+
+router.get('/pruebaAJAX', (req, res) => {
+  res.json({ "estatus": "funciona" })
 })
 
-router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaRevision',{color:"#ffff99"});
+
+router.get('/cuarto', (req, res) => {
+
+  gfs.files.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      res.render('index', { files: false });
+    } else {
+      files.map(file => {
+        if (
+          file.contentType === 'image/jpeg' ||
+          file.contentType === 'image/png'
+        ) {
+          file.isImage = true;
+        } else {
+          file.isImage = false;
+        }
+      });
+      //console.log(files)
+      res.render('cuartoPruebas', { files: files });
+    }
+  });
+
+
+});
+
+router.get('/cuarto2', (req, res) => {
+  res.render('cuartoPruebas2', { color: "#ffff99" });
 })
 
-router.get('/plantillaQuizz',(req, res)=>{
-  res.render('plantillaQuizz',{color:"#ffff99"});
+router.get('/plantillaRevision', (req, res) => {
+  res.render('plantillaRevision', { color: "#ffff99" });
+})
+
+router.get('/plantillaQuizz', (req, res) => {
+  res.render('plantillaQuizzFinal', { color: "#ffff99" });
 })
 
 // @route POST /upload
 // @desc  Uploads file to DB
 router.post('/upload', upload.single('file'), (req, res) => {
-    res.json({ file: req.file.id });
+  res.json({ file: req.file.id });
 
-   //res.redirect('/cuarto');
- });
- 
- // @route GET /files
- // @desc  Display all files in JSON
- router.get('/files', (req, res) => {
-   gfs.files.find().toArray((err, files) => {
-     // Check if files
-     if (!files || files.length === 0) {
-       return res.status(404).json({
-         err: 'No files exist'
-       });
-     }
- 
-     // Files exist
-     return res.json(files);
-   });
- });
- 
- // @route GET /files/:filename
- // @desc  Display single file object
- router.get('/files/:filename', (req, res) => {
-   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-     // Check if file
-     if (!file || file.length === 0) {
-       return res.status(404).json({
-         err: 'No file exists'
-       });
-     }
-     // File exists
-     return res.json(file);
-   });
- });
+  //res.redirect('/cuarto');
+});
 
- 
- 
- // @route GET /image/:filename
- // @desc Display Image
- router.get('/image/:filename', (req, res) => {
-   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-     // Check if file
-     if (!file || file.length === 0) {
-       return res.status(404).json({
-         err: 'No file exists'
-       });
-     }
- 
-     // Check if image
-     if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
-       // Read output to browser
-       const readstream = gfs.createReadStream(file.filename);
-       readstream.pipe(res);
-     } else {
-       res.status(404).json({
-         err: 'Not an image'
-       });
-     }
-   });
- });
- 
- // @route DELETE /files/:id
- // @desc  Delete file
- router.post('/files/:id', (req, res) => {
-   gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
-     if (err) {
-       return res.status(404).json({ err: err });
-     }
- 
-     res.redirect('/');
-   });
- });
+// @route GET /files
+// @desc  Display all files in JSON
+router.get('/files', (req, res) => {
+  gfs.files.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      return res.status(404).json({
+        err: 'No files exist'
+      });
+    }
+
+    // Files exist
+    return res.json(files);
+  });
+});
+
+// @route GET /files/:filename
+// @desc  Display single file object
+router.get('/files/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+    // File exists
+    return res.json(file);
+  });
+});
 
 
+
+// @route GET /image/:filename
+// @desc Display Image
+router.get('/image/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+
+    // Check if image
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an image'
+      });
+    }
+  });
+});
+
+// @route DELETE /files/:id
+// @desc  Delete file
+router.post('/files/:id', (req, res) => {
+  gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+    if (err) {
+      return res.status(404).json({ err: err });
+    }
+
+    res.redirect('/');
+  });
+});
 
 
 
 
- module.exports=router;
+
+
+module.exports = router;
