@@ -70,6 +70,11 @@ const materia = require('../modelos/materia.js');
 const { resolve } = require('path');
 const { json } = require('body-parser');
 
+//----Variables globales---//
+//Creación de una variable global para tener información disponible para las vistas de docentes
+global.datosDocenteSesion={};
+//Creación de una variable global para tener la información del alumno
+global.datosAlumnoSesion={};
 // ------------||  R U T A S  ||----------------//
 
 router.get('/', (req, res) => {
@@ -287,8 +292,7 @@ router.get('/docentes/editar',(req,res)=>{
 
 });
 
-//Creación de una variable global para tener información disponible para las vistas de docentes
-global.datosDocenteSesion={};
+
 
 router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token',async (req,res)=>{
   
@@ -523,6 +527,7 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
 
   }
   console.log(data);
+  datosAlumnoSesion=idAlumno;
   //asdas
 
   for (y in cuestionarios) {
@@ -640,7 +645,7 @@ var examencalificado= await Revisor.revisar("BP32G1BF",req);
   
   console.log(examencalificado);
   */
- var examencalificado= await Revisor.revisar("BP32G1BF",req);
+ var examencalificado= await Revisor.revisar(datosAlumnoSesion,req);
 
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
