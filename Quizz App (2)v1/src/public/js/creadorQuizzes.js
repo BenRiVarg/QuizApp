@@ -260,6 +260,13 @@ function reactivoRelacional(obj){
    
 }
 
+function quitarReactivoRelacional(obj){
+  //Elemento que se destruirá
+  obj.parentElement.parentElement.parentElement.remove();
+}
+
+
+//---------Comienzan Funciones Drag--------//
 function palabras() {
   var strVar = "";
   var palabra = document.querySelector("#palabra").value;
@@ -369,19 +376,7 @@ function arrastrable() {
     scroll: false,
     containment: "#bg-container",
 
-    /* start: function (event, ui) {
-      console.log("start top is :" + ui.position.top);
-      console.log("start left is :" + ui.position.left);
-    },
-    drag: function (event, ui) {
-      console.log("draging.....");
-    },
-    stop: function (event, ui) {
-      console.log("stop top is :" + ui.position.top);
-      console.log("stop left is :" + ui.position.left);
-
-      alert("left:" + ui.position.left + " top:" + ui.position.top);
-    }, */
+   
   });
 }
 
@@ -466,11 +461,8 @@ function flechaDiaIzquierdaInv() {
   document.getElementById("flechasDiaIzInv").innerHTML = strVar;
   arrastrable();
 }
+/*-----------Termina Funciones de la Pregunta Drag----------*/
 
-function quitarReactivoRelacional(obj){
-  //Elemento que se destruirá
-  obj.parentElement.parentElement.parentElement.remove();
-}
 
 function preguntaOM(){
 
