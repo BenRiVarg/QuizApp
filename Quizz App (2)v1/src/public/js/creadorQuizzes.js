@@ -13,6 +13,7 @@ function contadorTipo(){
 
      //Creación de un elemento hidden para registrar el tipo de pregunta
      var tipoHTML=document.createElement("INPUT");
+     tipoHTML.id = contador;
      tipoHTML.type="hidden";
      tipoHTML.name=tipo;
     return tipoHTML;
