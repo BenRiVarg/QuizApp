@@ -11,7 +11,7 @@
 -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="cache-control" content="no-cache" />
-  <link rel="stylesheet" href="/css/bootstrap.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"> -->
   <link rel="stylesheet" type="text/css" href="/css/style.css">
   <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
   <!-- Font Awesome -->
@@ -83,6 +83,34 @@
         bottom: 20px;
         right: 20px;
       }
+    }
+
+    .row {
+      margin-right: 0px;
+      --bs-gutter-x: 0;
+      --bs-gutter-y: 0;
+    }
+    :root {
+  --altolienzo: 550px;
+  --ancholienzo: 700px;
+    }
+
+    .lienzo {
+      position: relative;
+      display: inline-block;
+      width: var(--ancholienzo);
+      height: var(--altolienzo);
+      background-color: #ccffff;
+      margin: 0 auto;
+      border: 1px solid black;
+    }
+
+    .replica {
+      position: relative;
+      display: inline-block;
+      width: var(--ancholienzo);
+      height: var(--altolienzo);
+      background-color: #99ffcc;
     }
   </style>
   <script>
@@ -198,82 +226,86 @@
 
     </div>
     <!-- insertar aqui  -->
-    <div class="row mt-3">
+    <div class="row mt-3 shadow m-3">
       <h1 class="text-center mt-5">Crear exámen Drag</h1>
       <div class="col-lg-12 sm-12 text-center">
-        <div class="col-lg-12 ">
-          <div class="mt-5">
-            <h4 class="text-center mb-4">Busca la imagen que quieras agregar:</h4>
-            <form action="" id="form1" method="get" class="mt-3">
-              <input id="file" type="file" id="file-upload" class="form-control" style="width : 700px; margin: 0 auto;"
-                accept="image/*">
-            </form>
-            <div class="mt-3">
-              <h4 class="text-dark mb-3">Coloca la cantidad de recuadros:</h4>
-              <div class="mb-3">
-                <input id="caRe" type="number" placeholder="Cantidad:" class="form-control" style="width : 700px; margin: 0 auto;">
+        <div class="row">
+          <div class="col-lg-6 centrado">
+            <div class="mt-5">
+              <h4 class="text-center mb-4">Busca la imagen que quieras agregar:</h4>
+              <input id="file" type="file" id="file-upload" class="form-control" accept="image/*">
+              <div class="mt-3">
+                <h4 class="text-dark mb-3">Coloca la cantidad de recuadros:</h4>
+                <div class="mb-3">
+                  <input id="caRe" type="number" name="cuadro" placeholder="Cantidad:" class="form-control">
+                </div>
+                <button type="button" class="btn btn-primary fw-bold" onclick="cuadros()">Crear</button>
               </div>
-              <button type="button" class="btn btn-primary fw-bold" onclick="cuadros()">Crear</button>
-            </div>
-            <h4 class="text-dark mb-3 mt-3">Escribe las palabras que quieras agregar:</h4>
-            <div class="mb-3">
-              <input id="palabra" type="text" placeholder="Coloca las palabras:" class="form-control"
-                style="width : 700px; margin: 0 auto;">
-            </div>
-            <button type="button" class="btn btn-primary fw-bold" onclick="palabras()">Crear</button>
-            <div class="mt-2">
-              <h4 class="text-dark mb-3">Coloca la cantidad de flechas:</h4>
+              <h4 class="text-dark mb-3 mt-3">Escribe las palabras que quieras agregar:</h4>
               <div class="mb-3">
-                <input id="caFle" type="number" placeholder="Cantidad:" class="form-control"
-                  style="width : 700px; margin: 0 auto;">
+                <input id="palabra" type="text" name="palabra" placeholder="Coloca las palabras:" class="form-control">
               </div>
-              <h4 class="text-dark mb-3">Tipos de flecha:</h4>
-              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaHoDerecha()"><i class="fas fa-arrow-right fa-lg"></i></button>
-              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaHoIzquierda()"><i class="fas fa-arrow-left fa-lg"></i></button>
-              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaDerecha()"><i class="fas fa-location-arrow fa-lg"></i></button>
+              <button type="button" class="btn btn-primary fw-bold" onclick="palabras()">Crear</button>
+              <div class="mt-2">
+                <h4 class="text-dark mb-3">Coloca la cantidad de flechas:</h4>
+                <div class="mb-3">
+                  <input id="caFle" type="number" name="flechas" placeholder="Cantidad:" class="form-control">
+                </div>
+                <h4 class="text-dark mb-3">Tipos de flecha:</h4>
+                <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaHoDerecha()"><i
+                    class="fas fa-arrow-right fa-lg"></i></button>
+                <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaHoIzquierda()"><i
+                    class="fas fa-arrow-left fa-lg"></i></button>
+                <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaDerecha()"><i
+                    class="fas fa-location-arrow fa-lg"></i></button>
+              </div>
+              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaIzquierda()"><i
+                  class="fas fa-location-arrow fa-rotate-270 fa-lg"></i></button>
+              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaDerechaInv()"><i
+                  class="fas fa-location-arrow fa-rotate-90 fa-lg"></i></button>
+              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaIzquierdaInv()"><i
+                  class="fas fa-location-arrow fa-rotate-180 fa-lg"></i></button>
             </div>
-            <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaIzquierda()"><i class="fas fa-location-arrow fa-rotate-270 fa-lg"></i></button>
-            <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaDerechaInv()"><i class="fas fa-location-arrow fa-rotate-90 fa-lg"></i></button>
-            <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaIzquierdaInv()"><i class="fas fa-location-arrow fa-rotate-180 fa-lg"></i></button>
-          </div>
-          <!-- imagen -->
-          <div class="visualizacion container">
-            <hr>
-            <div id="titulop"></div>
-            <div id="preview"></div>
-            <!-- palabras -->
-            <div id="palabras" class="contenedor mt-5"></div>
-            <div id="cuadros" class="row text-center"></div>
+            <!-- imagen -->
+            <div class="visualizacion container">
+              <hr>
+              <div id="titulop"></div>
+              <div id="preview"></div>
+              <!-- palabras -->
+              <div id="palabras" class="contenedor mt-5"></div>
+              <div id="cuadros" class="row text-center"></div>
 
-            <div id="flechasHoDer" class="text-center">
-            </div>
-            <div id="flechasHoIz" class="text-center">
-            </div>
-            <div id="flechasDiaDer" class="text-center">
-            </div>
-            <div id="flechasDiaIz" class="text-center">
-            </div>
-            <div id="flechasDiaDerInv" class="text-center">
-            </div>
-            <div id="flechasDiaIzInv" class="text-center">
-            </div>
-            <div id="displayNone" class="mt-2 ">
-              <h4 id="tituloR" class="text-dark"></h4>
-              <div id="demo" type="hidden" class="respuestaDrag text-dark">
+              <div id="flechasHoDer" class="text-center">
               </div>
-              <div id="demo2" type="hidden" class="respuestaDrag text-dark">
+              <div id="flechasHoIz" class="text-center">
               </div>
-              <div id="demo3" type="hidden" class="respuestaDrag text-dark">
+              <div id="flechasDiaDer" class="text-center">
               </div>
-              <div id="demo4" type="hidden" class="respuestaDrag text-dark">
+              <div id="flechasDiaIz" class="text-center">
               </div>
-              <div id="demo5" type="hidden" class="respuestaDrag text-dark">
+              <div id="flechasDiaDerInv" class="text-center">
+              </div>
+              <div id="flechasDiaIzInv" class="text-center">
+              </div>
+              <div id="displayNone" class="mt-2 mb-3">
+                <h4 id="tituloR" class="text-dark"></h4>
+                <div id="demo" type="hidden" class="respuestaDrag text-dark">
+                </div>
+                <div id="demo2" type="hidden" class="respuestaDrag text-dark">
+                </div>
+                <div id="demo3" type="hidden" class="respuestaDrag text-dark">
+                </div>
+                <div id="demo4" type="hidden" class="respuestaDrag text-dark">
+                </div>
+                <div id="demo5" type="hidden" class="respuestaDrag text-dark">
+                </div>
               </div>
             </div>
           </div>
-          </br>
+          <div class="col-lg-6 lienzo shadow mt-5 mb-5">
+
+          </div>
         </div>
-
       </div>
     </div>
     </div>

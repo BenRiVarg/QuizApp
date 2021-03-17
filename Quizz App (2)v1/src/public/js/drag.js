@@ -72,7 +72,7 @@ $(".widget").draggable({
   scroll: false,
   containment: "#bg-container",
 
-  start: function (event, ui) {
+ /*  start: function (event, ui) {
     console.log("start top is :" + ui.position.top);
     console.log("start left is :" + ui.position.left);
   },
@@ -84,7 +84,7 @@ $(".widget").draggable({
     console.log("stop left is :" + ui.position.left);
 
     alert("left:" + ui.position.left + " top:" + ui.position.top);
-  },
+  }, */
 });
 
 
