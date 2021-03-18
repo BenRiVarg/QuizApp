@@ -661,34 +661,34 @@ var examencalificado= await Revisor.revisar("BP32G1BF",req);
 //Boomer "5fce761f2e2106439e852306"
 
 
-router.get("/pruebaAJAX", async (req, res) => {
-  var grados = await API.Find("grados");
-  grados = grados.grades;
-  res.json(grados);
+router.get("/pruebaAJAXgrados", async (req, res) => {
+  /* var grados = await API.Find("grados"); 
+  grados = grados.grades;  */
+  res.end(); /* json(grados); */
 });
 
-router.get("/pruebaAJAX", async (req, res) => {
+router.get("/pruebaAJAXmaterias", async (req, res) => {
   var materias = await API.Find("materias");
-  materias = materias.subjects;
-  res.json(materias);
+  /* materias = materias.subjects; */
+  res.end(); /* json(materias); */
 });
 
-router.get("/pruebaAJAX", async (req, res) => {
+router.get("/pruebaAJAXniveles", async (req, res) => {
   var niveles = await API.Find("niveles");
   niveles = niveles.levels;
   res.json(niveles);
 });
 
-router.get("/pruebaAJAX", async (req, res) => {
+router.get("/pruebaAJAXbloques", async (req, res) => {
   var bloques = await API.Find("bloques");
-  bloques = bloques.blocks;
-  res.json(bloques);
+  /* bloques = bloques.blocks; */
+  res.end(); /* json(bloques); */
 });
 
-router.get("/pruebaAJAX", async (req, res) => {
-  var secuencias = await API.Find("bloques");
-  secuencias = secuencias.sequences;
-  res.json(secuencias);
+router.get("/pruebaAJAXsecuencias", async (req, res) => {
+  var secuencias = await API.Find("secuencias");
+  /* secuencias = secuencias.sequences; */
+  res.end(); /* json(secuencias); */
 });
 
 
