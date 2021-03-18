@@ -69,6 +69,7 @@ const { resolve } = require('path');
 // ------------||  R U T A S  ||----------------//
 
 router.get('/',(req,res)=>{
+    var registros=API.Find("materias");
     res.render('index');
 
  });
@@ -459,8 +460,10 @@ var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
 
  //Boomer "5fce761f2e2106439e852306"
 
- router.get('/pruebaAJAX',(req, res)=>{
-  res.json({"estatus":"funciona"})
+ router.get('/pruebaAJAX',async (req, res)=>{
+  var niveles=await API.Find("niveles");
+  niveles=niveles.levels
+  res.json(niveles)
 })
 
 

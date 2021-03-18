@@ -202,6 +202,7 @@ function moverDiv(){
 
 }
 
+/*
 function activarDragQuizz(){
     var i=0;
     var arrastrables=document.querySelectorAll(".arrastrable");
@@ -408,14 +409,14 @@ function activarItemsDrop(){
       
     });
 
-    */
+    
     }
 
     
 
 
 }
-
+*/
 function contadorItemsMultiples(){
         
     //Buscamos todos aquellos elementos que tengan más de una respuesta

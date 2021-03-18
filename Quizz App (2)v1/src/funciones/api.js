@@ -12,50 +12,51 @@ const { stringify } = require('querystring');
   var URLbase="https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox";
   
 
-  exports.Find=function(recurso){
+  exports.Find = async function (recurso) {
     var urlRecurso
-    switch(recurso){
-        case "grados":
-         urlRecurso=URLbase+"/grades";
+    switch (recurso) {
+      case "grados":
+        urlRecurso = URLbase + "/grades";
         break;
-        case "materias":
-        urlRecurso=URLbase+"/subjects";
+      case "materias":
+        urlRecurso = URLbase + "/subjects";
         break;
-        case "niveles":
-        urlRecurso=URLbase+"/levels";
+      case "niveles":
+        urlRecurso = URLbase + "/levels";
         break;
-        case "bloques":
-        urlRecurso=URLbase+"/blocks";
+      case "bloques":
+        urlRecurso = URLbase + "/blocks";
         break;
-        case "secuencias":
-        urlRecurso=URLbase+"/sequences";
+      case "secuencias":
+        urlRecurso = URLbase + "/sequences";
         break;
     }
-
-    https.get(urlRecurso,options,(res)=>{
-      let data = '';
-      
-      // Un fragmento de datos ha sido recibido.
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
     
-      // Toda la respuesta ha sido recibida. Imprimir el resultado.
-      res.on('end', () => {
-       // console.log(data);
-       console.log(JSON.parse(data));
-       var registros=JSON.parse(data)
-     //  console.log(secuenciasAPI[0]);
-       return registros;
-      });
-    
-      
-    
-  }).on("error", (err) => {
-      console.log("Error: " + err.message);
+    var resultado = await new Promise((resolve, reject) => {
+        https.get(urlRecurso, options, (res) => {
+          let data = '';
+  
+          // Un fragmento de datos ha sido recibido.
+          res.on('data', (chunk) => {
+            data += chunk;
+          });
+  
+          // Toda la respuesta ha sido recibida. Imprimir el resultado.
+          res.on('end', () => {
+            // console.log(data);
+            var registros = JSON.parse(data)
+            //  console.log(secuenciasAPI[0]);
+            resolve(registros);
+          });
+  
+  
+  
+        }).on("error", (err) => {
+          console.log("Error: " + err.message);
+        });
+  
     });
-
-   
+    return resultado
   }
 
   exports.findByID= async function(recurso,recursoID){
