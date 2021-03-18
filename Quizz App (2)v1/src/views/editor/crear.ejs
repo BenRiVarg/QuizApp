@@ -243,7 +243,7 @@ box-shadow: (0,0,0, transparent);
         <button onclick="preguntaAbierta()" class="w3-bar-item w3-button">Insertar Pregunta Abierta</button>
         </sapn>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para agregar pregunta relacional" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaRelacional()" class="w3-bar-item w3-button" >Insertar Pregunta Relacional</button>
+        <button id="btn1"  onclick="preguntaRelacional(), desabilitado()" class="w3-bar-item w3-button" >Insertar Pregunta Relacional</button>
         </span>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear una pregunta de opcion multiple" delay="0" tabindex="0" class="d-inline-block" >
         <button onclick="preguntaOM()" class="w3-bar-item w3-button" >Insertar Pregunta Opción Múltiple</button>
@@ -259,6 +259,13 @@ box-shadow: (0,0,0, transparent);
       </span>
     </nav>
   </div>
+
+  <script>
+    function desabilitado(){
+      document.getElementById("btn1").disabled = true;
+      console.log('desabilitado');
+    }
+  </script>
  
   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
