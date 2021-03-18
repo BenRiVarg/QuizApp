@@ -10,8 +10,7 @@ const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const passport = require('passport');
 
-//const touchMovil=require('mobile-drag-drop');
-const { isAuthenticated } = require('../auth/auth.js');
+
 
 //Configuración del Body Parser
 router.use(bodyParser.urlencoded({ extendend: true }));
@@ -59,13 +58,23 @@ const Quizz = require('../modelos/quizz.js');
 const Materia = require('../modelos/materia.js');
 const Registros = require('../modelos/registros.js');
 
+//---------MIDDLEWARES---------//
+
+const {isAuthenticated}=require('../auth/auth.js');
+
 //--JS Back--//
 
 const Revisor = require("../funciones/revisor.js")
 const API = require("../funciones/api.js");
 const materia = require('../modelos/materia.js');
 const { resolve } = require('path');
+const { json } = require('body-parser');
 
+//----Variables globales---//
+//Creación de una variable global para tener información disponible para las vistas de docentes
+global.datosDocenteSesion={};
+//Creación de una variable global para tener la información del alumno
+global.datosAlumnoSesion={};
 // ------------||  R U T A S  ||----------------//
 
 router.get('/', (req, res) => {
@@ -244,26 +253,22 @@ router.post('/editores/crear', upload.array('imagenes'), (req, res) => {
     }
 
 
-
-
-
-
-    cuestionario.push(contenidoCuestionario);
-  }
-
-  //guardado en la BD
-  Quizz.create(
-    {
-      nivel: req.body.nivel,
-      grado: req.body.grado,
-      claveMateria: req.body.claveMateria,
-      nombreQuizz: req.body.nombreQuizz,
-      cuestionario: cuestionario
-
-    }
-
-  );
-
+     cuestionario.push(contenidoCuestionario);
+  } 
+  
+   Quizz.create( 
+   //guardado en la BD
+      {
+        nivel:req.body.nivel,
+       grado:req.body.grado,
+       materia: req.body.claveMateria,
+       bloque:req.body.bloque,
+       secuencia:req.body.secuencia,
+       nombreQuizz: req.body.nombreQuizz,
+       creador: req.body.creador,
+       cuestionario:cuestionario
+       }
+    );
   res.redirect("/editores/crear");
 });
 
@@ -282,34 +287,166 @@ router.get('/docentes', (req, res) => {
 });
 
 
+router.get('/docentes/editar',(req,res)=>{
+   res.render('docente/editar');
 
-router.get('/docentes/crear', (req, res) => {
+});
+
+
+
+router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token',async (req,res)=>{
+  
+
+  var grupo=req.params.idgrupo;
+  var materia=await API.findByID("materias",req.params.idmateria);
+  
+  var secuencia=await API.findByID("secuencias",req.params.idsecuencia);
+  var bloque=await API.findByID("bloques",secuencia.bloque);
+  var grado=await API.findByID("grados",materia.grado);
+  var nivel=await API.findByID("niveles",grado.nivel);
+  //Variable para conocer los ids de los quizzes  de una secuencia
+  var quizzesSecuencia;
+  //Variable para guardar los alumnos que tienen un progreso dentro de la secuencia
+  var alumnos
+
+  var datosSesion={
+    nivel:nivel,
+    grado:grado,
+    grupo:grupo,
+    materia: materia,
+    bloque: bloque,
+    secuencia: secuencia,
+    usuario: req.params.idmaestro,
+    quizzesSecuencia: quizzesSecuencia,
+    alumnos: alumnos
+  }
+
+  datosDocenteSesion=datosSesion;
+  console.log("Datos Docente");
+  console.log(datosDocenteSesion);
+  res.render('docente/index',{"datosVista": datosSesion});
+});
+
+router.get('/docentes/crear',async (req,res)=>{
+
   res.render('docente/crear');
 
 });
 
-router.get('/docentes/editar', (req, res) => {
-  res.render('docente/editar');
+router.get('/docentes/secuencia',async (req,res)=>{
+ 
+  var alumnosGrupo=await API.alumnos(datosDocenteSesion.grupo);
+
+  
+  //console.log(datosDocenteSesion.secuencia.id);
+  var quizzesSecuencia= await Quizz.find({ secuencia: { $eq: datosDocenteSesion.secuencia.id } },{nombreQuizz:1}).exec();
+  var totalQuizzes=quizzesSecuencia.length;
+
+  var idQuizzSecuencia=[];
+  //for para obtener todos los id de los quizzes de la secuencia
+  for(q in quizzesSecuencia){
+   
+    idQuizzSecuencia.push(quizzesSecuencia[q]);
+  }
+
+  //Captura de los ids quizz secuencia
+  datosDocenteSesion.quizzesSecuencia=idQuizzSecuencia;
+
+  var alumnosProgreso=[];
+  //alumno sin progreso alguno en la secuencia
+  var alumnos=[];
+
+  var x
+  for(var i=0;i<alumnosGrupo.length;i++){
+ 
+    var progreso=0;
+
+  //Por cada Quizz en la secuencia
+  
+      for(x in quizzesSecuencia){
+        
+
+        var quizzI=quizzesSecuencia[x];
+
+        //Buscamos si ha contestado el alumno por lo menos una vez el quizz x
+        var quizzContestado=await Registros.find({$and: [{ alumno: alumnosGrupo[i].id }, { quizz: quizzI.id }] });
+         if(quizzContestado.length>=1){
+          progreso=progreso+1;
+         }
+        
+      }
+      //Si hay algún progreso
+      if(progreso>=1){
+        var resultadoAlumno={
+          alumno: alumnosGrupo[i],
+          progreso: (progreso+"/"+totalQuizzes)
+        }
+
+        alumnosProgreso.push(resultadoAlumno);
+      }
+      else{ 
+        var resultadoAlumno={
+          alumno: alumnosGrupo[i],
+        }
+        alumnos.push(resultadoAlumno);
+      }
+     
+   }
+   datosDocenteSesion.alumnos=alumnosProgreso;
+  res.render('docente/secuencias',{ datosDocenteSesion,alumnosProgreso,alumnos});
 
 });
 
-router.get('/docentes/resultados', (req, res) => {
-  res.render('docente/estadisticas');
+router.get('/docentes/estadisticas/:idalumno',async (req,res)=>{
+
+  var alumnoAnalizado;
+
+  //Extracción del alumno
+  for(var i=0;i<datosDocenteSesion.alumnos.length;i++){
+    if((req.params.idalumno)==(datosDocenteSesion.alumnos[i].alumno.id)){
+      alumnoAnalizado=datosDocenteSesion.alumnos[i];
+      break;
+    }
+  }
+
+ 
+  var datosIntentos=[];
+
+
+  for(var i=0;i<datosDocenteSesion.quizzesSecuencia.length;i++){
+      var quizzI=datosDocenteSesion.quizzesSecuencia[i];
+      var Intentos=await Registros.find({$and: [{ alumno: req.params.idalumno }, { quizz: quizzI.id }] });
+
+      //Variable para juntar todos los intentos por Quizz
+      var apartado=[];
+
+      for(x in Intentos){
+        var intentoPorQuizz=Intentos[x];
+        apartado.push(intentoPorQuizz);
+      }
+
+      /*
+      var claveQuizz="quizz"+i;
+      datosIntentos[claveQuizz]={
+        nombre: quizzI.nombreQuizz,
+        intentos:apartado
+      }
+      */
+
+      var  datosIntento={
+        nombre: quizzI.nombreQuizz,
+        intentos:apartado
+      }
+
+      datosIntentos.push(datosIntento);
+  }
+  //console.log(datosIntentos);
+  //datosIntentos2=JSON.parse(datosIntentos);
+  console.log(datosIntentos);
+  res.render('docente/estadisticas',{datosDocenteSesion,alumnoAnalizado,datosIntentos});
 
 });
 
-router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
-  res.send(req.params.idgrupo + " " + req.params.idmaestro + req.params.idsecuencia + req.params.idmateria + req.params.token);
-
-  var materia = req.params.idmateria;
-  //console.log(materia);
-
-  var subject = await API.findByID("materias", materia);
-  console.log(subject);
-  //var autentication= await API.autenticacion("ABCDEFGH");
-
-  res.end();
-});
 
 //----Alumnos------------------
 //MiddleWare aplicado
@@ -390,6 +527,7 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
 
   }
   console.log(data);
+  datosAlumnoSesion=idAlumno;
   //asdas
 
   for (y in cuestionarios) {
@@ -472,13 +610,6 @@ router.get('/alumnos/examen/:id', async (req, res) => {
 
   
 
-  
-  console.log(quizz);
-
-
-
-  res.render('alumnos/examen2', { quizz });
-
 
 
 });
@@ -490,20 +621,19 @@ router.get('/alumnos/respuestas', (req, res) => {
 
 });
 
-router.post('/alumnos/correccion', async (req, res) => {
-  //Boomer 5fce761f2e2106439e852306
-
-  /* console.log(req.body);
-  Revisor.revisar("5fce761f2e2106439e852306",req);
-  
-  
-  */
+router.post('/alumnos/correccion',async (req,res)=>{
+//Boomer 5fce761f2e2106439e852306
+// alumno Ignacio BP32G1BF  grupo RX87YY9E
+/* console.log(req.body);
+Revisor.revisar("5fce761f2e2106439e852306",req);
 
   console.log(req.body);
   var examencalificado = await Revisor.revisar("5fce761f2e2106439e852306", req);
 
   //Para Guardar en la BD
 
+console.log(req.body);
+var examencalificado= await Revisor.revisar("BP32G1BF",req);
 
   //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
   //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
@@ -515,10 +645,13 @@ router.post('/alumnos/correccion', async (req, res) => {
   
   console.log(examencalificado);
   */
+ var examencalificado= await Revisor.revisar(datosAlumnoSesion,req);
 
+  //Registros.create(examencalificado);
+  //res.render('alumnos/correccion');
 
- // Registros.create(examencalificado);
-  res.render('alumnos/correccion');
+ Registros.create(examencalificado);
+   res.render('alumnos/correccion');
 
 });
 
