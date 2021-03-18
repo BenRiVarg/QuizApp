@@ -607,8 +607,9 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
 
+  const idAlumno = req.params.idAlumno;
   const quizz = await Quizz.findById(req.params.id);
-  res.render('alumnos/Quizz', { quizz });
+  res.render('alumnos/Quizz', { quizz, idAlumno });
 
 
 
@@ -623,7 +624,8 @@ router.get('/alumnos/respuestas', (req, res) => {
 
 });
 
-router.post('/alumnos/correccion', async (req, res) => {
+router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
+  var idAlumno = req.params.idAlumno;
   //Boomer 5fce761f2e2106439e852306
   // alumno Ignacio BP32G1BF  grupo RX87YY9E
   /* console.log(req.body);
@@ -647,7 +649,7 @@ router.post('/alumnos/correccion', async (req, res) => {
     
     console.log(examencalificado);
     */
-  var examencalificado = await Revisor.revisar(datosAlumnoSesion, req);
+  var examencalificado = await Revisor.revisar(idAlumno, req);
 
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
