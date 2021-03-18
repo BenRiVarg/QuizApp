@@ -283,23 +283,26 @@ function palabras() {
   var strVar = "";
   var palabra = document.querySelector("#palabra").value;
   var palabraPartida = palabra.split(" ");
+  var list = document.getElementsByClassName("palabraid");
   /* var x = $("#palabra").val(); */
-  
+
   /* palab.push(palabra); */
 
   /* el ciclo for lo utilizo para saber cuantas son las veces que va a inyectar la etiqueta con la palabra */
- for (var i = 0; i < palabraPartida.length; i++) {   
+  for (var i = 0; i < palabraPartida.length; i++) {
     strVar += '<div id=" " class="palabraid text-dark fw-bold text-center">';
     strVar += "              " + palabraPartida[i] + " </div>";
-   } 
-      
-  document.getElementById("palabras").innerHTML = strVar;
+  }
 
-    var list = document.getElementsByClassName("palabraid");
-    for (var j = 0; j < palabraPartida.length; j++) {
-      list[j].id = "drag" + (j+1);
-    }  
-  
+  document.getElementById("palabras").innerHTML = strVar;
+  var palabras = document.getElementById("palabras");
+  var align = palabras.getAttribute("id");
+  var list = document.getElementsByClassName("palabraid");
+  for (var j = 0; j < palabraPartida.length; j++) {
+    list[j].id = "drag" + (j + 1);
+    id = list[j].id;
+    console.log(id);
+  }
   comprobarDrag();
 }
 
@@ -393,10 +396,10 @@ function cuadros() {
   var cantidad = document.querySelector("#caRe").value;
   
   for (var i = 0; i < cantidad; i++) {
-    
-    var strVar = '  <div id="cuadro'+(i+1)+'" class="div1 widget"></div>';
+    var strVar = '  <div id="cuadro' + (i + 1) + '" class="div1 widget"></div>';
     var cuadro = document.getElementById("cuadros");
     cuadro.insertAdjacentHTML("beforeend", strVar);
+  console.log(cuadro.id);
   }
   arrastrable();
 }
@@ -1092,9 +1095,9 @@ function envioQuizz(){
      //creación e inserción de un elemento con el número de preguntas del cuestionario
     var numeroPreguntas=document.getElementsByClassName("cuestionario").length;
     var numeroHTML=document.createElement("INPUT");
-     numeroHTML.type="hidden";
+     numeroHTML.type = "hidden";
      numeroHTML.name="numeroPreguntas";
-     numeroHTML.value=numeroPreguntas;
+     numeroHTML.value = numeroPreguntas;
 
      insertor.appendChild(numeroHTML);
 
