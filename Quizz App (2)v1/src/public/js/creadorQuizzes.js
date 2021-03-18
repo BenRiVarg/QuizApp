@@ -5,6 +5,7 @@
 var insertor=document.getElementById("insercion");
 //Variable global para "enumerar" todas las preguntas,respuestas y tipo  de un cuestionario
 var contador=1;
+var contadorid = 1 ;
 
 
 //Función para nombrar los tipos de preguntas, y agregarles un contador para que no se pierdan en la request
@@ -13,28 +14,20 @@ function contadorTipo(){
 
      //Creación de un elemento hidden para registrar el tipo de pregunta
      var tipoHTML=document.createElement("INPUT");
-     tipoHTML.id = contador;
+     
      tipoHTML.type="hidden";
      tipoHTML.name=tipo;
     return tipoHTML;
 }
-function cambioId() {
-  
-  
-  for (var i = 0; i < cantidad; i++) {
-    var strVar = '  <div id="cuadro' + (i + 1) + '" class="div1 widget"></div>';
-    var cuadro = document.getElementById("cuadros");
-    cuadro.insertAdjacentHTML("beforeend", strVar);
-  console.log(cuadro.id);
-  }
-  arrastrable();
-}
+
 
 //Función para crear las preguntas abiertas en el cuerpo del HTML
 function preguntaAbierta(){
-  
+
+  contadorid++;
+  console.log(contadorid)
 var strVar="";
-strVar += '<div id=\"preg\" class=\"tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5\">';
+strVar += '<div id=\"preg'+(contadorid)+'\" class=\"tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5\">';
 strVar += "                    <div class=\"container text-center\">";
 strVar += "                      <h4>Pregunta Abierta<\/h4>";
 strVar += "                    <\/div>";
@@ -139,7 +132,6 @@ function readURL(event){
       strVar += "       <div class=\"correcto\" ><\/div>";
       strVar += "         <hr id=\"hr3\" >";
       strVar += "         <h3 class=\"correcto2\">Texto</h3> ";
-
       strVar += " <\/div>";
       strVar += "   <div class=\"editar\" role=\"group\" aria-label=\"Basic mixed styles example\">";
       strVar += "     <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
