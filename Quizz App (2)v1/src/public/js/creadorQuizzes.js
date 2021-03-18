@@ -18,14 +18,23 @@ function contadorTipo(){
      tipoHTML.name=tipo;
     return tipoHTML;
 }
+function cambioId() {
+  
+  
+  for (var i = 0; i < cantidad; i++) {
+    var strVar = '  <div id="cuadro' + (i + 1) + '" class="div1 widget"></div>';
+    var cuadro = document.getElementById("cuadros");
+    cuadro.insertAdjacentHTML("beforeend", strVar);
+  console.log(cuadro.id);
+  }
+  arrastrable();
+}
 
 //Función para crear las preguntas abiertas en el cuerpo del HTML
 function preguntaAbierta(){
-
-    
   
 var strVar="";
-strVar += "<div class=\"tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5\">";
+strVar += '<div id=\"preg\" class=\"tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5\">';
 strVar += "                    <div class=\"container text-center\">";
 strVar += "                      <h4>Pregunta Abierta<\/h4>";
 strVar += "                    <\/div>";
@@ -45,6 +54,8 @@ strVar += "                              <button type=\"button\" class=\"btn btn
 strVar += "                            <\/div>";
 strVar += "                  <\/div>";
 insertor.insertAdjacentHTML("beforeend",strVar);
+
+  
 
        
 } 
@@ -219,7 +230,7 @@ function preguntaRelacional(){
   strVar += "                                  <br>";
   strVar += "                                  ";
   strVar += "                ";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-danger col-md-2 text-center\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
+  strVar += "                                            <button type=\"button\" class=\"btn btn-danger col-md-2 text-center\" onclick=\"eliminar(this),habilitar()\">Quitar Pregunta<\/button>";
   strVar += "                                  ";
   strVar += "                                          ";
   strVar += "                                    <\/div>         ";
@@ -407,6 +418,8 @@ strVar += "          <\/div>";
 
 insertor.insertAdjacentHTML("beforeend",strVar);
 }
+
+
 
 function envioPreguntaRelacional(){
 

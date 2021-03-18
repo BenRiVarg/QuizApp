@@ -73,6 +73,9 @@ text-align:center;width: 100px; height: 100px; padding: 0.5em; float: left; marg
 position: absolute;
 align-items: baseline;
 }
+body{
+  position: relative;
+}
 
 .container1{
 margin: auto;
@@ -93,7 +96,7 @@ transition: all o.5s ease-in-out;
 box-shadow: (0,0,0,0.3);
 cursor: pointer;
 position: fixed;
-bottom: 360px;
+bottom: 450px;
 right: 40px;
 }
 
@@ -163,7 +166,7 @@ box-shadow: (0,0,0, transparent);
     
 <title>Crear Examen</title>
 </head>
-<body>
+<body data-spy="scroll" data-taregt=".nav1" data-offset="50" >
   <!-- Page Content -->
   
     
@@ -240,22 +243,22 @@ box-shadow: (0,0,0, transparent);
     <nav class="nav1">
     
           <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click para insertar Pregunta Abierta" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaAbierta()" class="w3-bar-item w3-button">Insertar Pregunta Abierta</button>
+        <button  onclick="preguntaAbierta()"  class="w3-bar-item w3-button"> <a href=""></a> Insertar Pregunta Abierta</button>
         </sapn>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para agregar pregunta relacional" delay="0" tabindex="0" class="d-inline-block" >
-        <button id="btn1"  onclick="preguntaRelacional(), desabilitado()" class="w3-bar-item w3-button" >Insertar Pregunta Relacional</button>
+        <button id="btn1"  onclick="preguntaRelacional(), desabilitado()" class="w3-bar-item w3-button" ><a href=""></a> Insertar Pregunta Relacional</button>
         </span>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear una pregunta de opcion multiple" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaOM()" class="w3-bar-item w3-button" >Insertar Pregunta Opción Múltiple</button>
+        <button onclick="preguntaOM()" class="w3-bar-item w3-button" > <a href=""></a> Insertar Pregunta Opción Múltiple</button>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear una pregunta de con imagen" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaIT()" class="w3-bar-item w3-button" >Insertar Pregunta-Imagen</button>
+        <button onclick="preguntaIT()" class="w3-bar-item w3-button" > <a href=""></a> Insertar Pregunta-Imagen</button>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para creaa una pregunta de matematicas" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaMatematicas()" class="w3-bar-item w3-button" >Insertar Pregunta de Matemáticas</button>
+        <button onclick="preguntaMatematicas()" class="w3-bar-item w3-button" > <a href=""></a> Insertar Pregunta de Matemáticas</button>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaArrastrar()" class="w3-bar-item w3-button" disabled>Inserta Pregunta Arrastrable </button>
+        <button onclick="preguntaArrastrar()" class="w3-bar-item w3-button" disabled> <a href=""></a> Inserta Pregunta Arrastrable </button>
       </span>
     </nav>
   </div>
@@ -264,6 +267,11 @@ box-shadow: (0,0,0, transparent);
     function desabilitado(){
       document.getElementById("btn1").disabled = true;
       console.log('desabilitado');
+    }
+
+    function habilitar(){
+    document.getElementById("btn1").disabled = false;
+    console.log("habilitado")
     }
   </script>
  
