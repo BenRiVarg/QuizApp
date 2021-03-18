@@ -660,9 +660,36 @@ var examencalificado= await Revisor.revisar("BP32G1BF",req);
 
 //Boomer "5fce761f2e2106439e852306"
 
-router.get('/pruebaAJAX', (req, res) => {
-  res.json({ "estatus": "funciona" })
-})
+
+router.get("/pruebaAJAX", async (req, res) => {
+  var grados = await API.Find("grados");
+  grados = grados.grades;
+  res.json(grados);
+});
+
+router.get("/pruebaAJAX", async (req, res) => {
+  var materias = await API.Find("materias");
+  materias = materias.subjects;
+  res.json(materias);
+});
+
+router.get("/pruebaAJAX", async (req, res) => {
+  var niveles = await API.Find("niveles");
+  niveles = niveles.levels;
+  res.json(niveles);
+});
+
+router.get("/pruebaAJAX", async (req, res) => {
+  var bloques = await API.Find("bloques");
+  bloques = bloques.blocks;
+  res.json(bloques);
+});
+
+router.get("/pruebaAJAX", async (req, res) => {
+  var secuencias = await API.Find("bloques");
+  secuencias = secuencias.sequences;
+  res.json(secuencias);
+});
 
 
 router.get('/cuarto', (req, res) => {
