@@ -188,17 +188,18 @@
         </select>
       </div>
       <div class="col-lg-7">
-        <select id="materias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
-          name="claveMateria" required>
-          <option selected>Materia</option>
-          
+        <select id="grades" class="form-select form-select-lg mb-3" aria-label=".form-select-sm example" name="grado" onchange="option();" required>
+          <option selected>Grado</option>
+        
         </select>
+        
       </div>
       <div class="col-lg-7">
-        <select id="grades" class="form-select form-select-sm" aria-label=".form-select-sm example" name="grado" required>
-          <option selected>Grado</option>
-         
-        </select>
+      <select id="materias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="claveMateria"
+        required>
+        <option selected>Materia</option>
+      
+      </select>
       </div>
     </div>
     <br>
@@ -239,9 +240,15 @@
         var id = (niveles[i].id);
         var select = document.getElementById("palabras").innerHTML +=
           "<option value='"+ id +"'>" + nombres + "</option>";
+
+         console.log(nombres);
       }
-      
+        $('select').on('change', function () {
+        var visible = document.getElementById("grades").style.display = "block";
+      });
     });
+
+   
 
     $.getJSON("/pruebaAJAXmaterias", function (materias){
       for(var i = 0; i < 11; i++){
@@ -249,6 +256,7 @@
         var id = (materias[i].id);
         var materiaS = document.getElementById("materias").innerHTML +=
           "<option value='" + id + "'>" + materiaN + "</option>";
+        var oculto = document.getElementById("materias").style.display = "none";
       }
     });
     
@@ -258,9 +266,16 @@
             var id = (grados[i].id);
             var grades = document.getElementById("grades").innerHTML += 
              "<option value='" + id + "'>"+ gradosN +"</option>"; 
+            var oculto = document.getElementById("grades").style.display = "none";
           }
+         
       });
 
+      function option(){
+         $('select').on('change', function () {
+           var visible = document.getElementById("materias").style.display = "block";
+        });
+      }
      
       
   </script>
