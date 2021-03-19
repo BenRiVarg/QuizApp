@@ -74,73 +74,527 @@ function colorido(){
 
 
 //pregunta arrastrable//
-function readURL(event){
-  var getImagePath = URL.createObjectURL(event.target.files[0]);
-  $('#divImg').css('background-image', 'url(' + getImagePath + ')');
-  $( "#divImg" ).droppable({
-      drop: function( event, ui ) {
-      $( this )
-      .addClass( "ui-state-highlight" );
-      
-      }
-      });
+//---------Comienzan Funciones Drag--------//
+//Variable global para dar ids que nunca se repitan para las preguntas drag
+var contadorIDrag=0;
+function palabras() {
+  var strVar = "";
+  var palabra = document.querySelector("#palabra").value;
+  var palabraPartida = palabra.split(" ");
+  var list = document.getElementsByClassName("palabraid");
+  /* var x = $("#palabra").val(); */
+
+  /* palab.push(palabra); */
+
+  /* el ciclo for lo utilizo para saber cuantas son las veces que va a inyectar la etiqueta con la palabra */
+  for (var i = 0; i < palabraPartida.length; i++) {
+    strVar += '<div id=" " class="palabraid text-dark fw-bold text-center">';
+    strVar += "              " + palabraPartida[i] + " </div>";
   }
 
-  function crearImagen(){
-    var btn = document.createElement("div");
-    btn.setAttribute("class","correcto");
-    btn.setAttribute("class","draggable");
-    hr3.appendChild(btn); 
-    console.log("correcto");
-    $( ".correcto" ).draggable();
-    $( ".correcto" ).css("background-color","white");
-    if ($("#size").val()=="chico") {
-        $(".correcto").css({"width":"50","heigth":"90"});
-    }else if ($("#size").val()=="mediano"){
-        $(".correcto").css({"width":"90","heigth":"150"});
-    }else if ($("#size").val()=="grande"){
-        $(".correcto").css({"width":"150","heigth":"300"});
+  document.getElementById("palabras").innerHTML = strVar;
+  var palabras = document.getElementById("palabras");
+  var align = palabras.getAttribute("id");
+  var list = document.getElementsByClassName("palabraid");
+  for (var j = 0; j < palabraPartida.length; j++) {
+    list[j].id = "drag" + (j + 1);
+    id = list[j].id;
+    console.log(id);
+  }
+  comprobarDrag();
+}
+
+function comprobarDrag(event) {
+  var arr = [];
+  var countOfItems = 0;
+
+  $("#drag1, #drag2, #drag3, #drag4").draggable({
+    revert: "invalid",
+    cursor: "move",
+  });
+
+
+  $("#cuadro1, #cuadro2, #cuadro3, #cuadro4").droppable({
+    greedy: true,
+    drop: function (event, ui) {
+      var div = event.target.id;
+      var element = ui.draggable.attr("id");
+      arr.push({
+        key: div,
+        val: element,
+      });
+      $("#" + element).addClass("someclass");
+      //if div with class name 'someclass' is greater than the required no of div
+      if ($("div.someclass").length > countOfItems) {
+        document.getElementById("tituloR").innerHTML = "Respuestas:";
+        /*  var count = false; */
+        $.each(arr, function (i, obj) {
+          if (obj.val == "drag1" && obj.key == "cuadro1") {
+            document.getElementById("demo").innerHTML = "¡Correcto!";
+          } else if (obj.val == "drag2" && obj.key == "cuadro2") {
+            document.getElementById("demo2").innerHTML = "¡Correcto!";
+          } else if (obj.val == "drag3" && obj.key == "cuadro3") {
+            document.getElementById("demo3").innerHTML = "¡Correcto!";
+          } else if (obj.val == "drag4" && obj.key == "cuadro4") {
+            document.getElementById("demo4").innerHTML = "¡Correcto!";
+          } else {
+            if (obj.val == "drag1" && obj.key != "cuadro1") {
+              document.getElementById("demo").innerHTML = "¡Incorrecto!";
+            } else if (obj.val == "drag2" && obj.key != "cuadro2") {
+              document.getElementById("demo2").innerHTML = "¡Incorrecto!";
+            } else if (obj.val == "drag3" && obj.key != "cuadro3") {
+              document.getElementById("demo3").innerHTML = "¡Incorrecto!";
+            } else if (obj.val == "drag4" && obj.key != "cuadro4") {
+              document.getElementById("demo4").innerHTML = "¡Incorrecto!";
+            }
+          }
+
+          var demo = document.getElementById("demo").innerHTML;
+          var demo2 = document.getElementById("demo2").innerHTML;
+          var demo3 = document.getElementById("demo3").innerHTML;
+          var demo4 = document.getElementById("demo4").innerHTML;
+
+          if (
+            demo == "¡Correcto!" &&
+            demo2 == "¡Correcto!" &&
+            demo3 == "¡Correcto!" &&
+            demo4 == "¡Correcto!"
+          ) {
+            document.getElementById("demo5").innerHTML =
+              "¡Todas las respuestas son correctas!";
+          } else if (
+            demo == "¡Incorrecto!" &&
+            demo2 == "¡Incorrecto!" &&
+            demo3 == "¡Incorrecto!" &&
+            demo4 == "¡Incorrecto!"
+          ) {
+            document.getElementById("demo5").innerHTML =
+              "¡Todas las respuestas son incorrectas!";
+          } else {
+            document.getElementById("demo5").innerHTML = " ";
+          }
+        });
+
+       
+      }
+    },
+  });
+}
+
+function arrastrable() {
+  $(".elementoDrag").draggable({
+    revert: "invalid",
+    cursor: "move",
+  });
+}
+
+function cuadros() {
+  var cantidad = document.querySelector("#caRe").value;
+  
+  for (var i = 0; i < cantidad; i++) {
+    var strVar = '  <div id="recuadro' + contadorIDrag + '" class="div1 recuadro elementoDrag"></div>';
+    var lienzo = document.getElementById("lienzo0");
+    lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
+    contadorIDrag++;
+  }
+  arrastrable();
+}
+
+function flechaHoDerecha() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar += '<img class="imagenes widget" src="/img/flecha.png" alt="">';
+  }
+  
+  document.getElementById("flechasHoDer").innerHTML = strVar;
+  arrastrable();
+}
+
+function flechaHoIzquierda() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar += '<img class="imagenes widget" src="/img/flechaHoIz.png" alt="">';
+  }
+
+  document.getElementById("flechasHoIz").innerHTML = strVar;
+  arrastrable();
+}
+
+function flechaDiaDerecha() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar +=
+      '<img class="widget diagonal" src="/img/flechadiaderecha.png" alt="">';
+  }
+
+  document.getElementById("flechasDiaDer").innerHTML = strVar;
+  arrastrable();
+}
+
+function flechaDiaIzquierda() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar +=
+      '<img class="widget diagonal" src="/img/flechadigaiz.png" alt="">';
+  }
+
+  document.getElementById("flechasDiaIz").innerHTML = strVar;
+  arrastrable();
+}
+
+function flechaDiaDerechaInv() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar +=
+      '<img class="widget diagonal" src="/img/diagonalderinvertida.png" alt="">';
+  }
+
+  document.getElementById("flechasDiaDerInv").innerHTML = strVar;
+  arrastrable();
+}
+
+function flechaDiaIzquierdaInv() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar +=
+      '<img class="widget diagonal" src="/img/diagonalizinvertida.png" alt="">';
+  }
+
+  document.getElementById("flechasDiaIzInv").innerHTML = strVar;
+  arrastrable();
+}
+
+
+
+
+  //Eventos ligados a clase lienzo
+  $(".lienzo").droppable({
+    drop: function (event, ui) {
+     
+      elemento=ui.draggable;
+      event.stopPropagation();
+      //Obtenemos las coordenadas el elemento que se mueve en el lienzo
+      var posicionelemento=elemento.position();
+      coordenadatop =posicionelemento.top;
+      coordenadaleft=posicionelemento.left;
+
+      var objetoHTML=elemento[0];
+      
+      var datos={
+        
+        operacion: "reposicion",
+        coordenadas:
+          {id: objetoHTML.id,
+            top: coordenadatop,
+            left: coordenadaleft
+          }
+      }
+
+      //Revisamos la clase que tiene el objeto que se mueve para guardarlo de cierta manera
+      var strCriterio=objetoHTML.className
+      if(strCriterio.search("recuadro")!=-1){
+        datos.tipoElemento="recuadro";
+      }
+      else if(strCriterio.search("flecha")!=-1){
+        datos.tipoElemento="flecha";
+        
+      }
+
+      var strlienzo=this.id;
+      var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
+      
+      construirObjLienzo(espacioObj,datos);
+
+    }
+  });
+
+
+
+$(".reactivo").droppable({
+  drop: function (event, ui) {
+
+    console.log("Detectando ID");
+    elemento=ui.draggable;
+    elemento=elemento[0];
+    event.stopPropagation();
+    //Variable para detectar el id del lienzo al que pertenece el elemento 
+    var strlienzo=this.parentElement.parentElement.id;
+
+    //Variable para llamar al espacio del objeto del lienzo
+    var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
+
+    
+
+    
+    
+    var pregunta={
+      id:this.id
+    }
+
+    var respuesta={
+      id_respuesta: elemento.id,
+      contenido:elemento.textContent,
+      id_pregunta:this.id
+    }
+
+    var datos={
+      operacion: "preg-res",
+      pregunta: pregunta,
+      respuesta: respuesta,
+    }
+
+    construirObjLienzo(espacioObj,datos)
+
+  }
+});
+
+function construirObjLienzo(espacioObj,datos){
+  
+  var objLienzo=objetosDrag[espacioObj];
+  var operacion=datos.operacion;
+  switch(operacion){
+    case "preg-res":
+      //Escribir(objLienzo,(datos.pregunta.id),datos,"pregunta","respuesta");
+      
+      var x;
+
+      //Si ya existe el elemento
+      var preguntaExistente
+      for(x in objLienzo.preguntas){
+        var preguntaI=objLienzo.pregunta[x]
+        if((preguntaI.id)&&(datos.pregunta.id==preguntaI.id)){
+            preguntaExistente=preguntaI;
+            break;
+        }
+      }
+      if (preguntaExistente){
+        //SobreEscritura de Datos
+        console.log("Sobreescribiendo");
+        console.log(x);
+        objLienzo.respuesta[x]=datos.respuesta;
+      }
+      else{
+        //Escritura de Datos
+        obj
+        objLienzo.pregunta.push(datos.pregunta);
+        objLienzo.respuesta.push(datos.respuesta);
+      }
+      console.log(objLienzo);
+      //objLienzo.preguntas.push(datos.pregunta)
+      
+      break;
+
+      case "reposicion":
+        
+        
+          var criterio=datos.tipoElemento;
+          console.log(datos);
+          switch(criterio){
+          case "recuadro":
+            var preguntaExistente
+            for(x in objLienzo.pregunta){
+                var preguntaI=objLienzo.pregunta[x]
+                if((preguntaI.id)&&(datos.coordenadas.id==preguntaI.id)){
+                    preguntaExistente=preguntaI;
+                    break;
+                }
+              }
+
+              console.log(preguntaExistente);
+              if (preguntaExistente){
+                //SobreEscritura de Datos
+                console.log("Reposicionando");
+                objLienzo.pregunta[x].top=datos.coordenadas.top;
+                objLienzo.pregunta[x].left=datos.coordenadas.left;
+              }
+              else{
+                //Escritura de Datos
+                objLienzo.pregunta.push(datos.coordenadas);
+              }
+              console.log(objLienzo);
+              
+          break 
+          case "flecha":
+            var flechaExistente
+            for(x in objLienzo.flecha){
+                var flechaI=objLienzo.flecha[x]
+                if((flechaI.id)&&(datos.coordenadas.id==flechaI.id)){
+                    flechaExistente=flechaI;
+                    break;
+                }
+              }
+
+              
+              if (flechaExistente){
+                //SobreEscritura de Datos
+                console.log("Reposicionando");
+                objLienzo.flecha[x].top=datos.coordenadas.top;
+                objLienzo.flecha[x].left=datos.coordenadas.left;
+              }
+              else{
+                //Escritura de Datos
+                objLienzo.flecha.push(datos.coordenadas);
+              }
+              console.log(objLienzo);
+              
+          break
+             
+          }
+      break;
+  }
+
+
+}
+
+//Función para crear las funciones preview
+document.getElementById("file").onchange = function (e) {
+  // Creamos el objeto de la clase FileReader
+  let reader = new FileReader();
+
+  // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+  reader.readAsDataURL(e.target.files[0]);
+
+  // Le decimos que cuando este listo ejecute el código interno
+  reader.onload = function () {
+    var titulo = (document.getElementById("titulop").innerHTML =
+      "Previsualización de la imagen");
+    let preview = document.getElementById("lienzo0"),
+      image = document.createElement("img");
+    image.src = reader.result;
+
+        
+    var imageDatos = new Image();
+    imageDatos.src = reader.result;
+
+    imageDatos.onload = function() {
+        // access image size here 
+        console.log("Resultado de la función")
+       
+
+        var leftAjustado= Math.round((770-this.width)/2);
+        var topAjustado= Math.round((550-this.height)/2);
+
+        console.log(leftAjustado);
+        console.log(topAjustado);
+
+        imageDatos.style.position="absolute";
+        imageDatos.style.top=topAjustado+"px";
+        imageDatos.style.left=leftAjustado+"px";
+    }
+
+   
+    //preview.innerHTML = "";
+    console.log(preview.children[0]);
+
+    //Si ya hay una imagen
+    if(preview.children[1]){
+      preview.children[1].remove()
+      preview.appendChild(imageDatos)
+    }
+    else{
+      preview.appendChild(imageDatos);
     }
     
-  }
+  };
+};
 
-      function crearRecuadroCorrecto(){
-        $( ".correcto2" ).draggable();
-        $( ".correcto2" ).css("color","red");
-        var texto = $("#text1").val();
-        $(".correcto2").text(texto);
-        console.log("correcto")
-        var strVar = "";
-        strVar += "<div class=\>"
-        strVar += "<h2 class=\"correcto2\">Texto<\/h2>";
-        $(".correcto2").draggable();
-      }
+//----Terminan funciones Drag--------//
 
       function preguntaArrastrar() {
         var strVar="";
-      strVar += "<div class=\"container cuestionario tipoArr \" >";
-      strVar += " <label for=\"file\">Agrega imagen <\/label>";
-      strVar += "   <input type='file' id='getval' name=\"background-image\" onchange=\"readURL(event)\" \/><br\/><br\/>  ";
-      strVar += "   <input type=\"text\" name=\"texto\" id=\"text1\" value=\"\" placeholder=\"Texto\">";
-      strVar += "     <button class=\"btn btn-info\" type=\"button\" onclick=\"crearRecuadroCorrecto()\" >Recuadro correcto<\/button>";
-      strVar += "     <button class=\"btn btn-info\" type=\"button\" onclick=\"crearImagen()\">Añadir Cuadro Arrastrable<\/button>"
-      strVar += "    <label for=\"tamaño\">Seleciona el tamaño<\/label>";
-      strVar += "     <select name=\"tamaño\" id=\"size\">";
-      strVar += "       <option  value=\"chico\" selected >Chico<\/option>";
-      strVar += "       <option value=\"mediano\">Mediano<\/option>";
-      strVar += "       <option value=\"grande\">Grande<\/option>";
-      strVar += "     <\/select>";
-      strVar += "     <div> <h3> </h3>    <\/div>";
-      strVar += "       <hr id=\"hr2\"  >";
-      strVar += "       <div id=\"divImg\" ><\/div>";
-      strVar += "       <div class=\"correcto\" ><\/div>";
-      strVar += "         <hr id=\"hr3\" >";
-      strVar += "         <h3 class=\"correcto2\">Texto</h3> ";
-
-      strVar += " <\/div>";
-      strVar += "   <div class=\"editar\" role=\"group\" aria-label=\"Basic mixed styles example\">";
-      strVar += "     <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
-      strVar += "   <\/div>";
+strVar += " <div class=\"tipoAr cuestionario\">";
+strVar += "    <div class=\"row mt-3\">";
+strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
+strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
+strVar += "        <div class=\"row\">";
+strVar += "          <div class=\"col-lg-6 centrado\">";
+strVar += "            <div class=\"mt-5\">";
+strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
+strVar += "              <input id=\"file\" type=\"file\" id=\"file-upload\" class=\"form-control\" accept=\"image\/*\">";
+strVar += "              <div class=\"mt-3\">";
+strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
+strVar += "                <div class=\"mb-3\">";
+strVar += "                  <input id=\"caRe\" type=\"number\" name=\"cuadro\" placeholder=\"Cantidad:\" class=\"form-control\">";
+strVar += "                <\/div>";
+strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"cuadros()\">Crear<\/button>";
+strVar += "              <\/div>";
+strVar += "              <h4 class=\"text-dark mb-3 mt-3\">Escribe las palabras que quieras agregar:<\/h4>";
+strVar += "              <div class=\"mb-3\">";
+strVar += "                <input id=\"palabra\" type=\"text\" name=\"palabra\" placeholder=\"Coloca las palabras:\" class=\"form-control\">";
+strVar += "              <\/div>";
+strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"palabras()\">Crear<\/button>";
+strVar += "              <div class=\"mt-2\">";
+strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de flechas:<\/h4>";
+strVar += "                <div class=\"mb-3\">";
+strVar += "                  <input id=\"caFle\" type=\"number\" name=\"flechas\" placeholder=\"Cantidad:\" class=\"form-control\">";
+strVar += "                <\/div>";
+strVar += "                <h4 class=\"text-dark mb-3\">Tipos de flecha:<\/h4>";
+strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoDerecha()\"><i";
+strVar += "                    class=\"fas fa-arrow-right fa-lg\"><\/i><\/button>";
+strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoIzquierda()\"><i";
+strVar += "                    class=\"fas fa-arrow-left fa-lg\"><\/i><\/button>";
+strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerecha()\"><i";
+strVar += "                    class=\"fas fa-location-arrow fa-lg\"><\/i><\/button>";
+strVar += "              <\/div>";
+strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierda()\"><i";
+strVar += "                  class=\"fas fa-location-arrow fa-rotate-270 fa-lg\"><\/i><\/button>";
+strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerechaInv()\"><i";
+strVar += "                  class=\"fas fa-location-arrow fa-rotate-90 fa-lg\"><\/i><\/button>";
+strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierdaInv()\"><i";
+strVar += "                  class=\"fas fa-location-arrow fa-rotate-180 fa-lg\"><\/i><\/button>";
+strVar += "            <\/div>";
+strVar += "            <!-- imagen -->";
+strVar += "            <div class=\"visualizacion container\">";
+strVar += "              <hr>";
+strVar += "              <div id=\"titulop\"><\/div>";
+strVar += "              <div id=\"preview\"><\/div>";
+strVar += "              <!-- palabras -->";
+strVar += "              <div id=\"palabras\" class=\"contenedor mt-5\"><\/div>";
+strVar += "              <div id=\"cuadros\" class=\"row text-center\"><\/div>";
+strVar += "";
+strVar += "              <div id=\"flechasHoDer\" class=\"text-center\">";
+strVar += "              <\/div>";
+strVar += "              <div id=\"flechasHoIz\" class=\"text-center\">";
+strVar += "              <\/div>";
+strVar += "              <div id=\"flechasDiaDer\" class=\"text-center\">";
+strVar += "              <\/div>";
+strVar += "              <div id=\"flechasDiaIz\" class=\"text-center\">";
+strVar += "              <\/div>";
+strVar += "              <div id=\"flechasDiaDerInv\" class=\"text-center\">";
+strVar += "              <\/div>";
+strVar += "              <div id=\"flechasDiaIzInv\" class=\"text-center\">";
+strVar += "              <\/div>";
+strVar += "              <div id=\"displayNone\" class=\"mt-2 mb-3\">";
+strVar += "                <h4 id=\"tituloR\" class=\"text-dark\"><\/h4>";
+strVar += "                <div id=\"demo\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
+strVar += "                <\/div>";
+strVar += "                <div id=\"demo2\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
+strVar += "                <\/div>";
+strVar += "                <div id=\"demo3\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
+strVar += "                <\/div>";
+strVar += "                <div id=\"demo4\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
+strVar += "                <\/div>";
+strVar += "                <div id=\"demo5\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
+strVar += "                <\/div>";
+strVar += "              <\/div>";
+strVar += "            <\/div>";
+strVar += "          <\/div>";
+strVar += "          <div class=\"col-lg-6 lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
+strVar += "            <div class=\"col-12\">";
+strVar += "             ";
+strVar += "            <\/div>";
+strVar += "          <\/div>";
+strVar += "        <\/div>";
+strVar += "      <\/div>";
+strVar += "    <\/div>";
+strVar += "    <\/div>";
+strVar += "  <\/div>";
       insertor.insertAdjacentHTML("beforeend",strVar);   
       }
 
@@ -275,384 +729,7 @@ function quitarReactivoRelacional(obj){
 }
 
 
-//---------Comienzan Funciones Drag--------//
 
-function palabras() {
-  var strVar = "";
-  var palabra = document.querySelector("#palabra").value;
-  var palabraPartida = palabra.split(" ");
-  var list = document.getElementsByClassName("palabraid");
-  /* var x = $("#palabra").val(); */
-
-  /* palab.push(palabra); */
-
-  /* el ciclo for lo utilizo para saber cuantas son las veces que va a inyectar la etiqueta con la palabra */
-  for (var i = 0; i < palabraPartida.length; i++) {
-    strVar += '<div id=" " class="palabraid text-dark fw-bold text-center">';
-    strVar += "              " + palabraPartida[i] + " </div>";
-  }
-
-  document.getElementById("palabras").innerHTML = strVar;
-  var palabras = document.getElementById("palabras");
-  var align = palabras.getAttribute("id");
-  var list = document.getElementsByClassName("palabraid");
-  for (var j = 0; j < palabraPartida.length; j++) {
-    list[j].id = "drag" + (j + 1);
-    id = list[j].id;
-    console.log(id);
-  }
-  comprobarDrag();
-}
-
-function comprobarDrag(event) {
-  var arr = [];
-  var countOfItems = 0;
-
-  $("#drag1, #drag2, #drag3, #drag4").draggable({
-    revert: "invalid",
-    cursor: "move",
-  });
-
-
-  $("#cuadro1, #cuadro2, #cuadro3, #cuadro4").droppable({
-    greedy: true,
-    drop: function (event, ui) {
-      var div = event.target.id;
-      var element = ui.draggable.attr("id");
-      arr.push({
-        key: div,
-        val: element,
-      });
-      $("#" + element).addClass("someclass");
-      //if div with class name 'someclass' is greater than the required no of div
-      if ($("div.someclass").length > countOfItems) {
-        document.getElementById("tituloR").innerHTML = "Respuestas:";
-        /*  var count = false; */
-        $.each(arr, function (i, obj) {
-          if (obj.val == "drag1" && obj.key == "cuadro1") {
-            document.getElementById("demo").innerHTML = "¡Correcto!";
-          } else if (obj.val == "drag2" && obj.key == "cuadro2") {
-            document.getElementById("demo2").innerHTML = "¡Correcto!";
-          } else if (obj.val == "drag3" && obj.key == "cuadro3") {
-            document.getElementById("demo3").innerHTML = "¡Correcto!";
-          } else if (obj.val == "drag4" && obj.key == "cuadro4") {
-            document.getElementById("demo4").innerHTML = "¡Correcto!";
-          } else {
-            if (obj.val == "drag1" && obj.key != "cuadro1") {
-              document.getElementById("demo").innerHTML = "¡Incorrecto!";
-            } else if (obj.val == "drag2" && obj.key != "cuadro2") {
-              document.getElementById("demo2").innerHTML = "¡Incorrecto!";
-            } else if (obj.val == "drag3" && obj.key != "cuadro3") {
-              document.getElementById("demo3").innerHTML = "¡Incorrecto!";
-            } else if (obj.val == "drag4" && obj.key != "cuadro4") {
-              document.getElementById("demo4").innerHTML = "¡Incorrecto!";
-            }
-          }
-
-          var demo = document.getElementById("demo").innerHTML;
-          var demo2 = document.getElementById("demo2").innerHTML;
-          var demo3 = document.getElementById("demo3").innerHTML;
-          var demo4 = document.getElementById("demo4").innerHTML;
-
-          if (
-            demo == "¡Correcto!" &&
-            demo2 == "¡Correcto!" &&
-            demo3 == "¡Correcto!" &&
-            demo4 == "¡Correcto!"
-          ) {
-            document.getElementById("demo5").innerHTML =
-              "¡Todas las respuestas son correctas!";
-          } else if (
-            demo == "¡Incorrecto!" &&
-            demo2 == "¡Incorrecto!" &&
-            demo3 == "¡Incorrecto!" &&
-            demo4 == "¡Incorrecto!"
-          ) {
-            document.getElementById("demo5").innerHTML =
-              "¡Todas las respuestas son incorrectas!";
-          } else {
-            document.getElementById("demo5").innerHTML = " ";
-          }
-        });
-
-       
-      }
-    },
-  });
-}
-
-function arrastrable() {
-  $(".widget").draggable({
-    scroll: false,
-    containment: "#bg-container",
-
-   
-  });
-}
-
-function cuadros() {
-  var cantidad = document.querySelector("#caRe").value;
-  
-  for (var i = 0; i < cantidad; i++) {
-    var strVar = '  <div id="cuadro' + (i + 1) + '" class="div1 widget"></div>';
-    var cuadro = document.getElementById("cuadros");
-    cuadro.insertAdjacentHTML("beforeend", strVar);
-  console.log(cuadro.id);
-  }
-  arrastrable();
-}
-
-function flechaHoDerecha() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar += '<img class="imagenes widget" src="/img/flecha.png" alt="">';
-  }
-  
-  document.getElementById("flechasHoDer").innerHTML = strVar;
-  arrastrable();
-}
-
-function flechaHoIzquierda() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar += '<img class="imagenes widget" src="/img/flechaHoIz.png" alt="">';
-  }
-
-  document.getElementById("flechasHoIz").innerHTML = strVar;
-  arrastrable();
-}
-
-function flechaDiaDerecha() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar +=
-      '<img class="widget diagonal" src="/img/flechadiaderecha.png" alt="">';
-  }
-
-  document.getElementById("flechasDiaDer").innerHTML = strVar;
-  arrastrable();
-}
-
-function flechaDiaIzquierda() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar +=
-      '<img class="widget diagonal" src="/img/flechadigaiz.png" alt="">';
-  }
-
-  document.getElementById("flechasDiaIz").innerHTML = strVar;
-  arrastrable();
-}
-
-function flechaDiaDerechaInv() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar +=
-      '<img class="widget diagonal" src="/img/diagonalderinvertida.png" alt="">';
-  }
-
-  document.getElementById("flechasDiaDerInv").innerHTML = strVar;
-  arrastrable();
-}
-
-function flechaDiaIzquierdaInv() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar +=
-      '<img class="widget diagonal" src="/img/diagonalizinvertida.png" alt="">';
-  }
-
-  document.getElementById("flechasDiaIzInv").innerHTML = strVar;
-  arrastrable();
-}
-
-
-  $(".elementoDrag").draggable({
-    revert: "invalid",
-    cursor: "move",
-  });
-
-  //Eventos ligados a clase lienzo
-  $(".lienzo").droppable({
-    drop: function (event, ui) {
-      elemento=ui.draggable;
-      event.stopPropagation();
-      //Obtenemos las coordenadas el elemento que se mueve en el lienzo
-      var posicionelemento=elemento.position();
-      coordenadatop =posicionelemento.top;
-      coordenadaleft=posicionelemento.left;
-
-      var objetoHTML=elemento[0];
-      
-      var datos={
-        
-        operacion: "reposicion",
-        coordenadas:
-          {id: objetoHTML.id,
-            top: coordenadatop,
-            left: coordenadaleft
-          }
-      }
-
-      //Revisamos la clase que tiene el objeto que se mueve para guardarlo de cierta manera
-      var strCriterio=objetoHTML.className
-      if(strCriterio.search("recuadro")!=-1){
-        datos.tipoElemento="recuadro";
-      }
-      else if(strCriterio.search("flecha")!=-1){
-        datos.tipoElemento="flecha";
-        
-      }
-
-      var strlienzo=this.id;
-      var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
-      
-      
-      construirObjLienzo(espacioObj,datos);
-
-    }
-  });
-
-
-
-$(".reactivo").droppable({
-  drop: function (event, ui) {
-
-    console.log("Detectando ID");
-    elemento=ui.draggable;
-    elemento=elemento[0];
-    event.stopPropagation();
-    //Variable para detectar el id del lienzo al que pertenece el elemento 
-    var strlienzo=this.parentElement.parentElement.id;
-
-    //Variable para llamar al espacio del objeto del lienzo
-    var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
-
-    
-
-    
-    
-    var pregunta={
-      id:this.id
-    }
-
-    var respuesta={
-      id_respuesta: elemento.id,
-      contenido:elemento.textContent,
-      id_pregunta:this.id
-    }
-
-    var datos={
-      operacion: "preg-res",
-      pregunta: pregunta,
-      respuesta: respuesta,
-    }
-
-    construirObjLienzo(espacioObj,datos)
-
-  }
-});
-
-function construirObjLienzo(espacioObj,datos){
-
-  var objLienzo=objetosDrag[espacioObj];
-  var operacion=datos.operacion;
-  switch(operacion){
-    case "preg-res":
-      //Escribir(objLienzo,(datos.pregunta.id),datos,"pregunta","respuesta");
-      
-      var x;
-
-      //Si ya existe el elemento
-      var preguntaExistente
-      for(x in objLienzo.preguntas){
-        var preguntaI=objLienzo.pregunta[x]
-        if((preguntaI.id)&&(datos.pregunta.id==preguntaI.id)){
-            preguntaExistente=preguntaI;
-            break;
-        }
-      }
-      if (preguntaExistente){
-        //SobreEscritura de Datos
-        console.log("Sobreescribiendo");
-        console.log(x);
-        objLienzo.respuesta[x]=datos.respuesta;
-      }
-      else{
-        //Escritura de Datos
-        obj
-        objLienzo.pregunta.push(datos.pregunta);
-        objLienzo.respuesta.push(datos.respuesta);
-      }
-      console.log(objLienzo);
-      //objLienzo.preguntas.push(datos.pregunta)
-      
-      break;
-
-      case "reposicion":
-          var criterio=datos.tipoElemento;
-          switch(criterio){
-          case "recuadro":
-            var preguntaExistente
-            for(x in objLienzo.pregunta){
-                var preguntaI=objLienzo.pregunta[x]
-                if((preguntaI.id)&&(datos.coordenadas.id==preguntaI.id)){
-                    preguntaExistente=preguntaI;
-                    break;
-                }
-              }
-
-              
-              if (preguntaExistente){
-                //SobreEscritura de Datos
-                console.log("Reposicionando");
-                objLienzo.pregunta[x].top=datos.coordenadas.top;
-                objLienzo.pregunta[x].left=datos.coordenadas.left;
-              }
-              else{
-                //Escritura de Datos
-                objLienzo.pregunta.push(datos.coordenadas);
-              }
-              console.log(objLienzo);
-              
-          break 
-          case "flecha":
-            var flechaExistente
-            for(x in objLienzo.flecha){
-                var flechaI=objLienzo.flecha[x]
-                if((flechaI.id)&&(datos.coordenadas.id==flechaI.id)){
-                    flechaExistente=flechaI;
-                    break;
-                }
-              }
-
-              
-              if (flechaExistente){
-                //SobreEscritura de Datos
-                console.log("Reposicionando");
-                objLienzo.flecha[x].top=datos.coordenadas.top;
-                objLienzo.flecha[x].left=datos.coordenadas.left;
-              }
-              else{
-                //Escritura de Datos
-                objLienzo.flecha.push(datos.coordenadas);
-              }
-              console.log(objLienzo);
-              
-          break
-             
-          }
-      break;
-  }
-
-
-}
 
 //Función para Escribir o sobreEscribir datos en el objeto Lienzo
 
@@ -824,6 +901,8 @@ function preguntaIT(){
 insertor.insertAdjacentHTML("beforeend",strVar);
 
 }
+
+
 
 
 function preguntaMatematicas(){
@@ -1198,31 +1277,7 @@ function fraccion(numero,expresion,iteracion){
 }
 //----Terminan funciones para preguntas de Matemáticas
 
-function readFile(input){
-  if(input.files && input.files[0]){
-      var reader = new FileReader();
-      reader.onload = (e)=>{
-          var filePreview = document.createElement("img");
-          filePreview.setAttribute("width","460");
-          filePreview.setAttribute("height","345");
-         /*  filePreview.setAttribute("ondragenter","dragEnter(event)");
-          filePreview.setAttribute("ondraleave","dragLeave(event)");
-          filePreview.setAttribute("ondragover","allowDrop(event)");
-          filePreview.setAttribute("ondrop","drop(event)");
-          filePreview.setAttribute("ondragstart","drag(event)");*/
-          filePreview.id = 'file-preview';
-          filePreview.src = e.target.result;
-          console.log(e.target.result);
-          var previewZone = document.getElementById('file-preview-zone');
-          previewZone.appendChild(filePreview);
-      }
-      reader.readAsDataURL(input.files[0]);
-  }
-}
-  var fileUpload = document.getElementById('file-upload');
-  fileUpload.onchange = (e)=>{
-      readFile(e.srcElement);
-  }
+
 
  
 function eliminar(obj){

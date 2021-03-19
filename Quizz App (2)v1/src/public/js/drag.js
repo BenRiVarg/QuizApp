@@ -88,7 +88,7 @@ $(".widget").draggable({
 });
 
 
-
+/*
     document.getElementById("file").onchange = function (e) {
       // Creamos el objeto de la clase FileReader
       let reader = new FileReader();
@@ -108,3 +108,5 @@ $(".widget").draggable({
         preview.append(image);
       };
     };
+
+    */
