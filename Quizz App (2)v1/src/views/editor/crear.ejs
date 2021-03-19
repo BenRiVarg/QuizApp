@@ -188,15 +188,10 @@
         </select>
       </div>
       <div class="col-lg-7">
-        <select id="color" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+        <select id="materias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
           name="claveMateria" required>
           <option selected>Materia</option>
-          <% materia.forEach (function (materia){ %>
-            <option value="<%= materia._id %>">
-              <%= materia.nombre %>
-            </option>
-
-            <% }); %>
+          
         </select>
       </div>
       <div class="col-lg-7">
@@ -212,6 +207,7 @@
       <p class="display-6">Nombre del Quizz:</p>
 
       <input type="text" name="nombreQuizz">
+
     </div>
     <!-- Inserto de nuevas preguntas-->
 
@@ -239,22 +235,34 @@
   <script>
     $.getJSON("/pruebaAJAXniveles", function (niveles) {
       for (var i = 0; i < 3; i++) {
-        var nombres= (niveles[i].nombre);
+        var nombres = (niveles[i].nombre);
         var id = (niveles[i].id);
         var select = document.getElementById("palabras").innerHTML +=
-          "<option class='nombres' value='"+ id +"'>" + nombres + "</option>";
+          "<option value='"+ id +"'>" + nombres + "</option>";
       }
       
     });
+
+    $.getJSON("/pruebaAJAXmaterias", function (materias){
+      for(var i = 0; i < 11; i++){
+        var materiaN = (materias[i].nombre);
+        var id = (materias[i].id);
+        var materiaS = document.getElementById("materias").innerHTML +=
+          "<option value='" + id + "'>" + materiaN + "</option>";
+      }
+    });
     
-      $.getJSON("/pruebaAJAXgrados", function (grades) {
+      $.getJSON("/pruebaAJAXgrados", function (grados) {
           for (var i = 0; i < 6; i++) {
-            var grados = (grades[i].nombre);
+            var gradosN = (grados[i].nombre);
+            var id = (grados[i].id);
             var grades = document.getElementById("grades").innerHTML += 
-             "<option value='1'>"+ grados +"</option>"; 
-              console.log(nombres);
+             "<option value='" + id + "'>"+ gradosN +"</option>"; 
           }
       });
+
+     
+      
   </script>
 </body>
 

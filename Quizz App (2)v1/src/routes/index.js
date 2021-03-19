@@ -670,8 +670,8 @@ router.get("/pruebaAJAXgrados", async (req, res) => {
 
 router.get("/pruebaAJAXmaterias", async (req, res) => {
   var materias = await API.Find("materias");
-  /* materias = materias.subjects; */
-  res.end(); /* json(materias); */
+  materias = materias.subjects; 
+  res.json(materias); 
 });
 
 router.get("/pruebaAJAXniveles", async (req, res) => {
