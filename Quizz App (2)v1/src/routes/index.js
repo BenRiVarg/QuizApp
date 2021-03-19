@@ -295,36 +295,17 @@ router.get('/docentes/editar', (req, res) => {
 
 
 router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
-
-
-  var grupo = req.params.idgrupo;
-  var materia = await API.findByID("materias", req.params.idmateria);
-
-  var secuencia = await API.findByID("secuencias", req.params.idsecuencia);
-  var bloque = await API.findByID("bloques", secuencia.bloque);
-  var grado = await API.findByID("grados", materia.grado);
-  var nivel = await API.findByID("niveles", grado.nivel);
-  //Variable para conocer los ids de los quizzes  de una secuencia
-  var quizzesSecuencia;
-  //Variable para guardar los alumnos que tienen un progreso dentro de la secuencia
-  var alumnos
-
-  var datosSesion = {
-    nivel: nivel,
-    grado: grado,
-    grupo: grupo,
-    materia: materia,
-    bloque: bloque,
-    secuencia: secuencia,
-    usuario: req.params.idmaestro,
-    quizzesSecuencia: quizzesSecuencia,
-    alumnos: alumnos
+  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro,);
+  var data = {
+    secuencia: req.params.idsecuencia,
+    materia: req.params.idmateria,
+    grupo: req.params.idgrupo,
+    maestro: req.params.idmaestro,
+    token: req.params.token,
   }
-
-  datosDocenteSesion = datosSesion;
-  console.log("Datos Docente");
+  var datosSesion = datosDocenteSesion;
   console.log(datosDocenteSesion);
-  res.render('docente/index', { "datosVista": datosSesion });
+  res.render('docente/index', { "datosVista": datosSesion, data });
 });
 
 router.get('/docentes/crear', async (req, res) => {
@@ -333,7 +314,16 @@ router.get('/docentes/crear', async (req, res) => {
 
 });
 
-router.get('/docentes/secuencia', async (req, res) => {
+router.get('/docentes/secuencia/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
+  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro,);
+
+  var data = {
+    secuencia: req.params.idsecuencia,
+    materia: req.params.idmateria,
+    grupo: req.params.idgrupo,
+    maestro: req.params.idmaestro,
+    token: req.params.token,
+  }
 
   var alumnosGrupo = await API.alumnos(datosDocenteSesion.grupo);
 
@@ -393,12 +383,11 @@ router.get('/docentes/secuencia', async (req, res) => {
 
   }
   datosDocenteSesion.alumnos = alumnosProgreso;
-  res.render('docente/secuencias', { datosDocenteSesion, alumnosProgreso, alumnos });
+  res.render('docente/secuencias', { datosDocenteSesion, alumnosProgreso, alumnos, data });
 
 });
 
 router.get('/docentes/estadisticas/:idalumno', async (req, res) => {
-
   var alumnoAnalizado;
 
   //Extracción del alumno

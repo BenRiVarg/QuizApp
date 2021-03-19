@@ -63,7 +63,6 @@ exports.Find = async function (recurso) {
 
 
 exports.findByID = async function (recurso, recursoID) {
-
   var urlRecurso
   var modificador;
   var resultado;
@@ -97,7 +96,6 @@ exports.findByID = async function (recurso, recursoID) {
 
       // Un fragmento de datos ha sido recibido.
       res.on('data', (chunk) => {
-
         data += chunk;
       });
 
@@ -105,10 +103,8 @@ exports.findByID = async function (recurso, recursoID) {
       res.on('end', () => {
         var registro;
         var registros = JSON.parse(data);
-
         for (var i = 0; i < registros[modificador].length; i++) {
-
-          if (registros[modificador][i].id === recursoID) {
+          if (registros[modificador][i].id == recursoID) {
             registro = registros[modificador][i];
             break;
           }
@@ -125,7 +121,6 @@ exports.findByID = async function (recurso, recursoID) {
     });
 
   });
-
   return resultado;
 }
 
@@ -253,23 +248,24 @@ exports.autenticacion = async function (JWTtoken) {
   return resultado;
 }
 
-exports.cargaDatos = async function (idmateria, idsecuencia, grupo) {
-
-  var materia = await this.findByID("materias", idmateria);
+exports.cargaDatos = async function (idsecuencia, idmateria, grupo, idmaestro) {
+  var mat = await this.findByID("materias", idmateria);
   var secuencia = await this.findByID("secuencias", idsecuencia);
-  var bloque = await this.findByID("bloques", secuencia.bloque);
-  var grado = await this.findByID("grados", materia.grado);
+  var bloque = await this.findByID("bloques", await secuencia.bloque);
+  var grado = await this.findByID("grados", await mat.grado);
   var nivel = await this.findByID("niveles", grado.nivel);
-
+  var quizzesSecuencia;
+  var alumnos;
   var datosSesion = {
     nivel: nivel,
     grado: grado,
     grupo: grupo,
-    materia: materia,
+    materia: mat,
     bloque: bloque,
     secuencia: secuencia,
     usuario: idmaestro,
     quizzesSecuencia: quizzesSecuencia,
     alumnos: alumnos
   }
+  return datosSesion;
 }
