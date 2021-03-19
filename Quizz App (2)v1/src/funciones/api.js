@@ -33,29 +33,29 @@ exports.Find = async function (recurso) {
       urlRecurso = URLbase + "/sequences";
       break;
   }
-  
+
   var resultado = await new Promise((resolve, reject) => {
-      https.get(urlRecurso, options, (res) => {
-        let data = '';
+    https.get(urlRecurso, options, (res) => {
+      let data = '';
 
-        // Un fragmento de datos ha sido recibido.
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-
-        // Toda la respuesta ha sido recibida. Imprimir el resultado.
-        res.on('end', () => {
-          // console.log(data);
-          var registros = JSON.parse(data)
-          //  console.log(secuenciasAPI[0]);
-          resolve(registros);
-        });
-
-
-
-      }).on("error", (err) => {
-        console.log("Error: " + err.message);
+      // Un fragmento de datos ha sido recibido.
+      res.on('data', (chunk) => {
+        data += chunk;
       });
+
+      // Toda la respuesta ha sido recibida. Imprimir el resultado.
+      res.on('end', () => {
+        // console.log(data);
+        var registros = JSON.parse(data)
+        //  console.log(secuenciasAPI[0]);
+        resolve(registros);
+      });
+
+
+
+    }).on("error", (err) => {
+      console.log("Error: " + err.message);
+    });
 
   });
   return resultado
@@ -103,13 +103,13 @@ exports.findByID = async function (recurso, recursoID) {
 
       // Toda la respuesta ha sido recibida. Imprimir el resultado.
       res.on('end', () => {
-          var registro;
-       var registros=JSON.parse(data);
-       
-      for(var i=0; i<registros[modificador].length;i++){
-        
-          if(registros[modificador][i].id===recursoID){
-              registro=registros[modificador][i];
+        var registro;
+        var registros = JSON.parse(data);
+
+        for (var i = 0; i < registros[modificador].length; i++) {
+
+          if (registros[modificador][i].id === recursoID) {
+            registro = registros[modificador][i];
             break;
           }
 
@@ -251,4 +251,25 @@ exports.autenticacion = async function (JWTtoken) {
   });
 
   return resultado;
+}
+
+exports.cargaDatos = async function (idmateria, idsecuencia, grupo) {
+
+  var materia = await this.findByID("materias", idmateria);
+  var secuencia = await this.findByID("secuencias", idsecuencia);
+  var bloque = await this.findByID("bloques", secuencia.bloque);
+  var grado = await this.findByID("grados", materia.grado);
+  var nivel = await this.findByID("niveles", grado.nivel);
+
+  var datosSesion = {
+    nivel: nivel,
+    grado: grado,
+    grupo: grupo,
+    materia: materia,
+    bloque: bloque,
+    secuencia: secuencia,
+    usuario: idmaestro,
+    quizzesSecuencia: quizzesSecuencia,
+    alumnos: alumnos
+  }
 }
