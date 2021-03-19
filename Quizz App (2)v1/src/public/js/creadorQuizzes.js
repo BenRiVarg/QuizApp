@@ -1,7 +1,5 @@
 //--------JS PARA LA INYECCIÓN DE PREGUNTAS EN EL DOM DE EDITORES/CREAR Y EL PROCESAMIENTO PARA SU ENVÍO----------//
 
-
-permitirLienzo()
 //Variable para hacer la inserción de elementos dentro del cuertpo del HTML
 var insertor=document.getElementById("insercion");
 //Variable global para "enumerar" todas las preguntas,respuestas y tipo  de un cuestionario
@@ -10,10 +8,10 @@ var contador=1;
 var objetosDrag=[];
 var lienzo={
             id:0,
-            img:"",
-            preguntas:{},
-            respuestas:{},
-            flechas:{}
+            img:[],
+            pregunta:[],
+            respuesta:[],
+            flecha:[]
 
             }
             //Simulación de un solo lienzo
@@ -474,32 +472,54 @@ function flechaDiaIzquierdaInv() {
   arrastrable();
 }
 
-function permitirLienzo(){
+
   $(".elementoDrag").draggable({
     revert: "invalid",
     cursor: "move",
   });
 
+  //Eventos ligados a clase lienzo
   $(".lienzo").droppable({
     drop: function (event, ui) {
       elemento=ui.draggable;
       event.stopPropagation();
+      //Obtenemos las coordenadas el elemento que se mueve en el lienzo
       var posicionelemento=elemento.position();
       coordenadatop =posicionelemento.top;
       coordenadaleft=posicionelemento.left;
 
-      console.log(coordenadatop);
-      console.log(coordenadaleft);
+      var objetoHTML=elemento[0];
       
+      var datos={
+        
+        operacion: "reposicion",
+        coordenadas:
+          {id: objetoHTML.id,
+            top: coordenadatop,
+            left: coordenadaleft
+          }
+      }
+
+      //Revisamos la clase que tiene el objeto que se mueve para guardarlo de cierta manera
+      var strCriterio=objetoHTML.className
+      if(strCriterio.search("recuadro")!=-1){
+        datos.tipoElemento="recuadro";
+      }
+      else if(strCriterio.search("flecha")!=-1){
+        datos.tipoElemento="flecha";
+        
+      }
+
+      var strlienzo=this.id;
+      var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
+      
+      
+      construirObjLienzo(espacioObj,datos);
 
     }
   });
 
 
-  
-
-
-}
 
 $(".reactivo").droppable({
   drop: function (event, ui) {
@@ -516,11 +536,7 @@ $(".reactivo").droppable({
 
     
 
-    //id del Div Reactivo
-    console.log(this.id);
-    //id de la palabra que le cae encima
-    console.log(elemento.id);
-    console.log(elemento.textContent);
+    
     
     var pregunta={
       id:this.id
@@ -538,7 +554,7 @@ $(".reactivo").droppable({
       respuesta: respuesta,
     }
 
-    console.log(datos);
+    construirObjLienzo(espacioObj,datos)
 
   }
 });
@@ -546,19 +562,143 @@ $(".reactivo").droppable({
 function construirObjLienzo(espacioObj,datos){
 
   var objLienzo=objetosDrag[espacioObj];
+  var operacion=datos.operacion;
+  switch(operacion){
+    case "preg-res":
+      //Escribir(objLienzo,(datos.pregunta.id),datos,"pregunta","respuesta");
+      
+      var x;
 
+      //Si ya existe el elemento
+      var preguntaExistente
+      for(x in objLienzo.preguntas){
+        var preguntaI=objLienzo.pregunta[x]
+        if((preguntaI.id)&&(datos.pregunta.id==preguntaI.id)){
+            preguntaExistente=preguntaI;
+            break;
+        }
+      }
+      if (preguntaExistente){
+        //SobreEscritura de Datos
+        console.log("Sobreescribiendo");
+        console.log(x);
+        objLienzo.respuesta[x]=datos.respuesta;
+      }
+      else{
+        //Escritura de Datos
+        obj
+        objLienzo.pregunta.push(datos.pregunta);
+        objLienzo.respuesta.push(datos.respuesta);
+      }
+      console.log(objLienzo);
+      //objLienzo.preguntas.push(datos.pregunta)
+      
+      break;
+
+      case "reposicion":
+          var criterio=datos.tipoElemento;
+          switch(criterio){
+          case "recuadro":
+            var preguntaExistente
+            for(x in objLienzo.pregunta){
+                var preguntaI=objLienzo.pregunta[x]
+                if((preguntaI.id)&&(datos.coordenadas.id==preguntaI.id)){
+                    preguntaExistente=preguntaI;
+                    break;
+                }
+              }
+
+              
+              if (preguntaExistente){
+                //SobreEscritura de Datos
+                console.log("Reposicionando");
+                objLienzo.pregunta[x].top=datos.coordenadas.top;
+                objLienzo.pregunta[x].left=datos.coordenadas.left;
+              }
+              else{
+                //Escritura de Datos
+                objLienzo.pregunta.push(datos.coordenadas);
+              }
+              console.log(objLienzo);
+              
+          break 
+          case "flecha":
+            var flechaExistente
+            for(x in objLienzo.flecha){
+                var flechaI=objLienzo.flecha[x]
+                if((flechaI.id)&&(datos.coordenadas.id==flechaI.id)){
+                    flechaExistente=flechaI;
+                    break;
+                }
+              }
+
+              
+              if (flechaExistente){
+                //SobreEscritura de Datos
+                console.log("Reposicionando");
+                objLienzo.flecha[x].top=datos.coordenadas.top;
+                objLienzo.flecha[x].left=datos.coordenadas.left;
+              }
+              else{
+                //Escritura de Datos
+                objLienzo.flecha.push(datos.coordenadas);
+              }
+              console.log(objLienzo);
+              
+          break
+             
+          }
+      break;
+  }
 
 
 }
 
+//Función para Escribir o sobreEscribir datos en el objeto Lienzo
+
 
 function enviarPreguntaDrag(){
-  console.log(objetosDrag.length);
+  console.log(objetosDrag[0]);
 }
 
 ///+++++++---------------Funcion de Examen------------++++++++//
 function dibujarLienzo(){
   console.log("Dibujando LIenzo");
+  var lienzo=objetosDrag[0];
+
+  var pregunta=lienzo.pregunta;
+  var flechas=lienzo.flecha;
+
+  for(x in pregunta){
+    
+    var id_recuadro=pregunta[x].id;
+    var id_simulacion="r"+id_recuadro.slice((id_recuadro.length-1),(id_recuadro.length))
+    var recuadro=document.getElementById(id_simulacion);
+    recuadro.style.top=pregunta[x].top+"px";
+    recuadro.style.left=pregunta[x].left+"px";
+    console.log(pregunta[x]);
+  }
+
+  for(y in flechas){
+    
+    var id_flecha=flechas[y].id;
+    var id_simulacion="fsi";
+    var flecha=document.getElementById("fsi");
+    
+    flecha.style.top=flechas[y].top+"px";
+    flecha.style.left=flechas[y].left+"px";
+    console.log(flecha);
+    
+  }
+
+   /*
+        var flechastr=objetoHTML.id;
+        //Recortamos el id para saber que tipo de flecha es
+        flechastr=flechastr.substr(0,(flechastr.length-1))
+        console.log(flechastr)
+        datos.tipoFlecha=flechastr;
+        */
+  //console.log(pregunta)
 }
 
 /*-----------Termina Funciones de la Pregunta Drag----------*/
