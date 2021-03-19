@@ -216,7 +216,7 @@ router.get('/editores/crear', async (req, res) => {
 router.post('/editores/crear', upload.array('imagenes'), (req, res) => {
   req.files
   console.log(req.body);
-
+/* 
   var contadorImagenes = 0;
 
   var i;
@@ -268,7 +268,7 @@ router.post('/editores/crear', upload.array('imagenes'), (req, res) => {
        creador: req.body.creador,
        cuestionario:cuestionario
        }
-    );
+    ); */
   res.redirect("/editores/crear");
 });
 
@@ -662,9 +662,10 @@ var examencalificado= await Revisor.revisar("BP32G1BF",req);
 
 
 router.get("/pruebaAJAXgrados", async (req, res) => {
-  /* var grados = await API.Find("grados"); 
-  grados = grados.grades;  */
-  res.end(); /* json(grados); */
+  var grados = await API.Find("grados"); 
+  grados = grados.grades;   
+  res.json(grados); /* 
+  console.log(grados); */
 });
 
 router.get("/pruebaAJAXmaterias", async (req, res) => {

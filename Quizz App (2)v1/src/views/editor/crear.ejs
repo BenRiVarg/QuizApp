@@ -182,13 +182,9 @@
   <form action="/editores/crear" id="formularioQuizz" method="POST" enctype="multipart/form-data" align="center">
     <div class="row justify-content-center mt-5 pt-5">
       <div class="col-lg-7">
-        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="nivel" required>
+        <select id="palabras" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="nivel" required>
           <option selected>Nivel</option>
-          <div id="palabras">
-          <option class="nombres" value="Primaria"></option>
-          <option class="nombres" value="Secundaria"></option>
-          <option class="nombres" value="Preparatoria"></option>
-          </div>
+
         </select>
       </div>
       <div class="col-lg-7">
@@ -204,14 +200,9 @@
         </select>
       </div>
       <div class="col-lg-7">
-        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="grado" required>
+        <select id="grades" class="form-select form-select-sm" aria-label=".form-select-sm example" name="grado" required>
           <option selected>Grado</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
+         
         </select>
       </div>
     </div>
@@ -249,12 +240,21 @@
     $.getJSON("/pruebaAJAXniveles", function (niveles) {
       for (var i = 0; i < 3; i++) {
         var nombres= (niveles[i].nombre);
-        console.log(nombre);
-        palabra = document.getElementById("palabras").innerHTML = 
-          <option> + nombres + </option>;
+        var id = (niveles[i].id);
+        var select = document.getElementById("palabras").innerHTML +=
+          "<option class='nombres' value='"+ id +"'>" + nombres + "</option>";
       }
       
     });
+    
+      $.getJSON("/pruebaAJAXgrados", function (grades) {
+          for (var i = 0; i < 6; i++) {
+            var grados = (grades[i].nombre);
+            var grades = document.getElementById("grades").innerHTML += 
+             "<option value='1'>"+ grados +"</option>"; 
+              console.log(nombres);
+          }
+      });
   </script>
 </body>
 
