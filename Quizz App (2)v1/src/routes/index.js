@@ -295,17 +295,24 @@ router.get('/docentes/editar', (req, res) => {
 
 
 router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
-  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro,);
-  var data = {
-    secuencia: req.params.idsecuencia,
-    materia: req.params.idmateria,
-    grupo: req.params.idgrupo,
-    maestro: req.params.idmaestro,
-    token: req.params.token,
+  var respuestaToken = await API.autenticacion(req.params.token);
+  if (respuestaToken) {
+    var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro,);
+    var data = {
+      secuencia: req.params.idsecuencia,
+      materia: req.params.idmateria,
+      grupo: req.params.idgrupo,
+      maestro: req.params.idmaestro,
+      token: req.params.token,
+    }
+    var datosSesion = datosDocenteSesion;
+    res.render('docente/index', { "datosVista": datosSesion, data });
+  } else {
+    //Aqui debe ir la ruta donde se enviara al usuario si no cumple con el jwt 
+    // res.render('alumnos/index', { "datosVista": datosSesion, data });
   }
-  var datosSesion = datosDocenteSesion;
-  console.log(datosDocenteSesion);
-  res.render('docente/index', { "datosVista": datosSesion, data });
+
+
 });
 
 router.get('/docentes/crear', async (req, res) => {
@@ -315,136 +322,149 @@ router.get('/docentes/crear', async (req, res) => {
 });
 
 router.get('/docentes/secuencia/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
-  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro, true);
+  var respuestaToken = await API.autenticacion(req.params.token);
+  if (respuestaToken) {
+    var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro, true);
 
-  var data = {
-    secuencia: req.params.idsecuencia,
-    materia: req.params.idmateria,
-    grupo: req.params.idgrupo,
-    maestro: req.params.idmaestro,
-    token: req.params.token,
-  }
-  /*
-    var alumnosGrupo = await API.alumnos(datosDocenteSesion.grupo);
-  
-  
-    //console.log(datosDocenteSesion.secuencia.id);
-    var quizzesSecuencia = await Quizz.find({ secuencia: { $eq: datosDocenteSesion.secuencia.id } }, { nombreQuizz: 1 }).exec();
-    var totalQuizzes = quizzesSecuencia.length;
-    //
-    var idQuizzSecuencia = [];
-    //for para obtener todos los id de los quizzes de la secuencia
-    for (q in quizzesSecuencia) {
-  
-      idQuizzSecuencia.push(quizzesSecuencia[q]);
+    var data = {
+      secuencia: req.params.idsecuencia,
+      materia: req.params.idmateria,
+      grupo: req.params.idgrupo,
+      maestro: req.params.idmaestro,
+      token: req.params.token,
     }
-  
-    //Captura de los ids quizz secuencia
-    datosDocenteSesion.quizzesSecuencia = idQuizzSecuencia;
-  
-    var alumnosProgreso = [];
-    //alumno sin progreso alguno en la secuencia
-    var alumnos = [];
-  
-    var x
-    for (var i = 0; i < alumnosGrupo.length; i++) {
-  
-      var progreso = 0;
-  
-      //Por cada Quizz en la secuencia
-  
-      for (x in quizzesSecuencia) {
-  
-  
-        var quizzI = quizzesSecuencia[x];
-  
-        //Buscamos si ha contestado el alumno por lo menos una vez el quizz x
-        var quizzContestado = await Registros.find({ $and: [{ alumno: alumnosGrupo[i].id }, { quizz: quizzI.id }] });
-        if (quizzContestado.length >= 1) {
-          progreso = progreso + 1;
-        }
-  
+    /*
+      var alumnosGrupo = await API.alumnos(datosDocenteSesion.grupo);
+    
+    
+      //console.log(datosDocenteSesion.secuencia.id);
+      var quizzesSecuencia = await Quizz.find({ secuencia: { $eq: datosDocenteSesion.secuencia.id } }, { nombreQuizz: 1 }).exec();
+      var totalQuizzes = quizzesSecuencia.length;
+      //
+      var idQuizzSecuencia = [];
+      //for para obtener todos los id de los quizzes de la secuencia
+      for (q in quizzesSecuencia) {
+    
+        idQuizzSecuencia.push(quizzesSecuencia[q]);
       }
-      //Si hay algún progreso
-      if (progreso >= 1) {
-        var resultadoAlumno = {
-          alumno: alumnosGrupo[i],
-          progreso: (progreso + "/" + totalQuizzes)
+    
+      //Captura de los ids quizz secuencia
+      datosDocenteSesion.quizzesSecuencia = idQuizzSecuencia;
+    
+      var alumnosProgreso = [];
+      //alumno sin progreso alguno en la secuencia
+      var alumnos = [];
+    
+      var x
+      for (var i = 0; i < alumnosGrupo.length; i++) {
+    
+        var progreso = 0;
+    
+        //Por cada Quizz en la secuencia
+    
+        for (x in quizzesSecuencia) {
+    
+    
+          var quizzI = quizzesSecuencia[x];
+    
+          //Buscamos si ha contestado el alumno por lo menos una vez el quizz x
+          var quizzContestado = await Registros.find({ $and: [{ alumno: alumnosGrupo[i].id }, { quizz: quizzI.id }] });
+          if (quizzContestado.length >= 1) {
+            progreso = progreso + 1;
+          }
+    
         }
-  
-        alumnosProgreso.push(resultadoAlumno);
-      }
-      else {
-        var resultadoAlumno = {
-          alumno: alumnosGrupo[i],
+        //Si hay algún progreso
+        if (progreso >= 1) {
+          var resultadoAlumno = {
+            alumno: alumnosGrupo[i],
+            progreso: (progreso + "/" + totalQuizzes)
+          }
+    
+          alumnosProgreso.push(resultadoAlumno);
         }
-        alumnos.push(resultadoAlumno);
-      }
-  
-    }*/
-  alumnos = datosDocenteSesion.alumnos;
-  alumnosProgreso = datosDocenteSesion.alumnosProgreso;
-  res.render('docente/secuencias', { datosDocenteSesion, alumnosProgreso, alumnos, data });
+        else {
+          var resultadoAlumno = {
+            alumno: alumnosGrupo[i],
+          }
+          alumnos.push(resultadoAlumno);
+        }
+    
+      }*/
+    alumnos = datosDocenteSesion.alumnos;
+    alumnosProgreso = datosDocenteSesion.alumnosProgreso;
+    res.render('docente/secuencias', { datosDocenteSesion, alumnosProgreso, alumnos, data });
+  } else {
+    //Aqui debe ir la ruta donde se enviara al usuario si no cumple con el jwt 
+    // res.render('alumnos/index', { "datosVista": datosSesion, data });
+  }
+
 
 });
 
 router.get('/docentes/estadisticas/:idalumno/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
+  var respuestaToken = await API.autenticacion(req.params.token);
+  if (respuestaToken) {
+    var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro, true);
 
-  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro, true);
+    var data = {
+      secuencia: req.params.idsecuencia,
+      materia: req.params.idmateria,
+      grupo: req.params.idgrupo,
+      maestro: req.params.idmaestro,
+      token: req.params.token,
+    }
 
-  var data = {
-    secuencia: req.params.idsecuencia,
-    materia: req.params.idmateria,
-    grupo: req.params.idgrupo,
-    maestro: req.params.idmaestro,
-    token: req.params.token,
+    var alumnoAnalizado;
+
+    //Extracción del alumno
+    for (var i = 0; i < datosDocenteSesion.alumnos.length; i++) {
+      if ((req.params.idalumno) == (datosDocenteSesion.alumnos[i].alumno.id)) {
+        alumnoAnalizado = datosDocenteSesion.alumnos[i];
+        break;
+      }
+    }
+
+
+    var datosIntentos = [];
+
+
+    for (var i = 0; i < datosDocenteSesion.quizzesSecuencia.length; i++) {
+      var quizzI = datosDocenteSesion.quizzesSecuencia[i];
+      var Intentos = await Registros.find({ $and: [{ alumno: req.params.idalumno }, { quizz: quizzI.id }] });
+
+      //Variable para juntar todos los intentos por Quizz
+      var apartado = [];
+
+      for (x in Intentos) {
+        var intentoPorQuizz = Intentos[x];
+        apartado.push(intentoPorQuizz);
+      }
+
+      /*
+      var claveQuizz="quizz"+i;
+      datosIntentos[claveQuizz]={
+        nombre: quizzI.nombreQuizz,
+        intentos:apartado
+      }
+      */
+
+      var datosIntento = {
+        nombre: quizzI.nombreQuizz,
+        intentos: apartado
+      }
+
+      datosIntentos.push(datosIntento);
+    }
+    //console.log(datosIntentos);
+    //datosIntentos2=JSON.parse(datosIntentos);
+    console.log(datosIntentos);
+    res.render('docente/estadisticas', { datosDocenteSesion, alumnoAnalizado, datosIntentos, data });
+  } else {
+    //Aqui debe ir la ruta donde se enviara al usuario si no cumple con el jwt 
+    // res.render('alumnos/index', { "datosVista": datosSesion, data });
   }
 
-  var alumnoAnalizado;
-
-  //Extracción del alumno
-  for (var i = 0; i < datosDocenteSesion.alumnos.length; i++) {
-    if ((req.params.idalumno) == (datosDocenteSesion.alumnos[i].alumno.id)) {
-      alumnoAnalizado = datosDocenteSesion.alumnos[i];
-      break;
-    }
-  }
-
-
-  var datosIntentos = [];
-
-
-  for (var i = 0; i < datosDocenteSesion.quizzesSecuencia.length; i++) {
-    var quizzI = datosDocenteSesion.quizzesSecuencia[i];
-    var Intentos = await Registros.find({ $and: [{ alumno: req.params.idalumno }, { quizz: quizzI.id }] });
-
-    //Variable para juntar todos los intentos por Quizz
-    var apartado = [];
-
-    for (x in Intentos) {
-      var intentoPorQuizz = Intentos[x];
-      apartado.push(intentoPorQuizz);
-    }
-
-    /*
-    var claveQuizz="quizz"+i;
-    datosIntentos[claveQuizz]={
-      nombre: quizzI.nombreQuizz,
-      intentos:apartado
-    }
-    */
-
-    var datosIntento = {
-      nombre: quizzI.nombreQuizz,
-      intentos: apartado
-    }
-
-    datosIntentos.push(datosIntento);
-  }
-  //console.log(datosIntentos);
-  //datosIntentos2=JSON.parse(datosIntentos);
-  console.log(datosIntentos);
-  res.render('docente/estadisticas', { datosDocenteSesion, alumnoAnalizado, datosIntentos, data });
 
 });
 
@@ -500,68 +520,72 @@ router.get('/alumnos', async (req, res) => {
 //router.get('/alumnos',isAuthenticated,async (req,res)=>{
 
 router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
-
-  //data que se envia a la siguiente vista para ser mostrada
-  var data = {
-    nombreMateria: '',
-    grupo: '',
-    alumno: '',
-    idAlumno: '',
-    urlImg: ''
-  };
-
-  var materia = req.params.idmateria; // variable de extraccion de id de materia de url
-  var sec = req.params.idsecuencia; // cariable de extraccion de id de secuencia de url
-  var idgrupo = req.params.idgrupo; // variable de extraccion de id de grupo
-  var idAlumno = req.params.idalumno;
-  var estado = 'Pendiente de Revisión'; // variable por defecto para el estado de un quizz 
-  var subject = await API.findByID("materias", materia);
-  var grupo = await API.alumnos(idgrupo);
-  var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
-  var datosCuestionario = [];
-  data.nombreMateria = subject.nombre;
-  data.urlImg = subject.portada;
-
-  for (let i = 0; i < grupo.length; i++) {
-    if (grupo[i].id === idAlumno) {
-      data.alumno = grupo[i].nombre;
-    }
-
-  }
-  data.idAlumno = idAlumno;
-  console.log(data);
-  datosAlumnoSesion = idAlumno;
-  //asdas
-
-  for (y in cuestionarios) {
-
-    if (cuestionarios[y].estado !== 'por revisar') {
-
-      estado = cuestionarios[y].estado;
-      calificacion = cuestionarios[y].calificacion + '/10';
-
-    } else {
-
-      calificacion = 'Calificacion Pendiente';
-
-    }
-
-    var datos = {
-      id: cuestionarios[y]._id,
-      nombre: cuestionarios[y].nombreQuizz,
-      estado: estado
+  var respuestaToken = await API.autenticacion(req.params.token);
+  if (respuestaToken) {
+    //data que se envia a la siguiente vista para ser mostrada
+    var data = {
+      nombreMateria: '',
+      grupo: '',
+      alumno: '',
+      idAlumno: '',
+      urlImg: ''
     };
 
-    datosCuestionario.push(datos);
+    var materia = req.params.idmateria; // variable de extraccion de id de materia de url
+    var sec = req.params.idsecuencia; // cariable de extraccion de id de secuencia de url
+    var idgrupo = req.params.idgrupo; // variable de extraccion de id de grupo
+    var idAlumno = req.params.idalumno;
+    var estado = 'Pendiente de Revisión'; // variable por defecto para el estado de un quizz 
+    var subject = await API.findByID("materias", materia);
+    var grupo = await API.alumnos(idgrupo);
+    var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
+    var datosCuestionario = [];
+    data.nombreMateria = subject.nombre;
+    data.urlImg = subject.portada;
 
+    for (let i = 0; i < grupo.length; i++) {
+      if (grupo[i].id === idAlumno) {
+        data.alumno = grupo[i].nombre;
+      }
+
+    }
+    data.idAlumno = idAlumno;
+    console.log(data);
+    datosAlumnoSesion = idAlumno;
+    //asdas
+
+    for (y in cuestionarios) {
+
+      if (cuestionarios[y].estado !== 'por revisar') {
+
+        estado = cuestionarios[y].estado;
+        calificacion = cuestionarios[y].calificacion + '/10';
+
+      } else {
+
+        calificacion = 'Calificacion Pendiente';
+
+      }
+
+      var datos = {
+        id: cuestionarios[y]._id,
+        nombre: cuestionarios[y].nombreQuizz,
+        estado: estado
+      };
+
+      datosCuestionario.push(datos);
+
+    }
+
+    //API.alumnos();
+    const Quizzes = await Quizz.find({});
+    res.render('alumnosQuizz/index', { quizzes: Quizzes, data, datosCuestionario });
+
+  } else {
+    //Aqui debe ir la ruta donde se enviara al usuario si no cumple con el jwt 
+    // res.render('alumnos/index', { "datosVista": datosSesion, data });
   }
 
-
-
-
-  //API.alumnos();
-  const Quizzes = await Quizz.find({});
-  res.render('alumnosQuizz/index', { quizzes: Quizzes, data, datosCuestionario });
 
 });
 
