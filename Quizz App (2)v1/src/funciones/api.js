@@ -2,6 +2,7 @@
 const https = require('https');
 const { resolve } = require('path');
 const { stringify } = require('querystring');
+const Quizz = require('../modelos/quizz.js');
 
 var options = {
   headers: {
@@ -248,14 +249,16 @@ exports.autenticacion = async function (JWTtoken) {
   return resultado;
 }
 
-exports.cargaDatos = async function (idsecuencia, idmateria, grupo, idmaestro) {
+exports.cargaDatos = async function (idsecuencia, idmateria, grupo, idmaestro, progreso) {
   var mat = await this.findByID("materias", idmateria);
   var secuencia = await this.findByID("secuencias", idsecuencia);
   var bloque = await this.findByID("bloques", await secuencia.bloque);
   var grado = await this.findByID("grados", await mat.grado);
   var nivel = await this.findByID("niveles", grado.nivel);
+  var alumnosGrupo = await this.alumnos(grupo);
   var quizzesSecuencia;
   var alumnos;
+  var alumnosProgreso = [];
   var datosSesion = {
     nivel: nivel,
     grado: grado,
@@ -265,7 +268,64 @@ exports.cargaDatos = async function (idsecuencia, idmateria, grupo, idmaestro) {
     secuencia: secuencia,
     usuario: idmaestro,
     quizzesSecuencia: quizzesSecuencia,
+    alumnosProgreso: alumnosProgreso,
     alumnos: alumnos
+  }
+  if (progreso) {
+    var quizzesSecuencia = await Quizz.find({ secuencia: { $eq: datosSesion.secuencia.id } }, { nombreQuizz: 1 }).exec();
+    var totalQuizzes = quizzesSecuencia.length;
+    var idQuizzSecuencia = [];
+    //for para obtener todos los id de los quizzes de la secuencia
+    for (var q = 0; q < quizzesSecuencia.length; q++) {
+      idQuizzSecuencia.push(quizzesSecuencia[q]);
+
+
+    }
+    //Captura de los ids quizz secuencia
+    datosSesion.quizzesSecuencia = idQuizzSecuencia;
+
+    //alumno sin progreso alguno en la secuencia
+    var alumnos = [];
+
+    var x;
+
+    for (var i = 0; i < alumnosGrupo.length; i++) {
+
+      var progreso = 0;
+
+      //Por cada Quizz en la secuencia
+
+      for (x in quizzesSecuencia) {
+
+
+        var quizzI = quizzesSecuencia[x];
+
+        //Buscamos si ha contestado el alumno por lo menos una vez el quizz x
+        var quizzContestado = await Registros.find({ $and: [{ alumno: alumnosGrupo[i].id }, { quizz: quizzI.id }] });
+        if (quizzContestado.length >= 1) {
+          progreso = progreso + 1;
+        }
+
+      }
+      //Si hay algún progreso
+      if (progreso >= 1) {
+        var resultadoAlumno = {
+          alumno: alumnosGrupo[i],
+          progreso: (progreso + "/" + totalQuizzes)
+        }
+
+        alumnosProgreso.push(resultadoAlumno);
+      }
+      else {
+        var resultadoAlumno = {
+          alumno: alumnosGrupo[i],
+        }
+        alumnos.push(resultadoAlumno);
+      }
+
+    }
+    datosSesion.alumnosProgreso = alumnosProgreso;
+    datosSesion.alumnos = alumnos;
   }
   return datosSesion;
 }

@@ -315,7 +315,82 @@ router.get('/docentes/crear', async (req, res) => {
 });
 
 router.get('/docentes/secuencia/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
-  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro,);
+  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro, true);
+
+  var data = {
+    secuencia: req.params.idsecuencia,
+    materia: req.params.idmateria,
+    grupo: req.params.idgrupo,
+    maestro: req.params.idmaestro,
+    token: req.params.token,
+  }
+  /*
+    var alumnosGrupo = await API.alumnos(datosDocenteSesion.grupo);
+  
+  
+    //console.log(datosDocenteSesion.secuencia.id);
+    var quizzesSecuencia = await Quizz.find({ secuencia: { $eq: datosDocenteSesion.secuencia.id } }, { nombreQuizz: 1 }).exec();
+    var totalQuizzes = quizzesSecuencia.length;
+    //
+    var idQuizzSecuencia = [];
+    //for para obtener todos los id de los quizzes de la secuencia
+    for (q in quizzesSecuencia) {
+  
+      idQuizzSecuencia.push(quizzesSecuencia[q]);
+    }
+  
+    //Captura de los ids quizz secuencia
+    datosDocenteSesion.quizzesSecuencia = idQuizzSecuencia;
+  
+    var alumnosProgreso = [];
+    //alumno sin progreso alguno en la secuencia
+    var alumnos = [];
+  
+    var x
+    for (var i = 0; i < alumnosGrupo.length; i++) {
+  
+      var progreso = 0;
+  
+      //Por cada Quizz en la secuencia
+  
+      for (x in quizzesSecuencia) {
+  
+  
+        var quizzI = quizzesSecuencia[x];
+  
+        //Buscamos si ha contestado el alumno por lo menos una vez el quizz x
+        var quizzContestado = await Registros.find({ $and: [{ alumno: alumnosGrupo[i].id }, { quizz: quizzI.id }] });
+        if (quizzContestado.length >= 1) {
+          progreso = progreso + 1;
+        }
+  
+      }
+      //Si hay algún progreso
+      if (progreso >= 1) {
+        var resultadoAlumno = {
+          alumno: alumnosGrupo[i],
+          progreso: (progreso + "/" + totalQuizzes)
+        }
+  
+        alumnosProgreso.push(resultadoAlumno);
+      }
+      else {
+        var resultadoAlumno = {
+          alumno: alumnosGrupo[i],
+        }
+        alumnos.push(resultadoAlumno);
+      }
+  
+    }*/
+  alumnos = datosDocenteSesion.alumnos;
+  alumnosProgreso = datosDocenteSesion.alumnosProgreso;
+  res.render('docente/secuencias', { datosDocenteSesion, alumnosProgreso, alumnos, data });
+
+});
+
+router.get('/docentes/estadisticas/:idalumno/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
+
+  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro, true);
 
   var data = {
     secuencia: req.params.idsecuencia,
@@ -325,69 +400,6 @@ router.get('/docentes/secuencia/grupo/:idgrupo/maestro/:idmaestro/materia/:idmat
     token: req.params.token,
   }
 
-  var alumnosGrupo = await API.alumnos(datosDocenteSesion.grupo);
-
-
-  //console.log(datosDocenteSesion.secuencia.id);
-  var quizzesSecuencia = await Quizz.find({ secuencia: { $eq: datosDocenteSesion.secuencia.id } }, { nombreQuizz: 1 }).exec();
-  var totalQuizzes = quizzesSecuencia.length;
-
-  var idQuizzSecuencia = [];
-  //for para obtener todos los id de los quizzes de la secuencia
-  for (q in quizzesSecuencia) {
-
-    idQuizzSecuencia.push(quizzesSecuencia[q]);
-  }
-
-  //Captura de los ids quizz secuencia
-  datosDocenteSesion.quizzesSecuencia = idQuizzSecuencia;
-
-  var alumnosProgreso = [];
-  //alumno sin progreso alguno en la secuencia
-  var alumnos = [];
-
-  var x
-  for (var i = 0; i < alumnosGrupo.length; i++) {
-
-    var progreso = 0;
-
-    //Por cada Quizz en la secuencia
-
-    for (x in quizzesSecuencia) {
-
-
-      var quizzI = quizzesSecuencia[x];
-
-      //Buscamos si ha contestado el alumno por lo menos una vez el quizz x
-      var quizzContestado = await Registros.find({ $and: [{ alumno: alumnosGrupo[i].id }, { quizz: quizzI.id }] });
-      if (quizzContestado.length >= 1) {
-        progreso = progreso + 1;
-      }
-
-    }
-    //Si hay algún progreso
-    if (progreso >= 1) {
-      var resultadoAlumno = {
-        alumno: alumnosGrupo[i],
-        progreso: (progreso + "/" + totalQuizzes)
-      }
-
-      alumnosProgreso.push(resultadoAlumno);
-    }
-    else {
-      var resultadoAlumno = {
-        alumno: alumnosGrupo[i],
-      }
-      alumnos.push(resultadoAlumno);
-    }
-
-  }
-  datosDocenteSesion.alumnos = alumnosProgreso;
-  res.render('docente/secuencias', { datosDocenteSesion, alumnosProgreso, alumnos, data });
-
-});
-
-router.get('/docentes/estadisticas/:idalumno', async (req, res) => {
   var alumnoAnalizado;
 
   //Extracción del alumno
@@ -432,7 +444,7 @@ router.get('/docentes/estadisticas/:idalumno', async (req, res) => {
   //console.log(datosIntentos);
   //datosIntentos2=JSON.parse(datosIntentos);
   console.log(datosIntentos);
-  res.render('docente/estadisticas', { datosDocenteSesion, alumnoAnalizado, datosIntentos });
+  res.render('docente/estadisticas', { datosDocenteSesion, alumnoAnalizado, datosIntentos, data });
 
 });
 
