@@ -466,7 +466,6 @@ var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
   res.json(niveles)
 })
 
-
  router.get('/cuarto', (req, res) => {
 
    gfs.files.find().toArray((err, files) => {

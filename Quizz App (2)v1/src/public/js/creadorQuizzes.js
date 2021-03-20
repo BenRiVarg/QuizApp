@@ -88,20 +88,18 @@ function palabras() {
 
   /* el ciclo for lo utilizo para saber cuantas son las veces que va a inyectar la etiqueta con la palabra */
   for (var i = 0; i < palabraPartida.length; i++) {
-    strVar += '<div id=" " class="palabraid text-dark fw-bold text-center">';
-    strVar += "              " + palabraPartida[i] + " </div>";
+    var id="drag"+contadorIDrag;
+    strVar += '<div id=\"'+id+'\" class="palabraid text-dark fw-bold text-center elementoDrag" style=\"width:90px;\">';
+    strVar += "" + palabraPartida[i] + " </div>";
+
+    contadorIDrag++;
   }
 
-  document.getElementById("palabras").innerHTML = strVar;
-  var palabras = document.getElementById("palabras");
-  var align = palabras.getAttribute("id");
-  var list = document.getElementsByClassName("palabraid");
-  for (var j = 0; j < palabraPartida.length; j++) {
-    list[j].id = "drag" + (j + 1);
-    id = list[j].id;
-    console.log(id);
-  }
-  comprobarDrag();
+
+  var espacioLienzo=document.getElementById("lienzo0").children[0];//.innerHTML = strVar;
+  espacioLienzo.insertAdjacentHTML("beforeend",strVar);   
+
+  arrastrable();
 }
 
 function comprobarDrag(event) {
@@ -192,22 +190,25 @@ function cuadros() {
   var cantidad = document.querySelector("#caRe").value;
   
   for (var i = 0; i < cantidad; i++) {
-    var strVar = '  <div id="recuadro' + contadorIDrag + '" class="div1 recuadro elementoDrag"></div>';
+    var strVar = '  <div id="recuadro' + contadorIDrag + '" class="div1 recuadro elementoDrag reactivo"></div>';
     var lienzo = document.getElementById("lienzo0");
     lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
     contadorIDrag++;
   }
   arrastrable();
+  activarReactivo();
 }
 
 function flechaHoDerecha() {
   var strVar = "";
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
-    strVar += '<img class="imagenes widget" src="/img/flecha.png" alt="">';
+    strVar += '<img class=" flecha imagenes elementoDrag" id="fid'+contadorIDrag+'"src="/img/flecha.png" alt="">';
+    contadorIDrag++
+   
   }
-  
-  document.getElementById("flechasHoDer").innerHTML = strVar;
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
 }
 
@@ -215,11 +216,13 @@ function flechaHoIzquierda() {
   var strVar = "";
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
-    strVar += '<img class="imagenes widget" src="/img/flechaHoIz.png" alt="">';
+    strVar += '<img class="flecha imagenes elementoDrag" id="fdi"'+contadorIDrag+'" src="/img/flechaHoIz.png" alt="">';
+    contadorIDrag++
   }
-
-  document.getElementById("flechasHoIz").innerHTML = strVar;
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
+  
 }
 
 function flechaDiaDerecha() {
@@ -227,10 +230,12 @@ function flechaDiaDerecha() {
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
     strVar +=
-      '<img class="widget diagonal" src="/img/flechadiaderecha.png" alt="">';
-  }
+      '<img class="flecha diagonal elementoDrag" id="fsd'+contadorIDrag+'" src="/img/flechadiaderecha.png" alt="">';
+    contadorIDrag++
+    }
 
-  document.getElementById("flechasDiaDer").innerHTML = strVar;
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
 }
 
@@ -239,10 +244,12 @@ function flechaDiaIzquierda() {
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
     strVar +=
-      '<img class="widget diagonal" src="/img/flechadigaiz.png" alt="">';
-  }
+      '<img class="flecha diagonal elementoDrag" id="fsi'+contadorIDrag+'" src="/img/flechadigaiz.png" alt="">';
+      contadorIDrag++;
+    }
 
-  document.getElementById("flechasDiaIz").innerHTML = strVar;
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
 }
 
@@ -251,10 +258,12 @@ function flechaDiaDerechaInv() {
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
     strVar +=
-      '<img class="widget diagonal" src="/img/diagonalderinvertida.png" alt="">';
-  }
+      '<img class="flecha diagonal elementoDrag" id="fad'+contadorIDrag+'" src="/img/diagonalderinvertida.png" alt="">';
+      contadorIDrag++;
+    }
 
-  document.getElementById("flechasDiaDerInv").innerHTML = strVar;
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
 }
 
@@ -263,10 +272,12 @@ function flechaDiaIzquierdaInv() {
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
     strVar +=
-      '<img class="widget diagonal" src="/img/diagonalizinvertida.png" alt="">';
-  }
+      '<img class="flecha diagonal elementoDrag" id="fai'+contadorIDrag+'" src="/img/diagonalizinvertida.png" alt="">';
+    contadorIDrag++;
+    }
 
-  document.getElementById("flechasDiaIzInv").innerHTML = strVar;
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
 }
 
@@ -298,6 +309,7 @@ function flechaDiaIzquierdaInv() {
 
       //Revisamos la clase que tiene el objeto que se mueve para guardarlo de cierta manera
       var strCriterio=objetoHTML.className
+      console.log(strCriterio);
       if(strCriterio.search("recuadro")!=-1){
         datos.tipoElemento="recuadro";
       }
@@ -305,17 +317,17 @@ function flechaDiaIzquierdaInv() {
         datos.tipoElemento="flecha";
         
       }
-
       var strlienzo=this.id;
       var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
       
+     
       construirObjLienzo(espacioObj,datos);
 
     }
   });
 
 
-
+function activarReactivo(){
 $(".reactivo").droppable({
   drop: function (event, ui) {
 
@@ -353,6 +365,8 @@ $(".reactivo").droppable({
 
   }
 });
+}
+
 
 function construirObjLienzo(espacioObj,datos){
   
@@ -366,7 +380,7 @@ function construirObjLienzo(espacioObj,datos){
 
       //Si ya existe el elemento
       var preguntaExistente
-      for(x in objLienzo.preguntas){
+      for(x in objLienzo.pregunta){
         var preguntaI=objLienzo.pregunta[x]
         if((preguntaI.id)&&(datos.pregunta.id==preguntaI.id)){
             preguntaExistente=preguntaI;
@@ -376,12 +390,10 @@ function construirObjLienzo(espacioObj,datos){
       if (preguntaExistente){
         //SobreEscritura de Datos
         console.log("Sobreescribiendo");
-        console.log(x);
         objLienzo.respuesta[x]=datos.respuesta;
       }
       else{
         //Escritura de Datos
-        obj
         objLienzo.pregunta.push(datos.pregunta);
         objLienzo.respuesta.push(datos.respuesta);
       }
@@ -394,7 +406,8 @@ function construirObjLienzo(espacioObj,datos){
         
         
           var criterio=datos.tipoElemento;
-          console.log(datos);
+          console.log("criterio")
+          console.log(criterio);
           switch(criterio){
           case "recuadro":
             var preguntaExistente
@@ -444,7 +457,23 @@ function construirObjLienzo(espacioObj,datos){
               console.log(objLienzo);
               
           break
-             
+          case "img":
+            console.log("entra");
+            var imgExistente=objLienzo.img[0];
+              
+              if (imgExistente){
+                //SobreEscritura de Datos
+                console.log("Nuevas coordenadas img");
+                objLienzo.img[0].top=datos.coordenadas.top;
+                objLienzo.img[0].left=datos.coordenadas.left;
+              }
+              else{
+                //Escritura de Datos
+                objLienzo.img.push(datos.coordenadas);
+              }
+              console.log(objLienzo);
+              
+          break   
           }
       break;
   }
@@ -462,8 +491,6 @@ document.getElementById("file").onchange = function (e) {
 
   // Le decimos que cuando este listo ejecute el código interno
   reader.onload = function () {
-    var titulo = (document.getElementById("titulop").innerHTML =
-      "Previsualización de la imagen");
     let preview = document.getElementById("lienzo0"),
       image = document.createElement("img");
     image.src = reader.result;
@@ -471,26 +498,38 @@ document.getElementById("file").onchange = function (e) {
         
     var imageDatos = new Image();
     imageDatos.src = reader.result;
+    imageDatos.id="image"+contadorIDrag;
 
+
+    var IDimagen=imageDatos.id;
     imageDatos.onload = function() {
         // access image size here 
         console.log("Resultado de la función")
        
-
+        //Espacio centrado en base al tamaño del lienzo
         var leftAjustado= Math.round((770-this.width)/2);
         var topAjustado= Math.round((550-this.height)/2);
-
-        console.log(leftAjustado);
-        console.log(topAjustado);
 
         imageDatos.style.position="absolute";
         imageDatos.style.top=topAjustado+"px";
         imageDatos.style.left=leftAjustado+"px";
+
+        var datos={
+          tipoElemento: "img",
+          operacion: "reposicion",
+          coordenadas:
+            { id: IDimagen,
+              top: topAjustado,
+              left: leftAjustado
+            }
+        }
+        
+        construirObjLienzo(0,datos);
     }
 
+    
    
     //preview.innerHTML = "";
-    console.log(preview.children[0]);
 
     //Si ya hay una imagen
     if(preview.children[1]){
@@ -508,93 +547,77 @@ document.getElementById("file").onchange = function (e) {
 
       function preguntaArrastrar() {
         var strVar="";
-strVar += " <div class=\"tipoAr cuestionario\">";
-strVar += "    <div class=\"row mt-3\">";
-strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
-strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
-strVar += "        <div class=\"row\">";
-strVar += "          <div class=\"col-lg-6 centrado\">";
-strVar += "            <div class=\"mt-5\">";
-strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
-strVar += "              <input id=\"file\" type=\"file\" id=\"file-upload\" class=\"form-control\" accept=\"image\/*\">";
-strVar += "              <div class=\"mt-3\">";
-strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
-strVar += "                <div class=\"mb-3\">";
-strVar += "                  <input id=\"caRe\" type=\"number\" name=\"cuadro\" placeholder=\"Cantidad:\" class=\"form-control\">";
-strVar += "                <\/div>";
-strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"cuadros()\">Crear<\/button>";
-strVar += "              <\/div>";
-strVar += "              <h4 class=\"text-dark mb-3 mt-3\">Escribe las palabras que quieras agregar:<\/h4>";
-strVar += "              <div class=\"mb-3\">";
-strVar += "                <input id=\"palabra\" type=\"text\" name=\"palabra\" placeholder=\"Coloca las palabras:\" class=\"form-control\">";
-strVar += "              <\/div>";
-strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"palabras()\">Crear<\/button>";
-strVar += "              <div class=\"mt-2\">";
-strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de flechas:<\/h4>";
-strVar += "                <div class=\"mb-3\">";
-strVar += "                  <input id=\"caFle\" type=\"number\" name=\"flechas\" placeholder=\"Cantidad:\" class=\"form-control\">";
-strVar += "                <\/div>";
-strVar += "                <h4 class=\"text-dark mb-3\">Tipos de flecha:<\/h4>";
-strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoDerecha()\"><i";
-strVar += "                    class=\"fas fa-arrow-right fa-lg\"><\/i><\/button>";
-strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoIzquierda()\"><i";
-strVar += "                    class=\"fas fa-arrow-left fa-lg\"><\/i><\/button>";
-strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerecha()\"><i";
-strVar += "                    class=\"fas fa-location-arrow fa-lg\"><\/i><\/button>";
-strVar += "              <\/div>";
-strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierda()\"><i";
-strVar += "                  class=\"fas fa-location-arrow fa-rotate-270 fa-lg\"><\/i><\/button>";
-strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerechaInv()\"><i";
-strVar += "                  class=\"fas fa-location-arrow fa-rotate-90 fa-lg\"><\/i><\/button>";
-strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierdaInv()\"><i";
-strVar += "                  class=\"fas fa-location-arrow fa-rotate-180 fa-lg\"><\/i><\/button>";
-strVar += "            <\/div>";
-strVar += "            <!-- imagen -->";
-strVar += "            <div class=\"visualizacion container\">";
-strVar += "              <hr>";
-strVar += "              <div id=\"titulop\"><\/div>";
-strVar += "              <div id=\"preview\"><\/div>";
-strVar += "              <!-- palabras -->";
-strVar += "              <div id=\"palabras\" class=\"contenedor mt-5\"><\/div>";
-strVar += "              <div id=\"cuadros\" class=\"row text-center\"><\/div>";
-strVar += "";
-strVar += "              <div id=\"flechasHoDer\" class=\"text-center\">";
-strVar += "              <\/div>";
-strVar += "              <div id=\"flechasHoIz\" class=\"text-center\">";
-strVar += "              <\/div>";
-strVar += "              <div id=\"flechasDiaDer\" class=\"text-center\">";
-strVar += "              <\/div>";
-strVar += "              <div id=\"flechasDiaIz\" class=\"text-center\">";
-strVar += "              <\/div>";
-strVar += "              <div id=\"flechasDiaDerInv\" class=\"text-center\">";
-strVar += "              <\/div>";
-strVar += "              <div id=\"flechasDiaIzInv\" class=\"text-center\">";
-strVar += "              <\/div>";
-strVar += "              <div id=\"displayNone\" class=\"mt-2 mb-3\">";
-strVar += "                <h4 id=\"tituloR\" class=\"text-dark\"><\/h4>";
-strVar += "                <div id=\"demo\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
-strVar += "                <\/div>";
-strVar += "                <div id=\"demo2\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
-strVar += "                <\/div>";
-strVar += "                <div id=\"demo3\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
-strVar += "                <\/div>";
-strVar += "                <div id=\"demo4\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
-strVar += "                <\/div>";
-strVar += "                <div id=\"demo5\" type=\"hidden\" class=\"respuestaDrag text-dark\">";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "            <\/div>";
-strVar += "          <\/div>";
-strVar += "          <div class=\"col-lg-6 lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
-strVar += "            <div class=\"col-12\">";
-strVar += "             ";
-strVar += "            <\/div>";
-strVar += "          <\/div>";
-strVar += "        <\/div>";
-strVar += "      <\/div>";
-strVar += "    <\/div>";
-strVar += "    <\/div>";
-strVar += "  <\/div>";
+            strVar += "<div class=\"tipoAr cuestionario\">";
+            strVar += "    <div class=\"row mt-3\">";
+            strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
+            strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
+            strVar += "        <div class=\"row\">";
+            strVar += "          <div class=\"col-lg-6 centrado\">";
+            strVar += "            <div class=\"mt-5\">";
+            strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
+            strVar += "              <input id=\"file\" type=\"file\" id=\"file-upload\" class=\"form-control\" accept=\"image\/*\">";
+            strVar += "              <div class=\"mt-3\">";
+            strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
+            strVar += "                <div class=\"mb-3\">";
+            strVar += "                  <input id=\"caRe\" type=\"number\" name=\"cuadro\" placeholder=\"Cantidad:\" class=\"form-control\">";
+            strVar += "                <\/div>";
+            strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"cuadros()\">Crear<\/button>";
+            strVar += "              <\/div>";
+            strVar += "              <h4 class=\"text-dark mb-3 mt-3\">Escribe las palabras que quieras agregar:<\/h4>";
+            strVar += "              <div class=\"mb-3\">";
+            strVar += "                <input id=\"palabra\" type=\"text\" name=\"palabra\" placeholder=\"Coloca las palabras:\" class=\"form-control\">";
+            strVar += "              <\/div>";
+            strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"palabras()\">Crear<\/button>";
+            strVar += "              <div class=\"mt-2\">";
+            strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de flechas:<\/h4>";
+            strVar += "                <div class=\"mb-3\">";
+            strVar += "                  <input id=\"caFle\" type=\"number\" name=\"flechas\" placeholder=\"Cantidad:\" class=\"form-control\">";
+            strVar += "                <\/div>";
+            strVar += "                <h4 class=\"text-dark mb-3\">Tipos de flecha:<\/h4>";
+            strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoDerecha()\"><i";
+            strVar += "                    class=\"fas fa-arrow-right fa-lg\"><\/i><\/button>";
+            strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoIzquierda()\"><i";
+            strVar += "                    class=\"fas fa-arrow-left fa-lg\"><\/i><\/button>";
+            strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerecha()\"><i";
+            strVar += "                    class=\"fas fa-location-arrow fa-lg\"><\/i><\/button>";
+            strVar += "              <\/div>";
+            strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierda()\"><i";
+            strVar += "                  class=\"fas fa-location-arrow fa-rotate-270 fa-lg\"><\/i><\/button>";
+            strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerechaInv()\"><i";
+            strVar += "                  class=\"fas fa-location-arrow fa-rotate-90 fa-lg\"><\/i><\/button>";
+            strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierdaInv()\"><i";
+            strVar += "                  class=\"fas fa-location-arrow fa-rotate-180 fa-lg\"><\/i><\/button>";
+            strVar += "            <\/div>";
+            strVar += "           ";
+            strVar += "              <!-- palabras -->";
+            strVar += "";
+            strVar += "              <div id=\"flechasHoDer\" class=\"text-center\">";
+            strVar += "              <\/div>";
+            strVar += "              <div id=\"flechasHoIz\" class=\"text-center\">";
+            strVar += "              <\/div>";
+            strVar += "              <div id=\"flechasDiaDer\" class=\"text-center\">";
+            strVar += "              <\/div>";
+            strVar += "              <div id=\"flechasDiaIz\" class=\"text-center\">";
+            strVar += "              <\/div>";
+            strVar += "              <div id=\"flechasDiaDerInv\" class=\"text-center\">";
+            strVar += "              <\/div>";
+            strVar += "              <div id=\"flechasDiaIzInv\" class=\"text-center\">";
+            strVar += "              <\/div>";
+            strVar += "            ";
+            strVar += "            <\/div>";
+            strVar += "          <\/div>";
+            strVar += "          <!--Comienza Lienzo-->";
+            strVar += "          <div class=\"col-lg-6 lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
+            strVar += "            <div class=\"col-12\">";
+            strVar += "             ";
+            strVar += "            <\/div>";
+            strVar += "          <\/div>";
+            strVar += "          <!-- Termina Lienzo-->";
+            strVar += "        <\/div>";
+            strVar += "      <\/div>";
+            strVar += "    <\/div>";
+            strVar += "    <\/div>";
+            strVar += "  <\/div>";
       insertor.insertAdjacentHTML("beforeend",strVar);   
       }
 
@@ -734,9 +757,7 @@ function quitarReactivoRelacional(obj){
 //Función para Escribir o sobreEscribir datos en el objeto Lienzo
 
 
-function enviarPreguntaDrag(){
-  console.log(objetosDrag[0]);
-}
+
 
 ///+++++++---------------Funcion de Examen------------++++++++//
 function dibujarLienzo(){
@@ -1157,8 +1178,32 @@ function envioPreguntaMate(){
 
   contador=contador+1;
   }
+  
 
   
+}
+
+function enviarPreguntaDrag(){
+  var i=0;
+  //Rastreo del div por su clase, que define el tipo de pregunta
+  var cuestionarios=document.getElementsByClassName("tipoAr");
+  
+  
+  //Clasificación de los elementos enviados para no tener conflictos en la request
+  for(i=0;i<cuestionarios.length;i++){
+  
+  //Se agrega el tipo de pregunta por medio de un elemento hidden
+  var tipoHTML=contadorTipo();
+  //Definición del tipo de pregunta
+  tipoHTML.value="tipoAr";
+  //inserción
+
+  var strVar="";
+  strVar += "<input type=\"hidden\" name=\"\" value=\"\">";
+
+  cuestionarios[i].appendChild(tipoHTML);
+  }
+ 
 }
 
 
