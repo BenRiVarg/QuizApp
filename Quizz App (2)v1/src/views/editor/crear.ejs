@@ -182,7 +182,7 @@
   <form action="/editores/crear" id="formularioQuizz" method="POST" enctype="multipart/form-data" align="center">
     <div class="row justify-content-center mt-5 pt-5">
       <div class="col-lg-7">
-        <select id="palabras" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="nivel" required>
+        <select id="nivel" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="nivel" required>
           <option selected>Nivel</option>
 
         </select>
@@ -238,44 +238,74 @@
       for (var i = 0; i < 3; i++) {
         var nombres = (niveles[i].nombre);
         var id = (niveles[i].id);
-        var select = document.getElementById("palabras").innerHTML +=
+        var select = document.getElementById("nivel").innerHTML +=
           "<option value='"+ id +"'>" + nombres + "</option>";
 
          console.log(nombres);
       }
-        $('select').on('change', function () {
+       
+    });
+
+    $('#nivel').on('change', async function () {
+          console.log(this.value);
+          var grados= await getGrados(this.value);
+          console.log("GRADOS OBTENIDOS")
+          console.log(grados);
+          console.log(grados[0].id);
+          console.log(grados[0].nombre);
         var visible = document.getElementById("grades").style.display = "block";
       });
-    });
 
-   
 
-    $.getJSON("/pruebaAJAXmaterias", function (materias){
-      for(var i = 0; i < 11; i++){
-        var materiaN = (materias[i].nombre);
-        var id = (materias[i].id);
-        var materiaS = document.getElementById("materias").innerHTML +=
-          "<option value='" + id + "'>" + materiaN + "</option>";
-        var oculto = document.getElementById("materias").style.display = "none";
-      }
-    });
-    
-      $.getJSON("/pruebaAJAXgrados", function (grados) {
-          for (var i = 0; i < 6; i++) {
-            var gradosN = (grados[i].nombre);
-            var id = (grados[i].id);
-            var grades = document.getElementById("grades").innerHTML += 
-             "<option value='" + id + "'>"+ gradosN +"</option>"; 
-            var oculto = document.getElementById("grades").style.display = "none";
-          }
-         
+    async function getGrados(idNivel){
+
+      var gradosDelNivel= await new Promise((resolve, reject) => {
+          $.getJSON("/pruebaAJAXgrados/"+idNivel+"", function (grados) {
+            
+            resolve(grados)
+          });
+       });
+
+      console.log("Resultado");
+      return gradosDelNivel;
+    }
+     
+    async function getMaterias(idGrado){
+
+      var materiasDelGrado= await new Promise((resolve, reject) => {
+        $.getJSON("/pruebaAJAXmaterias/"+idGrado+"", function (materias) {
+            
+            resolve(materias)
+           });
+       });
+
+       return materiasDelGrado;
+   }
+
+   async function getBloques(idMateria){
+
+        var bloquesPorMateria= await new Promise((resolve, reject) => {
+          $.getJSON("/pruebaAJAXbloques/"+idMateria+"", function (bloques) {
+              
+              resolve(bloques);
+            });
+        });
+
+        return bloquesPorMateria;
+    }
+      
+    async function getBloques(idBloque){
+
+      var secuenciasPorBloque= await new Promise((resolve, reject) => {
+        $.getJSON("/pruebaAJAXsecuencias/"+idBloque+"", function (secuencias) {
+            
+            resolve(secuencias);
+          });
       });
 
-      function option(){
-         $('select').on('change', function () {
-           var visible = document.getElementById("materias").style.display = "block";
-        });
+      return secuenciasPorBloque;
       }
+      
      
       
   </script>
