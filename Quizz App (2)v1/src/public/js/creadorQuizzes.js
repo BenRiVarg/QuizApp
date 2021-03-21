@@ -479,111 +479,74 @@ function construirObjLienzo(espacioObj,datos){
   
 }
 
-function previsualizarDraw2(){
-  var idFile="L-file"
-  var idpreView="lienzo0"
-  //Función para crear las funciones preview
-document.getElementById(idFile).onchange = function (e) {
-  // Creamos el objeto de la clase FileReader
-  let reader = new FileReader();
-
-  // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-  reader.readAsDataURL(e.target.files[0]);
-
-  // Le decimos que cuando este listo ejecute el código interno
-  reader.onload = function () {
-    let preview = document.getElementById(idpreView),
-      image = document.createElement("img");
-    image.src = reader.result;
-    image.id="image"+contadorIDrag;
-    console.log(image.style.width);
-    console.log(image.style.height);
-        /*
-     //Si ya hay una imagen
-     if(preview.children[0]){
-      preview.children[0].remove()
-      preview.appendChild(image)
-    }
-    else{
-      preview.appendChild(image);
-    }
-    */
-  }
-    
-   
-  };
-}
-
 function previsualizarDraw(){
-//Función para visualizar una imagen en el lienzo
-var lienzo=document.getElementById("lienzo0");
-document.getElementById("L-file").onchange = function (e) {
-  // Creamos el objeto de la clase FileReader
-  let reader = new FileReader();
+    //Función para crear las funciones preview
+    document.getElementById("L-file").onchange = function (e) {
+      // Creamos el objeto de la clase FileReader
+      let reader = new FileReader();
 
-  // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-  reader.readAsDataURL(e.target.files[0]);
+      // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+      reader.readAsDataURL(e.target.files[0]);
 
-  // Le decimos que cuando este listo ejecute el código interno
-  reader.onload = function () {
-      image = document.createElement("img");
-    image.src = reader.result;
+      // Le decimos que cuando este listo ejecute el código interno
+      reader.onload = function () {
+        let preview = document.getElementById("lienzo0"),
+          image = document.createElement("img");
+        image.src = reader.result;
+
+            
+        var imageDatos = new Image();
+        imageDatos.src = reader.result;
+        imageDatos.id="image"+contadorIDrag;
+
+
+        var IDimagen=imageDatos.id;
+        imageDatos.onload = function() {
+            // access image size here 
+            console.log("Resultado de la función")
+          
+            //Espacio centrado en base al tamaño del lienzo
+            var leftAjustado= Math.round((770-this.width)/2);
+            var topAjustado= Math.round((550-this.height)/2);
+
+            imageDatos.style.position="absolute";
+            imageDatos.style.top=topAjustado+"px";
+            imageDatos.style.left=leftAjustado+"px";
+
+            var datos={
+              tipoElemento: "img",
+              operacion: "reposicion",
+              coordenadas:
+                { id: IDimagen,
+                  top: topAjustado,
+                  left: leftAjustado
+                }
+            }
+            
+            construirObjLienzo(0,datos);
+        }
 
         
-    var imageDatos = new Image();
-    imageDatos.src = reader.result;
-    imageDatos.id="image"+contadorIDrag;
+      
+        //preview.innerHTML = "";
 
-
-    var IDimagen=imageDatos.id;
-    imageDatos.onload = function() {
-        // access image size here 
-        console.log("Resultado de la función")
-        console.log(this.width)
-        console.log(this.height);
-        //Espacio centrado en base al tamaño del lienzo
-        var leftAjustado= Math.round((770-this.width)/2);
-        var topAjustado= Math.round((550-this.height)/2);
-
-        imageDatos.style.position="absolute";
-        imageDatos.style.top=topAjustado+"px";
-        imageDatos.style.left=leftAjustado+"px";
-
-        var datos={
-          tipoElemento: "img",
-          operacion: "reposicion",
-          coordenadas:
-            { id: IDimagen,
-              top: topAjustado,
-              left: leftAjustado
-            }
-        }
-        lienzo.appendChild(imageDatos);
-      /*  
         //Si ya hay una imagen
-    if(lienzo.children[1]){
-      lienzo.children[1].remove()
-      lienzo.appendChild(imageDatos)
-    }
-    else{
-      lienzo.appendChild(imageDatos);
-    }
-    */
-        construirObjLienzo(0,datos);
-    }
-  }
-
-
-    
-    
-  };
-};
-previsualizarDraw();
+        if(preview.children[1]){
+          preview.children[1].remove()
+          preview.appendChild(imageDatos)
+        }
+        else{
+          preview.appendChild(imageDatos);
+        }
+        
+      };
+    };
+}
 //----Terminan funciones Drag--------//
 
       function preguntaArrastrar() {
-        var strVar="";
-        strVar += "<div class=\"tipoAr \">";
+                var strVar="";
+        strVar += "<div class=\"tipoAr cuestionario\">";
         strVar += "    <div class=\"row mt-3\">";
         strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
         strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
@@ -591,7 +554,7 @@ previsualizarDraw();
         strVar += "          <div class=\"col-lg-6 centrado\">";
         strVar += "            <div class=\"mt-5\">";
         strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
-        strVar += "              <input  type=\"file\" id=\"L-file\" class=\"form-control imgs\" name=\"imgs\" accept=\"image\/*\">";
+        strVar += "              <input id=\"L-file\" type=\"file\"  class=\"form-control\" accept=\"image\/*\">";
         strVar += "              <div class=\"mt-3\">";
         strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
         strVar += "                <div class=\"mb-3\">";
@@ -624,31 +587,15 @@ previsualizarDraw();
         strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierdaInv()\"><i";
         strVar += "                  class=\"fas fa-location-arrow fa-rotate-180 fa-lg\"><\/i><\/button>";
         strVar += "            <\/div>";
-        strVar += "           ";
-        strVar += "              \/\/ palabras ";
-        strVar += "";
-        strVar += "              <div id=\"flechasHoDer\" class=\"text-center\">";
-        strVar += "              <\/div>";
-        strVar += "              <div id=\"flechasHoIz\" class=\"text-center\">";
-        strVar += "              <\/div>";
-        strVar += "              <div id=\"flechasDiaDer\" class=\"text-center\">";
-        strVar += "              <\/div>";
-        strVar += "              <div id=\"flechasDiaIz\" class=\"text-center\">";
-        strVar += "              <\/div>";
-        strVar += "              <div id=\"flechasDiaDerInv\" class=\"text-center\">";
-        strVar += "              <\/div>";
-        strVar += "              <div id=\"flechasDiaIzInv\" class=\"text-center\">";
-        strVar += "              <\/div>";
-        strVar += "            ";
         strVar += "            <\/div>";
         strVar += "          <\/div>";
-        strVar += "          \/\/Comienza Lienzo";
+        strVar += "          <!--Comienza Lienzo-->";
         strVar += "          <div class=\"col-lg-6 lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
         strVar += "            <div class=\"col-12\">";
         strVar += "             ";
         strVar += "            <\/div>";
         strVar += "          <\/div>";
-        strVar += "          \/\/Termina Lienzo";
+        strVar += "          <!-- Termina Lienzo-->";
         strVar += "        <\/div>";
         strVar += "      <\/div>";
         strVar += "    <\/div>";
