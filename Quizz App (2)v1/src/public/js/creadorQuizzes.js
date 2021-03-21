@@ -1187,15 +1187,17 @@ function enviarPreguntaDrag(datosRequest){
     var lienzoI=objetosDrag[i];
   }
   */
- /*
+ console.log("enviando Drag");
  var tiposAr=document.getElementsByClassName("tipoAr");
+
  for(var j=0;j<tiposAr.length;j++){
    cuestionarioI=tiposAr[j]
+   console.log(cuestionarioI);
    //Captura de la imagen
-   var imagen = cuestionarioI.querySelectorAll("input.imagen");
-   imagen[0].name="imagenes";
+   var imagen = cuestionarioI.querySelectorAll("input.imgs");
+   console.log(imagen[0].files[0].name);
  }
- */
+ 
  /*
 
   var lienzos=objetosDrag.length;

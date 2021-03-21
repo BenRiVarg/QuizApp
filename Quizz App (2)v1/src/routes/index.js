@@ -207,7 +207,11 @@ router.get('/editores/crear',async (req,res)=>{
 
 router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
   console.log(req.files);
-  
+  var imagenes=req.files;
+  console.log("DEPURANDO");
+  for( i in imagenes){
+    console.log(imagenes[i].originalname);
+  }
   console.log(req.body);
  /*
  	var contadorImagenes=0;
