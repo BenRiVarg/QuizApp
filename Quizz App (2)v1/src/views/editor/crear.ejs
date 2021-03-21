@@ -96,8 +96,8 @@ transition: all o.5s ease-in-out;
 box-shadow: (0,0,0,0.3);
 cursor: pointer;
 position: fixed;
-bottom: 450px;
-right: 40px;
+bottom: 439px;
+right: 250px;
 }
 
 .button1::before{
@@ -123,7 +123,7 @@ background: #fff;
 
 .nav1 {
 transform: translateY(-10%);
-opacity: 0;
+opacity: 0%;
 transition: all 0.5s ease-in-out;
 background: white;
 width: 150px;
@@ -132,18 +132,16 @@ transform: translateY(0%);
 box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
 position: fixed;
 bottom: 160px;
-right: 80px;
+right: 100px;
 }
 
 .nav1 a{
 text-align: center;
 display: block;
-margin: 20px 0;
+margin: 10px 0;
 color: black;
 text-decoration: none;
 font-family: sans-serif;
-text-transform: uppercase;
-
 }
 
 #toggle:checked ~.nav1{
@@ -153,7 +151,7 @@ transform: translateY(10%);
 }
 #toggle:checked ~.button1{
 transform: rotate(135deg);
-box-shadow: (0,0,0, transparent);
+box-shadow: 0,0,0, transparent;
 }
     </style>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -166,7 +164,7 @@ box-shadow: (0,0,0, transparent);
     
 <title>Crear Examen</title>
 </head>
-<body data-spy="scroll" data-taregt=".nav1" data-offset="50" >
+<body data-spy="scroll" data-target="#insercion" data-offset="50" >
   <!-- Page Content -->
   
     
@@ -237,28 +235,78 @@ box-shadow: (0,0,0, transparent);
   </div>
   <div class="container1">
     <input type="checkbox" id="toggle">
-    <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para abrir el menú de preguntas" delay="0" tabindex="0" class="d-inline-block" >
+    <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para abrir y cerrar el menú de preguntas" delay="0" tabindex="0" class="d-inline-block" >
     <label for="toggle" class="button1"></label>
     </span>
+    <script>
+
+      var contadorhref=1;
+      function sumahref(id){
+
+        if (id==="ref") {
+          var ref = document.getElementById("ref");
+          contadorhref++;
+          ref.setAttribute("href",'#preg'+contadorhref);
+          
+          
+        }else if (id=="ref2") {
+          
+            var ref2 = document.getElementById("ref2");
+            contadorhref++;
+            ref2.setAttribute("href",'#preg'+contadorhref);
+            
+        }else if (id==="ref3") {
+          
+            var ref3 = document.getElementById("ref3");
+            contadorhref++;
+            ref3.setAttribute("href",'#preg'+contadorhref);
+            
+        }else if (id==="ref4"){
+          
+          var ref4 = document.getElementById("ref4");
+          contadorhref++;
+          ref4.setAttribute("href",'#preg'+contadorhref);
+          
+
+        }else if (id==="ref5"){
+          var ref5 = document.getElementById("ref5");
+          contadorhref++;
+          ref5.setAttribute("href",'#preg'+contadorhref);
+          
+        }else if (id==="ref6"){
+
+          var ref6 = document.getElementById("ref6");
+          contadorhref++;
+          ref6.setAttribute("href",'#preg'+contadorhref)
+          
+        }else{
+          console.log("error de link")
+          
+        }
+      }
+      
+
+    </script>
+    
     <nav class="nav1">
     
           <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click para insertar Pregunta Abierta" delay="0" tabindex="0" class="d-inline-block" >
-        <button  onclick="preguntaAbierta()"  class="w3-bar-item w3-button"> <a href=""></a> Insertar Pregunta Abierta</button>
+        <button  onclick="preguntaAbierta()"  class="w3-bar-item w3-button"> <a id="ref" onclick="sumahref(this.id)"  >Insertar Pregunta Abierta</a></button>
         </sapn>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para agregar pregunta relacional" delay="0" tabindex="0" class="d-inline-block" >
-        <button id="btn1"  onclick="preguntaRelacional(), desabilitado()" class="w3-bar-item w3-button" ><a href=""></a> Insertar Pregunta Relacional</button>
+        <button id="btn1"  onclick="preguntaRelacional(),desabilitado()" class="w3-bar-item w3-button" ><a id="ref2" onclick="sumahref(this.id)" >Insertar Pregunta Relacional</a></button>
         </span>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear una pregunta de opcion multiple" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaOM()" class="w3-bar-item w3-button" > <a href=""></a> Insertar Pregunta Opción Múltiple</button>
+        <button onclick="preguntaOM()" class="w3-bar-item w3-button" > <a id="ref3" onclick="sumahref(this.id)" >Insertar Pregunta Opción Múltiple</a></button>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear una pregunta de con imagen" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaIT()" class="w3-bar-item w3-button" > <a href=""></a> Insertar Pregunta-Imagen</button>
+        <button onclick="preguntaIT()" class="w3-bar-item w3-button" > <a id="ref4" onclick="sumahref(this.id)" >Insertar Pregunta-Imagen</a></button>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para creaa una pregunta de matematicas" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaMatematicas()" class="w3-bar-item w3-button" > <a href=""></a> Insertar Pregunta de Matemáticas</button>
+        <button onclick="preguntaMatematicas()" class="w3-bar-item w3-button" > <a id="ref5" onclick="sumahref(this.id)" >Insertar Pregunta de Matemáticas</a></button>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaArrastrar()" class="w3-bar-item w3-button" disabled> <a href=""></a> Inserta Pregunta Arrastrable </button>
+        <button onclick="preguntaArrastrar()" class="w3-bar-item w3-button" disabled> <a id="ref6" onclick="sumahref(this.id)" >Inserta Pregunta Arrastrable</a></button>
       </span>
     </nav>
   </div>
@@ -273,6 +321,8 @@ box-shadow: (0,0,0, transparent);
     document.getElementById("btn1").disabled = false;
     console.log("habilitado")
     }
+
+   
   </script>
  
   

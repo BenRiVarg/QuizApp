@@ -25,7 +25,7 @@ function contadorTipo(){
 function preguntaAbierta(){
 
   contadorid++;
-  console.log(contadorid)
+  
 var strVar="";
 strVar += '<div id=\"preg'+(contadorid)+'\" class=\"tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5\">';
 strVar += "                    <div class=\"container text-center\">";
@@ -140,14 +140,12 @@ function readURL(event){
           
       }
 
-
-      
-      
-      
-
 function preguntaRelacional(){
+  contadorid++;
+  
+
   var strVar="";
-  strVar += " <div class=\"tipoR cuestionario cuestionario row justify-content-center mt-5 pt-5 container\">";
+  strVar += '<div id=\"preg'+(contadorid)+'\" class=\"tipoR cuestionario cuestionario row justify-content-center mt-5 pt-5 container\">';
   strVar += "                                  ";
   strVar += "                                    <div class=\"col-md-4\">";
   strVar += "                                      <div class=\"\">";
@@ -272,8 +270,10 @@ function quitarReactivoRelacional(obj){
 
 function preguntaOM(){
 
+  contadorid++;
+  
   var strVar="";
-  strVar += " <div class=\"tipoOM cuestionario rounded-sm  \">";
+  strVar += ' <div id=\"preg'+(contadorid)+'\" class=\"tipoOM cuestionario rounded-sm  \">';
   strVar += "                      <div class=\"row\">";
   strVar += "                         ";
   strVar += "                              <div class=\"col-lg-12 col-md-6 col-sm-6 row justify-content-center mt-5 pt-5\">";
@@ -359,9 +359,12 @@ function seleccionarRespuesta(obj){
 }
 
 function preguntaIT(){
+
+  contadorid++;
+  
   var strVar="";
   strVar += "";
-  strVar += "                <div class=\"container tipoIT cuestionario mt-4 col-md-7 \">";
+  strVar += '                <div id=\"preg'+(contadorid)+'\" class=\"container tipoIT cuestionario mt-4 col-md-7 \">';
   strVar += "                    <div class=\"text-center\">";
   strVar += "                      <p class=\"display-6\">Pregunta Texto-Imagen<\/p>";
   strVar += "                      <p class=\"text-primary\"><b>Instruciones: <\/b> Seleccione la imagen a cargar, y defina pregunta y respuesta<\/p>";
@@ -390,9 +393,11 @@ insertor.insertAdjacentHTML("beforeend",strVar);
 
 
 function preguntaMatematicas(){
+  contadorid++;
+  
 
   var strVar="";
-strVar += "    <div class=\"tipoM cuestionario row justify-content-center mt-5 pt-5\">";
+strVar += '<div id=\"preg'+(contadorid)+'\" class=\"tipoM cuestionario row justify-content-center mt-5 pt-5\">';
 strVar += "            <div class=\"text-center\">";
 strVar += "              <h4>Pregunta de Matemáticas<\/h4>";
 strVar += "              <p class=\"text-primary\"><b>Instruciones: <\/b>   Si requiere escribir una fracción ingrese guion bajo\"_\" p. ej. 3_4 <\/p>";
