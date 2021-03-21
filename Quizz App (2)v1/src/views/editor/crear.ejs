@@ -318,6 +318,11 @@
               var visible = document.getElementById("bloques").style.display = "block";
             });
 
+            ////------------PRUEBAS FUNCIONALES------//
+            console.log("Debuggeando");
+            getBloques("T9iIq2yO-");
+            getSecuencias("dSnrbcbS1");
+            //-----------//
 
     async function getGrados(idNivel){
 
@@ -356,7 +361,7 @@
         return bloquesPorMateria;
     }
       
-    async function getBloques(idBloque){
+    async function getSecuencias(idBloque){
 
       var secuenciasPorBloque= await new Promise((resolve, reject) => {
         $.getJSON("/pruebaAJAXsecuencias/"+idBloque+"", function (secuencias) {
