@@ -479,11 +479,11 @@ function construirObjLienzo(espacioObj,datos){
   
 }
 
-
-
-function previsualizarDraw(){
-//Función para crear las funciones preview
-document.getElementById("file").onchange = function (e) {
+function previsualizarDraw2(){
+  var idFile="L-file"
+  var idpreView="lienzo0"
+  //Función para crear las funciones preview
+document.getElementById(idFile).onchange = function (e) {
   // Creamos el objeto de la clase FileReader
   let reader = new FileReader();
 
@@ -492,7 +492,40 @@ document.getElementById("file").onchange = function (e) {
 
   // Le decimos que cuando este listo ejecute el código interno
   reader.onload = function () {
-    let preview = document.getElementById("lienzo0"),
+    let preview = document.getElementById(idpreView),
+      image = document.createElement("img");
+    image.src = reader.result;
+    image.id="image"+contadorIDrag;
+    console.log(image.style.width);
+    console.log(image.style.height);
+        /*
+     //Si ya hay una imagen
+     if(preview.children[0]){
+      preview.children[0].remove()
+      preview.appendChild(image)
+    }
+    else{
+      preview.appendChild(image);
+    }
+    */
+  }
+    
+   
+  };
+}
+
+function previsualizarDraw(){
+//Función para visualizar una imagen en el lienzo
+var lienzo=document.getElementById("lienzo0");
+document.getElementById("L-file").onchange = function (e) {
+  // Creamos el objeto de la clase FileReader
+  let reader = new FileReader();
+
+  // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+  reader.readAsDataURL(e.target.files[0]);
+
+  // Le decimos que cuando este listo ejecute el código interno
+  reader.onload = function () {
       image = document.createElement("img");
     image.src = reader.result;
 
@@ -506,7 +539,8 @@ document.getElementById("file").onchange = function (e) {
     imageDatos.onload = function() {
         // access image size here 
         console.log("Resultado de la función")
-       
+        console.log(this.width)
+        console.log(this.height);
         //Espacio centrado en base al tamaño del lienzo
         var leftAjustado= Math.round((770-this.width)/2);
         var topAjustado= Math.round((550-this.height)/2);
@@ -524,104 +558,106 @@ document.getElementById("file").onchange = function (e) {
               left: leftAjustado
             }
         }
-        
+        lienzo.appendChild(imageDatos);
+      /*  
+        //Si ya hay una imagen
+    if(lienzo.children[1]){
+      lienzo.children[1].remove()
+      lienzo.appendChild(imageDatos)
+    }
+    else{
+      lienzo.appendChild(imageDatos);
+    }
+    */
         construirObjLienzo(0,datos);
     }
   }
-    
-   
-    //preview.innerHTML = "";
 
-    //Si ya hay una imagen
-    if(preview.children[1]){
-      preview.children[1].remove()
-      preview.appendChild(imageDatos)
-    }
-    else{
-      preview.appendChild(imageDatos);
-    }
+
+    
     
   };
 };
-
+previsualizarDraw();
 //----Terminan funciones Drag--------//
 
       function preguntaArrastrar() {
         var strVar="";
-            strVar += "<div class=\"tipoAr \">";
-            strVar += "    <div class=\"row mt-3\">";
-            strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
-            strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
-            strVar += "        <div class=\"row\">";
-            strVar += "          <div class=\"col-lg-6 centrado\">";
-            strVar += "            <div class=\"mt-5\">";
-            strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
-            strVar += "              <input id=\"file\" type=\"file\" id=\"file-upload\" class=\"form-control\" name=\"imgs\" accept=\"image\/*\">";
-            strVar += "              <div class=\"mt-3\">";
-            strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
-            strVar += "                <div class=\"mb-3\">";
-            strVar += "                  <input id=\"caRe\" type=\"number\" name=\"cuadro\" placeholder=\"Cantidad:\" class=\"form-control\">";
-            strVar += "                <\/div>";
-            strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"cuadros()\">Crear<\/button>";
-            strVar += "              <\/div>";
-            strVar += "              <h4 class=\"text-dark mb-3 mt-3\">Escribe las palabras que quieras agregar:<\/h4>";
-            strVar += "              <div class=\"mb-3\">";
-            strVar += "                <input id=\"palabra\" type=\"text\" name=\"palabra\" placeholder=\"Coloca las palabras:\" class=\"form-control\">";
-            strVar += "              <\/div>";
-            strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"palabras()\">Crear<\/button>";
-            strVar += "              <div class=\"mt-2\">";
-            strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de flechas:<\/h4>";
-            strVar += "                <div class=\"mb-3\">";
-            strVar += "                  <input id=\"caFle\" type=\"number\" name=\"flechas\" placeholder=\"Cantidad:\" class=\"form-control\">";
-            strVar += "                <\/div>";
-            strVar += "                <h4 class=\"text-dark mb-3\">Tipos de flecha:<\/h4>";
-            strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoDerecha()\"><i";
-            strVar += "                    class=\"fas fa-arrow-right fa-lg\"><\/i><\/button>";
-            strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoIzquierda()\"><i";
-            strVar += "                    class=\"fas fa-arrow-left fa-lg\"><\/i><\/button>";
-            strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerecha()\"><i";
-            strVar += "                    class=\"fas fa-location-arrow fa-lg\"><\/i><\/button>";
-            strVar += "              <\/div>";
-            strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierda()\"><i";
-            strVar += "                  class=\"fas fa-location-arrow fa-rotate-270 fa-lg\"><\/i><\/button>";
-            strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerechaInv()\"><i";
-            strVar += "                  class=\"fas fa-location-arrow fa-rotate-90 fa-lg\"><\/i><\/button>";
-            strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierdaInv()\"><i";
-            strVar += "                  class=\"fas fa-location-arrow fa-rotate-180 fa-lg\"><\/i><\/button>";
-            strVar += "            <\/div>";
-            strVar += "           ";
-            strVar += "              <!-- palabras -->";
-            strVar += "";
-            strVar += "              <div id=\"flechasHoDer\" class=\"text-center\">";
-            strVar += "              <\/div>";
-            strVar += "              <div id=\"flechasHoIz\" class=\"text-center\">";
-            strVar += "              <\/div>";
-            strVar += "              <div id=\"flechasDiaDer\" class=\"text-center\">";
-            strVar += "              <\/div>";
-            strVar += "              <div id=\"flechasDiaIz\" class=\"text-center\">";
-            strVar += "              <\/div>";
-            strVar += "              <div id=\"flechasDiaDerInv\" class=\"text-center\">";
-            strVar += "              <\/div>";
-            strVar += "              <div id=\"flechasDiaIzInv\" class=\"text-center\">";
-            strVar += "              <\/div>";
-            strVar += "            ";
-            strVar += "            <\/div>";
-            strVar += "          <\/div>";
-            strVar += "          <!--Comienza Lienzo-->";
-            strVar += "          <div class=\"col-lg-6 lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
-            strVar += "            <div class=\"col-12\">";
-            strVar += "             ";
-            strVar += "            <\/div>";
-            strVar += "          <\/div>";
-            strVar += "          <!-- Termina Lienzo-->";
-            strVar += "        <\/div>";
-            strVar += "      <\/div>";
-            strVar += "    <\/div>";
-            strVar += "    <\/div>";
-            strVar += "  <\/div>";
+        strVar += "<div class=\"tipoAr \">";
+        strVar += "    <div class=\"row mt-3\">";
+        strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
+        strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
+        strVar += "        <div class=\"row\">";
+        strVar += "          <div class=\"col-lg-6 centrado\">";
+        strVar += "            <div class=\"mt-5\">";
+        strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
+        strVar += "              <input  type=\"file\" id=\"L-file\" class=\"form-control imgs\" name=\"imgs\" accept=\"image\/*\">";
+        strVar += "              <div class=\"mt-3\">";
+        strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
+        strVar += "                <div class=\"mb-3\">";
+        strVar += "                  <input id=\"caRe\" type=\"number\"  placeholder=\"Cantidad:\" class=\"form-control\">";
+        strVar += "                <\/div>";
+        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"cuadros()\">Crear<\/button>";
+        strVar += "              <\/div>";
+        strVar += "              <h4 class=\"text-dark mb-3 mt-3\">Escribe las palabras que quieras agregar:<\/h4>";
+        strVar += "              <div class=\"mb-3\">";
+        strVar += "                <input id=\"palabra\" type=\"text\"  placeholder=\"Coloca las palabras:\" class=\"form-control\">";
+        strVar += "              <\/div>";
+        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"palabras()\">Crear<\/button>";
+        strVar += "              <div class=\"mt-2\">";
+        strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de flechas:<\/h4>";
+        strVar += "                <div class=\"mb-3\">";
+        strVar += "                  <input id=\"caFle\" type=\"number\"  placeholder=\"Cantidad:\" class=\"form-control\">";
+        strVar += "                <\/div>";
+        strVar += "                <h4 class=\"text-dark mb-3\">Tipos de flecha:<\/h4>";
+        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoDerecha()\"><i";
+        strVar += "                    class=\"fas fa-arrow-right fa-lg\"><\/i><\/button>";
+        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoIzquierda()\"><i";
+        strVar += "                    class=\"fas fa-arrow-left fa-lg\"><\/i><\/button>";
+        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerecha()\"><i";
+        strVar += "                    class=\"fas fa-location-arrow fa-lg\"><\/i><\/button>";
+        strVar += "              <\/div>";
+        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierda()\"><i";
+        strVar += "                  class=\"fas fa-location-arrow fa-rotate-270 fa-lg\"><\/i><\/button>";
+        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerechaInv()\"><i";
+        strVar += "                  class=\"fas fa-location-arrow fa-rotate-90 fa-lg\"><\/i><\/button>";
+        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierdaInv()\"><i";
+        strVar += "                  class=\"fas fa-location-arrow fa-rotate-180 fa-lg\"><\/i><\/button>";
+        strVar += "            <\/div>";
+        strVar += "           ";
+        strVar += "              \/\/ palabras ";
+        strVar += "";
+        strVar += "              <div id=\"flechasHoDer\" class=\"text-center\">";
+        strVar += "              <\/div>";
+        strVar += "              <div id=\"flechasHoIz\" class=\"text-center\">";
+        strVar += "              <\/div>";
+        strVar += "              <div id=\"flechasDiaDer\" class=\"text-center\">";
+        strVar += "              <\/div>";
+        strVar += "              <div id=\"flechasDiaIz\" class=\"text-center\">";
+        strVar += "              <\/div>";
+        strVar += "              <div id=\"flechasDiaDerInv\" class=\"text-center\">";
+        strVar += "              <\/div>";
+        strVar += "              <div id=\"flechasDiaIzInv\" class=\"text-center\">";
+        strVar += "              <\/div>";
+        strVar += "            ";
+        strVar += "            <\/div>";
+        strVar += "          <\/div>";
+        strVar += "          \/\/Comienza Lienzo";
+        strVar += "          <div class=\"col-lg-6 lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
+        strVar += "            <div class=\"col-12\">";
+        strVar += "             ";
+        strVar += "            <\/div>";
+        strVar += "          <\/div>";
+        strVar += "          \/\/Termina Lienzo";
+        strVar += "        <\/div>";
+        strVar += "      <\/div>";
+        strVar += "    <\/div>";
+        strVar += "    <\/div>";
+        strVar += "  <\/div>";
+        
       insertor.insertAdjacentHTML("beforeend",strVar);   
 
-      previsualizarDraw
+      previsualizarDraw();
       }
 
 
