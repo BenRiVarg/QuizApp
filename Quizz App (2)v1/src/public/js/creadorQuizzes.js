@@ -397,8 +397,6 @@ function construirObjLienzo(espacioObj,datos){
         objLienzo.pregunta.push(datos.pregunta);
         objLienzo.respuesta.push(datos.respuesta);
       }
-      console.log(objLienzo);
-      //objLienzo.preguntas.push(datos.pregunta)
       
       break;
 
@@ -430,7 +428,6 @@ function construirObjLienzo(espacioObj,datos){
                 //Escritura de Datos
                 objLienzo.pregunta.push(datos.coordenadas);
               }
-              console.log(objLienzo);
               
           break 
           case "flecha":
@@ -454,7 +451,6 @@ function construirObjLienzo(espacioObj,datos){
                 //Escritura de Datos
                 objLienzo.flecha.push(datos.coordenadas);
               }
-              console.log(objLienzo);
               
           break
           case "img":
@@ -471,16 +467,17 @@ function construirObjLienzo(espacioObj,datos){
                 //Escritura de Datos
                 objLienzo.img.push(datos.coordenadas);
               }
-              console.log(objLienzo);
               
           break   
           }
       break;
   }
 
-
+  console.log(objLienzo);
+  
 }
 
+function previsualizarDraw(){
 //Función para crear las funciones preview
 document.getElementById("file").onchange = function (e) {
   // Creamos el objeto de la clase FileReader
@@ -526,7 +523,7 @@ document.getElementById("file").onchange = function (e) {
         
         construirObjLienzo(0,datos);
     }
-
+  }
     
    
     //preview.innerHTML = "";
@@ -547,7 +544,7 @@ document.getElementById("file").onchange = function (e) {
 
       function preguntaArrastrar() {
         var strVar="";
-            strVar += "<div class=\"tipoAr cuestionario\">";
+            strVar += "<div class=\"tipoAr \">";
             strVar += "    <div class=\"row mt-3\">";
             strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
             strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
@@ -1072,6 +1069,7 @@ function envioPreguntaIT(){
   //Captura de la imagen
   var imagen = cuestionarios[i].querySelectorAll("input.imagen");
   imagen[0].name="imagenes";
+  
 
     //Creación de un espacio en blanco en un array para enviar el id de la imagen
   var imagenHTML = cuestionarios[i].querySelectorAll("input.imagenrequest");
@@ -1183,27 +1181,47 @@ function envioPreguntaMate(){
   
 }
 
-function enviarPreguntaDrag(){
-  var i=0;
-  //Rastreo del div por su clase, que define el tipo de pregunta
-  var cuestionarios=document.getElementsByClassName("tipoAr");
-  
-  
-  //Clasificación de los elementos enviados para no tener conflictos en la request
-  for(i=0;i<cuestionarios.length;i++){
-  
-  //Se agrega el tipo de pregunta por medio de un elemento hidden
-  var tipoHTML=contadorTipo();
-  //Definición del tipo de pregunta
-  tipoHTML.value="tipoAr";
-  //inserción
-
-  var strVar="";
-  strVar += "<input type=\"hidden\" name=\"\" value=\"\">";
-
-  cuestionarios[i].appendChild(tipoHTML);
+function enviarPreguntaDrag(datosRequest){
+  /*
+  for (var i=0;i<objetosDrag.length;i++){
+    var lienzoI=objetosDrag[i];
   }
- 
+  */
+ /*
+ var tiposAr=document.getElementsByClassName("tipoAr");
+ for(var j=0;j<tiposAr.length;j++){
+   cuestionarioI=tiposAr[j]
+   //Captura de la imagen
+   var imagen = cuestionarioI.querySelectorAll("input.imagen");
+   imagen[0].name="imagenes";
+ }
+ */
+ /*
+
+  var lienzos=objetosDrag.length;
+
+  var objetoLienzo=objetosDrag[0];
+  var imagen=objetoLienzo.img;
+  var preguntas=objetoLienzo.pregunta;
+  var flechas=objetoLienzo.flecha;
+  var respuestas=objetoLienzo.respuesta;
+
+  var pregunta=[];
+  pregunta[0]=imagen;
+  pregunta[1]=preguntas;
+  pregunta[2]=flechas;
+
+ var cuestionario={
+   tipo: "tipoAr",
+   pregunta: pregunta,
+   respuesta: respuestas
+ }
+
+ var lienzoRequestI=JSON.stringify(cuestionario);
+ //Construcción de los datos para la Request
+ datosRequest.append("lienzos",lienzos);
+ datosRequest.append("lienzo0",lienzoRequestI);
+*/
 }
 
 
@@ -1332,6 +1350,7 @@ function eliminar(obj){
 
 // Envío Final de todos los elementos
 function envioQuizz(){
+  
      //creación e inserción de un elemento con el número de preguntas del cuestionario
     var numeroPreguntas=document.getElementsByClassName("cuestionario").length;
     var numeroHTML=document.createElement("INPUT");
@@ -1340,13 +1359,25 @@ function envioQuizz(){
      numeroHTML.value = numeroPreguntas;
 
      insertor.appendChild(numeroHTML);
-
+  /*
      //Envío de tipos de preguntas
     envioPreguntaAbierta();
     envioPreguntaRelacional();
     envioPreguntaOM();
     envioPreguntaIT();
     envioPreguntaMate();
-    document.getElementById("formularioQuizz").submit();
+  */
+ 
+  var formulario=document.getElementById("formularioQuizz");
+
+  var datosEnvio=new FormData(formulario);
+  
+  enviarPreguntaDrag();
+  
+  var request = new XMLHttpRequest();
+  request.open("POST", "/editores/crear");
+  request.send(datosEnvio);
+  
+    //document.getElementById("formularioQuizz").submit();
     
 }

@@ -205,11 +205,12 @@ router.get('/editores/crear',async (req,res)=>{
 
 
 
-router.post('/editores/crear',upload.array('imagenes'),(req,res)=>{
-  req.files
-  console.log(req.body);
+router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
+  console.log(req.files);
   
- 	/* var contadorImagenes=0;
+  console.log(req.body);
+ /*
+ 	var contadorImagenes=0;
 
   var i;
   //variable para construir el cuestionario como un array
@@ -263,9 +264,10 @@ router.post('/editores/crear',upload.array('imagenes'),(req,res)=>{
        
        }
     
-    ); */
-      
+    ); 
+  */    
   res.redirect("/editores/crear");
+  
 });
 
 

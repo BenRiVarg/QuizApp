@@ -212,10 +212,10 @@
   </div>
  
 
-  <Button onclick="enviarPreguntaDrag();">Enviar Drag</Button>
+  <Button class="mt-5"onclick="enviarPreguntaDrag();">Enviar Drag</Button>
   
-  <Button onclick="dibujarLienzo();">Replicar</Button>
-
+  <Button  class="mt-5" onclick="wtf();">Replicar</Button>
+  <p id="prueba" >prueba</p>
   <div class=" d-flex justify-content-center">
     <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
       
@@ -277,6 +277,9 @@
   <script>
      arrastrable();
   activarReactivo();
+  function wtf(){
+    document.getElementById("prueba").textContent="Activandose";
+  }
   </script>
 </body>
 </html>
