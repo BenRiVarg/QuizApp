@@ -329,7 +329,7 @@
           console.log(grados);
           console.log(grados[0].id);
           console.log(grados[0].nombre);
-          for (var i = 0; i < 6; i++) {
+          for (var i = 0; i < grados.length; i++) {
           document.getElementById("grados").innerHTML +=
             "<option value='" + (grados[i].id) + "'>" + (grados[i].nombre) + "</option>";
           }
@@ -343,7 +343,7 @@
             console.log(materias);
             console.log(materias[0].id);
             console.log(materias[0].nombre);
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < materias.length; i++) {
             document.getElementById("materias").innerHTML +=
             "<option value='" + (materias[i].id) + "'>" + (materias[i].nombre) + "</option>";
             }
@@ -358,7 +358,7 @@
               console.log(bloques);
               console.log(bloques[0].id);
               console.log(bloques[0].nombre);
-              for (var i = 0; i < 1; i++) {
+              for (var i = 0; i < bloques.length; i++) {
               document.getElementById("bloques").innerHTML +=
                   "<option value='" + (bloques[i].id) + "'>" + (bloques[i].nombre) + "</option>";
               } 
@@ -372,7 +372,7 @@
                 console.log(secuencias);
                 console.log(secuencias[0].id);
                 console.log(secuencias[0].nombre);
-                for (var i = 0; i < 2; i++) {
+                for (var i = 0; i < secuencias.length; i++) {
                    document.getElementById("secuencias").innerHTML +=
                     "<option value='" + (secuencias[i].id) + "'>" + (secuencias[i].nombre) + "</option>";
                 }
