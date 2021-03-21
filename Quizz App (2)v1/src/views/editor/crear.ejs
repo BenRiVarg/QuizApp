@@ -10,34 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="cache-control" content="no-cache"/>
     <style>
-      #div10, #div11, #draggable {
-  float: left;
-  width: 100px;
-  height: 35px;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid black;
-}
-        #draggable { cursor:move;
-text-align:center;width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
-        #droppable { width: 350px; height: 600px; padding: 0.5em; float: left; margin: 10px; }
-        #div{float: left;  }
-
-        #divImg {
-              background-image:url('');
-              background-size:cover;
-              background-position: center;
-              height: 350px; width: 600px;
-              border: 1px solid #bbb;
-               }
-        .correcto, #incorrecto{
-            background-color: aliceblue;
-            background-size:cover;
-            color: red;
-            background-position: center;
-            height: 33px; width: 81px;
-            border: 1px solid #bbb;
-        }
+    
+        
         .btn-flotante {
 	font-size: 16px; /* Cambiar el tamaño de la tipografia */
 	text-transform: uppercase; /* Texto en mayusculas */
@@ -96,7 +70,7 @@ transition: all o.5s ease-in-out;
 box-shadow: (0,0,0,0.3);
 cursor: pointer;
 position: fixed;
-bottom: 439px;
+bottom: 479px;
 right: 250px;
 }
 
@@ -126,13 +100,13 @@ transform: translateY(-10%);
 opacity: 0%;
 transition: all 0.5s ease-in-out;
 background: white;
-width: 150px;
+width: 250px;
 border-radius: 5px;
 transform: translateY(0%);
 box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
 position: fixed;
 bottom: 160px;
-right: 100px;
+right: 20px;
 }
 
 .nav1 a{
@@ -237,6 +211,7 @@ box-shadow: 0,0,0, transparent;
     <input type="checkbox" id="toggle">
     <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para abrir y cerrar el menú de preguntas" delay="0" tabindex="0" class="d-inline-block" >
     <label for="toggle" class="button1"></label>
+
     </span>
     <script>
 
@@ -284,47 +259,37 @@ box-shadow: 0,0,0, transparent;
           
         }
       }
+      function desabilitado(){
+      document.getElementById("btn1").disabled = true;
       
-
+    }
+      function habilitar(){
+      document.getElementsById("btn1").disabled = false;
+      
+    }
     </script>
     
     <nav class="nav1">
-    
           <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click para insertar Pregunta Abierta" delay="0" tabindex="0" class="d-inline-block" >
-        <button  onclick="preguntaAbierta()"  class="w3-bar-item w3-button"> <a id="ref" onclick="sumahref(this.id)"  >Insertar Pregunta Abierta</a></button>
+        <a  onclick="preguntaAbierta(), sumahref(this.id)" id="ref" class="w3-bar-item w3-button btn"  >Insertar Pregunta Abierta</a>
         </sapn>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para agregar pregunta relacional" delay="0" tabindex="0" class="d-inline-block" >
-        <button id="btn1"  onclick="preguntaRelacional(),desabilitado()" class="w3-bar-item w3-button" ><a id="ref2" onclick="sumahref(this.id)" >Insertar Pregunta Relacional</a></button>
+        <button  id="btn1" class="btn1 btn w3-bar-item w3-button" onclick="preguntaRelacional(), desabilitado()"><a id="ref2" onclick="sumahref(this.id)" >Insertar Pregunta Relacional</a></button>
         </span>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear una pregunta de opcion multiple" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaOM()" class="w3-bar-item w3-button" > <a id="ref3" onclick="sumahref(this.id)" >Insertar Pregunta Opción Múltiple</a></button>
+        <a onclick="preguntaOM(), sumahref(this.id)" class="w3-bar-item w3-button btn" id="ref3">Insertar Pregunta Opción Múltiple</a></button>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear una pregunta de con imagen" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaIT()" class="w3-bar-item w3-button" > <a id="ref4" onclick="sumahref(this.id)" >Insertar Pregunta-Imagen</a></button>
+        <a onclick="preguntaIT(),sumahref(this.id)" id="ref4" class="btn w3-bar-item w3-button" >Insertar Pregunta-Imagen</a>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para creaa una pregunta de matematicas" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaMatematicas()" class="w3-bar-item w3-button" > <a id="ref5" onclick="sumahref(this.id)" >Insertar Pregunta de Matemáticas</a></button>
+        <a onclick="preguntaMatematicas(), sumahref(this.id)" class="btn w3-bar-item w3-button" id="ref5" onclick="sumahref(this.id)" >Insertar Pregunta de Matemáticas</a>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable" delay="0" tabindex="0" class="d-inline-block" >
         <button onclick="preguntaArrastrar()" class="w3-bar-item w3-button" disabled> <a id="ref6" onclick="sumahref(this.id)" >Inserta Pregunta Arrastrable</a></button>
       </span>
     </nav>
   </div>
-
-  <script>
-    function desabilitado(){
-      document.getElementById("btn1").disabled = true;
-      console.log('desabilitado');
-    }
-
-    function habilitar(){
-    document.getElementById("btn1").disabled = false;
-    console.log("habilitado")
-    }
-
-   
-  </script>
- 
   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
     <script src="/js/creadorQuizzes.js" type="text/javascript"></script> 
