@@ -188,18 +188,23 @@
         </select>
       </div>
       <div class="col-lg-7">
-        <select id="grades" class="form-select form-select-lg mb-3" aria-label=".form-select-sm example" name="grado" onchange="option();" required>
+        <select id="grados" class="form-select form-select-lg mb-3" aria-label=".form-select-sm example" name="grado"  required>
           <option selected>Grado</option>
         
         </select>
         
       </div>
       <div class="col-lg-7">
-      <select id="materias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="claveMateria"
-        required>
+      <select id="materias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="claveMateria" required>
         <option selected>Materia</option>
       
       </select>
+      </div>
+      <div class="col-lg-7">
+        <select id="bloques" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="bloques" required>
+          <option selected>Bloque</option>
+      
+        </select>
       </div>
     </div>
     <br>
@@ -246,6 +251,42 @@
        
     });
 
+     $.getJSON("/pruebaAJAXgrados", function (grados) {
+        for (var i = 0; i < 6; i++) {
+          var nombres = (grados[i].nombre);
+          var id = (grados[i].id);
+          var select = document.getElementById("grados").innerHTML +=
+            "<option value='" + id + "'>" + nombres + "</option>";
+          /* onchange = option(); */
+          console.log(nombres);
+        }
+
+      });
+
+        $.getJSON("/pruebaAJAXmaterias", function (materias) {
+            for (var i = 0; i < 6; i++) {
+              var nombres = (materias[i].nombre);
+              var id = (materias[i].id);
+              var select = document.getElementById("materias").innerHTML +=
+                "<option value='" + id + "'>" + nombres + "</option>";
+              /* onchange = option(); */
+              console.log(nombres);
+            }
+
+          });
+
+           $.getJSON("/pruebaAJAXbloques", function (bloques) {
+              for (var i = 0; i < 6; i++) {
+                var nombres = (bloques[i].nombre);
+                var id = (bloques[i].id);
+                var select = document.getElementById("bloques").innerHTML +=
+                  "<option value='" + id + "'>" + nombres + "</option>";
+                /* onchange = option(); */
+                console.log(nombres);
+              }
+
+            });
+
     $('#nivel').on('change', async function () {
           console.log(this.value);
           var grados= await getGrados(this.value);
@@ -253,8 +294,29 @@
           console.log(grados);
           console.log(grados[0].id);
           console.log(grados[0].nombre);
-        var visible = document.getElementById("grades").style.display = "block";
+        var visible = document.getElementById("grados").style.display = "block";
       });
+
+        $('#grados').on('change', async function () {
+            console.log(this.value);
+            var materias = await getMaterias(this.value);
+            console.log("MATERIAS OBTENIDOS")
+            console.log(materias);
+            console.log(materias[0].id);
+            console.log(materias[0].nombre);
+            var visible = document.getElementById("materias").style.display = "block";
+          });
+
+          
+            $('#materias').on('change', async function () {
+              console.log(this.value);
+              var bloques = await getBloques(this.value);
+              console.log("BLOQUES OBTENIDOS")
+              console.log(bloques);
+              console.log(bloques[0].id);
+              console.log(bloques[0].nombre);
+              var visible = document.getElementById("bloques").style.display = "block";
+            });
 
 
     async function getGrados(idNivel){
@@ -275,7 +337,7 @@
       var materiasDelGrado= await new Promise((resolve, reject) => {
         $.getJSON("/pruebaAJAXmaterias/"+idGrado+"", function (materias) {
             
-            resolve(materias)
+            resolve(materias);
            });
        });
 

@@ -669,6 +669,24 @@ router.get("/pruebaAJAXniveles", async (req, res) => {
   res.json(niveles);
 });
 
+router.get("/pruebaAJAXgrados", async (req, res) => {
+  var grados = await API.Find("grados");
+  grados = grados.grades;
+  res.json(grados);
+});
+
+router.get("/pruebaAJAXmaterias", async (req, res) => {
+  var materias = await API.Find("materias");
+  materias = materias.subjects;
+  res.json(materias);
+});
+
+router.get("/pruebaAJAXbloques", async (req, res) => {
+  var bloques = await API.Find("bloques");
+  bloques = bloques.blocks;
+  res.json(bloques);
+});
+
 router.get("/pruebaAJAXgrados/:idnivel", async (req, res) => {
   var grados = await API.busqueda(req.params.idnivel,"nivel","grados"); 
   res.json(grados); 
