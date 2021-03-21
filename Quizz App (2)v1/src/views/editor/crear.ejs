@@ -105,6 +105,11 @@
         right: 20px;
       }
     }
+
+    .crearQ{
+      width: 310px;
+      height: 35px;
+    }
   </style>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -206,13 +211,20 @@
       
         </select>
       </div>
+      <div class="col-lg-7">
+        <select id="secuencias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="Secuencias"
+          required>
+          <option selected>Secuencias</option>
+      
+        </select>
+      </div>
     </div>
     <br>
     <br>
     <div class="text-center">
       <p class="display-6">Nombre del Quizz:</p>
 
-      <input type="text" name="nombreQuizz">
+      <input class="crearQ" type="text" placeholder="Coloca el nombre:" name="nombreQuizz">
 
     </div>
     <!-- Inserto de nuevas preguntas-->
@@ -245,47 +257,63 @@
         var id = (niveles[i].id);
         var select = document.getElementById("nivel").innerHTML +=
           "<option value='"+ id +"'>" + nombres + "</option>";
-
-         console.log(nombres);
+        
+       /*   console.log(nombres); */
       }
        
     });
 
      $.getJSON("/pruebaAJAXgrados", function (grados) {
-        for (var i = 0; i < 6; i++) {
+     /*    for (var i = 0; i < 6; i++) {
           var nombres = (grados[i].nombre);
           var id = (grados[i].id);
           var select = document.getElementById("grados").innerHTML +=
             "<option value='" + id + "'>" + nombres + "</option>";
-          /* onchange = option(); */
+         
           console.log(nombres);
-        }
+        } */
 
+       var visible = document.getElementById("grados").style.display = "none"; 
       });
 
         $.getJSON("/pruebaAJAXmaterias", function (materias) {
-            for (var i = 0; i < 6; i++) {
+            /* for (var i = 0; i < 6; i++) {
               var nombres = (materias[i].nombre);
               var id = (materias[i].id);
               var select = document.getElementById("materias").innerHTML +=
                 "<option value='" + id + "'>" + nombres + "</option>";
-              /* onchange = option(); */
               console.log(nombres);
-            }
+            } */
 
+          var visible = document.getElementById("materias").style.display = "none"; 
           });
 
            $.getJSON("/pruebaAJAXbloques", function (bloques) {
-              for (var i = 0; i < 6; i++) {
+           /*    for (var i = 0; i < 6; i++) {
                 var nombres = (bloques[i].nombre);
                 var id = (bloques[i].id);
                 var select = document.getElementById("bloques").innerHTML +=
                   "<option value='" + id + "'>" + nombres + "</option>";
-                /* onchange = option(); */
-                console.log(nombres);
-              }
+              
+                console.log(nombres); 
+              } */
 
+             var visible = document.getElementById("bloques").style.display = "none"; 
             });
+
+            
+              $.getJSON("/pruebaAJAXsecuencias", function (secuencias) {
+               /*  for (var i = 0; i < 6; i++) {
+                  var nombres = (secuencias[i].nombre);
+                  var id = (secuencias[i].id);
+                  var select = document.getElementById("secuencias").innerHTML +=
+                    "<option value='" + id + "'>" + nombres + "</option>";
+                
+                  console.log(nombres);
+                } */
+
+                var visible = document.getElementById("secuencias").style.display = "none";
+              });
 
     $('#nivel').on('change', async function () {
           console.log(this.value);
@@ -294,7 +322,11 @@
           console.log(grados);
           console.log(grados[0].id);
           console.log(grados[0].nombre);
-        var visible = document.getElementById("grados").style.display = "block";
+          for (var i = 0; i < 6; i++) {
+          document.getElementById("grados").innerHTML +=
+            "<option value='" + (grados[i].id) + "'>" + (grados[i].nombre) + "</option>";
+          }
+        var visible = document.getElementById("grados").style.display = "block"; 
       });
 
         $('#grados').on('change', async function () {
@@ -304,6 +336,10 @@
             console.log(materias);
             console.log(materias[0].id);
             console.log(materias[0].nombre);
+            for (var i = 0; i < 10; i++) {
+            document.getElementById("materias").innerHTML +=
+            "<option value='" + (materias[i].id) + "'>" + (materias[i].nombre) + "</option>";
+            }
             var visible = document.getElementById("materias").style.display = "block";
           });
 
@@ -315,14 +351,27 @@
               console.log(bloques);
               console.log(bloques[0].id);
               console.log(bloques[0].nombre);
+              for (var i = 0; i < 1; i++) {
+              document.getElementById("bloques").innerHTML +=
+                  "<option value='" + (bloques[i].id) + "'>" + (bloques[i].nombre) + "</option>";
+              } 
               var visible = document.getElementById("bloques").style.display = "block";
             });
 
-            ////------------PRUEBAS FUNCIONALES------//
-            console.log("Debuggeando");
-            getBloques("T9iIq2yO-");
-            getSecuencias("dSnrbcbS1");
-            //-----------//
+             $('#bloques').on('change', async function () {
+                console.log(this.value);
+                var secuencias = await getSecuencias(this.value);
+                console.log("SECUENCIAS OBTENIDOS")
+                console.log(secuencias);
+                console.log(secuencias[0].id);
+                console.log(secuencias[0].nombre);
+                for (var i = 0; i < 2; i++) {
+                   document.getElementById("secuencias").innerHTML +=
+                    "<option value='" + (secuencias[i].id) + "'>" + (secuencias[i].nombre) + "</option>";
+                }
+                var visible = document.getElementById("secuencias").style.display = "block";
+              });
+
 
     async function getGrados(idNivel){
 
