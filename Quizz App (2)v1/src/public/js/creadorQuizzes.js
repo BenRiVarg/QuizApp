@@ -2,8 +2,10 @@
 
 //Variable para hacer la inserción de elementos dentro del cuertpo del HTML
 var insertor=document.getElementById("insercion");
-//Variable global para "enumerar" todas las preguntas,respuestas y tipo  de un cuestionario
+//Variable global para "enumerar" todas las preguntas,respuestas y tipo  de un cuestionario para la request
 var contador=1;
+//Variable para elementos que deben ser Previsualiados
+var contadorPreV=1;
 //---Variables para la pregunta Drag--//
 var objetosDrag=[];
 var lienzo={
@@ -477,6 +479,39 @@ function construirObjLienzo(espacioObj,datos){
   
 }
 
+
+function previsualizarIT(){
+  var idFile="imgIT"+contadorPreV;
+  var idpreView="prevIT"+contadorPreV;
+  //Función para crear las funciones preview
+document.getElementById(idFile).onchange = function (e) {
+  // Creamos el objeto de la clase FileReader
+  let reader = new FileReader();
+
+  // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+  reader.readAsDataURL(e.target.files[0]);
+
+  // Le decimos que cuando este listo ejecute el código interno
+  reader.onload = function () {
+    let preview = document.getElementById(idpreView),
+      image = document.createElement("img");
+    image.src = reader.result;
+
+        
+     //Si ya hay una imagen
+     if(preview.children[0]){
+      preview.children[0].remove()
+      preview.appendChild(image)
+    }
+    else{
+      preview.appendChild(image);
+    }
+   
+  }
+    
+   
+  };
+}
 function previsualizarDraw(){
 //Función para crear las funciones preview
 document.getElementById("file").onchange = function (e) {
@@ -552,7 +587,7 @@ document.getElementById("file").onchange = function (e) {
             strVar += "          <div class=\"col-lg-6 centrado\">";
             strVar += "            <div class=\"mt-5\">";
             strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
-            strVar += "              <input id=\"file\" type=\"file\" id=\"file-upload\" class=\"form-control\" accept=\"image\/*\">";
+            strVar += "              <input id=\"file\" type=\"file\" id=\"file-upload\" class=\"form-control\" name=\"imgs\" accept=\"image\/*\">";
             strVar += "              <div class=\"mt-3\">";
             strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
             strVar += "                <div class=\"mb-3\">";
@@ -892,34 +927,68 @@ function seleccionarRespuesta(obj){
 
 function preguntaIT(){
   var strVar="";
-  strVar += "";
-  strVar += "                <div class=\"container tipoIT cuestionario mt-4 col-md-7 \">";
-  strVar += "                    <div class=\"text-center\">";
-  strVar += "                      <p class=\"display-6\">Pregunta Texto-Imagen<\/p>";
-  strVar += "                      <p class=\"text-primary\"><b>Instruciones: <\/b> Seleccione la imagen a cargar, y defina pregunta y respuesta<\/p>";
-  strVar += "                    <\/div>";
-  strVar += "                    <input required type=\"file\" id=\"file-upload\" accept=\"image\/*\" class=\"imagen\">";
-  strVar += "                    <input required type=\"hidden\" class=\"imagenrequest\">";
-  strVar += "                    <div id=\"file-preview-zone\"  class=\"mx-auto\"><\/div>";
-  strVar += "                    <div class=\"mb-3\">";
-  strVar += "                      <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
-  strVar += "                      <input type=\"text\" class=\"form-control pregunta\"  placeholder=\"Escriba la pregunta\">";
-  strVar += "                    <\/div>";
-  strVar += "                    <div class=\"mb-3\">";
-  strVar += "                        <label for=\"formGroupExampleInput2\" class=\"form-label\">Respuesta<\/label>";
-  strVar += "                        <input required type=\"text\" class=\"form-control respuesta \"  placeholder=\"Escriba la respuesta\">";
-  strVar += "                    <\/div>";
-  strVar += "                    <div class=\"editar\" role=\"group\" aria-label=\"Basic mixed styles example\" float=\"left\" align=\"left\">";
-  strVar += "                    <br>";
-  strVar += "                    <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\" align=\"left\">Quitar Pregunta<\/button>";
-  strVar += "                  <\/div>";
-  strVar += "                 <\/div>";
+strVar += "  <div class=\"row justify-content-center mt-5 pt-5\" id=\"insercion\">";
+strVar += "                ";
+strVar += "                <div class=\"container tipoIT cuestionario mt-4 col-md-7 \">";
+strVar += "                    <div class=\"text-center\">";
+strVar += "                      <p class=\"display-6\">Pregunta Texto-Imagen<\/p>";
+strVar += "                      <p class=\"text-primary\"><b>Instruciones: <\/b> Seleccione la imagen a cargar, y defina pregunta y respuesta<\/p>";
+strVar += "                    <\/div>";
+strVar += "                    <input required type=\"file\" id=\"imgIT"+contadorPreV+"\" accept=\"image\/*\" class=\"imgs\" name=\"imgs\">";
+strVar += "                    <input required type=\"hidden\" class=\"imagenrequest\">";
+strVar += "                    <div id=\"prevIT"+contadorPreV+"\"  class=\"mx-auto\"><\/div>";
+strVar += "                    <div class=\"mb-3\">";
+strVar += "                      <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
+strVar += "                      <input type=\"text\" class=\"form-control pregunta\"  placeholder=\"Escriba la pregunta\">";
+strVar += "                    <\/div>";
+strVar += "                    <div class=\"mb-3\">";
+strVar += "                        <label for=\"formGroupExampleInput2\" class=\"form-label\">Respuesta<\/label>";
+strVar += "                        <input required type=\"text\" class=\"form-control respuesta \"  placeholder=\"Escriba la respuesta\">";
+strVar += "                    <\/div>";
+strVar += "                    <div class=\"editar\" role=\"group\" aria-label=\"Basic mixed styles example\" float=\"left\" align=\"left\">";
+strVar += "                    <br>";
+strVar += "                    <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\" align=\"left\">Quitar Pregunta<\/button>";
+strVar += "                  <\/div>";
+strVar += "                 <\/div>";
+strVar += "              <\/div>";
   
 
 insertor.insertAdjacentHTML("beforeend",strVar);
-
+previsualizarIT();
+contadorPreV++;
 }
+function previsualizarIT(){
+  var idFile="imgIT"+contadorPreV;
+  var idpreView="prevIT"+contadorPreV;
+  //Función para crear las funciones preview
+document.getElementById(idFile).onchange = function (e) {
+  // Creamos el objeto de la clase FileReader
+  let reader = new FileReader();
 
+  // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+  reader.readAsDataURL(e.target.files[0]);
+
+  // Le decimos que cuando este listo ejecute el código interno
+  reader.onload = function () {
+    let preview = document.getElementById(idpreView),
+      image = document.createElement("img");
+    image.src = reader.result;
+
+        
+     //Si ya hay una imagen
+     if(preview.children[0]){
+      preview.children[0].remove()
+      preview.appendChild(image)
+    }
+    else{
+      preview.appendChild(image);
+    }
+   
+  }
+    
+   
+  };
+}
 
 
 
@@ -1067,15 +1136,15 @@ function envioPreguntaIT(){
   cuestionarios[i].appendChild(tipoHTML);
   
   //Captura de la imagen
-  var imagen = cuestionarios[i].querySelectorAll("input.imagen");
-  imagen[0].name="imagenes";
-  
+  var imagen = cuestionarios[i].querySelectorAll("input.imgs");
+  var valorImagen=imagen[0].files[0].name;
 
     //Creación de un espacio en blanco en un array para enviar el id de la imagen
   var imagenHTML = cuestionarios[i].querySelectorAll("input.imagenrequest");
-  imagenHTML[0].name="pregunta"+contador;
-  imagenHTML[0].value="";
+  imagenHTML[0].name="imagen"+contador;
+  imagenHTML[0].value=valorImagen;
 
+  
   var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
   pregunta[0].name="pregunta"+contador;
 
@@ -1366,14 +1435,14 @@ function envioQuizz(){
     envioPreguntaAbierta();
     envioPreguntaRelacional();
     envioPreguntaOM();
-    envioPreguntaIT();
+    
     envioPreguntaMate();
   */
- 
+ envioPreguntaIT();
   var formulario=document.getElementById("formularioQuizz");
 
   var datosEnvio=new FormData(formulario);
-  
+ 
   enviarPreguntaDrag();
   
   var request = new XMLHttpRequest();

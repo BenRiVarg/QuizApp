@@ -63,6 +63,7 @@ const Registros=require('../modelos/registros.js');
 
 const Revisor=require("../funciones/revisor.js")
 const API=require("../funciones/api.js");
+const Funciones=require("../funciones/funciones.js");
 const materia = require('../modelos/materia.js');
 const { resolve } = require('path');
 
@@ -209,12 +210,11 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
   console.log(req.files);
   var imagenes=req.files;
   console.log("DEPURANDO");
-  for( i in imagenes){
-    console.log(imagenes[i].originalname);
-  }
+  //var imagenCuestionario=Funciones.buscarImagen("ña",imagenes);
+ 
   console.log(req.body);
- /*
- 	var contadorImagenes=0;
+ 
+ 	//var contadorImagenes=0;
 
   var i;
   //variable para construir el cuestionario como un array
@@ -231,14 +231,20 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
       //filtro para relacionar preguntas e imágenes
         if (req.body[tipo]=="tipoIT"){
 
-          //apertura de un espacio en el array de preguntas
-          var preguntaImagen=req.body[pregunta];
-          //asignación de un archivo en ese primer espacio
-          preguntaImagen[0]=req.files[contadorImagenes].filename;
-          //Movimiento del contador para asignar correctamente imagenes.
-          contadorImagenes=contadorImagenes+1;
-   
+          //Definimos el valor con el que llega el nombre de la imagen
+          var imgKey="imagen"+(i+1);
+          var nombreImg=req.body[imgKey];
+          //
+          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
 
+          //Creamos un array para la estructura de la preguta
+          var preguntaImagen=[];
+          // En el primer espacio guardamos el nombre de la Imagen
+          preguntaImagen[0]=imagen.filename;
+          //En el segundo la pregunta
+          preguntaImagen[1]=req.body[pregunta];
+          //Y reasignamos el valor en la request
+          req.body[pregunta]=preguntaImagen;
       }
 
 
@@ -256,7 +262,8 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
 
      cuestionario.push(contenidoCuestionario);
   } 
-  
+  console.log(cuestionario);
+  /*
    //guardado en la BD
    Quizz.create( 
       {
@@ -271,6 +278,8 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
     ); 
   */    
   res.redirect("/editores/crear");
+
+ 
   
 });
 
@@ -502,7 +511,7 @@ var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
 })
 
 router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaRevision',{color:"#ffff99"});
+  res.render('plantillaCreadorQuizz',{color:"#ffff99"});
 })
 
 router.get('/plantillaQuizz',(req, res)=>{
