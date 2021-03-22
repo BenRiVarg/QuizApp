@@ -286,7 +286,7 @@ function flechaDiaIzquierdaInv() {
 
 
 
-
+function ActivarLienzo(){
   //Eventos ligados a clase lienzo
   $(".lienzo").droppable({
     drop: function (event, ui) {
@@ -328,7 +328,7 @@ function flechaDiaIzquierdaInv() {
 
     }
   });
-
+}
 
 function activarReactivo(){
 $(".reactivo").droppable({
@@ -611,6 +611,7 @@ previsualizarDraw();
       insertor.insertAdjacentHTML("beforeend",strVar);   
 
       previsualizarDraw();
+      ActivarLienzo();
       }
 
 
