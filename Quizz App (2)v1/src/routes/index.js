@@ -231,43 +231,43 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
 
   //Si al menos e envio un cuestionario diferente a Drag
   if (req.body.tipo0){
-//Procesamiento de cada pregunta por la request
-  for (i = 0; i < req.body.numeroPreguntas; i++) {
-    var tipo = "tipo" + (i + 1);
-    var pregunta = "pregunta" + (i + 1);
-    var respuesta = "respuesta" + (i + 1);
+  //Procesamiento de cada pregunta por la request
+    for (i = 0; i < req.body.numeroPreguntas; i++) {
+      var tipo = "tipo" + (i + 1);
+      var pregunta = "pregunta" + (i + 1);
+      var respuesta = "respuesta" + (i + 1);
 
-    //filtro para relacionar preguntas e imágenes
-    if (req.body[tipo] == "tipoIT") {
+      //filtro para relacionar preguntas e imágenes
+      if (req.body[tipo] == "tipoIT") {
 
-          //Definimos el valor con el que llega el nombre de la imagen
-          var imgKey="imagen"+(i+1);
-          var nombreImg=req.body[imgKey];
-          //
-          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
+            //Definimos el valor con el que llega el nombre de la imagen
+            var imgKey="imagen"+(i+1);
+            var nombreImg=req.body[imgKey];
+            //
+            var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
 
-          //Creamos un array para la estructura de la preguta
-          var preguntaImagen=[];
-          // En el primer espacio guardamos el nombre de la Imagen
-          preguntaImagen[0]=imagen.filename;
-          //En el segundo la pregunta
-          preguntaImagen[1]=req.body[pregunta];
-          //Y reasignamos el valor en la request
-          req.body[pregunta]=preguntaImagen;
+            //Creamos un array para la estructura de la preguta
+            var preguntaImagen=[];
+            // En el primer espacio guardamos el nombre de la Imagen
+            preguntaImagen[0]=imagen.filename;
+            //En el segundo la pregunta
+            preguntaImagen[1]=req.body[pregunta];
+            //Y reasignamos el valor en la request
+            req.body[pregunta]=preguntaImagen;
+        }
+
       }
 
-    }
 
-
-     
-      cuestionario.push(contenidoCuestionario);
+      
+        cuestionario.push(contenidoCuestionario);
       
       
     
 
      
   } 
-}
+
   //Lectura de Preguntas Drag
   if(req.body.lienzos)
   {
@@ -634,22 +634,7 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
   console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
-  res.render('alumnos/revisionRespuestas', { quizz, respuestaAlumnoElegida });
-
-   
-   const quizz=await Quizz.findById(req.params.id);
-   
-  /*
-  for(var i=0;i<quizz.cuestionario.length;i++){
-    if(quizz.cuestionario[i].tipo=="tipoAr"){
-      console.log("Filtro Activado");
-      //SobreEscritura de los datos para poder tratar un lienzo en el Front
-      quizz.cuestionario[i].pregunta=JSON.stringify(quizz.cuestionario[i].pregunta);
-      quizz.cuestionario[i].respuesta=JSON.stringify(quizz.cuestionario[i].respuesta);
-    }
-    console.log(quizz.cuestionario[i]);
-  }
-  */
+  
    res.render('alumnos/examen',{ quizz });
 
 });
