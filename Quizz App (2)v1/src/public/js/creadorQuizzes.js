@@ -182,6 +182,7 @@ function comprobarDrag(event) {
 }
 
 function arrastrable() {
+  console.log("Activandose");
   $(".elementoDrag").draggable({
     revert: "invalid",
     cursor: "move",

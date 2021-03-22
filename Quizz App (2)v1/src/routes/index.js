@@ -297,7 +297,7 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
        cuestionario:cuestionario
        
        }
-    ); */
+    ); 
   res.redirect("/editores/crear");
 
  
@@ -708,8 +708,6 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
 
 //Boomer "5fce761f2e2106439e852306"
 
-
- router.get('/cuarto', (req, res) => {
 
 
 router.get("/pruebaAJAXniveles", async (req, res) => {
