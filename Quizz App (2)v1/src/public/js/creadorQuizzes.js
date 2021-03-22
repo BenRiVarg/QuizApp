@@ -542,6 +542,8 @@ function previsualizarDraw(){
       };
     };
 }
+
+previsualizarDraw();
 //----Terminan funciones Drag--------//
 
       function preguntaArrastrar() {
@@ -554,7 +556,7 @@ function previsualizarDraw(){
         strVar += "          <div class=\"col-lg-6 centrado\">";
         strVar += "            <div class=\"mt-5\">";
         strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
-        strVar += "              <input id=\"L-file\" type=\"file\"  class=\"form-control\" accept=\"image\/*\">";
+        strVar += "              <input id=\"L-file\" type=\"file\"  class=\"form-control imgs\"  name=\"imgs\" accept=\"image\/*\">";
         strVar += "              <div class=\"mt-3\">";
         strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
         strVar += "                <div class=\"mb-3\">";
@@ -1210,43 +1212,49 @@ function enviarPreguntaDrag(datosRequest){
     var lienzoI=objetosDrag[i];
   }
   */
- console.log("enviando Drag");
+ var lienzos=objetosDrag.length;
  var tiposAr=document.getElementsByClassName("tipoAr");
 
  for(var j=0;j<tiposAr.length;j++){
    cuestionarioI=tiposAr[j]
-   console.log(cuestionarioI);
    //Captura de la imagen
    var imagen = cuestionarioI.querySelectorAll("input.imgs");
-   console.log(imagen[0].files[0].name);
+
+   var NombreImagen=imagen[0].files[0].name;
+
+   var objetoLienzo=objetosDrag[0];
+   var coordenadasImg=objetoLienzo.img;
+   var preguntas=objetoLienzo.pregunta;
+   var flechas=objetoLienzo.flecha;
+   var respuestas=objetoLienzo.respuesta;
+   
+   var imagen={
+    nombre: NombreImagen,
+    coordenadas: coordenadasImg 
+   } 
+
+   var pregunta=[];
+   pregunta[0]=imagen;
+   pregunta[1]=preguntas;
+   pregunta[2]=flechas;
+ 
+  var cuestionario={
+    tipo: "tipoAr",
+    pregunta: pregunta,
+    respuesta: respuestas
+  }
+ 
+  var lienzoRequestI=JSON.stringify(cuestionario);
+  console.log(lienzoRequestI)
+  //Construcción de los datos para la Request
+  var clavelienzo="lienzo"+j
+  datosRequest.append("lienzos",lienzos);
+  datosRequest.append(clavelienzo,lienzoRequestI);
+  
  }
  
- /*
 
-  var lienzos=objetosDrag.length;
 
-  var objetoLienzo=objetosDrag[0];
-  var imagen=objetoLienzo.img;
-  var preguntas=objetoLienzo.pregunta;
-  var flechas=objetoLienzo.flecha;
-  var respuestas=objetoLienzo.respuesta;
-
-  var pregunta=[];
-  pregunta[0]=imagen;
-  pregunta[1]=preguntas;
-  pregunta[2]=flechas;
-
- var cuestionario={
-   tipo: "tipoAr",
-   pregunta: pregunta,
-   respuesta: respuestas
- }
-
- var lienzoRequestI=JSON.stringify(cuestionario);
- //Construcción de los datos para la Request
- datosRequest.append("lienzos",lienzos);
- datosRequest.append("lienzo0",lienzoRequestI);
-*/
 }
 
 
@@ -1384,20 +1392,18 @@ function envioQuizz(){
      numeroHTML.value = numeroPreguntas;
 
      insertor.appendChild(numeroHTML);
-  /*
      //Envío de tipos de preguntas
     envioPreguntaAbierta();
     envioPreguntaRelacional();
     envioPreguntaOM();
     
     envioPreguntaMate();
-  */
- envioPreguntaIT();
+    envioPreguntaIT();
   var formulario=document.getElementById("formularioQuizz");
 
   var datosEnvio=new FormData(formulario);
  
-  enviarPreguntaDrag();
+  enviarPreguntaDrag(datosEnvio);
   
   var request = new XMLHttpRequest();
   request.open("POST", "/editores/crear");

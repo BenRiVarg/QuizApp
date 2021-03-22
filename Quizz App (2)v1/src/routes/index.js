@@ -66,6 +66,7 @@ const API=require("../funciones/api.js");
 const Funciones=require("../funciones/funciones.js");
 const materia = require('../modelos/materia.js');
 const { resolve } = require('path');
+const { request } = require('http');
 
 // ------------||  R U T A S  ||----------------//
 
@@ -207,10 +208,8 @@ router.get('/editores/crear',async (req,res)=>{
 
 
 router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
-  console.log(req.files);
   var imagenes=req.files;
-  console.log("DEPURANDO");
-  //var imagenCuestionario=Funciones.buscarImagen("ña",imagenes);
+ 
  
   console.log(req.body);
  
@@ -221,7 +220,8 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
   var cuestionario= [
   ];
 
-  
+  //Si al menos e envio un cuestionario diferente a Drag
+  if (req.body.tipo0){
 //Procesamiento de cada pregunta por la request
   for (i = 0; i < req.body.numeroPreguntas; i++) {
       var tipo="tipo"+(i+1);
@@ -256,14 +256,33 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
       }
 
      
-  
-
+      cuestionario.push(contenidoCuestionario);
+      
+      
     
 
-     cuestionario.push(contenidoCuestionario);
+     
   } 
-  console.log(cuestionario);
-  /*
+}
+  //Lectura de Preguntas Drag
+  if(req.body.lienzos)
+  {
+    for(var j=0;j<req.body.lienzos;j++){
+      var claveLienzo="lienzo"+j;
+      var dataLienzo=JSON.parse(req.body[claveLienzo]);
+
+      var imagenHTML=dataLienzo.pregunta[0].nombre;
+      //Buscamos el archivo al que está vinculada la imagen
+      var imagen=Funciones.buscarImagen(imagenHTML,imagenes);
+      //Y lo reasignamos con el nombre con el que encontrará la imagen en la BD
+      dataLienzo.pregunta[0].nombre=imagen.filename;
+      console.log(dataLienzo.pregunta[0].nombre)
+      var cuestionarioLienzo=dataLienzo;
+      cuestionario.push(cuestionarioLienzo);
+    }
+  }
+
+  
    //guardado en la BD
    Quizz.create( 
       {
@@ -276,7 +295,7 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
        }
     
     ); 
-  */    
+  
   res.redirect("/editores/crear");
 
  
