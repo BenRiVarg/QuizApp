@@ -14,6 +14,7 @@ var lienzo={
             pregunta:[],
             respuesta:[],
             flecha:[]
+var contadorid = 1 ;
 
             }
             //Simulación de un solo lienzo
@@ -24,18 +25,20 @@ function contadorTipo(){
 
      //Creación de un elemento hidden para registrar el tipo de pregunta
      var tipoHTML=document.createElement("INPUT");
+     
      tipoHTML.type="hidden";
      tipoHTML.name=tipo;
     return tipoHTML;
 }
 
+
 //Función para crear las preguntas abiertas en el cuerpo del HTML
 function preguntaAbierta(){
 
-    
+  contadorid++;
   
 var strVar="";
-strVar += "<div class=\"tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5\">";
+strVar += '<div id=\"preg'+(contadorid)+'\" class=\"tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5\">';
 strVar += "                    <div class=\"container text-center\">";
 strVar += "                      <h4>Pregunta Abierta<\/h4>";
 strVar += "                    <\/div>";
@@ -55,6 +58,8 @@ strVar += "                              <button type=\"button\" class=\"btn btn
 strVar += "                            <\/div>";
 strVar += "                  <\/div>";
 insertor.insertAdjacentHTML("beforeend",strVar);
+
+  
 
        
 } 
@@ -614,14 +619,12 @@ previsualizarDraw();
       ActivarLienzo();
       }
 
-
-      
-      
-      
-
 function preguntaRelacional(){
+  contadorid++;
+  
+
   var strVar="";
-  strVar += " <div class=\"tipoR cuestionario cuestionario row justify-content-center mt-5 pt-5 container\">";
+  strVar += '<div id=\"preg'+(contadorid)+'\" class=\"tipoR cuestionario cuestionario row justify-content-center mt-5 pt-5 container\">';
   strVar += "                                  ";
   strVar += "                                    <div class=\"col-md-4\">";
   strVar += "                                      <div class=\"\">";
@@ -696,7 +699,7 @@ function preguntaRelacional(){
   strVar += "                                  <br>";
   strVar += "                                  ";
   strVar += "                ";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-danger col-md-2 text-center\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
+  strVar += "                                            <button type=\"button\" class=\"btn btn-danger col-md-2 text-center\" onclick=\"eliminar(this),habilitar()\">Quitar Pregunta<\/button>";
   strVar += "                                  ";
   strVar += "                                          ";
   strVar += "                                    <\/div>         ";
@@ -797,8 +800,10 @@ function dibujarLienzo(){
 
 function preguntaOM(){
 
+  contadorid++;
+  
   var strVar="";
-  strVar += " <div class=\"tipoOM cuestionario rounded-sm  \">";
+  strVar += ' <div id=\"preg'+(contadorid)+'\" class=\"tipoOM cuestionario rounded-sm  \">';
   strVar += "                      <div class=\"row\">";
   strVar += "                         ";
   strVar += "                              <div class=\"col-lg-12 col-md-6 col-sm-6 row justify-content-center mt-5 pt-5\">";
@@ -887,6 +892,9 @@ function seleccionarRespuesta(obj){
 }
 
 function preguntaIT(){
+
+  contadorid++;
+  
   var strVar="";
 strVar += "  <div class=\"row justify-content-center mt-5 pt-5\" id=\"insercion\">";
 strVar += "                ";
@@ -954,9 +962,11 @@ document.getElementById(idFile).onchange = function (e) {
 
 
 function preguntaMatematicas(){
+  contadorid++;
+  
 
   var strVar="";
-strVar += "    <div class=\"tipoM cuestionario row justify-content-center mt-5 pt-5\">";
+strVar += '<div id=\"preg'+(contadorid)+'\" class=\"tipoM cuestionario row justify-content-center mt-5 pt-5\">';
 strVar += "            <div class=\"text-center\">";
 strVar += "              <h4>Pregunta de Matemáticas<\/h4>";
 strVar += "              <p class=\"text-primary\"><b>Instruciones: <\/b>   Si requiere escribir una fracción ingrese guion bajo\"_\" p. ej. 3_4 <\/p>";
@@ -974,6 +984,8 @@ strVar += "          <\/div>";
 
 insertor.insertAdjacentHTML("beforeend",strVar);
 }
+
+
 
 function envioPreguntaRelacional(){
 
