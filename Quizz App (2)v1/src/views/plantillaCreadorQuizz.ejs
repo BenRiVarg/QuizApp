@@ -175,9 +175,9 @@ document.getElementById("mySidebar").style.display = "none";
                       <p class="display-6">Pregunta Texto-Imagen</p>
                       <p class="text-primary"><b>Instruciones: </b> Seleccione la imagen a cargar, y defina pregunta y respuesta</p>
                     </div>
-                    <input required type="file" id="file-upload" accept="image/*" class="imagen">
+                    <input required type="file" id="imgIT" accept="image/*" class="imgs">
                     <input required type="hidden" class="imagenrequest">
-                    <div id="file-preview-zone"  class="mx-auto"></div>
+                    <div id="prevIT"  class="mx-auto"></div>
                     <div class="mb-3">
                       <label for="formGroupExampleInput" class="form-label">Pregunta</label>
                       <input type="text" class="form-control pregunta"  placeholder="Escriba la pregunta">
@@ -191,6 +191,7 @@ document.getElementById("mySidebar").style.display = "none";
                     <button type="button" class="btn btn-danger" onclick="eliminar(this)" align="left">Quitar Pregunta</button>
                   </div>
                  </div>
+              </div>
        
           <div class="tipoM cuestionario row justify-content-center mt-5 pt-5">
               <div class="text-center">
