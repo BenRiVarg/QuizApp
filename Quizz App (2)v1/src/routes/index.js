@@ -297,9 +297,7 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
        cuestionario:cuestionario
        
        }
-    
-    ); 
-  
+    ); */
   res.redirect("/editores/crear");
 
  
@@ -710,13 +708,63 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
 
 //Boomer "5fce761f2e2106439e852306"
 
- router.get('/pruebaAJAX',async (req, res)=>{
-  var niveles=await API.Find("niveles");
-  niveles=niveles.levels
-  res.json(niveles)
-})
 
  router.get('/cuarto', (req, res) => {
+
+
+router.get("/pruebaAJAXniveles", async (req, res) => {
+  var niveles = await API.Find("niveles");
+  niveles = niveles.levels;
+  res.json(niveles);
+});
+
+router.get("/pruebaAJAXgrados", async (req, res) => {
+  var grados = await API.Find("grados");
+  grados = grados.grades;
+  res.json(grados);
+});
+
+router.get("/pruebaAJAXmaterias", async (req, res) => {
+  var materias = await API.Find("materias");
+  materias = materias.subjects;
+  res.json(materias);
+});
+
+router.get("/pruebaAJAXbloques", async (req, res) => {
+  var bloques = await API.Find("bloques");
+  bloques = bloques.blocks;
+  res.json(bloques);
+});
+
+router.get("/pruebaAJAXsecuencias", async (req, res) => {
+  var secuencias = await API.Find("secuencias");
+  secuencias = secuencias.sequences;
+  res.json(secuencias);
+});
+
+router.get("/pruebaAJAXgrados/:idnivel", async (req, res) => {
+  var grados = await API.busqueda(req.params.idnivel,"nivel","grados"); 
+  res.json(grados); 
+});
+
+router.get("/pruebaAJAXmaterias/:idgrado", async (req, res) => {
+  var materias = await API.busqueda(req.params.idgrado,"grado","materias"); 
+  res.json(materias); 
+});
+
+
+router.get("/pruebaAJAXbloques/:idmateria", async (req, res) => {
+  var bloques = await API.busqueda(req.params.idmateria,"materia","bloques"); 
+  res.json(bloques); 
+});
+
+router.get("/pruebaAJAXsecuencias/:idbloque", async (req, res) => {
+  var secuencias = await API.busqueda(req.params.idbloque,"bloque","secuencias"); 
+  res.json(secuencias);
+});
+
+
+router.get('/cuarto', (req, res) => {
 
   gfs.files.find().toArray((err, files) => {
     // Check if files
