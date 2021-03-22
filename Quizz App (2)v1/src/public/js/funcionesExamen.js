@@ -5,8 +5,8 @@ function caliz(){
     alert("Sí va a Funcionar")
 }
 
-//Variable para asignar un valor de id a cada item de tipo Drag
-var contadorDrag=1;
+//Variable para recuperar las respuestas del alumno
+var respuestasAlumnoD=[];
 var retornable=document.getElementsByClassName("retornable")[0];
 matematicas();
 contadorItemsMultiples();
@@ -269,19 +269,7 @@ function activarReactivo(){
         elemento=ui.draggable;
         elemento=elemento[0];
         event.stopPropagation();
-        //Variable para detectar el id del lienzo al que pertenece el elemento 
-        var strlienzo=this.parentElement.parentElement.id;
-    
-        //Variable para llamar al espacio del objeto del lienzo
-        var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
-    
         
-    
-        
-        
-        var pregunta={
-          id:this.id
-        }
     
         var respuesta={
           id_respuesta: elemento.id,
@@ -289,17 +277,34 @@ function activarReactivo(){
           id_pregunta:this.id
         }
     
-        var datos={
-          operacion: "preg-res",
-          pregunta: pregunta,
-          respuesta: respuesta,
-        }
-    
-        construirObjLienzo(espacioObj,datos)
+       if(!BuscarRespuesta(respuesta.id_pregunta,respuesta)){
+           respuestasAlumnoD.push(respuesta);
+       }
+        console.log(respuestasAlumnoD);
+       
     
       }
     });
     }
+
+    function BuscarRespuesta(id_buscado,respuesta){
+        var resultado=false
+        for(x in respuestasAlumnoD){
+            if(id_buscado==respuestasAlumnoD[x].id_pregunta){
+                console.log("Sobreescribiendo")
+                respuestasAlumnoD[x]=respuesta
+                resultado= true
+            }
+        }
+        return resultado;
+    }
+
+    function arrastrable() {
+        $(".elementoDrag").draggable({
+          revert: "invalid",
+          cursor: "move",
+        });
+      }
 
 function enviarQuizz(){
     envioRespuestasMate();
