@@ -8,13 +8,14 @@ var contador=1;
 var contadorPreV=1;
 //---Variables para la pregunta Drag--//
 var objetosDrag=[];
+var contadorid = 1 ;
 var lienzo={
             id:0,
             img:[],
             pregunta:[],
             respuesta:[],
             flecha:[]
-var contadorid = 1 ;
+
 
             }
             //Simulación de un solo lienzo
@@ -521,6 +522,7 @@ function previsualizarDraw(){
             imageDatos.style.position="absolute";
             imageDatos.style.top=topAjustado+"px";
             imageDatos.style.left=leftAjustado+"px";
+            imageDatos.className="img-PLienzo"
 
             var datos={
               tipoElemento: "img",
@@ -556,8 +558,9 @@ previsualizarDraw();
 //----Terminan funciones Drag--------//
 
       function preguntaArrastrar() {
+        contadorid++;
                 var strVar="";
-        strVar += "<div class=\"tipoAr cuestionario\">";
+        strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoAr cuestionario\">";
         strVar += "    <div class=\"row mt-3\">";
         strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
         strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
@@ -896,7 +899,7 @@ function preguntaIT(){
   contadorid++;
   
   var strVar="";
-strVar += "  <div class=\"row justify-content-center mt-5 pt-5\" id=\"insercion\">";
+strVar += "  <div id=\"preg"+(contadorid)+"\" class=\"row justify-content-center mt-5 pt-5\" id=\"insercion\">";
 strVar += "                ";
 strVar += "                <div class=\"container tipoIT cuestionario mt-4 col-md-7 \">";
 strVar += "                    <div class=\"text-center\">";
