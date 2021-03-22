@@ -10,9 +10,6 @@ var contadorDrag=1;
 var retornable=document.getElementsByClassName("retornable")[0];
 matematicas();
 contadorItemsMultiples();
-activarDragQuizz();
-activarItemsDrop();
-
 
 //----------Empiezan FUncioens de Mate-----//
 function matematicas(){
@@ -202,221 +199,7 @@ function moverDiv(){
 
 }
 
-/*
-function activarDragQuizz(){
-    var i=0;
-    var arrastrables=document.querySelectorAll(".arrastrable");
-    for(i;i<arrastrables.length;i++){
-        var elemento=arrastrables[i];
-        elemento.setAttribute('id', ("itemDragQuizz"+contadorDrag));
-    activarItemDrag(elemento);
-    }
-}
 
-function activarItemDrag(obj){
-    
-        
-        obj.setAttribute('draggable', 'true');
-
-        addEvent(obj, 'dragstart', function (e) {
-            console.log('dragstart');
-
-            e.dataTransfer.effectAllowed = 'copy';
-
-            //TODO fails on desktop safari because drag is immediately aborted
-//                this.style.display = "none";
-
-            console.log('setting data: ' + this.id);
-
-            e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
-        });
-
-        contadorDrag=contadorDrag+1;
-    
- 
-}
-
-function drop(event,itemDrop){
-    event.preventDefault();
-    event.stopPropagation();
-  //Conseguir los datos del elemento drag que está encima
-  var el = document.getElementById(event.dataTransfer.getData('Text'));
-
-  //console.log(this.children[0].id.search("itemDragQuizz"));
-  
-  if(itemDrop.children[0].id.search("itemDragQuizz")==-1){
-      //Casilla Vacía
-      if (el.parentElement.className!="reactivoDrop"){
-          el.remove();
-  
-          }
-
-      else{
-          el.textContent="Tu Respuesta";
-          el.id=null;
-      }
-    
-       //Copia de todos los elementos que se soltarán
-       itemDrop.children[0].innerHTML=el.innerHTML;
-       itemDrop.children[0].id=el.id;
-
-          //Activamos funcionalidad Drag del nuevo elemento en la casilla
-      activarItemDrag(itemDrop.children[0]);
-
-      //Y copiamos datos del elemento en los procesadores de request
-       var respuesta=itemDrop.querySelectorAll("input.respuestaDrag")[0];
-       respuesta.value=el.textContent;
-
-  }
-  else{ //Casilla Ocupada
- 
-      //Copiamos los elementos del elemento que ya está en la casilla
-      var replica=document.createElement(itemDrop.children[0].tagName);
-      replica.textContent=itemDrop.children[0].textContent;
-      replica.id=itemDrop.children[0].id;
-
-   
-      //Y lo replicamos para poder seguirlo utilizando
-      retornable.appendChild(replica);
-
-      //Damos funcionalidad Drag al elemento que acaba de reaparecer
-      var elementoRenacido=document.getElementById(replica.id);
-      activarItemDrag(elementoRenacido);
-
-      //Asignamos los valores del elemento Drag nuevo 
-      itemDrop.children[0].innerHTML=el.innerHTML;
-      itemDrop.children[0].id=el.id;
-
-        //LLenamos la casilla para anunciar que no hay respueta
-      el.textContent="Tu respuesta";
-
-      //Y destruimos los elementos si estan afuera de un item Respuesta
-      if (el.parentElement.className!="reactivoDrop"){
-          el.remove();
-  
-          }
-      //Activamos funcionalidad Drag del nuevo elemento en la casilla
-      activarItemDrag(itemDrop.children[0]);
-
-    
-
-  }
-
-  
-}
-
-
-function activarItemsDrop(){
-    var i=0;
-    var reactivosDrop=document.getElementsByClassName("reactivoDrop");
-
-    
-    for(i;i<reactivosDrop.length;i++){
-    var innerBin=reactivosDrop[i];
-    addEvent(innerBin, 'dragenter', function (e) {
-        console.log('apperture dragenter');
-
-        e.preventDefault();
-        e.stopPropagation(); // stop it here to prevent it bubble up
-
-       // bin.classList.add('in');
-    });
-
-    addEvent(innerBin, 'dragover', function (e) {
-        console.log('apperture dragover');
-
-        e.preventDefault(); // allows us to drop
-        e.stopPropagation(); // stop it here to prevent it bubble up
-
-       // e.dataTransfer.dropEffect = 'copy';
-    });
-
-    addEvent(innerBin, 'dragexit', function (e) {
-        console.log('apperture dragexit');
-
-        e.stopPropagation(); // stop it here to prevent it bubble up
-
-        //bin.classList.remove('in');
-    });
-
-    addEvent(innerBin, 'dragleave', function (e) {
-        console.log('apperture dragleave');
-
-        e.stopPropagation(); // stop it here to prevent it bubble up
-
-      //  bin.classList.remove('in');
-    });
-
-  
-    /*
-    addEvent(innerBin, 'drop', function (e) {
-        console.log('apperture drop');
-
-        e.stopPropagation(); // stop it here to prevent it bubble up
-
-        //bin.classList.remove////  ('in');
-        //Conseguir los datos del elemento drag que está encima
-        var el = document.getElementById(e.dataTransfer.getData('Text'));
-        
-       
-        console.log(el.id);
-        console.log(this.children[0].id.search("itemDragQuizz"));
-        if(this.children[0].id.search("itemDragQuizz")==-1){
-            //Casilla Vacía
-            if (el.parentElement.className!="reactivoDrop"){
-                el.remove();
-        
-                }
-
-            else{
-                el.textContent="Texto a Reemplazar";
-                el.id=null;
-            }
-          
-             //Copia de todos los elementos que se soltarán
-             this.children[0].innerHTML=el.innerHTML;
-             this.children[0].id=el.id;
-
-                //Activamos funcionalidad Drag del nuevo elemento en la casilla
-            activarItemDrag(this.children[0]);
-        }
-        else{ //Casilla Ocupada
-       
-            //Copiamos los elementos del elemento que ya está en la casilla
-            var replica=document.createElement(this.children[0].tagName);
-            replica.textContent=this.children[0].textContent;
-            replica.id=this.children[0].id;
-
-         
-            //Y lo replicamos para poder seguirlo utilizando
-            retornable.appendChild(replica);
-
-            //Damos funcionalidad Drag al elemento que acaba de reaparecer
-            var elementoRenacido=document.getElementById(replica.id);
-            activarItemDrag(elementoRenacido);
-
-            //Asignamos los valores del elemento Drag nuevo 
-            this.children[0].innerHTML=el.innerHTML;
-            this.children[0].id=el.id;
-            //Y destruimos los elementos si estan afuera de un item Respuesta
-            if (el.parentElement.className!="reactivoDrop"){
-                el.remove();
-        
-                }
-            //Activamos funcionalidad Drag del nuevo elemento en la casilla
-            activarItemDrag(this.children[0]);
-        }
-      
-    });
-
-    
-    }
-
-    
-
-
-}
-*/
 function contadorItemsMultiples(){
         
     //Buscamos todos aquellos elementos que tengan más de una respuesta
@@ -476,6 +259,47 @@ function envioRespuestasMate(){
         }
     }
 }
+
+//Función para detectar ids y contenido de lo que cae en un reactivo
+function activarReactivo(){
+    $(".reactivo").droppable({
+      drop: function (event, ui) {
+    
+        console.log("Detectando ID");
+        elemento=ui.draggable;
+        elemento=elemento[0];
+        event.stopPropagation();
+        //Variable para detectar el id del lienzo al que pertenece el elemento 
+        var strlienzo=this.parentElement.parentElement.id;
+    
+        //Variable para llamar al espacio del objeto del lienzo
+        var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
+    
+        
+    
+        
+        
+        var pregunta={
+          id:this.id
+        }
+    
+        var respuesta={
+          id_respuesta: elemento.id,
+          contenido:elemento.textContent,
+          id_pregunta:this.id
+        }
+    
+        var datos={
+          operacion: "preg-res",
+          pregunta: pregunta,
+          respuesta: respuesta,
+        }
+    
+        construirObjLienzo(espacioObj,datos)
+    
+      }
+    });
+    }
 
 function enviarQuizz(){
     envioRespuestasMate();

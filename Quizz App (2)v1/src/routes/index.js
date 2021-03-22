@@ -439,14 +439,18 @@ router.get('/alumnos/examen/:id',async(req,res)=>{
    
    const quizz=await Quizz.findById(req.params.id);
    
-   /*
-   var materia=quizz.claveMateria;
-   var color=await Materia.findById(materia)
-   color=color.color;
+  /*
+  for(var i=0;i<quizz.cuestionario.length;i++){
+    if(quizz.cuestionario[i].tipo=="tipoAr"){
+      console.log("Filtro Activado");
+      //SobreEscritura de los datos para poder tratar un lienzo en el Front
+      quizz.cuestionario[i].pregunta=JSON.stringify(quizz.cuestionario[i].pregunta);
+      quizz.cuestionario[i].respuesta=JSON.stringify(quizz.cuestionario[i].respuesta);
+    }
+    console.log(quizz.cuestionario[i]);
+  }
   */
    res.render('alumnos/examen',{ quizz });
-
-   
 
 });
 

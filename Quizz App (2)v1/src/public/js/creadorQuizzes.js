@@ -508,6 +508,9 @@ function previsualizarDraw(){
             //Espacio centrado en base al tamaño del lienzo
             var leftAjustado= Math.round((770-this.width)/2);
             var topAjustado= Math.round((550-this.height)/2);
+            
+       
+            
 
             imageDatos.style.position="absolute";
             imageDatos.style.top=topAjustado+"px";
