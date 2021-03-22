@@ -259,7 +259,7 @@
   <script src="/js/creadorQuizzes.js" type="text/javascript"></script>
   <script>
     $.getJSON("/pruebaAJAXniveles", function (niveles) {
-      for (var i = 0; i < 3; i++) {
+      for (var i = 0; i < niveles.length; i++) {
         var nombres = (niveles[i].nombre);
         var id = (niveles[i].id);
         var select = document.getElementById("nivel").innerHTML +=
