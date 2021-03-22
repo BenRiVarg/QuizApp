@@ -652,6 +652,17 @@ router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
 });
 
+router.get('/alumnos/examen/:id', async (req, res) => {
+
+
+  const quizz = await Quizz.findById(req.params.id);
+  res.render('alumnos/examen', { quizz });
+
+  
+
+
+
+});
 
 
 router.get('/alumnos/respuestas', (req, res) => {
