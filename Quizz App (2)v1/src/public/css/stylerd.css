@@ -38,5 +38,25 @@ body{
 image{
   max-width: 10px;
 }
+:root {
+  --altolienzo: 600px;
+  --ancholienzo: 700px !important;
+}
+.lienzo {
+  position: relative;
+  display: inline-block;
+  width: var(--ancholienzo);
+  height: var(--altolienzo);
+  background-color: #ccffff;
+  margin: 0 auto;
+  border: 1px solid black;
+}
 
+.replica {
+  position: relative;
+  display: inline-block;
+  width: var(--ancholienzo);
+  height: var(--altolienzo);
+  background-color: #99ffcc;
+}
 
