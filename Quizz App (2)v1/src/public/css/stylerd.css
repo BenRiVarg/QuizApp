@@ -1,0 +1,42 @@
+body{
+  background-color: #FFE8CD;
+  margin: 1px;
+  padding: 1px;
+}
+.figure,p{
+  width: 100px;
+  height: 100px;
+  background-color: #CE002B;
+  color: white;
+}
+
+.progress-bar{
+  background-color: #CE002B
+}
+.figure2{
+  width: 100px;
+  height: 100px;
+  background-color: #CE002B;
+  float: right;
+  position: relative;
+  
+}
+.bt1{
+  float: left;
+  background-color: #FFBA6A;
+
+}
+.bt2{
+  float: right;
+  background-color: #FFBA6A;
+}
+.card-body{
+  background-color: #F69100;
+  border-radius: 20px;
+  
+}
+image{
+  max-width: 10px;
+}
+
+

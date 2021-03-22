@@ -705,6 +705,9 @@ router.get('/plantillaRevision', (req, res) => {
 router.get('/plantillaQuizz', (req, res) => {
   res.render('plantillaQuizzFinal', { color: "#ffff99" });
 })
+router.get('/rediseno', (req, res) => {
+  res.render('rediseno', { color: "#FFE8CD" });
+})
 
 // @route POST /upload
 // @desc  Uploads file to DB
