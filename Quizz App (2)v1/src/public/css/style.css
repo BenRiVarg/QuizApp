@@ -244,7 +244,7 @@
   display: inline-block;
   width: var(--ancholienzo);
   height: var(--altolienzo);
-  background-color: #99ffcc;
+  background-color: lightcyan;
 }
 
 .img-PLienzo {
