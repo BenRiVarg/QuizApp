@@ -1,138 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <!--
-  <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
--->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="cache-control" content="no-cache"/>
-    <style>
-    
-        
-        .btn-flotante {
-	font-size: 16px; /* Cambiar el tamaño de la tipografia */
-	text-transform: uppercase; /* Texto en mayusculas */
-	font-weight: bold; /* Fuente en negrita o bold */
-	color: #ffffff; /* Color del texto */
-	border-radius: 5px; /* Borde del boton */
-	letter-spacing: 2px; /* Espacio entre letras */
-	background-color: cyan; /* Color de fondo */
-	padding: 18px 30px; /* Relleno del boton */
-	position: fixed;
-	bottom: 40px;
-	right: 40px;
-	transition: all 300ms ease 0ms;
-	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-	z-index: 99;
-}
-.btn-flotante:hover {
-	background-color: #2c2fa5; /* Color de fondo al pasar el cursor */
-	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
-	transform: translateY(-7px);
-}
-
-@media only screen and (max-width: 600px) {
- 	.btn-flotante {
-		font-size: 14px;
-		padding: 12px 20px;
-		bottom: 20px;
-		right: 20px;
-	}
-}
-.container1, .button1, .nav1{
-
-position: absolute;
-align-items: baseline;
-}
-body{
-  position: relative;
-}
-
-.container1{
-margin: auto;
-top: 10%;
-left: 50%;
-}
-
-#toggle{
-display: none;
-}
-.button1{
-z-index: 999;
-width: 43px;
-height: 43px;
-background-color:blue;
-border-radius: 100%;
-transition: all o.5s ease-in-out;
-box-shadow: (0,0,0,0.3);
-cursor: pointer;
-position: fixed;
-bottom: 479px;
-right: 250px;
-}
-
-.button1::before{
-position: absolute;
-top: 20px;
-left: 9px;
-content: '';
-width: 25px;
-height: 2px;
-background: #fff;
-transform: rotate(90deg);
-}
-.button1::after{
-position: absolute;
-top: 20px;
-left: 9px;
-content: '';
-width: 25px;
-height: 2px;
-background: #fff;
-
-}
-
-.nav1 {
-transform: translateY(-10%);
-opacity: 0%;
-transition: all 0.5s ease-in-out;
-background: white;
-width: 250px;
-border-radius: 5px;
-transform: translateY(0%);
-box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
-position: fixed;
-bottom: 160px;
-right: 20px;
-}
-
-.nav1 a{
-text-align: center;
-display: block;
-margin: 10px 0;
-color: black;
-text-decoration: none;
-font-family: sans-serif;
-}
-
-#toggle:checked ~.nav1{
-opacity: 1;
-transform: translateY(10%);
-
-}
-#toggle:checked ~.button1{
-transform: rotate(135deg);
-box-shadow: 0,0,0, transparent;
-}
-    </style>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-
+    <link rel="stylesheet" type="text/css" href="/css/editoresCrear.css">
+    <script src="https://kit.fontawesome.com/c35e85c3bd.js" crossorigin="anonymous"></script>
     <!-- Sidebar -->
   
     
@@ -141,71 +17,75 @@ box-shadow: 0,0,0, transparent;
 <body data-spy="scroll" data-target="#insercion" data-offset="50" >
   <!-- Page Content -->
   
-    
+  <div>
     <h4 class="display w3-bar-item d-inline-block" onclick="" >QuizApp</h4>
     <p class="display w3-bar-item d-inline-block" onclick="" >Help</p>
     <p class="display w3-bar-item d-inline-block" onclick="" >FAQ</p>
   
   </div>
   <br>
-<div class="row justify-content-center mt-5 pt-5">
-  <header class="text-center mb-5"><h1>Crea un nuevo exámen</h1></header>
-</div>
-      
-    <form action="/editores/crear"  id="formularioQuizz" method="POST" enctype="multipart/form-data" align="center">
-                  <div class="row justify-content-center mt-5 pt-5">
-                    <div class="col-lg-7">
-                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="nivel" required>
-                        <option selected>Nivel</option>
-                        <option value="Primaria">Primaria</option>
-                        <option value="Secundaria">Secundaria</option>
-                        <option value="Preparatoria">Preparatoria</option>
-                    </select>
-                </div>
-                <div class="col-lg-7">
-                    <select id="color" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"  name="claveMateria" required>
-                        <option selected>Materia</option>
-                        <% 
-                        materia.forEach (function (materia){ %>
-                          <option value="<%= materia._id %>"><%= materia.nombre %></option>
-                        
-                            <% }); 
-                        %>
-                    </select>
-                </div>
-                <div class="col-lg-7">
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example"  name="grado" required>
-                        <option selected>Grado</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                </div>
-            </div>
-            <br>
-            <br>
-            <div class="text-center">
-              <p class="display-6">Nombre del Quizz:</p>
-              
-              <input type="text" name="nombreQuizz" >
-            </div>
-           <!-- Inserto de nuevas preguntas-->
-           
-            <div class="row justify-content-center mt-5 pt-5" id="insercion">
-                
-           </div>
-            
-  </form>
-  
-      <div class="boton3">
-        <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu Quizz" delay="0" tabindex="0" class="d-inline-block" >
-          <button type="button" class="btn-flotante"  onclick="envioQuizz()"  >Crear Quizz</button>
-        </span>
+  <div class="row justify-content-center mt-5 pt-5">
+    <header class="text-center mb-5">
+      <h1>Crea un nuevo exámen</h1>
+    </header>
+  </div>
+
+  <form action="/editores/crear" id="formularioQuizz" method="POST" enctype="multipart/form-data" align="center">
+    <div class="row justify-content-center mt-5 pt-5">
+      <div class="col-lg-7">
+        <select id="nivel" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="nivel" required>
+          <option selected>Nivel</option>
+
+        </select>
       </div>
-  
+      <div class="col-lg-7">
+        <select id="grados" class="form-select form-select-lg mb-3" aria-label=".form-select-sm example" name="grado"  required>
+          <option selected>Grado</option>
+        
+        </select>
+        
+      </div>
+      <div class="col-lg-7">
+      <select id="materias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="claveMateria" required>
+        <option selected>Materia</option>
+      
+      </select>
+      </div>
+      <div class="col-lg-7">
+        <select id="bloques" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="bloques" required>
+          <option selected>Bloque</option>
+      
+        </select>
+      </div>
+      <div class="col-lg-7">
+        <select id="secuencias" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="Secuencias"
+          required>
+          <option selected>Secuencias</option>
+      
+        </select>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="text-center">
+      <p class="display-6">Nombre del Quizz:</p>
+
+      <input class="crearQ" type="text" placeholder="Coloca el nombre:" name="nombreQuizz">
+
+    </div>
+    <!-- Inserto de nuevas preguntas-->
+
+    <div class="row justify-content-center mt-5 pt-5" id="insercion">
+
+    </div>
+
+  </form>
+
+  <div class="boton3">
+    <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu Quizz" delay="0"
+      tabindex="0" class="d-inline-block">
+      <button type="button" class="btn-flotante" onclick="envioQuizz()">Crear Quizz</button>
+    </span>
   </div>
   <div class="container1">
     <input type="checkbox" id="toggle">
@@ -213,61 +93,7 @@ box-shadow: 0,0,0, transparent;
     <label for="toggle" class="button1"></label>
 
     </span>
-    <script>
-
-      var contadorhref=1;
-      function sumahref(id){
-
-        if (id==="ref") {
-          var ref = document.getElementById("ref");
-          contadorhref++;
-          ref.setAttribute("href",'#preg'+contadorhref);
-          
-          
-        }else if (id=="ref2") {
-          
-            var ref2 = document.getElementById("ref2");
-            contadorhref++;
-            ref2.setAttribute("href",'#preg'+contadorhref);
-            
-        }else if (id==="ref3") {
-          
-            var ref3 = document.getElementById("ref3");
-            contadorhref++;
-            ref3.setAttribute("href",'#preg'+contadorhref);
-            
-        }else if (id==="ref4"){
-          
-          var ref4 = document.getElementById("ref4");
-          contadorhref++;
-          ref4.setAttribute("href",'#preg'+contadorhref);
-          
-
-        }else if (id==="ref5"){
-          var ref5 = document.getElementById("ref5");
-          contadorhref++;
-          ref5.setAttribute("href",'#preg'+contadorhref);
-          
-        }else if (id==="ref6"){
-
-          var ref6 = document.getElementById("ref6");
-          contadorhref++;
-          ref6.setAttribute("href",'#preg'+contadorhref)
-          
-        }else{
-          console.log("error de link")
-          
-        }
-      }
-      function desabilitado(){
-      document.getElementById("btn1").disabled = true;
-      
-    }
-      function habilitar(){
-      document.getElementsById("btn1").disabled = false;
-      
-    }
-    </script>
+   
     
     <nav class="nav1">
           <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click para insertar Pregunta Abierta" delay="0" tabindex="0" class="d-inline-block" >
@@ -286,13 +112,75 @@ box-shadow: 0,0,0, transparent;
         <a onclick="preguntaMatematicas(), sumahref(this.id)" class="btn w3-bar-item w3-button" id="ref5" onclick="sumahref(this.id)" >Insertar Pregunta de Matemáticas</a>
       </span>
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable" delay="0" tabindex="0" class="d-inline-block" >
-        <button onclick="preguntaArrastrar()" class="w3-bar-item w3-button" disabled> <a id="ref6" onclick="sumahref(this.id)" >Inserta Pregunta Arrastrable</a></button>
+        <buton onclick="preguntaArrastrar()" class="w3-bar-item w3-button" ><a id="ref6" class="" onclick="sumahref(this.id)" >Inserta Pregunta Arrastrable</a></button>
       </span>
     </nav>
   </div>
   
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
-    <script src="/js/creadorQuizzes.js" type="text/javascript"></script> 
-  
-  </body>
+  <script>
+
+    var contadorhref=1;
+    function sumahref(id){
+
+      if (id==="ref") {
+        var ref = document.getElementById("ref");
+        contadorhref++;
+        ref.setAttribute("href",'#preg'+contadorhref);
+        
+        
+      }else if (id=="ref2") {
+        
+          var ref2 = document.getElementById("ref2");
+          contadorhref++;
+          ref2.setAttribute("href",'#preg'+contadorhref);
+          
+      }else if (id==="ref3") {
+        
+          var ref3 = document.getElementById("ref3");
+          contadorhref++;
+          ref3.setAttribute("href",'#preg'+contadorhref);
+          
+      }else if (id==="ref4"){
+        
+        var ref4 = document.getElementById("ref4");
+        contadorhref++;
+        ref4.setAttribute("href",'#preg'+contadorhref);
+        
+
+      }else if (id==="ref5"){
+        var ref5 = document.getElementById("ref5");
+        contadorhref++;
+        ref5.setAttribute("href",'#preg'+contadorhref);
+        
+      }else if (id==="ref6"){
+
+        var ref6 = document.getElementById("ref6");
+        contadorhref++;
+        ref6.setAttribute("href",'#preg'+contadorhref)
+        
+      }else{
+        console.log("error de link")
+        
+      }
+    }
+    function desabilitado(){
+    document.getElementById("btn1").disabled = true;
+    
+  }
+    function habilitar(){
+    document.getElementsById("btn1").disabled = false;
+    
+  }
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script src="/js/creadorQuizzes.js" type="text/javascript"></script>
+  <script src="/js/filtroSelects.js" type="text/javascript"></script>
+
+</body>
+
 </html>
