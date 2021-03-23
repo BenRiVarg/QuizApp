@@ -217,6 +217,15 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
  
  
   console.log(req.body);
+
+  console.log(req.body.nivel);
+  console.log(req.body.grado);
+  console.log(req.body.claveMateria);
+  console.log(req.body.bloques);
+  console.log(req.body.Secuencias);
+  console.log(req.body.nombreQuizz);
+
+
  
  	//var contadorImagenes=0;
 
@@ -291,16 +300,21 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
    //guardado en la BD
    var nuevoQuizz= await Quizz.create( 
       {
-        nivel:req.body.nivel,
-       grado:req.body.grado,
-       claveMateria: req.body.claveMateria,
-       nombreQuizz: req.body.nombreQuizz,
-       cuestionario:cuestionario
+      
+
+    nivel:req.body.nivel,
+    grado:req.body.grado,
+    materia:req.body.claveMateria,
+    bloque:req.body.bloques,
+    secuencia:req.body.Secuencias,
+    nombreQuizz:req.body.nombreQuizz,
+    creador:"Pendiente",
+    cuestionario: cuestionario
        
        }
     
-    ); 
-    console.log(nuevoQuizz._id);
+    );
+    //console.log(nuevoQuizz._id);
   
   res.redirect("/editores/crear");
 
