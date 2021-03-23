@@ -3,11 +3,13 @@ body{
   margin: 1px;
   padding: 1px;
 }
-.figure,p{
+.figure,h6{
   width: 100px;
   height: 100px;
   background-color: #CE002B;
   color: white;
+  line-height: 100px;
+  text-align: center;
 }
 
 .progress-bar{
@@ -18,7 +20,7 @@ body{
   height: 100px;
   background-color: #CE002B;
   float: right;
-  position: relative;
+  position: absolute;
   
 }
 .bt1{
@@ -59,4 +61,22 @@ image{
   height: var(--altolienzo);
   background-color: #99ffcc;
 }
-
+.radio{
+  background-color:#C06500;
+  width: 50px;
+  height: 50px;
+}
+.container{
+      padding-left: 0;
+}
+.temporizador {
+  text-align: center;
+  font-size: 60px;
+  margin-top: 0px;
+}
+.time{
+  align-self: center;
+}
+/* .row{
+  padding-left: 225px;
+} */
