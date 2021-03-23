@@ -225,7 +225,7 @@
   z-index: 1;
 }
 
-/*--- Back drag branch ----*/
+/*--- Estilo de la Pregunta Drag ----*/
 :root {
   --altolienzo: 550px;
   --ancholienzo: 580px;
@@ -251,6 +251,11 @@
   z-index: 0;
 }
 
+.img-replica {
+  position: absolute;
+  z-index: 0;
+}
+
 .recuadro {
   width: 100px;
   height: 50px;
@@ -259,28 +264,22 @@
   z-index: 1;
 }
 
+.reactivoDrag {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 1;
+}
+
 .flecha {
+  position: absolute;
   z-index: 2;
 }
 
-#elemento {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 1;
-}
-#e-replica {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 1;
-}
-
-.elementoReplica {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 1;
+.respuesta-reactivo {
+  z-index: 3;
 }
 
 .centrado {

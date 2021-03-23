@@ -513,7 +513,7 @@ function previsualizarDraw(){
             console.log("Resultado de la función")
           
             //Espacio centrado en base al tamaño del lienzo
-            var leftAjustado= Math.round((770-this.width)/2);
+            var leftAjustado= Math.round((580-this.width)/2);
             var topAjustado= Math.round((550-this.height)/2);
             
        
