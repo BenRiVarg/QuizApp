@@ -279,6 +279,7 @@
 }
 
 .respuesta-reactivo {
+  width: 100px;
   z-index: 3;
 }
 

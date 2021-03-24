@@ -97,7 +97,7 @@ function palabras() {
   /* el ciclo for lo utilizo para saber cuantas son las veces que va a inyectar la etiqueta con la palabra */
   for (var i = 0; i < palabraPartida.length; i++) {
     var id="drag"+contadorIDrag;
-    strVar += '<div id=\"'+id+'\" class="palabraid text-dark fw-bold text-center elementoDrag" style=\"width:90px;\">';
+    strVar += '<div id=\"'+id+'\" class="palabraid text-dark fw-bold text-center elementoDrag" style=\"width:100px;\">';
     strVar += "" + palabraPartida[i] + " </div>";
 
     contadorIDrag++;
