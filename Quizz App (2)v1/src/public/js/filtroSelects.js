@@ -1,3 +1,5 @@
+
+
 var niveles=document.getElementsByClassName("select");
       
 var arrNiveles=[];
@@ -24,11 +26,23 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
   $('#nivel').on('change', async function () {
         console.log(this.value);
         var grados= await getGrados(this.value);
-        console.log("GRADOS OBTENIDOS")
-        console.log(grados);
-        console.log(grados[0].id);
-        console.log(grados[0].nombre);
+        console.log("ETIQUETA OBTENIDA")
+       
+        var claseNivel=this.className;
+
+        ocultarNiveles(claseNivel);
+        /*
+        var valor=claseNivel.search("nivel-");
+        console.log(valor);
+        var claveNivel=claseNivel.substr(valor);
+        var numeroNivel=Number.parseInt( claveNivel.slice(claveNivel.length-1,claseNivel.length));
+        console.log(numeroNivel);
+        */
+
         document.getElementById("grados").innerHTML ="";
+        document.getElementById("grados").innerHTML +=
+        "<option value='"+ 0 +"'>Grado</option>";
+
         for (var i = 0; i < grados.length; i++) {
         document.getElementById("grados").innerHTML +=
           "<option value='" + (grados[i].id) + "'>" + (grados[i].nombre) + "</option>";
@@ -43,7 +57,13 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
           console.log(materias);
           console.log(materias[0].id);
           console.log(materias[0].nombre);
-          document.getElementById("materias").innerHTML =""
+
+          var claseNivel=this.className;
+
+          ocultarNiveles(claseNivel);
+          document.getElementById("materias").innerHTML ="";
+        document.getElementById("materias").innerHTML +=
+        "<option value='"+ 0 +"'>Materia</option>";
           for (var i = 0; i < materias.length; i++) {
           document.getElementById("materias").innerHTML +=
           "<option value='" + (materias[i].id) + "'>" + (materias[i].nombre) + "</option>";
@@ -59,7 +79,14 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
             console.log(bloques);
             console.log(bloques[0].id);
             console.log(bloques[0].nombre);
+
+            var claseNivel=this.className;
+
+            ocultarNiveles(claseNivel);
+
             document.getElementById("bloques").innerHTML =""
+            document.getElementById("bloques").innerHTML +=
+            "<option value='"+ 0 +"'>Bloque</option>";
             for (var i = 0; i < bloques.length; i++) {
             document.getElementById("bloques").innerHTML +=
                 "<option value='" + (bloques[i].id) + "'>" + (bloques[i].nombre) + "</option>";
@@ -75,6 +102,13 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
               console.log(secuencias[0].id);
               console.log(secuencias[0].nombre);
               
+              document.getElementById("secuencias").innerHTML =""
+            document.getElementById("secuencias").innerHTML +=
+            "<option value='"+ 0 +"'>Secuencias</option>";
+            var claseNivel=this.className;
+
+            ocultarNiveles(claseNivel);
+
               for (var i = 0; i < secuencias.length; i++) {
                  document.getElementById("secuencias").innerHTML +=
                   "<option value='" + (secuencias[i].id) + "'>" + (secuencias[i].nombre) + "</option>";
@@ -132,11 +166,20 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
     return secuenciasPorBloque;
     }
     
-    function ocultarNiveles(nivel){
-      var i=nivel+1;
+    function ocultarNiveles(claseNivel){
+      var valor=claseNivel.search("nivel-");
+      console.log(valor);
+      var claveNivel=claseNivel.substr(valor);
+      var numeroNivel=Number.parseInt( claveNivel.slice(claveNivel.length-1,claseNivel.length));
+      console.log(numeroNivel);
+      /////////////
+      var i=numeroNivel+1;
+      if(numeroNivel!=4){
       for( i;i<arrNiveles.length;i++){
-        
+        var elemento=arrNiveles[i];
+        elemento.style.display="none";
       }
+    }
     
     }
    
