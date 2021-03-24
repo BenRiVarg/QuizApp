@@ -80,8 +80,8 @@ global.datosAlumnoSesion = {};
 
 router.get('/', async (req, res) => {
   res.render('index');
- var niveles=   await API.Find("niveles");
-  console.log(niveles)
+ var grupo=   await API.alumnos("R71MHRG4");
+  console.log(grupo)
 });
 
 
@@ -675,7 +675,7 @@ router.get('/alumnos/examen/:id', async (req, res) => {
 
 
   const quizz = await Quizz.findById(req.params.id);
-  res.render('alumnos/examen', { quizz });
+  res.render('alumnos/Quizz', { quizz });
 
   
 
