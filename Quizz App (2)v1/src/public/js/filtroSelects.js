@@ -1,90 +1,39 @@
+var niveles=document.getElementsByClassName("select");
+      
+var arrNiveles=[];
+for(var i=0;i<niveles.length;i++){
 
-//---------------------------A J A X -------------------------------------//
+  arrNiveles[i]=niveles[i];
+  
+}
+
+
 $.getJSON("/pruebaAJAXniveles", function (niveles) {
     for (var i = 0; i < niveles.length; i++) {
       var nombres = (niveles[i].nombre);
       var id = (niveles[i].id);
       var select = document.getElementById("nivel").innerHTML +=
         "<option value='"+ id +"'>" + nombres + "</option>";
-      
+    
     }
      
   });
 
-  /*
-   $.getJSON("/pruebaAJAXgrados", function (grados) {
-  
+   
 
-      document.getElementById("grados").style.display = "none"; 
-    });
-    */
-
-      $.getJSON("/pruebaAJAXmaterias", function (materias) {
-          /* for (var i = 0; i < 6; i++) {
-            var nombres = (materias[i].nombre);
-            var id = (materias[i].id);
-            var select = document.getElementById("materias").innerHTML +=
-              "<option value='" + id + "'>" + nombres + "</option>";
-            console.log(nombres);
-          } */
-
-         document.getElementById("materias").style.display = "none"; 
-        });
-
-         $.getJSON("/pruebaAJAXbloques", function (bloques) {
-         /*    for (var i = 0; i < 6; i++) {
-              var nombres = (bloques[i].nombre);
-              var id = (bloques[i].id);
-              var select = document.getElementById("bloques").innerHTML +=
-                "<option value='" + id + "'>" + nombres + "</option>";
-            
-              console.log(nombres); 
-            } */
-
-            document.getElementById("bloques").style.display = "none"; 
-          });
-
-          
-            $.getJSON("/pruebaAJAXsecuencias", function (secuencias) {
-             /*  for (var i = 0; i < 6; i++) {
-                var nombres = (secuencias[i].nombre);
-                var id = (secuencias[i].id);
-                var select = document.getElementById("secuencias").innerHTML +=
-                  "<option value='" + id + "'>" + nombres + "</option>";
-              
-                console.log(nombres);
-              } */
-
-                document.getElementById("secuencias").style.display = "none";
-            });
-
-            //---------------------------H T M L ---------------------//
   $('#nivel').on('change', async function () {
         console.log(this.value);
         var grados= await getGrados(this.value);
-    
         console.log("GRADOS OBTENIDOS")
         console.log(grados);
-    /*
         console.log(grados[0].id);
         console.log(grados[0].nombre);
-    */  var x;
-        for(x in grados){
-          console.log(grados[x].id);
-          console.log(grados[x].nombre);
-          document.getElementById("grados").innerHTML +=
-          '<option value="' + (grados[x].id) + '">' + (grados[x].nombre) + '</option>';
-        }
-        document.getElementById("grados").style.display = "block";
-        /*
+        document.getElementById("grados").innerHTML ="";
         for (var i = 0; i < grados.length; i++) {
-          console.log(grados[2].nombre);
         document.getElementById("grados").innerHTML +=
-          '<option value="' + (grados[i].id) + '">' + (grados[i].nombre) + '</option>';
+          "<option value='" + (grados[i].id) + "'>" + (grados[i].nombre) + "</option>";
         }
-        */
-
-      //document.getElementById("grados").style.display = "block"; 
+       document.getElementById("grados").style.display = "block"; 
     });
 
       $('#grados').on('change', async function () {
@@ -94,11 +43,12 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
           console.log(materias);
           console.log(materias[0].id);
           console.log(materias[0].nombre);
+          document.getElementById("materias").innerHTML =""
           for (var i = 0; i < materias.length; i++) {
           document.getElementById("materias").innerHTML +=
           "<option value='" + (materias[i].id) + "'>" + (materias[i].nombre) + "</option>";
           }
-          document.getElementById("materias").style.display = "block";
+          var visible = document.getElementById("materias").style.display = "block";
         });
 
         
@@ -109,11 +59,12 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
             console.log(bloques);
             console.log(bloques[0].id);
             console.log(bloques[0].nombre);
+            document.getElementById("bloques").innerHTML =""
             for (var i = 0; i < bloques.length; i++) {
             document.getElementById("bloques").innerHTML +=
                 "<option value='" + (bloques[i].id) + "'>" + (bloques[i].nombre) + "</option>";
             } 
-             document.getElementById("bloques").style.display = "block";
+            var visible = document.getElementById("bloques").style.display = "block";
           });
 
            $('#bloques').on('change', async function () {
@@ -123,24 +74,15 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
               console.log(secuencias);
               console.log(secuencias[0].id);
               console.log(secuencias[0].nombre);
+              
               for (var i = 0; i < secuencias.length; i++) {
                  document.getElementById("secuencias").innerHTML +=
                   "<option value='" + (secuencias[i].id) + "'>" + (secuencias[i].nombre) + "</option>";
               }
-              document.getElementById("secuencias").style.display = "block";
+              var visible = document.getElementById("secuencias").style.display = "block";
             });
 
 
-  function bloquearNiveles(){}
-  var arrNiveles=[];
-  var niveles= document.getElementsByClassName("select");
-  
-  //Capturamos todos los selects
-  for(var i=0;i<niveles.length;i++){
-     arrNiveles[i]=niveles[i];
-     console.log(arrNiveles[i]);
-  }
-              //----------------------------------------------- FUNCIONES------------------//
   async function getGrados(idNivel){
 
     var gradosDelNivel= await new Promise((resolve, reject) => {
@@ -190,5 +132,12 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
     return secuenciasPorBloque;
     }
     
+    function ocultarNiveles(nivel){
+      var i=nivel+1;
+      for( i;i<arrNiveles.length;i++){
+        
+      }
+    
+    }
    
     
