@@ -155,7 +155,6 @@
                             <div class="d-flex justify-content-center  ">
                               <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
 
-                                <% var Irelacional=i %>
                                 <div class="card-body border border-1">
                                   <h4 class="display-7">Relaciona los items</h4><br>
                                   <div class="d-flex justify-content-center container">
@@ -200,23 +199,28 @@
                             <!--Termina P Relacional-->
                           </div>
                           <% break; case "tipoM" : %>
-                          <div class="carousel-item <%= activo %>">
-                            <!--P Texto-->
-                            <div class="d-flex justify-content-center ">
-                              <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
-    
-                                <div class="card-body border border-1 ">
-                                  <div class="row justify-content-center" style="background-color:lightblue">
-                                    <p class="mate">
-                                      <%= quizz.cuestionario[i].pregunta[0] %>
-                                    </p>
-                                    <input class="tipoMate" id="<%= i %>" type="hidden">
+                            <div class="carousel-item <%= activo %>">
+                              <!--P Mate -->
+                              <div class="d-flex justify-content-center  carousel-item">
+                                <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
+
+                                  <div class="card-body border border-1">
+                                    <h4 class="display-7">Resuelve la siguiente expresión</h4><br>
+                                    <div class="row justify-content-center" style="background-color:lightblue">
+                                      <p class="mate">
+                                        <%= quizz.cuestionario[i].pregunta[0] %>
+                                      </p>
+                                      <div class="align-self-first">
+
+                                      </div>
+                                      <input class="tipoMate" id="<%= i %>" type="hidden">
+                                    </div>
                                   </div>
                                 </div>
                               </div>
+                              <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
+                              <!--Termina P mate-->
                             </div>
-                            <!--Termina P Texto-->
-                          </div>
                             <% break; case "tipoIT" : %>
                               <div class="carousel-item <%= activo %>">
                                 <!--pregunta IT-->
@@ -338,7 +342,6 @@
     <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-   
     <!--Invalidadndo campos si no existe ninguna pregunta Drag-->
       
     <% if (iteracionLienzo!==undefined) { %>

@@ -78,9 +78,10 @@ global.datosDocenteSesion = {};
 global.datosAlumnoSesion = {};
 // ------------||  R U T A S  ||----------------//
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   res.render('index');
-
+ var grupo=   await API.alumnos("R71MHRG4");
+  console.log(grupo)
 });
 
 
@@ -212,62 +213,72 @@ router.get('/editores/crear', async (req, res) => {
 });
 
 
-
-
-router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
+router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
  
  
   console.log(req.body);
+
+  console.log(req.body.nivel);
+  console.log(req.body.grado);
+  console.log(req.body.claveMateria);
+  console.log(req.body.bloques);
+  console.log(req.body.Secuencias);
+  console.log(req.body.nombreQuizz);
+
+
  
  	//var contadorImagenes=0;
 
-  var contadorImagenes = 0;
-
   var i;
   //variable para construir el cuestionario como un array
-  var cuestionario = [
+  var cuestionario= [
   ];
 
   //Si al menos e envio un cuestionario diferente a Drag
-  if (req.body.tipo0){
-  //Procesamiento de cada pregunta por la request
-    for (i = 0; i < req.body.numeroPreguntas; i++) {
-      var tipo = "tipo" + (i + 1);
-      var pregunta = "pregunta" + (i + 1);
-      var respuesta = "respuesta" + (i + 1);
+  if (req.body.tipo1){
+//Procesamiento de cada pregunta por la request
+  for (i = 0; i < req.body.numeroPreguntas; i++) {
+      var tipo="tipo"+(i+1);
+      var pregunta="pregunta"+(i+1);
+      var respuesta="respuesta"+(i+1);
 
       //filtro para relacionar preguntas e imágenes
-      if (req.body[tipo] == "tipoIT") {
+        if (req.body[tipo]=="tipoIT"){
 
-            //Definimos el valor con el que llega el nombre de la imagen
-            var imgKey="imagen"+(i+1);
-            var nombreImg=req.body[imgKey];
-            //
-            var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
+          //Definimos el valor con el que llega el nombre de la imagen
+          var imgKey="imagen"+(i+1);
+          var nombreImg=req.body[imgKey];
+          //
+          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
 
-            //Creamos un array para la estructura de la preguta
-            var preguntaImagen=[];
-            // En el primer espacio guardamos el nombre de la Imagen
-            preguntaImagen[0]=imagen.filename;
-            //En el segundo la pregunta
-            preguntaImagen[1]=req.body[pregunta];
-            //Y reasignamos el valor en la request
-            req.body[pregunta]=preguntaImagen;
-        }
-
+          //Creamos un array para la estructura de la preguta
+          var preguntaImagen=[];
+          // En el primer espacio guardamos el nombre de la Imagen
+          preguntaImagen[0]=imagen.filename;
+          //En el segundo la pregunta
+          preguntaImagen[1]=req.body[pregunta];
+          //Y reasignamos el valor en la request
+          req.body[pregunta]=preguntaImagen;
       }
 
 
-      
-        cuestionario.push(contenidoCuestionario);
+      //Construcción de documentos de cuestionarios de manera iterativa
+      var contenidoCuestionario={
+        tipo:req.body[tipo],
+        pregunta:  req.body[pregunta],
+        respuesta: req.body[respuesta]
+      }
+
+     
+      cuestionario.push(contenidoCuestionario);
       
       
     
 
      
   } 
-
+}
   //Lectura de Preguntas Drag
   if(req.body.lienzos)
   {
@@ -288,21 +299,31 @@ router.post('/editores/crear',upload.array('imgs'),(req,res)=>{
 
   
    //guardado en la BD
-   Quizz.create( 
+   var nuevoQuizz= await Quizz.create( 
       {
-        nivel:req.body.nivel,
-       grado:req.body.grado,
-       claveMateria: req.body.claveMateria,
-       nombreQuizz: req.body.nombreQuizz,
-       cuestionario:cuestionario
+      
+
+    nivel:req.body.nivel,
+    grado:req.body.grado,
+    materia:req.body.claveMateria,
+    bloque:req.body.bloques,
+    secuencia:req.body.Secuencias,
+    nombreQuizz:req.body.nombreQuizz,
+    creador:"Pendiente",
+    cuestionario: cuestionario
        
        }
-    ); 
+    
+    );
+    //console.log(nuevoQuizz._id);
+  
   res.redirect("/editores/crear");
 
  
   
 });
+
+
 
 
 router.get('/editores/editar', (req, res) => {
@@ -654,7 +675,7 @@ router.get('/alumnos/examen/:id', async (req, res) => {
 
 
   const quizz = await Quizz.findById(req.params.id);
-  res.render('alumnos/examen', { quizz });
+  res.render('alumnos/Quizz', { quizz });
 
   
 

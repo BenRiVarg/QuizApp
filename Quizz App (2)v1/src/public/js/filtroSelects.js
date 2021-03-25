@@ -1,79 +1,53 @@
+
+
+var niveles=document.getElementsByClassName("select");
+      
+var arrNiveles=[];
+for(var i=0;i<niveles.length;i++){
+
+  arrNiveles[i]=niveles[i];
+  
+}
+
+
 $.getJSON("/pruebaAJAXniveles", function (niveles) {
     for (var i = 0; i < niveles.length; i++) {
       var nombres = (niveles[i].nombre);
       var id = (niveles[i].id);
       var select = document.getElementById("nivel").innerHTML +=
         "<option value='"+ id +"'>" + nombres + "</option>";
-      
-     /*   console.log(nombres); */
+    
     }
      
   });
 
-   $.getJSON("/pruebaAJAXgrados", function (grados) {
-   /*    for (var i = 0; i < 6; i++) {
-        var nombres = (grados[i].nombre);
-        var id = (grados[i].id);
-        var select = document.getElementById("grados").innerHTML +=
-          "<option value='" + id + "'>" + nombres + "</option>";
-       
-        console.log(nombres);
-      } */
-
-     var visible = document.getElementById("grados").style.display = "none"; 
-    });
-
-      $.getJSON("/pruebaAJAXmaterias", function (materias) {
-          /* for (var i = 0; i < 6; i++) {
-            var nombres = (materias[i].nombre);
-            var id = (materias[i].id);
-            var select = document.getElementById("materias").innerHTML +=
-              "<option value='" + id + "'>" + nombres + "</option>";
-            console.log(nombres);
-          } */
-
-        var visible = document.getElementById("materias").style.display = "none"; 
-        });
-
-         $.getJSON("/pruebaAJAXbloques", function (bloques) {
-         /*    for (var i = 0; i < 6; i++) {
-              var nombres = (bloques[i].nombre);
-              var id = (bloques[i].id);
-              var select = document.getElementById("bloques").innerHTML +=
-                "<option value='" + id + "'>" + nombres + "</option>";
-            
-              console.log(nombres); 
-            } */
-
-           var visible = document.getElementById("bloques").style.display = "none"; 
-          });
-
-          
-            $.getJSON("/pruebaAJAXsecuencias", function (secuencias) {
-             /*  for (var i = 0; i < 6; i++) {
-                var nombres = (secuencias[i].nombre);
-                var id = (secuencias[i].id);
-                var select = document.getElementById("secuencias").innerHTML +=
-                  "<option value='" + id + "'>" + nombres + "</option>";
-              
-                console.log(nombres);
-              } */
-
-              var visible = document.getElementById("secuencias").style.display = "none";
-            });
+   
 
   $('#nivel').on('change', async function () {
         console.log(this.value);
         var grados= await getGrados(this.value);
-        console.log("GRADOS OBTENIDOS")
-        console.log(grados);
-        console.log(grados[0].id);
-        console.log(grados[0].nombre);
+        console.log("ETIQUETA OBTENIDA")
+       
+        var claseNivel=this.className;
+
+        ocultarNiveles(claseNivel);
+        /*
+        var valor=claseNivel.search("nivel-");
+        console.log(valor);
+        var claveNivel=claseNivel.substr(valor);
+        var numeroNivel=Number.parseInt( claveNivel.slice(claveNivel.length-1,claseNivel.length));
+        console.log(numeroNivel);
+        */
+
+        document.getElementById("grados").innerHTML ="";
+        document.getElementById("grados").innerHTML +=
+        "<option value='"+ 0 +"'>Grado</option>";
+
         for (var i = 0; i < grados.length; i++) {
         document.getElementById("grados").innerHTML +=
           "<option value='" + (grados[i].id) + "'>" + (grados[i].nombre) + "</option>";
         }
-      var visible = document.getElementById("grados").style.display = "block"; 
+       document.getElementById("grados").style.display = "block"; 
     });
 
       $('#grados').on('change', async function () {
@@ -83,6 +57,13 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
           console.log(materias);
           console.log(materias[0].id);
           console.log(materias[0].nombre);
+
+          var claseNivel=this.className;
+
+          ocultarNiveles(claseNivel);
+          document.getElementById("materias").innerHTML ="";
+        document.getElementById("materias").innerHTML +=
+        "<option value='"+ 0 +"'>Materia</option>";
           for (var i = 0; i < materias.length; i++) {
           document.getElementById("materias").innerHTML +=
           "<option value='" + (materias[i].id) + "'>" + (materias[i].nombre) + "</option>";
@@ -98,6 +79,14 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
             console.log(bloques);
             console.log(bloques[0].id);
             console.log(bloques[0].nombre);
+
+            var claseNivel=this.className;
+
+            ocultarNiveles(claseNivel);
+
+            document.getElementById("bloques").innerHTML =""
+            document.getElementById("bloques").innerHTML +=
+            "<option value='"+ 0 +"'>Bloque</option>";
             for (var i = 0; i < bloques.length; i++) {
             document.getElementById("bloques").innerHTML +=
                 "<option value='" + (bloques[i].id) + "'>" + (bloques[i].nombre) + "</option>";
@@ -112,6 +101,14 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
               console.log(secuencias);
               console.log(secuencias[0].id);
               console.log(secuencias[0].nombre);
+              
+              document.getElementById("secuencias").innerHTML =""
+            document.getElementById("secuencias").innerHTML +=
+            "<option value='"+ 0 +"'>Secuencias</option>";
+            var claseNivel=this.className;
+
+            ocultarNiveles(claseNivel);
+
               for (var i = 0; i < secuencias.length; i++) {
                  document.getElementById("secuencias").innerHTML +=
                   "<option value='" + (secuencias[i].id) + "'>" + (secuencias[i].nombre) + "</option>";
@@ -169,5 +166,21 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
     return secuenciasPorBloque;
     }
     
+    function ocultarNiveles(claseNivel){
+      var valor=claseNivel.search("nivel-");
+      console.log(valor);
+      var claveNivel=claseNivel.substr(valor);
+      var numeroNivel=Number.parseInt( claveNivel.slice(claveNivel.length-1,claseNivel.length));
+      console.log(numeroNivel);
+      /////////////
+      var i=numeroNivel+1;
+      if(numeroNivel!=4){
+      for( i;i<arrNiveles.length;i++){
+        var elemento=arrNiveles[i];
+        elemento.style.display="none";
+      }
+    }
+    
+    }
    
     
