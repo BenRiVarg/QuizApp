@@ -1017,7 +1017,14 @@ function envioPreguntaRelacional(){
  
 }
 
-
+function validar(cuestionario,elementos){
+  console.log("EJECUTANDO VALIDACIÓN")
+  console.log(cuestionario);
+  for(var i=0;i<elementos.length;i++){
+    var valorCampo=elementos[i].value
+  console.log(valorCampo.length);
+  }
+}
 
 //Función para un envío clasificado de los tipos de preguntas
 function envioPreguntaAbierta(){
@@ -1036,12 +1043,16 @@ function envioPreguntaAbierta(){
     //inserción
     cuestionarios[i].appendChild(tipoHTML);
     
+    
     var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
     pregunta[0].name="pregunta"+contador;
 
     var respuesta = cuestionarios[i].querySelectorAll("input.respuesta");
     respuesta[0].name="respuesta"+contador;
- 
+    
+    var elementosValidacion=[pregunta[0],respuesta[0]];
+    
+    validar(cuestionarios[i],elementosValidacion);
     contador=contador+1;
     }
 
@@ -1399,6 +1410,10 @@ function fraccion(numero,expresion,iteracion){
 function eliminar(obj){
   obj.parentElement.parentElement.remove();
 }
+
+
+
+//--------------VALIDACIONES------------//
 
 
 // Envío Final de todos los elementos
