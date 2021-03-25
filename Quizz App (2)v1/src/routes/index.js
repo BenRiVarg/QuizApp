@@ -675,7 +675,7 @@ router.get('/alumnos/examen/:id', async (req, res) => {
 
 
   const quizz = await Quizz.findById(req.params.id);
-  res.render('alumnos/Quizz', { quizz });
+  res.render('alumnos/quizz2', { quizz });
 
   
 
