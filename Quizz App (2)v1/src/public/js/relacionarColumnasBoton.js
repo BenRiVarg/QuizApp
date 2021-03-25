@@ -1,7 +1,7 @@
       
         window.addEventListener("load", function(e){
 
-            var preguntaSelecta="0,0";
+            var preguntaSelecta;
             var tablaSelecta=document.querySelectorAll(".tablaEjercicio")[0];
             var filasReactivos = tablaSelecta.querySelectorAll("tr");
            //var filasReactivos = document.querySelectorAll(".tablaEjercicio tr");
@@ -49,9 +49,15 @@
                 
                 e.stopPropagation();
                 e.preventDefault();
+                console.log(e.currentTarget.nextElementSibling);
                 //Revisamos si no está nada más selecto
                 antiguoElemento=document.getElementById(preguntaSelecta);
                 nuevoElemento=e.currentTarget.nextElementSibling;
+
+                if(!antiguoElemento){
+                    antiguoElemento=e.currentTarget.nextElementSibling;
+                    console.log(antiguoElemento)
+                }
                 if(antiguoElemento===nuevoElemento){
                     //Mismo elemento que el click
                
