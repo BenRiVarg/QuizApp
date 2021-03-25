@@ -1,9 +1,12 @@
-body{
+
+body {
   background-color: #FFE8CD;
   margin: 1px;
   padding: 1px;
+  margin-top: 5px;
 }
-.figure,h6{
+
+.figure, h6 {
   width: 100px;
   height: 100px;
   background-color: #CE002B;
@@ -12,38 +15,63 @@ body{
   text-align: center;
 }
 
-.progress-bar{
+.progress-bar {
   background-color: #CE002B
 }
-.figure2{
+
+.figure2 {
   width: 100px;
   height: 100px;
   background-color: #CE002B;
-  float: right;
   position: absolute;
-  
 }
-.bt1{
+
+.bt1 {
   float: left;
   background-color: #FFBA6A;
-
 }
-.bt2{
+
+.bt2 {
   float: right;
   background-color: #FFBA6A;
 }
-.card-body{
+.bt3 {
+  float: right;
+  background-color: #FFBA6A;
+  color: black;
+}
+
+.card-body {
   background-color: #F69100;
   border-radius: 20px;
+}
+
+.shadow-lg {
+  box-shadow: none !important;
+}
+
+.card{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: transparent !important;
+  background-clip: border-box;
+  border: 0px;
+  border-radius: .25rem;
   
 }
-image{
-  max-width: 10px;
+
+img {
+  max-width: 10%;
 }
+
 :root {
   --altolienzo: 600px;
   --ancholienzo: 700px !important;
 }
+
 .lienzo {
   position: relative;
   display: inline-block;
@@ -61,22 +89,32 @@ image{
   height: var(--altolienzo);
   background-color: #99ffcc;
 }
-.radio{
-  background-color:#C06500;
+
+.radio {
+  background-color: #C06500;
   width: 50px;
   height: 50px;
 }
-.container{
-      padding-left: 0;
+
+.container {
+  padding-left: 0;
+  margin-top: 5px;
 }
+
 .temporizador {
   text-align: center;
-  font-size: 60px;
+  font-size: 30px;
   margin-top: 0px;
 }
-.time{
-  align-self: center;
+
+.time {
+  float: right;
+  width: 45%;
+  
 }
+
 /* .row{
   padding-left: 225px;
 } */
+
+
