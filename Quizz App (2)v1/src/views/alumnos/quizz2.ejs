@@ -83,7 +83,7 @@
                   </div>
                   <div class=" col-lg-6 col-sm-12">
                     <div class="col-lg-10  col-sm-12 text-center">
-                      <img src="img/hapy.jpeg" class="card-img-top img-fluid" style="max-width: 280px;" alt="Imagen del Quizz">
+                      <img src="/img/hapy.jpeg" class="card-img-top img-fluid" style="max-width: 280px;" alt="Imagen del Quizz">
                     </div>
 
                   </div>
@@ -147,6 +147,63 @@
               aria-valuemin="0" aria-valuemax="100">3/3</div>
           </div>
 
+        </div>
+        <div class="carousel-item">
+            <div class="d-flex justify-content-center">
+                <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
+          
+                  <div class="card-body border border-1">
+                    <h4 class="display-7">
+                      <% <!--=quizz.cuestionario[i].pregunta -->%>Relaciona los Items
+                    </h4><br>
+                    <div class="d-flex justify-content-center container">
+                      <div class="row">
+                        <table class="tablaEjercicio">
+          
+                          <div class="col order-first">
+                            <tr>
+                              <td class="botonPregunta mx-3 px-3"><button class="opcion">A</button> </td>
+                              <td class="mx-5" style="margin-right: 5px;">Opcion 1</td>
+                              <td class="botonRespuesta mx-3 px-3"><button class="opcion">1</button> </td>
+                              <td class="celdaRespuesta mx-3">R Opcion1 </td>
+                            </tr>
+                          </div>
+          
+          
+          
+                          <div class="col order-last">
+                            <tr>
+          
+                              <td class="botonPregunta mx-3 px-3"><button class="opcion">B</button> </td>
+                              <td class="mx-3">Opcion 1</td>
+                              <td class="botonRespuesta mx-3 px-3"><button class="opcion">2</button> </td>
+                              <td class="celdaRespuesta mx-3">R Opcion1 </td>
+                            </tr>
+                            <tr>
+          
+                                <td class="botonPregunta mx-3 px-3"><button class="opcion">B</button> </td>
+                                <td class="mx-3">Opcion 1</td>
+                                <td class="botonRespuesta mx-3 px-3"><button class="opcion">2</button> </td>
+                                <td class="celdaRespuesta mx-3">R Opcion1 </td>
+                              </tr>
+                              <tr>
+          
+                                <td class="botonPregunta mx-3 px-3"><button class="opcion">B</button> </td>
+                                <td class="mx-3">Opcion 1</td>
+                                <td class="botonRespuesta mx-3 px-3"><button class="opcion">2</button> </td>
+                                <td class="celdaRespuesta mx-3">R Opcion1 </td>
+                              </tr>
+                          </div>
+          
+                        </table>
+                      </div>
+          
+                    </div>
+                    <input type="hidden" name="cuestionario<%<!--= i -->%>" value="<%<!--= quizz.cuestionario[i]._id -->%>">
+          
+                  </div>
+                </div>
+              </div>
         </div>
 
       </div>
