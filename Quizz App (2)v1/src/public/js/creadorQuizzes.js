@@ -6,6 +6,8 @@ var insertor=document.getElementById("insercion");
 var contador=1;
 //Variable para elementos que deben ser Previsualiados
 var contadorPreV=1;
+var errores;
+//
 //---Variables para la pregunta Drag--//
 var objetosDrag=[];
 var contadorid = 1 ;
@@ -554,7 +556,6 @@ function previsualizarDraw(){
     };
 }
 
-previsualizarDraw();
 //----Terminan funciones Drag--------//
 
       function preguntaArrastrar() {
@@ -1017,15 +1018,128 @@ function envioPreguntaRelacional(){
  
 }
 
+function validarPreguntaRelacional(){
+
+  var i=0;
+  var cuestionarios=document.getElementsByClassName("tipoR");
+
+  
+  for(i=0;i<cuestionarios.length;i++){
+      var cuestionario=cuestionarios[i];
+      var elementosValidacion=[];
+        
+      var reactivos=cuestionario.querySelectorAll("div.contenedorItem input.pregunta");
+
+      for(j=0;j<reactivos.length;j++){
+        var pregunta = cuestionario.querySelectorAll("div.contenedorItem input.pregunta");
+        elementosValidacion.push(pregunta[j]);
+
+        var respuesta = cuestionario.querySelectorAll("div.contenedorItem input.respuesta");
+        elementosValidacion.push(respuesta[j]);
+
+      }
+
+      var strRevision=cuestionario.querySelectorAll("div.Error")[0];
+     
+      var error=false;
+
+      
+      for(var k=0;k<elementosValidacion.length;k++){
+        var valorCampo=elementosValidacion[k].value
+        if(valorCampo.length==0){
+          
+        
+          error=true;
+          break;
+        
+        }
+      }
+
+     
+     
+
+    // Si hay errores y No hay mensaje
+    if( error && (!strRevision)){
+      //Escribe mensaje
+      var strVar="";
+      strVar += "<div class=\"container\">";
+      strVar += "    <div class=\"  Error row justify-content-center \" >";
+      strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
+      strVar += "        Error: Faltan Campos por Rellenar";
+      strVar += "      <\/div>";
+      strVar += "    <\/div>";
+      strVar += "  <\/div>";
+      cuestionario.insertAdjacentHTML("afterbegin",strVar);
+      
+      }
+
+      if(!error && (strRevision)){
+        strRevision.remove();
+      }
+    
+    
+      
+   
+  }
+ 
+}
+
 function validar(cuestionario,elementos){
   console.log("EJECUTANDO VALIDACIÓN")
   console.log(cuestionario);
+  console.log(cuestionario.children[0].className);
+  
+  var strRevision=cuestionario.children[0].querySelectorAll("div.Error")[0];
+  var error=false;
+
+
   for(var i=0;i<elementos.length;i++){
     var valorCampo=elementos[i].value
-  console.log(valorCampo.length);
+    if(valorCampo==0){
+       
+     
+      error=true;
+      break;
+    }
   }
+
+ // Si hay errores y No hay mensaje
+ if( error && (!strRevision)){
+   //Escribe mensaje
+  var strVar="";
+  strVar += "<div class=\"container\">";
+  strVar += "    <div class=\"  Error row justify-content-center \" >";
+  strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
+  strVar += "        Error: Faltan Campos por Rellenar";
+  strVar += "      <\/div>";
+  strVar += "    <\/div>";
+  strVar += "  <\/div>";
+  cuestionario.insertAdjacentHTML("afterbegin",strVar);
+   
+  }
+
+  if(!error && (strRevision)){
+    cuestionario.children[0].remove();
+  }
+
+
+  
+return error
+    
 }
 
+function mensaje(){
+  var MensajeRetro=document.getElementById("mensaje");
+  
+  MensajeRetro.classList.remove('retroActivado','retroEfin');
+  MensajeRetro.classList.remove('retroError');
+  MensajeRetro.classList.add('retroActivado');
+ 
+      setTimeout(function () {
+        MensajeRetro.classList.add('retroEfin');
+    }, 250);
+  
+}
 //Función para un envío clasificado de los tipos de preguntas
 function envioPreguntaAbierta(){
    
@@ -1050,13 +1164,113 @@ function envioPreguntaAbierta(){
     var respuesta = cuestionarios[i].querySelectorAll("input.respuesta");
     respuesta[0].name="respuesta"+contador;
     
-    var elementosValidacion=[pregunta[0],respuesta[0]];
-    
-    validar(cuestionarios[i],elementosValidacion);
+  
     contador=contador+1;
     }
 
     
+}
+
+function validar(cuestionario,elementos){
+  console.log("EJECUTANDO VALIDACIÓN")
+  console.log(cuestionario);
+  console.log(cuestionario.children[0].className);
+  
+  var strRevision=cuestionario.children[0].querySelectorAll("div.Error")[0];
+  var error=false;
+
+
+  for(var i=0;i<elementos.length;i++){
+    var valorCampo=elementos[i].value
+    if(valorCampo==0){
+       
+     
+      error=true;
+      break;
+    }
+  }
+
+ // Si hay errores y No hay mensaje
+ if( error && (!strRevision)){
+   //Escribe mensaje
+  var strVar="";
+  strVar += "<div class=\"container\">";
+  strVar += "    <div class=\"  Error row justify-content-center \" >";
+  strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
+  strVar += "        Error: Faltan Campos por Rellenar";
+  strVar += "      <\/div>";
+  strVar += "    <\/div>";
+  strVar += "  <\/div>";
+  cuestionario.insertAdjacentHTML("afterbegin",strVar);
+   
+  }
+
+  if(!error && (strRevision)){
+    cuestionario.children[0].remove();
+  }
+
+
+  
+return error
+    
+}
+
+function validarPreguntaAbierta(){
+   
+  var i=0;
+  //Rastreo del div por su clase, que define el tipo de pregunta
+  var cuestionarios=document.getElementsByClassName("tipoT");
+  
+  //Clasificación de los elementos enviados para no tener conflictos en la request
+  for(i=0;i<cuestionarios.length;i++){
+        cuestionario=cuestionarios[i];
+        var pregunta = cuestionario.querySelectorAll("input.pregunta")[0];
+
+        var respuesta = cuestionario.querySelectorAll("input.respuesta")[0];
+
+        var elementosValidacion=[pregunta,respuesta];
+        
+        var strRevision=cuestionario.children[0].querySelectorAll("div.Error")[0];
+        var error=false;
+
+
+        for(var i=0;i<elementosValidacion.length;i++){
+          var valorCampo=elementosValidacion[i].value
+          if(valorCampo.length==0){
+            
+          
+            error=true;
+            break;
+          
+          }
+        }
+       
+
+      // Si hay errores y No hay mensaje
+      if( error && (!strRevision)){
+        //Escribe mensaje
+        var strVar="";
+        strVar += "<div class=\"container\">";
+        strVar += "    <div class=\"  Error row justify-content-center \" >";
+        strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
+        strVar += "        Error: Faltan Campos por Rellenar";
+        strVar += "      <\/div>";
+        strVar += "    <\/div>";
+        strVar += "  <\/div>";
+        cuestionario.insertAdjacentHTML("afterbegin",strVar);
+        
+        }
+
+        if(!error && (strRevision)){
+          cuestionario.children[0].remove();
+        }
+
+       
+
+        
+      }
+
+ 
 }
 
 function envioPreguntaOM(){
@@ -1105,6 +1319,87 @@ function envioPreguntaOM(){
       }
 }
 
+function validarPreguntaOM(){
+  
+  var i=0;
+    //Rastreo del div por su clase, que define el tipo de pregunta
+    var cuestionarios=document.getElementsByClassName("tipoOM");
+
+    for(i=0;i<cuestionarios.length;i++){
+      cuestionario=cuestionarios[i];
+     
+      var elementosValidacion=[];
+      //Selección de la pregunta que aparecerá para el alumno
+      var pregunta = cuestionario.querySelectorAll("div.pregunta input.pregunta")[0];
+      elementosValidacion.push(pregunta);
+
+      //Recolección de las opciones a mostrar
+      var reactivos=cuestionario.querySelectorAll("div.reactivos input.opcion");
+
+      for(j=0;j<reactivos.length;j++){
+      elementosValidacion.push(reactivos[j]);
+      }
+
+      //Recolección de la(s) respuesta(s)
+      var respuesta = cuestionario.querySelectorAll("div.bg-success input.opcion")[0];
+      
+      
+
+      var strRevision=cuestionario.querySelectorAll("div.Error")[0];
+      var strRespuesta=cuestionario.querySelectorAll("div.ErrorR")[0];
+      var error=false;
+
+      
+      for(var i=0;i<elementosValidacion.length;i++){
+        console.log(elementosValidacion[i]);
+        var valorCampo=elementosValidacion[i].value
+        if(valorCampo.length==0){
+          
+        
+          error=true;
+          break;
+        
+        }
+      }
+
+     
+      if(!respuesta && !strRespuesta){
+        var strVar="";
+        strVar += "<div class=\"container\">";
+        strVar += "    <div class=\"  ErrorR row justify-content-center \" >";
+        strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
+        strVar += "        Error: No has definido una respuesta para esta pregunta";
+        strVar += "      <\/div>";
+        strVar += "    <\/div>";
+        strVar += "  <\/div>";
+        cuestionario.insertAdjacentHTML("afterbegin",strVar);
+      }
+
+    // Si hay errores y No hay mensaje
+    if( error && (!strRevision)){
+      //Escribe mensaje
+      var strVar="";
+      strVar += "<div class=\"container\">";
+      strVar += "    <div class=\"  Error row justify-content-center \" >";
+      strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
+      strVar += "        Error: Faltan Campos por Rellenar";
+      strVar += "      <\/div>";
+      strVar += "    <\/div>";
+      strVar += "  <\/div>";
+      cuestionario.insertAdjacentHTML("afterbegin",strVar);
+      
+      }
+
+      if(!error && (strRevision)){
+        strRevision.remove();
+      }
+    
+      if(respuesta&&(strRespuesta)){
+        strRespuesta.remove()
+      }
+      }
+}
+
 function envioPreguntaIT(){
    
   var i=0;
@@ -1144,8 +1439,56 @@ function envioPreguntaIT(){
   }
 
   
+  
 }
 
+function validarPreguntaIT(){
+   
+  var i=0;
+  //Rastreo del div por su clase, que define el tipo de pregunta
+  var cuestionarios=document.getElementsByClassName("tipoIT");
+  
+  
+  //Clasificación de los elementos enviados para no tener conflictos en la request
+  for(i=0;i<cuestionarios.length;i++){
+  
+ 
+  //Captura de la imagen
+  var imagen = cuestionarios[i].querySelectorAll("input.imgs");
+  var valorImagen=imagen[0].files[0];
+   
+   
+
+  
+  var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
+  pregunta[0].name="pregunta"+contador;
+
+  
+
+  var respuesta = cuestionarios[i].querySelectorAll("input.respuesta");
+  respuesta[0].name="respuesta"+contador;
+
+     var strRevision=cuestionario.querySelectorAll("div.Error")[0];
+      var strImagen=cuestionario.querySelectorAll("div.ErrorI")[0];
+      var error=false;
+  
+  if(!valorImagen && !strImagen){
+    var strVar="";
+    strVar += "<div class=\"container\">";
+    strVar += "    <div class=\"  ErrorI row justify-content-center \" >";
+    strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
+    strVar += "        Error: No has seleccionado una Imagen";
+    strVar += "      <\/div>";
+    strVar += "    <\/div>";
+    strVar += "  <\/div>";
+    cuestionario.insertAdjacentHTML("afterbegin",strVar);
+  }
+
+  
+  }
+
+  
+}
 
 function envioPreguntaMate(){
    
@@ -1446,4 +1789,32 @@ function envioQuizz(){
   
     //document.getElementById("formularioQuizz").submit();
     
+}
+
+function crearQuizz(){
+  /*
+  validarPreguntaAbierta();
+  validarPreguntaOM();
+  validarPreguntaRelacional();
+  */
+  validarPreguntaIT();
+  
+    var errores=document.getElementsByClassName("Error");
+    var erroresRespuesta=document.getElementsByClassName("ErrorR");
+    if(errores ||erroresRespuesta){
+    mensaje();
+    }
+    else{
+      
+      envioPreguntaAbierta();
+      var formulario=document.getElementById("formularioQuizz");
+
+      var datosEnvio=new FormData(formulario);
+    
+      enviarPreguntaDrag(datosEnvio);
+      
+      var request = new XMLHttpRequest();
+      request.open("POST", "/editores/crear");
+      request.send(datosEnvio);
+    }
 }

@@ -227,7 +227,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   console.log(req.body.nombreQuizz);
 
 
- 
+ /*
  	//var contadorImagenes=0;
 
   var i;
@@ -318,7 +318,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     //console.log(nuevoQuizz._id);
   
   res.redirect("/editores/crear");
-
+       */
  
   
 });

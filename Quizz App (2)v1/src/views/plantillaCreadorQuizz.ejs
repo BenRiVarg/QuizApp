@@ -360,21 +360,23 @@ document.getElementById("mySidebar").style.display = "none";
            </div>
             
   </form>
-  
+
+    <p class="retroError" id="mensaje">Hay campos sin llenar</p>
       <div class="boton3">
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu Quizz" delay="0" tabindex="0" class="d-inline-block" >
-          <button type="button" class="btn-flotante"  onclick="envioPreguntaAbierta()"  >Crear Quizz</button>
+          <button type="button" class="btn-flotante"  onclick="crearQuizz()"  >Crear Quizz</button>
         </span>
       </div>
   
   </div>
-  <div class="container">
-    <div class=" row justify-content-center ">
-      <div class=" fw-bold col-10 mx-auto bg-danger p-3 m-1 text-center text-white">
+  <!--  <div class="container">
+    <div class="  Error row justify-content-center ">
+      <div class="border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger">
         Error: Faltan Campos por Rellenar
       </div>
     </div>
   </div>
+-->
 
   
   
