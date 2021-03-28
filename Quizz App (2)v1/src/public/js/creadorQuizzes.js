@@ -1125,7 +1125,7 @@ function preguntaMatematicas(){
   contadorid++;
 
 var strVar="";
-strVar += "<div id=\"preg'+(contadorid)+'\" class=\"tipoM cuestionario justify-content-center mt-5 pt-5 nivel-Superior\">";
+strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoM cuestionario justify-content-center mt-5 pt-5 nivel-Superior\">";
 strVar += "      <div class=\"container contenedorErrores\">";
 strVar += "      <\/div>";
 strVar += "      <div class=\"row\">";
