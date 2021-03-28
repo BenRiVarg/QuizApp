@@ -206,9 +206,8 @@ router.get('/editores/aprobar', (req, res) => {
 });
 
 router.get('/editores/crear', async (req, res) => {
-  const materia = await Materia.find({});
 
-  res.render('editor/crear', { materia: materia });
+  res.render('editor/crear', );
 
 });
 

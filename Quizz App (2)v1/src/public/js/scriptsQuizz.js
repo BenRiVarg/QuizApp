@@ -26,6 +26,10 @@ var x = setInterval(function () {
   }
 }, 1000);
 
+function getTotal(valor){
+  console.log(valor);
+}
+
  var progreso = 0;
  function barra() {
    progreso += 34;
