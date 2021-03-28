@@ -31,17 +31,11 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
         var claseNivel=this.className;
 
         ocultarNiveles(claseNivel);
-        /*
-        var valor=claseNivel.search("nivel-");
-        console.log(valor);
-        var claveNivel=claseNivel.substr(valor);
-        var numeroNivel=Number.parseInt( claveNivel.slice(claveNivel.length-1,claseNivel.length));
-        console.log(numeroNivel);
-        */
+        
 
         document.getElementById("grados").innerHTML ="";
         document.getElementById("grados").innerHTML +=
-        "<option value='"+ 0 +"'>Grado</option>";
+        "<option >Grado</option>";
 
         for (var i = 0; i < grados.length; i++) {
         document.getElementById("grados").innerHTML +=
@@ -63,7 +57,7 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
           ocultarNiveles(claseNivel);
           document.getElementById("materias").innerHTML ="";
         document.getElementById("materias").innerHTML +=
-        "<option value='"+ 0 +"'>Materia</option>";
+        "<option >Materia</option>";
           for (var i = 0; i < materias.length; i++) {
           document.getElementById("materias").innerHTML +=
           "<option value='" + (materias[i].id) + "'>" + (materias[i].nombre) + "</option>";
@@ -86,7 +80,7 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
 
             document.getElementById("bloques").innerHTML =""
             document.getElementById("bloques").innerHTML +=
-            "<option value='"+ 0 +"'>Bloque</option>";
+            "<option >Bloque</option>";
             for (var i = 0; i < bloques.length; i++) {
             document.getElementById("bloques").innerHTML +=
                 "<option value='" + (bloques[i].id) + "'>" + (bloques[i].nombre) + "</option>";
@@ -104,7 +98,7 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
               
               document.getElementById("secuencias").innerHTML =""
             document.getElementById("secuencias").innerHTML +=
-            "<option value='"+ 0 +"'>Secuencias</option>";
+            "<option>Secuencias</option>";
             var claseNivel=this.className;
 
             ocultarNiveles(claseNivel);

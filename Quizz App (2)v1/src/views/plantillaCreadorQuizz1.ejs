@@ -3,10 +3,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <!--
-  <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
--->
+  
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="cache-control" content="no-cache"/>
     <style>
@@ -73,6 +70,7 @@ text-align:center;width: 100px; height: 100px; padding: 0.5em; float: left; marg
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/editoresCrear.css">
 
     <!-- Sidebar -->
   <div class="w3-sidebar w3-bar-block w3-border-right w3-light" style="display:none" style="position: fixed;" id="mySidebar">
@@ -192,7 +190,10 @@ document.getElementById("mySidebar").style.display = "none";
                   </div>
                  </div>
               </div>
-       
+              
+          
+                 
+              </div>
           <div class="tipoM cuestionario row justify-content-center mt-5 pt-5">
               <div class="text-center">
                 <h4>Pregunta de Matemáticas</h4>
@@ -210,7 +211,7 @@ document.getElementById("mySidebar").style.display = "none";
              </div>
              <button type="button" class="btn btn-primary text-white" onclick="envioPreguntaMate()">Debug Mate</button>
          
-                <div class="tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5">
+                <div class="tipoT cuestionario  row justify-content-center mt-5 pt-5">
                     <div class="container text-center">
                       <h4>Pregunta Abierta</h4>
                     </div>
@@ -356,15 +357,25 @@ document.getElementById("mySidebar").style.display = "none";
            </div>
             
   </form>
-  
+
+    <p class="retroError" id="mensaje">Hay campos sin llenar</p>
       <div class="boton3">
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu Quizz" delay="0" tabindex="0" class="d-inline-block" >
-          <button type="button" class="btn-flotante"  onclick="envioQuizz()"  >Crear Quizz</button>
+          <button type="button" class="btn-flotante"  onclick="crearQuizz()"  >Crear Quizz</button>
         </span>
       </div>
   
   </div>
- 
+  <!--  <div class="container">
+    <div class="  Error row justify-content-center ">
+      <div class="border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger">
+        Error: Faltan Campos por Rellenar
+      </div>
+    </div>
+  </div>
+-->
+
+  
   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
     <script src="/js/creadorQuizzes.js" type="text/javascript"></script> 

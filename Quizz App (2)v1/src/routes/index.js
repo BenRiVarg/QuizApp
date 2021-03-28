@@ -206,9 +206,8 @@ router.get('/editores/aprobar', (req, res) => {
 });
 
 router.get('/editores/crear', async (req, res) => {
-  const materia = await Materia.find({});
 
-  res.render('editor/crear', { materia: materia });
+  res.render('editor/crear', );
 
 });
 
@@ -216,7 +215,7 @@ router.get('/editores/crear', async (req, res) => {
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
  
- 
+ /*
   console.log(req.body);
 
   console.log(req.body.nivel);
@@ -225,7 +224,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   console.log(req.body.bloques);
   console.log(req.body.Secuencias);
   console.log(req.body.nombreQuizz);
-
+*/
 
  
  	//var contadorImagenes=0;
@@ -316,9 +315,9 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     
     );
     //console.log(nuevoQuizz._id);
-  
-  res.redirect("/editores/crear");
-
+  var ruta="/alumnos/examen/"+nuevoQuizz.id;
+  res.redirect(ruta);
+       
  
   
 });
@@ -813,11 +812,14 @@ router.get('/cuarto2', (req, res) => {
 })
 
 router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaCreadorQuizz',{color:"#ffff99"});
+  res.render('plantillaCreadorQuizz2',{color:"#ffff99"});
 })
 
 router.get('/plantillaQuizz', (req, res) => {
   res.render('plantillaQuizzFinal', { color: "#ffff99" });
+})
+router.get('/rediseno', (req, res) => {
+  res.render('rediseno', { color: "#FFE8CD" });
 })
 
 router.get("/plantillaQuizzFinal", (req, res) => {

@@ -71,7 +71,8 @@
                         //Selecciona
                         preguntaSelecta=e.currentTarget.nextElementSibling.id;
                         e.currentTarget.nextElementSibling.className+="selecta";
-                        e.currentTarget.nextElementSibling.style.backgroundColor="lightgreen";
+                        e.currentTarget.nextElementSibling.style.backgroundColor =
+                          "#FFE8CD";
                     }
 
                 }
@@ -80,7 +81,7 @@
                     antiguoElemento.style.backgroundColor="white";
                     preguntaSelecta=nuevoElemento.id;
                     nuevoElemento.className+="selecta";
-                    nuevoElemento.style.backgroundColor="lightgreen";
+                    nuevoElemento.style.backgroundColor = "#FFE8CD";
                 }
             
              
