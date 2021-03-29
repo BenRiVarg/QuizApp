@@ -114,7 +114,7 @@
 
                                         <div class="col">
 
-                                          <div id="items<%= i %>">
+                                          <div class="text-light" id="items<%= i %>">
                                             <% for (var j=1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
                                               <input class="form-check-input reactivo" type="checkbox"
                                                 name="respuesta<%= i %>,<%= j %>"
@@ -160,7 +160,7 @@
                                   <h4 class="display-7 text-light">Relaciona los items</h4><br>
                                   <div class="d-flex justify-content-center container">
                                     <div class="row">
-                                      <table class="tablaEjercicio" id="items<%= i %>">
+                                      <table class="tablaEjercicio text-light" id="items<%= i %>">
                                         <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
                                           <div class="col">
                                             <tr>
@@ -206,7 +206,7 @@
                               <div class="card shadow-lg p-3 my-3 bg-body text-center col-sm-10 col-lg-10">
 
                                 <div class="card-body border border-1 border-rounded">
-                                  <div class="row justify-content-center" style="background-color:#FFE8CD">
+                                  <div class="row justify-content-center" style="background-color:#FFE8CD; margin-top: 80px;">
                                     <p class="mate">
                                       <%= quizz.cuestionario[i].pregunta[0] %>
                                     </p>

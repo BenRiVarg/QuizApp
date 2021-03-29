@@ -43,7 +43,9 @@ body {
 .card-body {
   background-color: #F69100;
   border-radius: 20px;
-  height: 200px;
+  height: 350px;
+  padding: 35px;
+  min-height: 200px;
 }
 
 .shadow-lg {
