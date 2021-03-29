@@ -1,7 +1,8 @@
       
         window.addEventListener("load", function(e){
-
-            var preguntaSelecta="0,0";
+            var tablaSelecta=document.querySelectorAll(".tablaEjercicio")[0];
+            if(tablaSelecta){
+            var preguntaSelecta;
             var tablaSelecta=document.querySelectorAll(".tablaEjercicio")[0];
             var filasReactivos = tablaSelecta.querySelectorAll("tr");
            //var filasReactivos = document.querySelectorAll(".tablaEjercicio tr");
@@ -11,6 +12,11 @@
             var tempPregunta;
             var tempBoton;
             var tempRespuesta;
+            //sonidos
+            var  seleccionarPregunta=new sound("/sonidos/seleccionaRR.mp3");
+            var asociarPregunta=new sound("/sonidos/asociaRR.mp3");
+
+            
             Array.prototype.forEach.call(filasReactivos, function(fila){
                 tempPregunta = fila.querySelector("td");
                 tempRespuesta = fila.querySelector("td.celdaRespuesta");
@@ -31,6 +37,7 @@
                 botonPregunta.addEventListener("click", alApretarPregunta, false);
                 tempBoton.addEventListener("click", alApretarOpcion, false);
 
+               
             });
 
             shuffle(respuestas);
@@ -46,12 +53,19 @@
 
             //Función de los botones Pregunta 
             function alApretarPregunta(e){
-                
+                seleccionarPregunta.stop();
+                seleccionarPregunta.reload();
                 e.stopPropagation();
                 e.preventDefault();
+                console.log(e.currentTarget.nextElementSibling);
                 //Revisamos si no está nada más selecto
                 antiguoElemento=document.getElementById(preguntaSelecta);
                 nuevoElemento=e.currentTarget.nextElementSibling;
+
+                if(!antiguoElemento){
+                    antiguoElemento=e.currentTarget.nextElementSibling;
+                    console.log(antiguoElemento)
+                }
                 if(antiguoElemento===nuevoElemento){
                     //Mismo elemento que el click
                
@@ -65,20 +79,25 @@
                         //Selecciona
                         preguntaSelecta=e.currentTarget.nextElementSibling.id;
                         e.currentTarget.nextElementSibling.className+="selecta";
-                        e.currentTarget.nextElementSibling.style.backgroundColor="lightgreen";
+                        e.currentTarget.nextElementSibling.style.backgroundColor =
+                          "#FFE8CD";
+                        e.currentTarget.nextElementSibling.style.color =
+                        "black";
                     }
 
                 }
                 else{
                     //diferente elemento que el click
-                    antiguoElemento.style.backgroundColor="white";
+                    antiguoElemento.style.backgroundColor="#f69100";
+                    antiguoElemento.style.color="white";
                     preguntaSelecta=nuevoElemento.id;
                     nuevoElemento.className+="selecta";
-                    nuevoElemento.style.backgroundColor="lightgreen";
+                    nuevoElemento.style.backgroundColor = "#FFE8CD";
+                    nuevoElemento.style.color = "black";
                 }
             
              
-                
+                seleccionarPregunta.play();
                 console.log(preguntaSelecta);
             }
             //Función de los Botones Respuesta
@@ -87,7 +106,8 @@
 
                 e.stopPropagation();
                 e.preventDefault();
-
+                asociarPregunta.stop();
+                asociarPregunta.reload();
                 //Extracción del elemento respuesta
                  var preguntaSelecta=document.getElementById(obtenerPreguntaSelecta());
                 
@@ -96,7 +116,9 @@
 
                 var respuestaSeleccionada=e.currentTarget.nextElementSibling;
                 
+                respuestaSeleccionada.style.backgroundColor=" #ffc380";
                 
+
                 if(antiguo=document.getElementById("antigua"+preguntaSelecta.id)){
                     console.log("hay un duplicado");
                     var nuevo=e.currentTarget.nextElementSibling;
@@ -104,7 +126,7 @@
                     antiguo.id=" ";
                     antiguo.previousElementSibling.querySelector("button").innerHTML="";
                     var antiguaRequest=antiguo.children[0].children[0];
-                    //antiguo.style.backgroundColor="red";
+                    antiguo.style.backgroundColor="#f69100";
                     //---Eliminación de las respuestas para la Request--//
                     antiguaRequest.value="";
 
@@ -131,7 +153,7 @@
                     
                 }
                 
-                
+                asociarPregunta.play();
             }
 
 
@@ -161,4 +183,5 @@
                 });
             }
             //console.log("prueba reemplazo: ", reemplazarTexto('My Name is %NAME% and my age is %AGE%, the following %TOKEN% is invalid. y gano el 10% de lo que tú',  {"%NAME%": "Mike","%AGE%": "26","%EVENT%": "20"}));
-        }, false);
+        }
+    }, false);

@@ -14,8 +14,9 @@ var options = {
 var URLbase = "https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox";
 
 
-exports.Find = function (recurso) {
-  var urlRecurso
+exports.Find = async function (recurso) {
+  
+  var urlRecurso;
   switch (recurso) {
     case "grados":
       urlRecurso = URLbase + "/grades";
@@ -33,32 +34,31 @@ exports.Find = function (recurso) {
       urlRecurso = URLbase + "/sequences";
       break;
   }
+ 
+  var resultado = await new Promise((resolve, reject) => {
+    https
+      .get(urlRecurso, options, (res) => {
+        let data = "";
 
-  https.get(urlRecurso, options, (res) => {
-    let data = '';
+        // Un fragmento de datos ha sido recibido.
+        res.on("data", (chunk) => {
+          data += chunk;
+        });
 
-    // Un fragmento de datos ha sido recibido.
-    res.on('data', (chunk) => {
-      data += chunk;
-    });
-
-    // Toda la respuesta ha sido recibida. Imprimir el resultado.
-    res.on('end', () => {
-      // console.log(data);
-      console.log(JSON.parse(data));
-      var registros = JSON.parse(data)
-      //  console.log(secuenciasAPI[0]);
-      return registros;
-    });
-
-
-
-  }).on("error", (err) => {
-    console.log("Error: " + err.message);
+        // Toda la respuesta ha sido recibida. Imprimir el resultado.
+        res.on("end", () => {
+          // console.log(data);
+          var registros = JSON.parse(data);
+          //  console.log(secuenciasAPI[0]);
+          resolve(registros);
+        });
+      })
+      .on("error", (err) => {
+        console.log("Error: " + err.message);
+      });
   });
-
-
-}
+  return resultado;
+};
 
 exports.findByID = async function (recurso, recursoID) {
 
@@ -101,13 +101,13 @@ exports.findByID = async function (recurso, recursoID) {
 
       // Toda la respuesta ha sido recibida. Imprimir el resultado.
       res.on('end', () => {
-        var registro;
-        var registros = JSON.parse(data);
-        console.log(recursoID);
-        for (var i = 0; i < registros[modificador].length; i++) {
-
-          if (registros[modificador][i].id === recursoID) {
-            registro = registros[modificador][i];
+          var registro;
+       var registros=JSON.parse(data);
+       
+      for(var i=0; i<registros[modificador].length;i++){
+        
+          if(registros[modificador][i].id===recursoID){
+              registro=registros[modificador][i];
             break;
           }
 
@@ -125,6 +125,51 @@ exports.findByID = async function (recurso, recursoID) {
   });
 
   return resultado;
+}
+
+/*--Método para encontrar todos los registros en base a un ID
+      pide todos los datos (recursoBúsqueda)
+      de un recurso(idpeticion,recursoConocido)
+--**/
+exports.busqueda=async function(idpeticion,recursoConocido,recursoBusqueda){
+ 
+  var registros=await this.Find(recursoBusqueda);
+  var modificador;
+  var datosBusqueda;
+  switch (recursoBusqueda) {
+    case "grados":
+      modificador = "grades";
+      datosBusqueda=registros[modificador];
+      break;
+    case "materias":
+      modificador = "subjects";
+      datosBusqueda=registros[modificador];
+      break;
+    case "niveles":
+      modificador = "levels"
+      datosBusqueda=registros[modificador];
+      break;
+    case "bloques":
+      modificador = "blocks";
+      datosBusqueda=registros[modificador];
+      break;
+    case "secuencias":
+      modificador = "sequences";
+      datosBusqueda=registros[modificador];
+      break;
+  }
+  var datosfiltrados=[];
+  for(var i=0;i<datosBusqueda.length;i++){
+    if(idpeticion==datosBusqueda[i][recursoConocido])
+    datosfiltrados.push(datosBusqueda[i])
+  }
+ 
+
+  
+  return datosfiltrados;
+  
+ 
+  
 }
 
 

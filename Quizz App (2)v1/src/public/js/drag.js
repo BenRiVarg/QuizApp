@@ -72,7 +72,7 @@ $(".widget").draggable({
   scroll: false,
   containment: "#bg-container",
 
-  start: function (event, ui) {
+ /*  start: function (event, ui) {
     console.log("start top is :" + ui.position.top);
     console.log("start left is :" + ui.position.left);
   },
@@ -84,8 +84,29 @@ $(".widget").draggable({
     console.log("stop left is :" + ui.position.left);
 
     alert("left:" + ui.position.left + " top:" + ui.position.top);
-  },
+  }, */
 });
 
 
+/*
+    document.getElementById("file").onchange = function (e) {
+      // Creamos el objeto de la clase FileReader
+      let reader = new FileReader();
 
+      // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+      reader.readAsDataURL(e.target.files[0]);
+
+      // Le decimos que cuando este listo ejecute el código interno
+      reader.onload = function () {
+        var titulo = (document.getElementById("titulop").innerHTML =
+          "Previsualización de la imagen");
+        let preview = document.getElementById("preview"),
+          image = document.createElement("img");
+        image.src = reader.result;
+
+        preview.innerHTML = "";
+        preview.append(image);
+      };
+    };
+
+    */

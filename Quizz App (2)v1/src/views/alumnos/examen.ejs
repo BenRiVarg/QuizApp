@@ -16,7 +16,7 @@
   <title>Hacer Examen</title>
 </head>
 
-<body style="background-color:lightseagreen" margin="5px">
+<body style="background-color: lightblue" margin="5px">
   <div class="container text-center">
     <h1 class="display-4">
       <%= quizz.nombreQuizz %>
@@ -175,78 +175,51 @@
 
                               <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
                               <% break; case "tipoAr" : %>
+                              <!-- Empieza Pregunta Drag-->
+                              <div class="contanier-fluid p-5 tipoAr" id="main">
 
-
-                                <div class="contanier-fluid p-5" id="main">
-
-                                  <h3 class="text-center">Activado</h3>
-                                  <h4 class="text-center">Coloca las palabras en el lugar correcto.</h4>
-                                  <div class="row mt-3">
-                                    <div class="col-lg-6 sm-12  text-center">
-                                      <div class="col-lg-12 ">
-                                        <div class="row imagen">
-                                          <div class="col" style="margin-top: 86px; margin-left: 26px;">
-                                            <div class="div1" id="cuadro1"></div>
-                                          </div>
-                                          <div class="col" style="margin-top: 86px;">
-                                            <div class="div1" id="cuadro2"></div>
-                                          </div>
-                                          <div class="col">
-                                            <p></p>
-                                          </div>
-                                          <div class="col" style="margin-bottom: 18px;">
-                                            <div class="div1" id="cuadro3"></div>
-                                          </div>
-                                          <div class="col">
-                                            <p></p>
-                                          </div>
-                                          <div class="col" style="margin-left: 90px; margin-bottom: 160px;">
-                                            <div class="div1" id="cuadro4"></div>
-                                          </div>
-                                          <div class="col">
-                                            <p></p>
-                                          </div>
+                                <h4 class="text-center">Coloca las palabras en el lugar correcto.</h4>
+                                <div class="row mt-3">
+                                  <div class="col-lg-6 sm-12  text-center">
+                                    <div class="col-lg-12 ">
+                                      <!--Lienzo-->
+                                      <div class="replica row mx-auto "id="<%= i %>">
+                                        <% var iteracionLienzo=i%>
+                                        <div class="col-12">
+                                        
+                                          <img id="<%= quizz.cuestionario[i].pregunta[0].coordenadas[0].id%>"src="/image/<%= quizz.cuestionario[i].pregunta[0].nombre %>" class="img-fluid img-replica">
                                         </div>
+                    
                                       </div>
+                                      <!--Lienzo-->
                                     </div>
+                                  </div>
+                              
+                                  <div class="col-lg-4 sm-12 text-center mt-5  contenedor-palabras">
+                                    <div
+                                      class="row bg-primary py-3 shadow p-3 mb-5 bg-body rounded-3 border border-dark">
+                                      <div class="mt-2">
+                                        <h3 class="text-light mb-3">Palabras:</h3>
+                                        <div class="contenedor">
+                                          <%var respuestas=quizz.cuestionario[i].respuesta %>
+                                          <% respuestas.forEach (function (respuesta){ %>
 
-                                    <div class="col-lg-6 sm-12 text-center mt-5">
-                                      <div
-                                        class="row bg-primary py-3 shadow p-3 mb-5 bg-body rounded-3 border border-dark">
-                                        <div class="mt-2">
-                                          <h3 class="text-light mb-3">Palabras:</h3>
-                                          <div class="contenedor">
-                                            <div id="drag1" class="text-light fw-bold text-center">
-                                              Ojo Izquierdo</div>
-                                            <div id="drag2" class="text-light fw-bold text-center">
-                                              Ojo Derecho</div>
-                                            <div id="drag3" class="text-light fw-bold text-center">
-                                              Naríz</div>
-                                            <div id="drag4" class="text-light fw-bold text-center">
-                                              Hocico</div>
-                                          </div>
-
-                                          <div id="displayNone" class="mt-2 ">
-                                            <h4 id="tituloR" class="text-dark"></h4>
-                                            <div id="demo" type="hidden" class="respuestaDrag text-dark">
-                                            </div>
-                                            <div id="demo2" type="hidden" class="respuestaDrag text-dark">
-                                            </div>
-                                            <div id="demo3" type="hidden" class="respuestaDrag text-dark">
-                                            </div>
-                                            <div id="demo4" type="hidden" class="respuestaDrag text-dark">
-                                            </div>
-                                            <div id="demo5" type="hidden" class="respuestaDrag text-dark">
-                                            </div>
-                                          </div>
+                                            <div id="<%= respuesta.id_respuesta %>" class="text-light fw-bold text-center respuesta-reactivo elementoDrag"><%= respuesta.contenido %></div>
+                                               
+                                              <% }); 
+                                              %> 
+                                       
                                         </div>
+                              
+                                       
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                                <input type="hidden" name="cuestionario<%= i %>"
-                                  value="<%= quizz.cuestionario[i]._id %>">
-
+                              </div>
+                              <!--Termina Pregunta Drag-->
+                              <input type="hidden" name="cuestionario<%= i %>"
+                                value="<%= quizz.cuestionario[i]._id %>">
                                 <% break; } %>
                                   <% } %>
 
@@ -258,7 +231,7 @@
                                       respuestas</button>
   </form>
 
-  <a class="ml-5" href="/alumnos/respuestas">Enviar respuestas</a>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
     crossorigin="anonymous"></script>
@@ -271,13 +244,102 @@
   <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
   <script src="/js/drag.js"></script>
-  <script src="/mobileD/release/index.min.js"></script>
-  <script src="/mobileD/release/scroll-behaviour.min.js"></script>
-  <script src="/mobileD/demo/demo.js"></script>
   <script type="text/javascript" src="/js/relacionarColumnasBoton.js"></script>
-  <script src="/mobileD/mobile.js"></script>
-  <script src="/js/creadorQuizzes.js" type="text/javascript"></script>
   <script src="/js/funcionesExamen.js" type="text/javascript"></script>
+  
+  <!--Invalidadndo campos si no existe ninguna pregunta Drag-->
+
+<% if (iteracionLienzo!==undefined) { %>
+  <script>
+    var preguntasAr=document.getElementsByClassName("tipoAr");
+  if(preguntasAr){
+  
+    for(var r=0;r<preguntasAr.length;r++){
+      var replica=preguntasAr[r].querySelectorAll("div.replica")[0];
+      insertorReplica=replica.children[0]
+    
+     
+      //Reacomodo de Imagen
+      var idImagen="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].id %>"
+      var imagen =document.getElementById(idImagen);
+   
+      imagen.style.top="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].top %>"+"px";
+      imagen.style.left="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].left %>"+"px";
+      
+
+      var reactivos=<%-JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[1])%>;//"<%-  JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[1]) %>";
+      var flechas=<%-JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[2])%>;
+      
+      for( x in reactivos){
+        var reactivo=document.createElement("DIV");
+        reactivo.id=reactivos[x].id;
+         reactivo.className="reactivo";
+         reactivo.style.top=reactivos[x].top+"px";
+         reactivo.style.left=reactivos[x].left+"px";
+         insertorReplica.appendChild(reactivo);
+      }
+
+      for(y in flechas){
+
+        //Obtención de los Datos para ver que tipo de Flecha es
+        var claveFlecha=flechas[y].id
+        var tipoFlecha=claveFlecha.substr(0,3);
+        var imagenFlecha=document.createElement("IMG");
+        switch(tipoFlecha){
+          case "fid":
+          imagenFlecha.src="/img/flecha.png";
+          imagenFlecha.className="flecha imagenes";
+          imagenFlecha.style.top=flechas[y].top+"px";
+          imagenFlecha.style.left=flechas[y].left+"px";
+          break;
+          case "fdi":
+          imagenFlecha.src="/img/flechaHoIz.png.png";
+          imagenFlecha.className="flecha imagenes";
+          imagenFlecha.style.top=flechas[y].top+"px";
+          imagenFlecha.style.left=flechas[y].left+"px";
+          break;
+          case "fsi":
+          imagenFlecha.src="/img/flechadigaiz.png";
+          imagenFlecha.className="flecha diagonal";
+          imagenFlecha.style.top=flechas[y].top+"px";
+          imagenFlecha.style.left=flechas[y].left+"px";
+          break;
+          case "fsd":
+          imagenFlecha.src="/img/flechadiaderecha.png";
+          imagenFlecha.className="flecha diagonal";
+          imagenFlecha.style.top=flechas[y].top+"px";
+          imagenFlecha.style.left=flechas[y].left+"px";
+          break;
+          case "fai":
+          imagenFlecha.src="/img/diagonalizinvertida.png";
+          imagenFlecha.className="flecha diagonal";
+          imagenFlecha.style.top=flechas[y].top+"px";
+          imagenFlecha.style.left=flechas[y].left+"px";
+          break;
+          case "fad":
+          imagenFlecha.src="/img/diagonalderinvertida.png";
+          imagenFlecha.className="flecha diagonal";
+          imagenFlecha.style.top=flechas[y].top+"px";
+          imagenFlecha.style.left=flechas[y].left+"px";
+          break;
+
+        }
+       
+
+        insertorReplica.appendChild(imagenFlecha);
+      }
+    
+
+      arrastrable();
+      activarReactivo();
+    }
+    
+   
+  }
+</script>
+  <% }
+    %> "
+
 </body>
 
 </html>

@@ -1,8 +1,12 @@
 @media (min-width: 720px) {
   img {
-    width: 50%;
+    width: 250px;
+    margin: 0 auto !important;
   }
-  html h1, h2, h3, h4 {
+  html h1,
+  h2,
+  h3,
+  h4 {
     color: Black;
   }
   .grid-contenedor {
@@ -11,7 +15,8 @@
     margin: 50px;
   }
   body {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, Helvetica, sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif, Helvetica, sans-serif;
   }
   * {
     box-sizing: border-box;
@@ -82,11 +87,13 @@
     font-size: 35px;
     font-weight: bold;
   }
-  .cancelbtn, .signupbtn {
+  .cancelbtn,
+  .signupbtn {
     float: left;
     width: 50%;
   }
-  .close:hover, .close:focus {
+  .close:hover,
+  .close:focus {
     color: red;
     cursor: pointer;
   }
@@ -99,22 +106,22 @@
   /* Add Zoom Animation */
   .animate {
     -webkit-animation: animatezoom 0.3s;
-    animation: animatezoom 0.3s
+    animation: animatezoom 0.3s;
   }
   @-webkit-keyframes animatezoom {
     from {
-      -webkit-transform: scale(0)
+      -webkit-transform: scale(0);
     }
     to {
-      -webkit-transform: scale(1)
+      -webkit-transform: scale(1);
     }
   }
   @keyframes animatezoom {
     from {
-      transform: scale(0)
+      transform: scale(0);
     }
     to {
-      transform: scale(1)
+      transform: scale(1);
     }
   }
   .cancelbtn {
@@ -150,8 +157,22 @@
   body.examen {
     justify-content: center;
   }
+  .imagenResp {
+    width: 700px;
+    height: 400px;
+    margin: 0 auto !important;
+  }
 }
 
+@media (min-width: 721px) and (max-width: 1400px) {
+  .imagenResp {
+    width: 700px;
+    height: auto;
+    margin: 0 auto !important;
+  }
+}
+
+/*---------Comienza Estilo  Crear Drag---*/
 .div1 {
   margin: 5px;
   width: 90px;
@@ -163,7 +184,7 @@
 }
 
 .imagen {
-  background-image: url('../img/hapy.jpeg');
+  background-image: url("../img/hapy.jpeg");
   background-size: cover;
   background-position: 50% 50%;
   border-bottom-width: 0;
@@ -181,4 +202,87 @@
   border-radius: 10px;
   font-size: 1.2rem;
   background-color: white;
+}
+
+.imagenes {
+  width: 200px;
+  height: 30px;
+  margin: 0 auto;
+}
+
+.imagenResp {
+  width: 700px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.diagonal {
+  height: 140px;
+  width: 170px;
+}
+
+.palabraid {
+  z-index: 1;
+}
+
+/*--- Estilo de la Pregunta Drag ----*/
+:root {
+  --altolienzo: 550px;
+  --ancholienzo: 580px;
+}
+
+.lienzo {
+  position: relative;
+  display: inline-block;
+  width: var(--ancholienzo);
+  height: var(--altolienzo);
+  background-color: #ccffff;
+}
+
+.replica {
+  position: relative;
+  display: inline-block;
+  width: var(--ancholienzo);
+  height: var(--altolienzo);
+  background-color: lightcyan;
+}
+
+.img-PLienzo {
+  z-index: 0;
+}
+
+.img-replica {
+  position: absolute;
+  z-index: 0;
+}
+
+.recuadro {
+  width: 100px;
+  height: 50px;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.reactivoDrag {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.flecha {
+  position: absolute;
+  z-index: 2;
+}
+
+.respuesta-reactivo {
+  width: 100px;
+  z-index: 3;
+}
+
+.centrado {
+  margin: 0 auto;
 }
