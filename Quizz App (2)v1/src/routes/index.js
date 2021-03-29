@@ -405,6 +405,7 @@ router.get('/docentes/secuencia', async (req, res) => {
   datosDocenteSesion.quizzesSecuencia = idQuizzSecuencia;
 
   var alumnosProgreso = [];
+ 
   //alumno sin progreso alguno en la secuencia
   var alumnos = [];
 
@@ -422,11 +423,14 @@ router.get('/docentes/secuencia', async (req, res) => {
 
       //Buscamos si ha contestado el alumno por lo menos una vez el quizz x
       var quizzContestado = await Registros.find({ $and: [{ alumno: alumnosGrupo[i].id }, { quizz: quizzI.id }] });
+      console.log("Debug");
+  console.log(quizzContestado);
       if (quizzContestado.length >= 1) {
         progreso = progreso + 1;
       }
 
     }
+    console.log(quizzesSecuencia);
     //Si hay algún progreso
     if (progreso >= 1) {
       var resultadoAlumno = {
@@ -444,6 +448,8 @@ router.get('/docentes/secuencia', async (req, res) => {
     }
 
   }
+  console.log("Debug");
+  console.log(alumnosProgreso);
   datosDocenteSesion.alumnos = alumnosProgreso;
   res.render('docente/secuencias', { datosDocenteSesion, alumnosProgreso, alumnos });
 
@@ -690,35 +696,13 @@ router.get('/alumnos/respuestas', (req, res) => {
 
 router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
-  //Boomer 5fce761f2e2106439e852306
-  // alumno Ignacio BP32G1BF  grupo RX87YY9E
-  /* console.log(req.body);
-  Revisor.revisar("5fce761f2e2106439e852306",req);
   
-    console.log(req.body);
-    var examencalificado = await Revisor.revisar("5fce761f2e2106439e852306", req);
-  
-    //Para Guardar en la BD
-  
-  console.log(req.body);
-  var examencalificado= await Revisor.revisar("BP32G1BF",req);
-  
-    //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-    //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-  
-    //console.log(examencalificado);
-  
-    /*  //Para Guardar en la BD
-     var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-    
-    console.log(examencalificado);
-    */
   var examencalificado = await Revisor.revisar(idAlumno, req);
-
-  //Registros.create(examencalificado);
+  //console.log(examencalificado);
+  Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
-  Registros.create(examencalificado);
+ // Registros.create(examencalificado);
   res.render('alumnos/correccion');
 
 });
