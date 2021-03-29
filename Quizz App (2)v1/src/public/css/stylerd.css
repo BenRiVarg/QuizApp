@@ -43,7 +43,6 @@ body {
 .card-body {
   background-color: #F69100;
   border-radius: 20px;
-  height: 420px;
   padding: 35px;
 }
 
@@ -163,4 +162,24 @@ img {
     bottom: 20px;
     right: 20px;
   }
+}
+
+/* @media only screen and (max-width: 780) {
+  .card-body {
+    background-color: #F69100;
+    border-radius: 20px;
+    height: 500px !important;
+    padding: 35px;
+  }
+}
+ */
+.contenedorimg {
+  height: 360px;
+}
+
+.img-fluid {
+  width: 260px !important;
+  height: 348px;
+  margin: 0 auto;
+  background-size: cover;
 }
