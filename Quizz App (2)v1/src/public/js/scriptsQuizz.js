@@ -38,6 +38,7 @@ function getTotal(valor){
   cambioProgreso=100/totalPreguntas
   progreso=cambioProgreso;
   cambioProgreso=Math.round(cambioProgreso)+1;
+  $("#bar").css("width", cambioProgreso + "%");
   //console.log(cambioProgreso);
 
 }
