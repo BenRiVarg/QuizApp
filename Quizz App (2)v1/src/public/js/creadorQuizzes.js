@@ -1041,7 +1041,7 @@ function preguntaIT(){
   contadorid++;
 
 var strVar="";
-strVar += "<div id=\"preg"+(contadorid)+"\" class=\"justify-content-center mt-5 pt-5\" >";
+strVar += "<div id=\"preg"+(contadorid)+"\" class=\"justify-content-center mt-5 pt-5 nivel-Superior\" >";
 strVar += "      <div class=\"contenedorErrores\">";
 strVar += "      ";
 strVar += "     <\/div>";
@@ -1060,7 +1060,7 @@ strVar += "              <h4 class=\"text-primary\">Intrucciones<\/h4>";
 strVar += "              <p class=\"fs-5 justify-content-center text\">Seleccione la imagen a cargar, y defina pregunta y respuesta";
 strVar += "              <\/p>";
 strVar += "            <\/div>";
-strVar += "            <input required type=\"file\" id=\"imgIT"+contadorPreV+"\" accept=\"image\/*\" class=\"imgs\">";
+strVar += "            <input required type=\"file\" id=\"imgIT"+contadorPreV+"\" accept=\"image\/*\" class=\"imgs\" name=\"imgs\">";
 strVar += "            <input required type=\"hidden\" class=\"imagenrequest\">";
 strVar += "            <div id=\"prevIT"+contadorPreV+"\" class=\"mx-auto\"><\/div>";
 strVar += "            <div class=\"mb-3\">";
@@ -1367,8 +1367,8 @@ function validarPreguntaAbierta(){
         var error=false;
 
 
-        for(var i=0;i<elementosValidacion.length;i++){
-          var valorCampo=elementosValidacion[i].value
+        for(var j=0;j<elementosValidacion.length;j++){
+          var valorCampo=elementosValidacion[j].value
           if(valorCampo.length==0){
             
           
@@ -1483,9 +1483,9 @@ function validarPreguntaOM(){
       var error=false;
 
       
-      for(var i=0;i<elementosValidacion.length;i++){
-        console.log(elementosValidacion[i]);
-        var valorCampo=elementosValidacion[i].value
+      for(var k=0;k<elementosValidacion.length;k++){
+        console.log(elementosValidacion[k]);
+        var valorCampo=elementosValidacion[k].value
         if(valorCampo.length==0){
           
         
@@ -2080,7 +2080,7 @@ function crearQuizz(){
       mensaje(validacion.str);
     }
     else{
-      
+     
       envioQuizz();
     }
 }
