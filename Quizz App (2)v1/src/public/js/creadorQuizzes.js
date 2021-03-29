@@ -1,5 +1,7 @@
 //--------JS PARA LA INYECCIÓN DE PREGUNTAS EN EL DOM DE EDITORES/CREAR Y EL PROCESAMIENTO PARA SU ENVÍO----------//
 
+
+
 //Variable para hacer la inserción de elementos dentro del cuertpo del HTML
 var insertor=document.getElementById("insercion");
 //Variable global para "enumerar" todas las preguntas,respuestas y tipo  de un cuestionario para la request
@@ -11,6 +13,7 @@ var errores;
 //---Variables para la pregunta Drag--//
 var objetosDrag=[];
 var contadorid = 0 ;
+var numeracionPregunta=1;
 var lienzo={
             id:0,
             img:[],
@@ -49,7 +52,7 @@ strVar += "        <div class=\"col-12\">";
 strVar += "          <div class=\"rounded-pill\">";
 strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
 strVar += "              style=\"width: 3rem; height:3rem; margin-left: 210px;\">";
-strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px;\">"+contadorid+"<\/p>";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px;\">"+numeracionPregunta+"<\/p>";
 strVar += "            <\/a>";
 strVar += "          <\/div>";
 strVar += "          <div class=\"text-center mb-5 mt-5\">";
@@ -80,7 +83,7 @@ strVar += "    <\/div>";
 insertor.insertAdjacentHTML("beforeend",strVar);
 
   
-
+numeracionPregunta++;
        
 } 
 
@@ -943,7 +946,7 @@ strVar += "        <div class=\"col-12 col-md-12 col-lg-6 justify-content-center
 strVar += "          <div class=\"rounded-pill\">";
 strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
 strVar += "              style=\"width: 3rem; height:3rem;\">";
-strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 16px;\">"+contadorid+"<\/p>";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 16px;\">"+numeracionPregunta+"<\/p>";
 strVar += "            <\/a>";
 strVar += "          <\/div>";
 strVar += "          <div class=\"text-center\">";
@@ -994,6 +997,7 @@ strVar += "    <\/div>";
   
 
 insertor.insertAdjacentHTML("beforeend",strVar);
+numeracionPregunta++;
 }
 
 //Función para la creación de una opción en preguntas de opción múltiple
@@ -1050,7 +1054,7 @@ strVar += "        <div class=\"col-12\">";
 strVar += "          <div class=\"rounded-pill\">";
 strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
 strVar += "              style=\"width: 3rem; height:3rem; margin-left: 198px;\">";
-strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 15px;\">"+contadorid+"<\/p>";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 15px;\">"+numeracionPregunta+"<\/p>";
 strVar += "            <\/a>";
 strVar += "          <\/div>";
 strVar += "          <div class=\"container tipoIT cuestionario mt-4 col-md-7 \">";
@@ -1085,7 +1089,9 @@ strVar += "    <\/div>";
 insertor.insertAdjacentHTML("beforeend",strVar);
 previsualizarIT();
 contadorPreV++;
+numeracionPregunta++;
 }
+
 function previsualizarIT(){
   var idFile="imgIT"+contadorPreV;
   var idpreView="prevIT"+contadorPreV;
@@ -1133,7 +1139,7 @@ strVar += "        <div class=\"col-12\">";
 strVar += "          <div class=\"rounded-pill\">";
 strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
 strVar += "              style=\"width: 3rem; height:3rem; margin-left: 203px;\">";
-strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 15px;\">"+contadorid+"<\/p>";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 15px;\">"+numeracionPregunta+"<\/p>";
 strVar += "            <\/a>";
 strVar += "          <\/div>";
 strVar += "          <div class=\"text-center\">";
@@ -1158,6 +1164,7 @@ strVar += "    <\/div>";
 
 
 insertor.insertAdjacentHTML("beforeend",strVar);
+numeracionPregunta++;
 }
 
 
@@ -1959,7 +1966,7 @@ function eliminar(obj){
   }
  
   objeto.remove();
-  
+  numeracionPregunta--;
 }
 
 
@@ -1971,48 +1978,55 @@ function validaciones(){
     error: false,
     str:"Hay Campos sin llenar",
   }
-  var nombreQuizz=document.getElementsByClassName("crearQ")[0];
-  var Nivel=document.getElementById("nivel");
-  var Grado=document.getElementById("grados");
-  var Materia=document.getElementById("materias");
-  var Bloque=document.getElementById("bloques");
-  var Secuencia=document.getElementById("secuencias");
   var cuestionarios=document.getElementsByClassName("cuestionario")[0];
-   if(nombreQuizz.value.length==0){
-     revision.error=true;
-     revision.str="No has definido el nombre del Quizz";
-     return revision;
-   }
-   
-   if(Nivel.value=="Nivel"){
-    revision.error=true;
-    revision.str="No has definido el Nivel"
-    return revision;
-   }
-   if(Grado.value=="Grado"){
-    revision.error=true;
-    revision.str="No has definido el Grado"
-    return revision;
-   }
-   if(Materia.value=="Materia"){
-    revision.error=true;
-    revision.str="No has definido la Materia"
-    return revision;
-   }
-   if(Bloque.value=="Bloque"){
-    revision.error=true;
-    revision.str="No has definido el Bloque"
-    return revision;
-   }
-   if(Secuencia.value=="Secuencias"){
-    revision.error=true;
-    revision.str="No has definido la Secuencia"
-    return revision;
-   }
+  var nombreQuizz=document.getElementsByClassName("crearQ")[0];
+  //Filtro para la vista de Docentes
+  var vista=document.getElementById("vista");
+  if(!vista){
+     
+      var Nivel=document.getElementById("nivel");
+      var Grado=document.getElementById("grados");
+      var Materia=document.getElementById("materias");
+      var Bloque=document.getElementById("bloques");
+      var Secuencia=document.getElementById("secuencias");
+      
+      if(Nivel.value=="Nivel"){
+        revision.error=true;
+        revision.str="No has definido el Nivel"
+        return revision;
+      }
+      if(Grado.value=="Grado"){
+        revision.error=true;
+        revision.str="No has definido el Grado"
+        return revision;
+      }
+      if(Materia.value=="Materia"){
+        revision.error=true;
+        revision.str="No has definido la Materia"
+        return revision;
+      }
+      if(Bloque.value=="Bloque"){
+        revision.error=true;
+        revision.str="No has definido el Bloque"
+        return revision;
+      }
+      if(Secuencia.value=="Secuencias"){
+        revision.error=true;
+        revision.str="No has definido la Secuencia"
+        return revision;
+      }
+  }
    if(!cuestionarios){
     revision.error=true;
     revision.str="No hay preguntas en este Quizz"
    }
+
+
+   if(nombreQuizz.value.length==0){
+    revision.error=true;
+    revision.str="No has definido el nombre del Quizz";
+    return revision;
+  }
 
    return revision;
   }
@@ -2064,8 +2078,11 @@ function envioQuizz(){
 }
 
 function crearQuizz(){
- 
+  
 
+  
+  
+  
   validarPreguntaRelacional();
   validarPreguntaOM();
   validarPreguntaAbierta();
@@ -2082,5 +2099,13 @@ function crearQuizz(){
     else{
      
       envioQuizz();
+      var formulario=document.getElementById("formularioQuizz");
+        document.getElementById("malla").style.display="block";
+        document.getElementById("msgE").style.display="block";
+        setTimeout(function () {
+          location.reload();
+      }, 1500);
+      formulario.reset();
     }
+    
 }
