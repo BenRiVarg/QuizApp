@@ -1527,43 +1527,7 @@ function validarPreguntaOM(){
   if(respuesta && errorRespuesta){
     errorRespuesta.remove();
   }
-  /*
-      if(!respuesta && !strRespuesta){
-         var strVar="";
-              strVar += "<div class=\" ErrorR container\">";
-              strVar += "          <div class=\" row justify-content-center mb-3\">";
-              strVar += "            <div class=\"Error fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
-              strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: No has seleccionado una Imagen<\/p>";
-              strVar += "            <\/div>";
-              strVar += "          <\/div>";
-              strVar += "        <\/div>";
-        cuestionario.insertAdjacentHTML("afterbegin",strVar);
-      }
-      */
-    // Si hay errores y No hay mensaje
-    /*
-    if( error && (!strRevision)){
-      //Escribe mensaje
-      var strVar="";
-      strVar += "<div class=\"container\">";
-      strVar += "    <div class=\"  Error row justify-content-center \" >";
-      strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
-      strVar += "        Error: Faltan Campos por Rellenar";
-      strVar += "      <\/div>";
-      strVar += "    <\/div>";
-      strVar += "  <\/div>";
-      cuestionario.insertAdjacentHTML("afterbegin",strVar);
-      
-      }
-
-      if(!error && (strRevision)){
-        strRevision.remove();
-      }
-    
-      if(respuesta&&(strRespuesta)){
-        strRespuesta.remove()
-      }
-      */
+  
       }
 }
 
@@ -2013,7 +1977,7 @@ function validaciones(){
   var Materia=document.getElementById("materias");
   var Bloque=document.getElementById("bloques");
   var Secuencia=document.getElementById("secuencias");
-  
+  var cuestionarios=document.getElementsByClassName("cuestionario")[0];
    if(nombreQuizz.value.length==0){
      revision.error=true;
      revision.str="No has definido el nombre del Quizz";
@@ -2045,7 +2009,10 @@ function validaciones(){
     revision.str="No has definido la Secuencia"
     return revision;
    }
-
+   if(!cuestionarios){
+    revision.error=true;
+    revision.str="No hay preguntas en este Quizz"
+   }
 
    return revision;
   }
