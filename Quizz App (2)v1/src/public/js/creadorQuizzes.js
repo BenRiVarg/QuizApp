@@ -2081,6 +2081,6 @@ function crearQuizz(){
     }
     else{
       
-      //envioQuizz();
+      envioQuizz();
     }
 }

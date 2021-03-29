@@ -32,12 +32,17 @@ function sound(src) {
   this.sound.setAttribute("preload", "auto");
   this.sound.setAttribute("controls", "none");
   this.sound.style.display = "none";
+  this.sound.volume=0.3;
   document.body.appendChild(this.sound);
   this.play = function(){
     this.sound.play();
   }
   this.stop = function(){
     this.sound.pause();
+  }
+
+  this.reload= function(){
+    this.sound.load();
   }
 } 
 
@@ -46,15 +51,14 @@ var progreso = 0;
 var cambioProgreso=0;
 var preguntaInicial=document.getElementsByClassName("active")[0];
   var preguntaFinal=document.getElementsByClassName("pregunta-Final")[0];
-  var cambioPregunta=new sound("/sonidos/cambioPregunta.mp3");
-  
+  var cambioPregunta=new sound("/sonidos/cambio_pregunta.mp3");
+  cambioPregunta.sound.volume=1;
 function getTotal(valor){
   var totalPreguntas=Number.parseInt(valor);
   cambioProgreso=100/totalPreguntas
   progreso=cambioProgreso;
   cambioProgreso=Math.round(cambioProgreso)+1;
   $("#bar").css("width", cambioProgreso + "%");
-  //console.log(cambioProgreso);
 
 }
 
@@ -78,8 +82,6 @@ function getTotal(valor){
  var progreso = 0;
  function barraM() {
   var preguntaPrevia=document.getElementsByClassName("active")[0];//.children[0];
-  console.log(preguntaPrevia);
-  console.log(preguntaPrevia==preguntaInicial);
 
   if(preguntaPrevia==preguntaInicial){
     progreso=100;
