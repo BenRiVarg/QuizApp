@@ -26,18 +26,48 @@ var x = setInterval(function () {
   }
 }, 1000);
 
+
+//Funciones para la barra de carga de los quizzes
+var progreso = 0;
+var cambioProgreso=0;
+var preguntaInicial=document.getElementsByClassName("active")[0];
+  var preguntaFinal=document.getElementsByClassName("pregunta-Final")[0];
+  
 function getTotal(valor){
-  console.log(valor);
+  var totalPreguntas=Number.parseInt(valor);
+  cambioProgreso=100/totalPreguntas
+  progreso=cambioProgreso;
+  cambioProgreso=Math.round(cambioProgreso)+1;
+  //console.log(cambioProgreso);
+
 }
 
- var progreso = 0;
  function barra() {
-   progreso += 34;
+   var carrusel=document.getElementsByClassName("active")[0];//.children[0];
+   console.log(carrusel);
+   console.log(carrusel==preguntaFinal);
+
+   if(carrusel==preguntaFinal){
+     progreso=cambioProgreso;
+    $("#bar").css("width", cambioProgreso + "%");
+   }
+   else{
+
+   
+   progreso += cambioProgreso;
+   if(progreso>100){
+     progreso=100;
+   }
    $("#bar").css("width", progreso + "%");
+  }
+  console.log(progreso);
 }
  
  var progreso = 0;
  function barraM() {
-   progreso -= 34;
+   progreso -= cambioProgreso;
+   if(progreso<0){
+    progreso=0;
+  }
    $("#bar").css("width", progreso + "%");
  }
