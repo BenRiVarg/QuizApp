@@ -80,9 +80,9 @@
                                         <% for (var j=1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
 
                                           <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="respuesta<%= i %>"
+                                            <input class="form-check-input" style="margin-top: 8px; margin-left: -32px !important; width: 25px; height: 25px;" type="radio" name="respuesta<%= i %>"
                                               value=" <%= quizz.cuestionario[i].pregunta[j]%>" id="flexRadioDefault1">
-                                            <label class="form-check-label" for="pregunta">
+                                            <label class="form-check-label text-light fs-4" for="pregunta">
                                               <%= quizz.cuestionario[i].pregunta[j]%>
                                             </label>
                                           </div>
@@ -165,13 +165,13 @@
                                           <div class="col">
                                             <tr>
 
-                                              <td class="botonPregunta  reactivo mx-3 px-3"><button type="button" class="opcion">
+                                              <td class="botonPregunta  reactivo mx-3 px-3"><button type="button" class="opcion fs-3">
                                                   <%= j+1%>
                                                 </button> </td>
                                               <td class="mx-3" id="<%=i%>,<%=j%>">
                                                 <%= quizz.cuestionario[i].pregunta[j]%>
                                               </td>
-                                              <td class="botonRespuesta mx-3 px-3"><button class="opcion"></button> </td>
+                                              <td class="botonRespuesta mx-3 px-3"><button class="opcion fs-3"></button> </td>
                                               <td class="celdaRespuesta mx-3">
                                                 <div>
                                                   <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
