@@ -26,12 +26,27 @@ var x = setInterval(function () {
   }
 }, 1000);
 
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+} 
 
 //Funciones para la barra de carga de los quizzes
 var progreso = 0;
 var cambioProgreso=0;
 var preguntaInicial=document.getElementsByClassName("active")[0];
   var preguntaFinal=document.getElementsByClassName("pregunta-Final")[0];
+  var cambioPregunta=new sound("/sonidos/cambioPregunta.mp3");
   
 function getTotal(valor){
   var totalPreguntas=Number.parseInt(valor);
@@ -57,7 +72,7 @@ function getTotal(valor){
   
    $("#bar").css("width", progreso + "%");
   }
-  console.log(progreso);
+  cambioPregunta.play();
 }
  
  var progreso = 0;
@@ -75,5 +90,7 @@ function getTotal(valor){
    
     $("#bar").css("width", progreso + "%");
   }
-
+  cambioPregunta.play();
  }
+
+ 
