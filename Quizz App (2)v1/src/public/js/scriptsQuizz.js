@@ -44,11 +44,9 @@ function getTotal(valor){
 }
 
  function barra() {
-   var carrusel=document.getElementsByClassName("active")[0];//.children[0];
-   console.log(carrusel);
-   console.log(carrusel==preguntaFinal);
+   var preguntaPrevia=document.getElementsByClassName("active")[0];//.children[0];
 
-   if(carrusel==preguntaFinal){
+   if(preguntaPrevia==preguntaFinal){
      progreso=cambioProgreso;
     $("#bar").css("width", cambioProgreso + "%");
    }
@@ -56,9 +54,7 @@ function getTotal(valor){
 
    
    progreso += cambioProgreso;
-   if(progreso>100){
-     progreso=100;
-   }
+  
    $("#bar").css("width", progreso + "%");
   }
   console.log(progreso);
@@ -66,9 +62,18 @@ function getTotal(valor){
  
  var progreso = 0;
  function barraM() {
-   progreso -= cambioProgreso;
-   if(progreso<0){
-    progreso=0;
+  var preguntaPrevia=document.getElementsByClassName("active")[0];//.children[0];
+  console.log(preguntaPrevia);
+  console.log(preguntaPrevia==preguntaInicial);
+
+  if(preguntaPrevia==preguntaInicial){
+    progreso=100;
+    $("#bar").css("width", progreso + "%");
   }
-   $("#bar").css("width", progreso + "%");
+  else{
+    progreso -= cambioProgreso;
+   
+    $("#bar").css("width", progreso + "%");
+  }
+
  }
