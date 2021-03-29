@@ -215,7 +215,7 @@ router.get('/editores/crear', async (req, res) => {
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
  
- /*
+  /*
   console.log(req.body);
 
   console.log(req.body.nivel);
@@ -224,9 +224,9 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   console.log(req.body.bloques);
   console.log(req.body.Secuencias);
   console.log(req.body.nombreQuizz);
-*/
 
- 
+
+ */
  	//var contadorImagenes=0;
 
   var i;
@@ -317,8 +317,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     //console.log(nuevoQuizz._id);
   var ruta="/alumnos/examen/"+nuevoQuizz.id;
   res.redirect(ruta);
-       
- 
+   
   
 });
 

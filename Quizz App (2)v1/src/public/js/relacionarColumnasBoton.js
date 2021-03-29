@@ -89,9 +89,11 @@
                 else{
                     //diferente elemento que el click
                     antiguoElemento.style.backgroundColor="#f69100";
+                    antiguoElemento.style.color="white";
                     preguntaSelecta=nuevoElemento.id;
                     nuevoElemento.className+="selecta";
                     nuevoElemento.style.backgroundColor = "#FFE8CD";
+                    nuevoElemento.style.color = "black";
                 }
             
              
