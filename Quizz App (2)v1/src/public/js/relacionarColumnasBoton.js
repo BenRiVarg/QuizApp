@@ -81,6 +81,8 @@
                         e.currentTarget.nextElementSibling.className+="selecta";
                         e.currentTarget.nextElementSibling.style.backgroundColor =
                           "#FFE8CD";
+                        e.currentTarget.nextElementSibling.style.color =
+                        "black";
                     }
 
                 }
@@ -113,6 +115,7 @@
                 var respuestaSeleccionada=e.currentTarget.nextElementSibling;
                 
                 respuestaSeleccionada.style.backgroundColor=" #ffc380";
+                
 
                 if(antiguo=document.getElementById("antigua"+preguntaSelecta.id)){
                     console.log("hay un duplicado");
