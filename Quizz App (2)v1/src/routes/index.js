@@ -214,10 +214,10 @@ router.get('/editores/crear', async (req, res) => {
 
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
+
+  console.log(req.body);
  
   /*
-  console.log(req.body);
-
   console.log(req.body.nivel);
   console.log(req.body.grado);
   console.log(req.body.claveMateria);
@@ -228,7 +228,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
 
  */
  	//var contadorImagenes=0;
-
+  
   var i;
   //variable para construir el cuestionario como un array
   var cuestionario= [
@@ -315,9 +315,10 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     
     );
     //console.log(nuevoQuizz._id);
-  var ruta="/alumnos/examen/"+nuevoQuizz.id;
-  res.redirect(ruta);
-   
+  
+       
+  
+
   
 });
 
