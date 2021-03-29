@@ -178,8 +178,8 @@ img {
 }
 
 .img-fluid {
-  width: 260px !important;
-  height: 348px;
+  width: 320px !important;
+  height: 358px;
   margin: 0 auto;
   background-size: cover;
 }
