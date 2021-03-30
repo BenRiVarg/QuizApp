@@ -30,7 +30,8 @@ conn.once('open', () => {
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection('uploads');
 });
-
+//URI SSD mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority
+//URI PRODUCCION mongodb+srv://QUIZ-API:PFEpkCKG5VcQDJNj@cluster0.lcjm4.mongodb.net/QUIZZES?retryWrites=true&w=majority
 // Create storage engine
 const storage = new GridFsStorage({
   url: 'mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority',
@@ -214,6 +215,13 @@ router.get('/editores/crear', async (req, res) => {
 
 });
 
+https://quizz-app-ebe.herokuapp.com/verify/:token
+
+router.get('/verify/:token', async (req, res) => {
+   var token=req.params.token;
+  res.render('editor/crear', );
+
+});
 
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
@@ -695,12 +703,13 @@ router.get('/alumnos/respuestas', (req, res) => {
 router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
   
-  var examencalificado = await Revisor.revisar(idAlumno, req);
+  console.log(req.body)
+  //var examencalificado = await Revisor.revisar(idAlumno, req);
 
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
-  Registros.create(examencalificado);
+  //Registros.create(examencalificado);
   res.render('alumnos/correccion');
 
 });
