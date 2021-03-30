@@ -962,21 +962,21 @@ strVar += "              <div class=\"mb-3\">";
 strVar += "                <div class=\"\">";
 strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Verdadero\" value=\"verdadero\">";
 strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
-strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
+strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
 strVar += "                <\/div>";
 strVar += "              <\/div>";
 strVar += "              <div class=\"mb-3\">";
 strVar += "                <div class=\"\">";
 strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Falso\" value=\"falso\">";
 strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
-strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
+strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
 strVar += "                <\/div>";
 strVar += "              <\/div>";
 strVar += "            <\/div>";
 strVar += "          <\/div>";
 strVar += "          <div class=\"editar mt-3 text-center\" role=\"group\" aria-label=\"Basic mixed styles example\">";
 strVar += "            <button type=\"button\" class=\"btn btn-success\" onclick=\"reactivoOM(this)\">Agregar Reactivo<\/button>";
-strVar += "            <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
+strVar += "            <button type=\"button\" class=\"btn btn-danger\" onclick=\"borrarReactivoOM(this)\">Quitar Pregunta<\/button>";
 strVar += "          <\/div>";
 strVar += "        <\/div>";
 strVar += "        <div class=\"col-12 col-md-12 col-lg-6\">";
@@ -1010,9 +1010,9 @@ function reactivoOM(obj){
   var strVar="";
   strVar += " <div class=\"mb-3\">";
   strVar += "                <div >";
-  strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Falso\" value=\"falso\">";
+  strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Opción para el alumno\" >";
   strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
-  strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
+  strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
   strVar += "                <\/div>";
   strVar += "              <\/div>";
   
@@ -1040,6 +1040,11 @@ function seleccionarRespuesta(obj){
 
 }
 
+function borrarReactivoOM(obj){
+  var contenedor=obj.parentElement.parentElement;
+  contenedor.remove()
+}
+/*------------- Terminan funciones de Pregunta Opción Múltiple-----*/
 function preguntaIT(){
 
   contadorid++;
