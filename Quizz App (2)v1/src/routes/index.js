@@ -103,7 +103,7 @@ global.datosAlumnoSesion = {};
    console.log("Debuggeando"); 
    var hoy=new Date();
    var vigencia=new Date(usuario.token.exp);
-   console.log(hoy>vigencia);
+   console.log(hoy>vigencia);   ---------Token Caduco
    */
   });
 
