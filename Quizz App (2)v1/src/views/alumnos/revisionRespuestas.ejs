@@ -16,15 +16,15 @@
 </head>
 
 <body>
-  <h1>Revisión de Respuestas</h1>
+  <h1 class="text-center mt-3">Revisión de Respuestas</h1>
   <input type="hidden" name="QuizzID" value="<%= quizz._id %>">
   <% for(var i=0; i<quizz.cuestionario.length ; i++) {%>
     <% switch (quizz.cuestionario[i].tipo) { case "tipoT" : %>
-      <p>ID del Examen</p>
-      <p>
+      <p class="ml-5">ID del Examen</p>
+      <p class="ml-5">
         <%= respuestaAlumnoElegida[0].cuestionarioID %>
       </p>
-      <h6>
+      <h6 class="ml-5">
         <%= quizz.nombreQuizz %>
       </h6>
       <div class="d-flex justify-content-center">
