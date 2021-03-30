@@ -212,23 +212,26 @@ exports.autenticacion = async function (JWTtoken) {
 
       let data = "";
       var estatus = res.statusCode;
+      /*
       if (estatus == 200) {
         //autenticacion aprobada
-        resolve(true);
+        //resolve(true);
       }
       else {
         //Autenticación Fallida
-        resolve(false);
+        //resolve(false);
       }
+      */
       // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
         data += chunk;
-        //console.log(`BODY: ${chunk}`);
-        //console.log(JSON.parse(chunk));
+        console.log(`BODY: ${chunk}`);
+        console.log(JSON.parse(chunk));
       });
       res.on('end', () => {
-        //var respuestaURL=JSON.parse(data); //Capturar los datos recibidos como respuesta de la URL
+        var respuestaURL=JSON.parse(data); //Capturar los datos recibidos como respuesta de la URL
+        resolve(respuestaURL);
       });
     });
 

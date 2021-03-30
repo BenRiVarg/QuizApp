@@ -77,10 +77,35 @@ global.datosDocenteSesion = {};
 global.datosAlumnoSesion = {};
 // ------------||  R U T A S  ||----------------//
 
-router.get('/', (req, res) => {
-  res.render('index');
-
-});
+/* -------------Info de Tokens------
+{
+  usuario: 'idDelUsuario',
+  tipo: 'Alumno',
+  aud: 'https://alumnos.ebe.com',
+  exp: expiración del token,
+  iat: fecha en que se generó el token
+  }
+  
+  Los datos que se mandan en el token de maestros es:
+  
+  {
+  usuario: 'idDelMaestro',
+  tipo: 'Maestro',
+  aud: 'https://maestros.ebe.com',
+  exp: expiración del token,
+  iat: fecha en que se generó el token
+  }*/
+  
+  router.get('/', async (req, res) => {
+    res.render('index');
+   var usuario=   await API.autenticacion("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQm13STdJUnYiLCJub21icmUiOiJJZ25hY2lvIFJ1YmVuIE9ydHXDsW8gQWxiYXJyYW4iLCJwZXJtaXNvcyI6W3sidmlzdWFsaXphcl9uaXZlbGVzX2FjYWTDqW1pY29zIjp0cnVlLCJhZ3JlZ2FyX25pdmVsZXNfYWNhZMOpbWljb3MiOnRydWUsImFjdHVhbGl6YXJfbml2ZWxlc19hY2Fkw6ltaWNvcyI6dHJ1ZSwiZWxpbWluYXJfbml2ZWxlc19hY2Fkw6ltaWNvcyI6dHJ1ZSwidmlzdWFsaXphcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiYWdyZWdhcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiYWN0dWFsaXphcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiZWxpbWluYXJfZ3JhZG9zX2RlX2VzdHVkaW8iOnRydWUsInZpc3VhbGl6YXJfbWF0ZXJpYXMiOnRydWUsImFncmVnYXJfbWF0ZXJpYXMiOnRydWUsImFjdHVhbGl6YXJfbWF0ZXJpYXMiOnRydWUsImVsaW1pbmFyX21hdGVyaWFzIjp0cnVlLCJ2aXN1YWxpemFyX3dpa2lzIjp0cnVlLCJhZ3JlZ2FyX3dpa2lzIjp0cnVlLCJhY3R1YWxpemFyX3dpa2lzIjp0cnVlLCJlbGltaW5hcl93aWtpcyI6dHJ1ZSwidmlzdWFsaXphcl9xdWl6emVzIjp0cnVlLCJ2aXN1YWxpemFyX2Jsb3F1ZXMiOnRydWUsImFncmVnYXJfYmxvcXVlcyI6dHJ1ZSwiYWN0dWFsaXphcl9ibG9xdWVzIjp0cnVlLCJlbGltaW5hcl9ibG9xdWVzIjp0cnVlLCJ2aXN1YWxpemFyX3NlY3VlbmNpYXMiOnRydWUsImFncmVnYXJfc2VjdWVuY2lhcyI6dHJ1ZSwiYWN0dWFsaXphcl9zZWN1ZW5jaWFzIjp0cnVlLCJlbGltaW5hcl9zZWN1ZW5jaWFzIjp0cnVlLCJ2aXN1YWxpemFyX2FtYml0b3MiOnRydWUsImFncmVnYXJfYW1iaXRvcyI6dHJ1ZSwiYWN0dWFsaXphcl9hbWJpdG9zIjp0cnVlLCJlbGltaW5hcl9hbWJpdG9zIjp0cnVlLCJ2aXN1YWxpemFyX3BzbHMiOnRydWUsImFncmVnYXJfcHNscyI6dHJ1ZSwiYWN0dWFsaXphcl9wc2xzIjp0cnVlLCJlbGltaW5hcl9wc2xzIjp0cnVlLCJ2aXN1YWxpemFyX2VqZXMiOnRydWUsImFncmVnYXJfZWplcyI6dHJ1ZSwiYWN0dWFsaXphcl9lamVzIjp0cnVlLCJlbGltaW5hcl9lamVzIjp0cnVlLCJ2aXN1YWxpemFyX3RlbWFzIjp0cnVlLCJhZ3JlZ2FyX3RlbWFzIjp0cnVlLCJhY3R1YWxpemFyX3RlbWFzIjp0cnVlLCJlbGltaW5hcl90ZW1hcyI6dHJ1ZSwidmlzdWFsaXphcl9wYWdpbmFzIjp0cnVlLCJhZ3JlZ2FyX3BhZ2luYXMiOnRydWUsImFjdHVhbGl6YXJfcGFnaW5hcyI6dHJ1ZSwiZWxpbWluYXJfcGFnaW5hcyI6dHJ1ZSwicmVzdGF1cmFyX3BhZ2luYXMiOnRydWUsImVsaW1pbmFyX3BhZ2luYXNfZGVmaW5pdGl2YW1lbnRlIjp0cnVlLCJ2aXN1YWxpemFyX2ltYWdlbmVzIjp0cnVlLCJhZ3JlZ2FyX2ltYWdlbmVzIjp0cnVlLCJhY3R1YWxpemFyX2ltYWdlbmVzIjp0cnVlLCJlbGltaW5hcl9pbWFnZW5lcyI6dHJ1ZSwidmlzdWFsaXphcl9nYWxlcmlhcyI6dHJ1ZSwiYWdyZWdhcl9nYWxlcmlhcyI6dHJ1ZSwiYWN0dWFsaXphcl9nYWxlcmlhcyI6dHJ1ZSwiZWxpbWluYXJfZ2FsZXJpYXMiOnRydWUsInZpc3VhbGl6YXJfdmlkZW9zIjp0cnVlLCJhZ3JlZ2FyX3ZpZGVvcyI6dHJ1ZSwiYWN0dWFsaXphcl92aWRlb3MiOnRydWUsImVsaW1pbmFyX3ZpZGVvcyI6dHJ1ZX1dLCJpYXQiOjE2MTcwNzMxMzYsImV4cCI6MTYxNzEwMTkzNiwiYXVkIjoiaHR0cHM6Ly9lc3BlY2lhbGlzdGFzLmViZS5jb20ifQ.3TFpmPpkmiQIfOZIsZUPisfHDjc-C16STri_Mo2Vcnw");
+ /*
+   console.log("Debuggeando"); 
+   var hoy=new Date();
+   var vigencia=new Date(usuario.token.exp);
+   console.log(hoy>vigencia);
+   */
+  });
 
 
 //login
