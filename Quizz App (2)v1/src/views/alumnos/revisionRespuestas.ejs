@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <h1 class="text-center mt-5">Revisión de Respuestas</h1>
+  <h1 class="text-center mt-5 text-primary">Revisión de Respuestas</h1>
   <input type="hidden" name="QuizzID" value="<%= quizz._id %>">
   <% for(var i=0; i<quizz.cuestionario.length ; i++) {%>
     <% switch (quizz.cuestionario[i].tipo) { case "tipoT" : %>
@@ -67,14 +67,14 @@
             <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
 
               <div class="card-body border border-1">
-                <h4 class="display-6 text-primary">Relaciona los Items</h4><br>
+                <h4 class="display-6">Relaciona los Items</h4><br>
                 <div class="d-flex justify-content-center container">
                   <div class="row">
                     <table class="tablaEjercicio">
                       <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
                         <tr>
 
-                          <td class="botonPregunta reactivo"><button type="button">
+                          <td class="botonPregunta reactivo"><button class="opcion mr-3" type="button">
                               <%= j+1%>
                             </button></td>
                           <td id="<%=i%>,<%=j%>">
@@ -83,7 +83,7 @@
 
                           <% if (respuestaAlumnoElegida [0].respuestas[0].revision[j]){ %>
                             <!--Solución Correcta-->
-                            <td class="botonRespuesta mx-3 px-3 contestada bien"><button>
+                            <td class="botonRespuesta mx-3 px-3 contestada bien"><button class="ml-3 opcion">
                                 <%=j+1%>
                               </button> </td>
                             <td class="celdaRespuesta mx-3">
@@ -95,13 +95,15 @@
 
                             <%}else { %>
                               <!--Solución Incorrecta-->
-                              <td class="botonRespuesta mx-3 px-3 contestada mal"><button>
+                              <td class="botonRespuesta mx-3 px-3 contestada mal"><button class="ml-3 opcion">
                                   <%=j+1%>
-                                </button> </td>
-                              <td class="celdaRespuesta mx-3">
-                                <p class="d-inline text-danger">
+                                </button>
+                                <p class="d-inline text-danger ml-5 fw-bold">
                                   <%= respuestaAlumnoElegida [0].respuestas[0].respuestaA[j] %>
                                 </p>
+                              </td>
+                              <td class="celdaRespuesta mx-3">
+                                
                                 <p class="d-inline text-danger ml-5 ">Correcta: <%= quizz.cuestionario[i].respuesta[j]
                                     %>
                                 </p>
