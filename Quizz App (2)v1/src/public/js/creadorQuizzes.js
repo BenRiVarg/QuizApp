@@ -976,7 +976,7 @@ strVar += "            <\/div>";
 strVar += "          <\/div>";
 strVar += "          <div class=\"editar mt-3 text-center\" role=\"group\" aria-label=\"Basic mixed styles example\">";
 strVar += "            <button type=\"button\" class=\"btn btn-success\" onclick=\"reactivoOM(this)\">Agregar Reactivo<\/button>";
-strVar += "            <button type=\"button\" class=\"btn btn-danger\" onclick=\"borrarReactivoOM(this)\">Quitar Pregunta<\/button>";
+strVar += "            <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
 strVar += "          <\/div>";
 strVar += "        <\/div>";
 strVar += "        <div class=\"col-12 col-md-12 col-lg-6\">";
