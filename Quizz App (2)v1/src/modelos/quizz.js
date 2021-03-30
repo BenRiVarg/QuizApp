@@ -18,6 +18,7 @@ var modeloQuizz = Schema ({
     secuencia:{type: String},
     nombreQuizz:{type: String},
     grupo:{type: String},
+    intentos:{type:String},
     estado:{type: 'String', enum:['revisado','por revisar'], default:"por revisar"},
     creador:{type: String},
     cuestionario:[cuestionario]

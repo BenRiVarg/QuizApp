@@ -1978,8 +1978,10 @@ function validaciones(){
     error: false,
     str:"Hay Campos sin llenar",
   }
+  var intentos=document.getElementById("intentos");
   var cuestionarios=document.getElementsByClassName("cuestionario")[0];
   var nombreQuizz=document.getElementsByClassName("crearQ")[0];
+  console.log(typeof(intentos.value));
   //Filtro para la vista de Docentes
   var vista=document.getElementById("vista");
   if(!vista){
@@ -2021,6 +2023,7 @@ function validaciones(){
     revision.str="No hay preguntas en este Quizz"
    }
 
+   
 
    if(nombreQuizz.value.length==0){
     revision.error=true;
@@ -2088,6 +2091,7 @@ function crearQuizz(){
   validarPreguntaAbierta();
   validarPreguntaIT();
   validarPreguntaMate();
+  
     var validacion=validaciones();
    
     var errores=document.getElementsByClassName("Error")[0];
