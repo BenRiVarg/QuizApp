@@ -16,12 +16,12 @@
 </head>
 
 <body>
-  <h1 class="text-center mt-3">Revisión de Respuestas</h1>
+  <h1 class="text-center mt-5">Revisión de Respuestas</h1>
   <input type="hidden" name="QuizzID" value="<%= quizz._id %>">
   <% for(var i=0; i<quizz.cuestionario.length ; i++) {%>
     <% switch (quizz.cuestionario[i].tipo) { case "tipoT" : %>
       <p class="ml-5">ID del Examen</p>
-      <p class="ml-5">
+      <p>
         <%= respuestaAlumnoElegida[0].cuestionarioID %>
       </p>
       <h6 class="ml-5">
@@ -47,10 +47,10 @@
                   <h4 class="display-7">
                     <%= quizz.cuestionario[i].pregunta %>
                   </h4><br>
-                  <p class="text-danger"> <b class="contestada mal">Respuesta Incorrecta</b>
+                  <p class=""> <b>Respuesta </b>
                     <%= quizz.cuestionario[i].respuesta %>
                   </p>
-                  <p class=""> <b>Tu Respuesta </b>
+                  <p class="text-danger"> <b class="contestada mal"> Tu Respuesta </b>
                     <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>
                   </p>
                   <% } %>
@@ -141,7 +141,7 @@
                             <% for (var k=1; k<quizz.cuestionario[i].pregunta.length; k++) {%>
                               <% if (quizz.cuestionario[i].pregunta[k]==quizz.cuestionario[i].respuesta[0]){ %>
                                 <div class="form-check">
-                                  <p class="display-4 text-danger text-center">No contestaste</p>
+                                  <p class="display-5 text-danger text-center">No contestaste</p>
                                   <input class="form-check-input" type="radio" name="respuesta<%= i %>"
                                     value=" <%= quizz.cuestionario[i].pregunta[j]%>" id="flexRadioDefault1"
                                     checked="checked">
@@ -173,7 +173,7 @@
                                               class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
 
                                               <div class="card-body border border-1">
-                                                <h4 class="display-7 bien">
+                                                <h4 class="display-7">
                                                   <% <!--=quizz.cuestionario[i].pregunta -->%>Pregunta Para el Alumno
                                                     OMMR
                                                 </h4><br>
@@ -184,7 +184,7 @@
                                                       <% if (respuestaAlumnoElegida [0].respuestas[i].respuestaA[0]==k){
                                                         %>
                                                         <div class="form-check">
-                                                          <p class="display-4 text-success text-center">¡Correcto!</p>
+                                                          <p class="display-6 text-success text-center"><b class="bien pr-4"></b>¡Correcto!</p>
                                                           <input class="form-check-input" type="radio"
                                                             id="flexRadioDefault1" checked="checked">
                                                           <label class="form-check-label  text-success" for="pregunta">
