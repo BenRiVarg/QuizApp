@@ -643,6 +643,7 @@ router.get('/alumnos/registro', async (req, res) => {
 
 router.get('/alumnos/revision/:id', async (req, res) => {
 
+  console.log(req.params.id);
   //Recuperamos el registro del alumno que vamos a revisar
   var respuestaAlumnoElegida = await Registros.find({ _id: req.params.id }).exec();
 
@@ -653,7 +654,7 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
   
-   res.render('alumnos/examen',{ quizz });
+   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 
 });
 
