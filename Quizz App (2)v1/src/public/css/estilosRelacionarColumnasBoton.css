@@ -331,3 +331,10 @@ html h1, h2, h3, h4 {
   border-radius: 0;
   font-size: 26px;
 }
+
+.img-fluid {
+  width: 1020px !important;
+  height: 358px;
+  margin: 0 auto;
+  background-size: cover;
+}
