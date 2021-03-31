@@ -704,12 +704,12 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
   
   console.log(req.body)
-  //var examencalificado = await Revisor.revisar(idAlumno, req);
-
+  var examencalificado = await Revisor.revisar(idAlumno, req);
+  console.log(examencalificado);
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
-  //Registros.create(examencalificado);
+  Registros.create(examencalificado);
   res.render('alumnos/correccion');
 
 });
@@ -803,7 +803,7 @@ router.get('/cuarto2', (req, res) => {
 })
 
 router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaCreadorQuizz2',{color:"#ffff99"});
+  res.render('plantillaRevision',{color:"#ffff99"});
 })
 
 router.get('/plantillaQuizz', (req, res) => {
