@@ -704,12 +704,12 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
   
   console.log(req.body)
-  //var examencalificado = await Revisor.revisar(idAlumno, req);
+  var examencalificado = await Revisor.revisar(idAlumno, req);
 
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
-  //Registros.create(examencalificado);
+  Registros.create(examencalificado);
   res.render('alumnos/correccion');
 
 });

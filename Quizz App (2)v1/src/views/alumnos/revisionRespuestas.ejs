@@ -313,20 +313,18 @@
                   <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 " >
                         <% if (respuestaAlumnoElegida [0].respuestas[i].revision[0]){ %>
                           <!--Solución Correcta-->
-                          <div class="card-body border border-1">
-                            <h4 class="display-7 contestada bien "><% <!--= quizz.cuestionario[i].pregunta -->%>Resuelve la siguiente expresión</h4><br>
+                          <div class="card-body border border-1 text-dark">
+                            <h4 class="display-7 text-dark " id="" ><%= quizz.cuestionario[i].pregunta[0] %></h4><br>
                             <div class="row justify-content-center" style="background-color:lightblue">
-                          <p class="mate bien" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %><p><p class="respuestasM" id="respuestaM<%=i%>"><%= respuestaAlumnoElegida[0].respuestas[0].respuestaA[0] %></p>
-                          <%}else { %>
-                            <!--Solución Incorrecta-->
-                            <div class="card-body border border-1">
-                              <h4 class="display-7 contestada mal "><% <!--= quizz.cuestionario[i].pregunta -->%>Resuelve la siguiente expresión</h4><br>
+                              
+                              <p class="contestada bien " id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %><p class="">tu respuesta es correcta<p class="respuestasM text-success id="respuestaM<%=i%>"> <%= respuestaAlumnoElegida[0].respuestas[0].respuestaA[0] %></p>
+                                <%}else { %>
+                                <!--Solución Incorrecta-->
+                                <div class="card-body border border-1 text-dark">
+                                <h4 class="display-7 text-dark " ><%= quizz.cuestionario[i].pregunta[0] %></h4><br>
                               <div class="row justify-content-center" style="background-color:lightblue">
-                            <p class="mate mal" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %><p><p class="respuestasM" id="respuestaM<%=i%>"><%= respuestaAlumnoElegida[0].respuestas[0].respuestaA[0] %></p>
+                            <p class="contestada mal " id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %><p class="" >tu respuesta es incorrecta</p><p class="respuestasM text-danger" id="respuestaM<%=i%>"> <%= respuestaAlumnoElegida[0].respuestas[0].respuestaA[0] %></p>
                             <% } %>
-                          <div class="align-self-first">
-                         </div>
-                
                           </div>
                         </div>
                       </div>

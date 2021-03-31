@@ -113,7 +113,7 @@ function matematicas(){
            strVar += "                <div class=\"pt-1\">";
            strVar += "                  <input type=\"number\"  class=\"denominador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
            strVar += "                <\/div>";
-           strVar += "            <\/div>";
+           strVar += "            <\/div>"
 
          preguntasMate[i].parentElement.insertAdjacentHTML("beforeend",strVar);
                  identificadoresMate[i].value="fraccion";

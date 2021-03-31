@@ -216,6 +216,8 @@
                                       <%= quizz.cuestionario[i].pregunta[0] %>
                                     </p>
                                     <input class="tipoMate" id="<%= i %>" type="hidden">
+                                    <input type="hidden" name="cuestionario<%= i %>"
+                                  value="<%= quizz.cuestionario[i]._id %>">
                                   </div>
                                 </div>
                               </div>
