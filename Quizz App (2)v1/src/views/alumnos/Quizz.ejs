@@ -165,54 +165,39 @@
                                   <h4 class="display-6 text-light text-center fw-bold">Relaciona los items</h4><br>
                                   <div class="d-flex justify-content-center container">
                                     
-                                      <div class="tablaEjercicio text-light" id="items<%= i %>">
-                                        <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
-                                       
-                                            <div class="container">
-                                              <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                                                <div class="col col-md-2">
-                                                  <div class="p-3">
-                                                      <div class="botonPregunta reactivo">
-                                                        <button type="button" class="opcion fs-3 botonNum text-center textoRp3"><%= j+1%></button>
-                                                      </div>
-                                                  </div>
-                                                </div>
-                                                <div class="col col-md-4">
-                                                  <div class="p-3">
-                                                    <div class="respuestaText textoRp" id="<%=i%>,<%=j%>">
-                                                      <%= quizz.cuestionario[i].pregunta[j]%>
+                                        <div class="row" style="display: block;">
+                                          <table class="tablaEjercicio text-light" id="items<%= i %>">
+                                            <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
+                                              <div class="col">
+                                                <tr>
+                                        
+                                                  <td class="botonPregunta reactivo mx-3 mb-3 text-center" style="width: 100px;">
+                                                    <button type="button" class="opcion fs-3">
+                                                      <%= j+1%>
+                                                    </button>
+                                                  </td>
+                                                  <td class=" mb-3" id="<%=i%>,<%=j%> text-center" style="width: 320px; ">
+                                                    <%= quizz.cuestionario[i].pregunta[j]%>
+                                                  </td>
+                                                  <td class="botonRespuesta mx-3 text-center pl-3">
+                                                    <button class="opcion fs-3"></button>
+                                                  </td>
+                                                  <td class="celdaRespuesta mx-3 ">
+                                                    <div class="ml-3">
+                                                      <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
+                                                      <%= quizz.cuestionario[i].respuesta[j]%>
+                                        
                                                     </div>
-                                                  </div>
-                                                </div>
-                                                <div class="col col-md-2">
-                                                  <div class="p-3">
-                                                    <div class="botonRespuesta textoRp4">
-                                                      <button type="button" class="opcion fs-3 botonNumRes  text-center"></button> 
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div class="col col-md-4">
-                                                  <div class="p-3">
-                                                    <div class="celdaRespuesta">
-                                                      <div class="respuestaText2 textoRp2">
-                                                        <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
-                                                        <%= quizz.cuestionario[i].respuesta[j]%>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </div>
+                                                  </td>
+                                                </tr>
                                               </div>
-                                            </div>
-
-                                            
-                                              
-                                            
-                                          
-
-                                          <% } %>
-
-
-                                      </div>
+                                        
+                                              <% } %>
+                                        
+                                        
+                                          </table>
+                                          <input type="hidden" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
+                                        </div>
                                       <input type="hidden" class="contadorItems" value="<%= i %>"
                                         name="contadorItems<%= i %>">
                                    
