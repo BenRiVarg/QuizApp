@@ -266,7 +266,6 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 		revision: [],
 
 	}
-	var revision=[];
 	//Una sola Respuesta
 	if(opcion==0){
 		
@@ -307,7 +306,6 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 	else{ //Multples respuestas
 		
 		//El alumno no contestó nada
-		
 		if(respuestaAlumno.length==0){
 			resultado.revision.push(false);
 			resultado.respuestasAlumno.push(0);
@@ -329,7 +327,9 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 					if(respuestaIteracion==respuestaBDI){
 						resultado.revision.push(true);
 
-						var iteracionRespuesta=preguntaBD.indexOf(respuestaBD[j]);
+						console.log("respuestaBD[j]");
+						console.log(respuestaBD[j]);
+						var iteracionRespuesta=preguntaBD.indexOf(respuestaAlumno[i]);
 						resultado.respuestasAlumno.push(iteracionRespuesta);
 						break;
 					}
@@ -337,7 +337,7 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 						//Si ya no hay más respuestas correctas posibles
 						if(j==(respuestaBD.length-1)){
 							
-							var iteracionRespuesta=preguntaBD.indexOf(respuestaBD[j]);
+							var iteracionRespuesta=preguntaBD.indexOf(respuestaAlumno[i]);
 							resultado.respuestasAlumno.push(iteracionRespuesta);
 							resultado.revision.push(false);
 						}
@@ -350,6 +350,7 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 		}
 		console.log(resultado.respuestasAlumno);
 		console.log(resultado.revision);
+		
 	}
 	return resultado;
 }

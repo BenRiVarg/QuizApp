@@ -226,7 +226,7 @@
       <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
 
         <div class="card-body border border-1">
-          <h4 class="display-7 contestada bien">
+          <h4 class="display-7 contestada ">
             <% <!--=quizz.cuestionario[i].pregunta -->%>Pregunta Para el Alumno OM
           </h4><br>
           <div class="container">
@@ -286,29 +286,29 @@
       <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
 
         <div class="card-body border border-1">
-          <h4 class="display-7 contestada bien">
-            <% <!--=quizz.cuestionario[i].pregunta -->%>Pregunta Para el Alumno OMMR
+          <h4 class="display-7 contestada ">
+            <%= quizz.cuestionario[i].pregunta[0] %>
           </h4><br>
           <div class="container">
             <div class="row">
               <div class="col">
-                <input class="form-check-input" type="checkbox" name="respuesta<%<!--= i -->%>" id="flexRadioDefault1"
-                  value="<%<!--= quizz.cuestionario[i].pregunta[j]-->%>">
+                <input class="form-check-input " type="checkbox" name="respuesta<%<!--= i -->%>" id="flexRadioDefault1"
+                 checked="checked">
                 <label class="form-check-label" for="pregunta">
-                  <%<!--= quizz.cuestionario[i].pregunta[j]-->%> Item
+                  <p class="ml-1 text-success">Item</p>
                 </label><br>
 
                 <input class="form-check-input" type="checkbox" name="respuesta<%<!--= i -->%>" id="flexRadioDefault1"
-                  value="<%<!--= quizz.cuestionario[i].pregunta[j]-->%>">
+                  value="<%<!--= quizz.cuestionario[i].pregunta[j]-->%>" checked="checked">
                 <label class="form-check-label" for="pregunta">
-                  <%<!--= quizz.cuestionario[i].pregunta[j]-->%> Item
+                  <p class="text-danger">Item</p> 
                 </label><br>
               </div>
               <div class="col">
                 <input class="form-check-input" type="checkbox" name="respuesta<%<!--= i -->%>" id="flexRadioDefault1"
-                  value="<%<!--= quizz.cuestionario[i].pregunta[j]-->%>">
+                  value="<%<!--= quizz.cuestionario[i].pregunta[j]-->%>" >
                 <label class="form-check-label" for="pregunta">
-                  <%<!--= quizz.cuestionario[i].pregunta[j]-->%> Item
+                  <p class="ml-1 text-success">Item</p>
                 </label><br>
                 <input class="form-check-input" type="checkbox" name="respuesta<%<!--= i -->%>" id="flexRadioDefault1"
                   value="<%<!--= quizz.cuestionario[i].pregunta[j]-->%>">
@@ -321,7 +321,7 @@
         </div>
       </div>
     </div>
-    <!--P OM-->
+    <!--Termina Múltiple Respuesta -->
 
     <!--P Relacional-->
     <div class="d-flex justify-content-center">

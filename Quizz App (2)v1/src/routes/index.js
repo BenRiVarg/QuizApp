@@ -705,11 +705,11 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   
   console.log(req.body)
   var examencalificado = await Revisor.revisar(idAlumno, req);
-  console.log(examencalificado);
+  //console.log(examencalificado);
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
-  Registros.create(examencalificado);
+  //Registros.create(examencalificado);
   res.render('alumnos/correccion');
 
 });
