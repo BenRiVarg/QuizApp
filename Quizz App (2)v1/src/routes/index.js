@@ -709,7 +709,7 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
-  //Registros.create(examencalificado);
+  Registros.create(examencalificado);
   res.render('alumnos/correccion');
 
 });

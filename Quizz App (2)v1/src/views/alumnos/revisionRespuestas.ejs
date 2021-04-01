@@ -228,23 +228,58 @@
                      else { %>
                       <!--Variable para recorrer los arrays de respuesta del alumno-->
                       <% var llaveRA=0 %>
-                     <h1> <%= respuestaAlumnoElegida[0].respuestas[0].respuestaA[0] %> </h1>
-                     <h1> <%= respuestaAlumnoElegida[0].respuestas[0].respuestaA[1] %> </h1> 
+                      <div class="container">
+                        <div class="row">
+                          <div class="col">
                       <% for (var j=1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
 
                         <%if(j==respuestaAlumnoElegida[0].respuestas[0].respuestaA[llaveRA]){%> 
-                         respuesta de Alumno
+                            <!--Condicionales de Respuestas del Alumno-->
+                            <%if(j==respuestaAlumnoElegida[0].respuestas[0].revision[llaveRA]){%> 
+                              <!--Respuesta Correcta-->
+                              <input class="form-check-input " type="checkbox"  id="flexRadioDefault1"
+                              checked="checked">
+                              <label class="form-check-label" for="pregunta">
+                                <p class="ml-2 text-success"><%= quizz.cuestionario[i].pregunta[j] %></p>
+                              </label><br>
+                                <%}
+                                else{%>
+                              <!--Respuesta Incorrecata-->
+                              <input class="form-check-input" type="checkbox" checked="checked">
+                            <label class="form-check-label" for="pregunta">
+                              <p class="ml-2 text-danger"><%= quizz.cuestionario[i].pregunta[j] %></p> 
+                            </label><br>
+                                <%}
+                              %>
+                              <!--Aumentamos la clave que mueve las respuestas del alumno-->
                          <% llaveRA=llaveRA+1; %>
-                          <%}
+                          <%}else{%>
+                                <% var respuestaNeutra=true %>
+                                        <% for(var k=0;k<=(quizz.cuestionario[i].respuesta.length-1);k++){%>
+                                          <!--Respuesta Correcta vacía-->
+                                              <% if(quizz.cuestionario[i].respuesta[k]==quizz.cuestionario[i].pregunta[j]){%>
+                                                <input class="form-check-input " type="checkbox"  id="flexRadioDefault1" >
+                                                <label class="form-check-label" for="pregunta">
+                                                  <p class="ml-2 text-success"><%= quizz.cuestionario[i].pregunta[j] %></p>
+                                                </label><br>
+                                                <% var respuestaNeutra=false%>
+                                                <% break %>
+                                                <%}%>
+                                          <%}%>
+                                          <% if(respuestaNeutra){%>
+                                                            <!--Respuestas vacías-->
+                                                <input class="form-check-input" type="checkbox"  id="flexRadioDefault1" >
+                                                <label class="form-check-label" for="pregunta">
+                                                  <p class="ml-2 "><%= quizz.cuestionario[i].pregunta[j] %></p> 
+                                                </label><br>
+                                            <%}%>
+                            <%}
                           %>
-                      
-                        <input class="form-check-input reactivo" type="checkbox">
-                        <label for="pregunta">
-                          <%= quizz.cuestionario[i].pregunta[j] %>
-                        </label>
-                        <br>
+                            
                         <% } %>
-
+                          </div>
+                        </div>
+                      </div>
                           <!--Multiple respuesta-->
                             <div class="d-flex justify-content-center">
                               <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
