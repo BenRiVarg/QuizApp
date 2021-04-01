@@ -11,7 +11,7 @@
     <title>Revision</title>
 </head>
 <body>
-    <h1>Revisión de Respuestas</h1>
+    <h1 class="text-center mt-5">Revisión de Respuestas</h1>
         <input type="hidden" name="QuizzID" value="<%= quizz._id %>">
         <% 
              for(var i=0; i<quizz.cuestionario.length ; i++)
@@ -228,10 +228,10 @@
                      else { %>
                           <!--Empieza Revisión OMM-->
                             <div class="d-flex justify-content-center">
-                              <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
+                              <div class="card shadow-lg p-3 my-3 bg-body rounded col-sm-10 col-lg-10">
 
                                 <div class="card-body border border-1">
-                                  <h4 class="display-7 contestada mb-0 pb-0">
+                                  <h4 class="display-7 contestada mb-0 pb-0 text-center">
                                     <%= quizz.cuestionario[i].pregunta[0] %>
                                   </h4><br>
                                   <div class="container">
