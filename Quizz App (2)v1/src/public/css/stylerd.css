@@ -173,6 +173,7 @@ img {
   }
 }
  */
+
 .contenedorimg {
   height: 360px;
 }
@@ -182,4 +183,46 @@ img {
   height: 358px;
   margin: 0 auto;
   background-size: cover;
+}
+
+.botonNum {
+  margin-left: 63px;
+}
+
+.respuestaText {
+  margin-left: -50px;
+  font-size: 20px;
+}
+
+.botonNumRes {
+  margin-left: 63px;
+}
+
+.respuestaText2 {
+  margin-left: -50px;
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 1350px) {
+  .container .row .col .textoRp {
+    margin-left: 16px;
+    margin-top: -18px;
+    width: 195px;
+    font-size: 19px;
+  }
+  .container .row .col .textoRp2 {
+    margin-left: 16px;
+    margin-top: -22px;
+    width: 195px;
+    font-size: 19px;
+  }
+  .container .row .col .textoRp3 {
+  
+    margin-top: -22px;
+  }
+  .container .row .col .textoRp4 {
+    
+    margin-top: -22px;
+    
+  }
 }

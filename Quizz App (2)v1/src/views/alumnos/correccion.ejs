@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Resultados</title>
 </head>
-<body>
+
+<body onload="nobackbutton();">
     <h1>Resultados del examen</h1>
-    <p>Aquí se visualizará la calificación  del alumno así como retroalimentación de las respuestas correctas</p>
+    <p>Aquí se visualizará la calificación del alumno así como retroalimentación de las respuestas correctas</p>
+
+    <script type="text/javascript">
+        history.pushState(null, null, location.href);
+        history.back();
+        history.forward();
+        window.onpopstate = function () { history.go(1); };
+    </script>
+
 </body>
+
 </html>
