@@ -290,12 +290,15 @@
             Pregunta
           </h4><br>
           <div class="container">
+            <div class="justify-content-center text-danger">
+              No has contestado nada para esta pregunta
+            </div>
             <div class="row">
               <div class="col">
-                <input class="form-check-input " type="checkbox" name="respuesta<%<!--= i -->%>" id="flexRadioDefault1"
+                <input class="form-check-input " type="checkbox"
                   checked="checked">
                  <label class="form-check-label" for="pregunta">
-                   <p class="bien ml-5">a</p>
+                  
                    <p class="ml-1 bien text-success">Item</p>
                  </label><br>
                 
@@ -304,7 +307,7 @@
                 <input class="form-check-input" type="checkbox" name="respuesta<%<!--= i -->%>" id="flexRadioDefault1"
                   value="<%<!--= quizz.cuestionario[i].pregunta[j]-->%>" checked="checked">
                 <label class="form-check-label" for="pregunta">
-                  <p class="text-danger">Item</p> 
+                  <p class="ml-1 mal text-danger">Item</p> 
                 </label><br>
               </div>
               <div class="col">
