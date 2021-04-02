@@ -5,13 +5,19 @@ function caliz(){
     alert("Sí va a Funcionar")
 }
 
+var formulario=document.getElementById("quizz");
+//Nos aseguramos de no estar guardando otros valores
+formulario.reset()
+
+var impedimento=1
+console.log(impedimento);
 //Variable para recuperar las respuestas del alumno
 var respuestasAlumnoD=[];
 var retornable=document.getElementsByClassName("retornable")[0];
 matematicas();
 contadorItemsMultiples();
 
-//----------Empiezan FUncioens de Mate-----//
+//----------Empiezan Funciones de Mate-----//
 function matematicas(){
  var preguntasMate=document.getElementsByClassName("mate");
  var identificadoresMate=document.querySelectorAll("input.tipoMate");
@@ -210,6 +216,7 @@ function contadorItemsMultiples(){
         var claveI=cuestionariosMultiples[i].value;
     
         var selectorI="items"+claveI;
+        console.log(selectorI);
 
         //Conseguimos el elemento que contiene los items
         var itemsCuestionario=document.getElementById(selectorI);
@@ -308,5 +315,7 @@ function activarReactivo(){
 
 function enviarQuizz(){
     envioRespuestasMate();
-    document.getElementById("quizz").submit();
+    //document.getElementById("quizz").reset();
+    formulario.submit();
+    impedimento++;
 }

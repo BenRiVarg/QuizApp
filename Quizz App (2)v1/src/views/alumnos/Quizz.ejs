@@ -14,7 +14,7 @@
   <title>Hacer Examen</title>
 </head>
 
-<body style="background-color:#FFE8CD">
+<body style="background-color:#FFE8CD" onload="caliz()">
   <div class="col ">
     <div class="figure" style="margin-right: 473px !important;">
       <h6>Español</h6>
@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <form action="/alumnos/correccion/alumno/<%=idAlumno%>" method="POST" id="quizz">
+  <form action="/alumnos/correccion/alumno/<#%=idAlumno%>" method="POST" id="quizz">
     <input type="hidden" name="quizz" value="<%= quizz._id %>">
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
       <div class="carousel-inner">
@@ -208,7 +208,7 @@
                                 </div>
                             </div>
                           </div>
-
+                          
                           <!--Termina P Relacional-->
                         </div>
                         <% break; case "tipoM" : %>

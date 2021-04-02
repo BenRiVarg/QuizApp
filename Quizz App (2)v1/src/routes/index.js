@@ -708,20 +708,20 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   
   console.log(req.body)
   var examencalificado = await Revisor.revisar(idAlumno, req);
-  //console.log(examencalificado);
-  //Registros.create(examencalificado);
-  //res.render('alumnos/correccion');
+ // console.log(examencalificado);
 
+/*
   //Registros.create(examencalificado);
   var nuevoIntento= await Registros.create(examencalificado);
   
   //Recuperamos el quizz que contestó
  var quizz = await Quizz.findById(nuevoIntento.quizz);
-  //console.log(quizz);
   console.log(nuevoIntento.respuestas[0].respuestaA);
   respuestaAlumnoElegida=[nuevoIntento];
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
+  */
+ res.end();
 });
 /*
 router.get('/alumnos/revision/:id', async (req, res) => {

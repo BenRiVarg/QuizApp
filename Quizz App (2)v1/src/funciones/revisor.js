@@ -1,159 +1,216 @@
 'use strict'
-const Quizz=require('../modelos/quizz.js');
+const Quizz = require('../modelos/quizz.js');
 
-var examencalificado={
-    alumno:"",
-    revisado:true,
-    quizz: "",
-    respuestas:Array
+var examencalificado = {
+	alumno: "",
+	revisado: true,
+	quizz: "",
+	respuestas: Array,
+	calificacion: 0,
 };
 
-exports.revisar= async function (alumno,req){
-	
-	
-	var cuestionariosCalificados=[];
-	//Conseguimos el examen que vamos a calificar
-	var quizz=  await Quizz.findById(req.body.quizz);
-	
+var calificacionGlobal=0;
+var calificacionPorCuestionario=[];
 
-	
+exports.revisar = async function (alumno, req) {
+
+
+	var cuestionariosCalificados = [];
+	//Conseguimos el examen que vamos a calificar
+	var quizz = await Quizz.findById(req.body.quizz);
+
+
+
 	//Extracción de los cuestionarios de ese quizz
-	var cuestionariosBD=quizz.cuestionario;
+	var cuestionariosBD = quizz.cuestionario;
 	var cuestionario;
 	var cuestionarioI;
 
 
 	//Variable para mover los punteros en la request
-	var iteracionCalificacion=0;
+	var iteracionCalificacion = 0;
 
 
 
 
 
-	for(cuestionario in cuestionariosBD){
-		
+	for (cuestionario in cuestionariosBD) {
+
 		//Seleccion de los elementos en la iteración correspondiente
-		var cuestionario="cuestionario"+(iteracionCalificacion);
-		var respuesta="respuesta"+(iteracionCalificacion);
-	
-		//Busqueda en la request
-		var cuestionarioRequest=req.body[cuestionario];
-		var respuestaAlumno=req.body[respuesta];
+		var cuestionario = "cuestionario" + (iteracionCalificacion);
+		var respuesta = "respuesta" + (iteracionCalificacion);
 
-		for(cuestionarioI in cuestionariosBD){
+		//Busqueda en la request
+		var cuestionarioRequest = req.body[cuestionario];
+		var respuestaAlumno = req.body[respuesta];
+
+		for (cuestionarioI in cuestionariosBD) {
 			//Busqueda del cuestionario a calificar
-			if(cuestionariosBD[cuestionarioI]._id==cuestionarioRequest){
-				var cuestionarioAcalificar=cuestionariosBD[cuestionarioI];
+			if (cuestionariosBD[cuestionarioI]._id == cuestionarioRequest) {
+				var cuestionarioAcalificar = cuestionariosBD[cuestionarioI];
 				break;
 			}
 		}
 
-		var tipoCuestionario=cuestionarioAcalificar.tipo;
+		var tipoCuestionario = cuestionarioAcalificar.tipo;
 		//Limpiamos y declaramos la variable para las respuestas
-		
 
-		switch(tipoCuestionario) {
+
+		switch (tipoCuestionario) {
 			case "tipoT":
 				//console.log(cuestionarioAcalificar.respuesta[0]);
-			  var resultado=calificarRA(respuestaAlumno,cuestionarioAcalificar.respuesta[0]);
-			  console.log("RPA: "+resultado);
-			  break;
+				var resultado = calificarRA(respuestaAlumno, cuestionarioAcalificar.respuesta[0]);
+				console.log("RPA: " + resultado);
+				calificacionPorCuestionario.push(resultado);
+				break;
 			case "tipoIT":
-				var resultado=calificarRA(respuestaAlumno,cuestionarioAcalificar.respuesta[0]);
-				console.log("RPA: "+resultado);
-			
-			break;
+				var resultado = calificarRA(respuestaAlumno, cuestionarioAcalificar.respuesta[0]);
+				console.log("RPAIT: " + resultado);
+				calificacionPorCuestionario.push(resultado);
+				break;
 
 			case "tipoOM":
-				
-				  if(respuestaAlumno=="multiple"){
+
+				if (respuestaAlumno == "multiple") {
 					//"Hay más de una respuesta"
-					var respuestaAlumnoProcesada=[];
+					var respuestaAlumnoProcesada = [];
 					//Identificamos cuantos reactivos tiene el Quizz en el HTML DOM
-					var reactivosCuestionario=req.body[("contadorItems"+iteracionCalificacion)];
-					
+					var reactivosCuestionario = req.body[("contadorItems" + iteracionCalificacion)];
+
 					//Creamos un array con las respuestas del alumno
-					for(var i=1;i<=reactivosCuestionario;i++){
-						var respuestaAlumnoI=req.body[("respuesta"+iteracionCalificacion+","+i)];
-						if(respuestaAlumnoI && respuestaAlumnoI!=""){
+					for (var i = 1; i <= reactivosCuestionario; i++) {
+						var respuestaAlumnoI = req.body[("respuesta" + iteracionCalificacion + "," + i)];
+						if (respuestaAlumnoI && respuestaAlumnoI != "") {
 							respuestaAlumnoProcesada.push(respuestaAlumnoI);
 						}
 					}
+					respuestaAlumno = respuestaAlumnoProcesada;
 
-					respuestaAlumno=respuestaAlumnoProcesada;
-
-					console.log("Respuesta Alumno: "+respuestaAlumnoProcesada.length);
+					console.log("Respuesta Alumno: " + respuestaAlumnoProcesada.length);
 					//Y las calificamos
-					var resultado=calificarOM(respuestaAlumno,cuestionarioAcalificar.pregunta,cuestionarioAcalificar.respuesta,1);
-					console.log("OMM: "+resultado.revision);
-					respuestaAlumno=resultado.respuestasAlumno;
-					resultado=resultado.revision;
-				}
-				  else{
-					//"Sólo hay una respuesta"
-					var resultado=calificarOM(respuestaAlumno,cuestionarioAcalificar.pregunta,cuestionarioAcalificar.respuesta,0);
-					console.log("OMS: "+resultado.revision);
+					var resultado = calificarOM(respuestaAlumno, cuestionarioAcalificar.pregunta, cuestionarioAcalificar.respuesta, 1);
+					console.log("OMM: " + resultado.revision);
 					
-					respuestaAlumno=resultado.respuestasAlumno;
-					resultado=resultado.revision;
-				}
+					//Ajuste de calificiación para preguntas OMM
 			
-			 
-			  break;
-
-			  case "tipoR":
-					var reactivosCuestionario=req.body[("contadorItems"+iteracionCalificacion)];
-					var respuestaAlumnoProcesada=[];
-
-					//Creamos un array con las respuestas del alumno
-					for(var i=0;i<reactivosCuestionario;i++){
-						var respuestaAlumnoI=req.body[("r"+iteracionCalificacion+","+i)];
-						if(respuestaAlumnoI.length==0){
-							
-							respuestaAlumnoProcesada.push("");
-						}
-						else{
-							
-							respuestaAlumnoProcesada.push(respuestaAlumnoI);
-						}
+					if((resultado.revision.length)<(cuestionarioAcalificar.respuesta.length)){
+						var revisionAjustada=resultado.revision;
+						//Ajustamos el contador al tamaño de la respuesta que sí puso
+						var inicio=revisionAjustada.length;
+						 for(inicio;inicio<cuestionarioAcalificar.respuesta.length;inicio++){
+							 revisionAjustada.push(false);
+						 }
+						 console.log("Debugg")
+						 console.log(revisionAjustada);
+						 calificacionPorCuestionario.push(revisionAjustada);
 					}
+					else{
+						calificacionPorCuestionario.push(resultado.revision);
+					}
+					//Asignación de valores para el registro de BD
+					respuestaAlumno = resultado.respuestasAlumno;
+					resultado = resultado.revision;
+				}
+				else {
+					//"Sólo hay una respuesta"
+					var resultado = calificarOM(respuestaAlumno, cuestionarioAcalificar.pregunta, cuestionarioAcalificar.respuesta, 0);
+					console.log("OMS: " + resultado.revision);
 
-					respuestaAlumno=respuestaAlumnoProcesada;
-					var resultado=calificarR(respuestaAlumno,cuestionarioAcalificar.respuesta,cuestionarioAcalificar.pregunta);
-					respuestaAlumno=resultado.respuestasAlumno;
+					respuestaAlumno = resultado.respuestasAlumno;
+					resultado = resultado.revision;
+					calificacionPorCuestionario.push(resultado.revision);
+				}
 
-					resultado=resultado.revision;
-					console.log("Calificacion R: "+resultado)
-					console.log(respuestaAlumno);
-					
-			  break;
-			  case "tipoM":
-					console.log("listo para calificar Mate");
-					var resultado=calificarM(respuestaAlumno,cuestionarioAcalificar.respuesta[0]);
-					console.log("Calificacion M: "+resultado)
-			  break;
-			
-		  } 
-		  var respuestas={
+
+				break;
+
+			case "tipoR":
+				var reactivosCuestionario = req.body[("contadorItems" + iteracionCalificacion)];
+				var respuestaAlumnoProcesada = [];
+
+				//Creamos un array con las respuestas del alumno
+				for (var i = 0; i < reactivosCuestionario; i++) {
+					var respuestaAlumnoI = req.body[("r" + iteracionCalificacion + "," + i)];
+					if (respuestaAlumnoI.length == 0) {
+
+						respuestaAlumnoProcesada.push("");
+					}
+					else {
+
+						respuestaAlumnoProcesada.push(respuestaAlumnoI);
+					}
+				}
+
+				respuestaAlumno = respuestaAlumnoProcesada;
+				var resultado = calificarR(respuestaAlumno, cuestionarioAcalificar.respuesta, cuestionarioAcalificar.pregunta);
+				
+				//Ajuste de calificiación para preguntas Relacionales
+				if((resultado.revision.length)<(cuestionarioAcalificar.respuesta)){
+					var revisionAjustada=resultado.revision;
+					for(var i=0;i<cuestionarioAcalificar.respuesta.length;i++){
+						revisionAjustada.push(false);
+					}
+					calificacionPorCuestionario.push(revisionAjustada);
+			   }
+
+				respuestaAlumno = resultado.respuestasAlumno;
+
+				resultado = resultado.revision;
+				console.log("Calificacion R: " + resultado)
+				console.log(respuestaAlumno);
+
+				break;
+			case "tipoM":
+				console.log("listo para calificar Mate");
+				var resultado = calificarM(respuestaAlumno, cuestionarioAcalificar.respuesta[0]);
+				console.log("Calificacion M: " + resultado)
+
+				calificacionPorCuestionario.push(resultado);
+				break;
+
+		}
+		var respuestas = {
 			cuestionarioID: cuestionarioAcalificar._id,
 			respuestaA: respuestaAlumno,
 			revision: resultado
 		};
 
 		cuestionariosCalificados.push(respuestas)
-
 		//Incremento de la variable para la siguiente iteración
-		iteracionCalificacion=iteracionCalificacion+1;
+		iteracionCalificacion = iteracionCalificacion + 1;
 	}
-	//console.log(cuestionariosCalificados);
-//----------TODO CORRECTO---------------
-	//asignamos un alumno para el registro
-	examencalificado.alumno=alumno;
-	examencalificado.quizz=quizz._id;
-	examencalificado.respuestas=cuestionariosCalificados;
+
+	/*
+	// seccion para guardar la calificacion
+	var calificacionGlobal = 0;// calificcacion que sera almacenada
+	for (var i = 0; i < cuestionariosCalificados.length; i++) { // ciclo que recorre la cantidad de cuestionarios por examen
+		var aciertos = 0;// variable de numeros de aciertos por cuestionario
+		var calificacionCuestionario = 0; // aqui se guardara la calificacion del cuestionario
+		for (let j = 0; j < cuestionariosCalificados[i].revision.length; j++) {// cliclo para recorrer las respuestas del examen
+			if (cuestionariosCalificados[i].revision[j]) {// si es una respuesta correcta se aumenta el contador de aciertos
+				aciertos++;// aumento del contador
+			}
+		}// fin de ciclo for para preguntas
+		calificacionCuestionario = (aciertos / cuestionariosCalificados[i].revision.length) * 100;	// Se obtiene la calificacion promedio del cuestionario 
+		// Se dividen los aciertos entre el total de preguntas y se multiplica por 1		
+		calificacionGlobal = calificacionGlobal + calificacionCuestionario;// Sumatoria de calificaciones por cuestionario para calculo global de calificacion
+	}
 
 	
-	
+	calificacionGlobal = calificacionGlobal / cuestionariosCalificados.length; // calculo de calificacion global diviendo la sumatoria entre la cantidad de cuestionarios
+	//console.log(cuestionariosCalificados);
+	*/
+	console.log("Resultado");
+	console.log(calificacionPorCuestionario);
+	//----------TODO CORRECTO---------------
+	//asignamos un alumno para el registro
+	examencalificado.calificacion = calificacionGlobal; // se agrega la calificacion al objeto que se almacenara en la base de datos
+	examencalificado.alumno = alumno;
+	examencalificado.quizz = quizz._id;
+	examencalificado.respuestas = cuestionariosCalificados;
+
+
+
 	return examencalificado;
 }
 
@@ -161,102 +218,102 @@ exports.revisar= async function (alumno,req){
 //////////////FUNCIONES DE APOLLO/////////
 
 //Calificacion de Respuestas de Mate
-function calificarM(respuestaAlumno,respuestaBD){
-	var revision=[];
+function calificarM(respuestaAlumno, respuestaBD) {
+	var revision = [];
 
-	if(!(typeof(respuestaAlumno)=="string")){
+	if (!(typeof (respuestaAlumno) == "string")) {
 		console.log("Proceso con Fracciones");
-		if(respuestaAlumno[0]==NaN){
+		if (respuestaAlumno[0] == NaN) {
 			revision.push(false);
 		}
-		else{
+		else {
 			console.log(respuestaAlumno);
 			console.log(respuestaBD);
-			console.log(respuestaAlumno[0]==respuestaBD);
-	
-			if(respuestaAlumno[0]==respuestaBD){
-			revision.push(true)
+			console.log(respuestaAlumno[0] == respuestaBD);
+
+			if (respuestaAlumno[0] == respuestaBD) {
+				revision.push(true)
 			}
-			else{
-			revision.push(false)
+			else {
+				revision.push(false)
 			}
-			
+
 		}
 	}
-	else{
+	else {
 		//Proceso con Enteros
-		if(respuestaAlumno==NaN){
+		if (respuestaAlumno == NaN) {
 			revision.push(false);
 		}
-		else{
+		else {
 			console.log(respuestaAlumno);
 			console.log(respuestaBD);
-			console.log(respuestaAlumno==respuestaBD);
-	
-			if(respuestaAlumno==respuestaBD){
-			revision.push(true)
+			console.log(respuestaAlumno == respuestaBD);
+
+			if (respuestaAlumno == respuestaBD) {
+				revision.push(true)
 			}
-			else{
-			revision.push(false)
+			else {
+				revision.push(false)
 			}
-			
+
 		}
 
 	}
 
-	
-	
-	
+
+
+
 	return revision;
 }
 
 
 //Calificación de Respuestas Relacionales (tambien devuelve lo que el alumno realmente contestó)
-function calificarR(respuestaAlumno,respuestaBD,preguntaBD){
-	
-	var resultado={
+function calificarR(respuestaAlumno, respuestaBD, preguntaBD) {
+
+	var resultado = {
 		revision: [],
 		respuestasAlumno: []
 	}
 
 	//Creamos un array para llenarlo de las respuestas que realmente contestó el alumno en cada ocación
-	var contestacionAlumnoReal=[];
+	var contestacionAlumnoReal = [];
 
-	for(var i=0;i<preguntaBD.length;i++){
-		
+	for (var i = 0; i < preguntaBD.length; i++) {
 
-		if(respuestaAlumno[i].length==0){ //Respuesta vacía
+		console.log(respuestaAlumno);
+		if (respuestaAlumno[i].length == 0) { //Respuesta vacía
 			resultado.revision.push(false);
 		}
-		else{
+		else {
 			var x;
 			//El criterio de respuesta correcta, es que las respuestas del alumno (tienene la pregunta)  esten ligadas a la pregunta en la BD correcta
-			var matchCorrecto=igualacion(preguntaBD[i]);
-			var contestacionAlumno=igualacion(respuestaAlumno[i]);
-	//			console.log("Respuesta Alumno: "+contestacionAlumno);
+			var matchCorrecto = igualacion(preguntaBD[i]);
+			var contestacionAlumno = igualacion(respuestaAlumno[i]);
+			//			console.log("Respuesta Alumno: "+contestacionAlumno);
 
-			for(x in preguntaBD){
-				if(contestacionAlumno==igualacion(preguntaBD[x])){
-					var respuestaAlumnoreal=respuestaBD[x];
+			for (x in preguntaBD) {
+				if (contestacionAlumno == igualacion(preguntaBD[x])) {
+					var respuestaAlumnoreal = respuestaBD[x];
 				}
 			}
 
 			//Guardamos lo que Realmente contestó el alumno
 			resultado.respuestasAlumno.push(respuestaAlumnoreal);
 
-			if(matchCorrecto==contestacionAlumno){
+			if (matchCorrecto == contestacionAlumno) {
 				resultado.revision.push(true);
 			}
-			else{
+			else {
 				resultado.revision.push(false);
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	return resultado;
-	
+
 }
 
 //Calificacion de Respuestas de Opción Multiple
@@ -356,25 +413,26 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 }
 
 
-//Calificación de Respuestas Abiertas
-function calificarRA(respuestaAlumno,respuestaBD){
 
-	var revision=[];
-	if(igualacion(respuestaAlumno)==igualacion(respuestaBD)){
+//Calificación de Respuestas Abiertas
+function calificarRA(respuestaAlumno, respuestaBD) {
+
+	var revision = [];
+	if (igualacion(respuestaAlumno) == igualacion(respuestaBD)) {
 		revision.push(true)
 	}
-	else{
+	else {
 		revision.push(false)
 	}
 
-   return revision;
+	return revision;
 }
 
-function igualacion(cadena){
-    
-    //Eliminación de todos los espacios en blanco
-    cadena=cadena.replace(/\s+/g, ''); 
+function igualacion(cadena) {
 
-    cadena=cadena.toLowerCase();
-    return cadena
+	//Eliminación de todos los espacios en blanco
+	cadena = cadena.replace(/\s+/g, '');
+
+	cadena = cadena.toLowerCase();
+	return cadena
 }
