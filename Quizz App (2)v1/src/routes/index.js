@@ -30,7 +30,8 @@ conn.once('open', () => {
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection('uploads');
 });
-
+//URI SSD mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority
+//URI PRODUCCION mongodb+srv://QUIZ-API:PFEpkCKG5VcQDJNj@cluster0.lcjm4.mongodb.net/QUIZZES?retryWrites=true&w=majority
 // Create storage engine
 const storage = new GridFsStorage({
   url: 'mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority',
@@ -80,8 +81,11 @@ global.datosAlumnoSesion = {};
 
 router.get('/', async (req, res) => {
   res.render('index');
- var grupo=   await API.alumnos("R71MHRG4");
-  console.log(grupo)
+ var usuario=   await API.autenticacion("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQm13STdJUnYiLCJub21icmUiOiJJZ25hY2lvIFJ1YmVuIE9ydHXDsW8gQWxiYXJyYW4iLCJwZXJtaXNvcyI6W3sidmlzdWFsaXphcl9uaXZlbGVzX2FjYWTDqW1pY29zIjp0cnVlLCJhZ3JlZ2FyX25pdmVsZXNfYWNhZMOpbWljb3MiOnRydWUsImFjdHVhbGl6YXJfbml2ZWxlc19hY2Fkw6ltaWNvcyI6dHJ1ZSwiZWxpbWluYXJfbml2ZWxlc19hY2Fkw6ltaWNvcyI6dHJ1ZSwidmlzdWFsaXphcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiYWdyZWdhcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiYWN0dWFsaXphcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiZWxpbWluYXJfZ3JhZG9zX2RlX2VzdHVkaW8iOnRydWUsInZpc3VhbGl6YXJfbWF0ZXJpYXMiOnRydWUsImFncmVnYXJfbWF0ZXJpYXMiOnRydWUsImFjdHVhbGl6YXJfbWF0ZXJpYXMiOnRydWUsImVsaW1pbmFyX21hdGVyaWFzIjp0cnVlLCJ2aXN1YWxpemFyX3dpa2lzIjp0cnVlLCJhZ3JlZ2FyX3dpa2lzIjp0cnVlLCJhY3R1YWxpemFyX3dpa2lzIjp0cnVlLCJlbGltaW5hcl93aWtpcyI6dHJ1ZSwidmlzdWFsaXphcl9xdWl6emVzIjp0cnVlLCJ2aXN1YWxpemFyX2Jsb3F1ZXMiOnRydWUsImFncmVnYXJfYmxvcXVlcyI6dHJ1ZSwiYWN0dWFsaXphcl9ibG9xdWVzIjp0cnVlLCJlbGltaW5hcl9ibG9xdWVzIjp0cnVlLCJ2aXN1YWxpemFyX3NlY3VlbmNpYXMiOnRydWUsImFncmVnYXJfc2VjdWVuY2lhcyI6dHJ1ZSwiYWN0dWFsaXphcl9zZWN1ZW5jaWFzIjp0cnVlLCJlbGltaW5hcl9zZWN1ZW5jaWFzIjp0cnVlLCJ2aXN1YWxpemFyX2FtYml0b3MiOnRydWUsImFncmVnYXJfYW1iaXRvcyI6dHJ1ZSwiYWN0dWFsaXphcl9hbWJpdG9zIjp0cnVlLCJlbGltaW5hcl9hbWJpdG9zIjp0cnVlLCJ2aXN1YWxpemFyX3BzbHMiOnRydWUsImFncmVnYXJfcHNscyI6dHJ1ZSwiYWN0dWFsaXphcl9wc2xzIjp0cnVlLCJlbGltaW5hcl9wc2xzIjp0cnVlLCJ2aXN1YWxpemFyX2VqZXMiOnRydWUsImFncmVnYXJfZWplcyI6dHJ1ZSwiYWN0dWFsaXphcl9lamVzIjp0cnVlLCJlbGltaW5hcl9lamVzIjp0cnVlLCJ2aXN1YWxpemFyX3RlbWFzIjp0cnVlLCJhZ3JlZ2FyX3RlbWFzIjp0cnVlLCJhY3R1YWxpemFyX3RlbWFzIjp0cnVlLCJlbGltaW5hcl90ZW1hcyI6dHJ1ZSwidmlzdWFsaXphcl9wYWdpbmFzIjp0cnVlLCJhZ3JlZ2FyX3BhZ2luYXMiOnRydWUsImFjdHVhbGl6YXJfcGFnaW5hcyI6dHJ1ZSwiZWxpbWluYXJfcGFnaW5hcyI6dHJ1ZSwicmVzdGF1cmFyX3BhZ2luYXMiOnRydWUsImVsaW1pbmFyX3BhZ2luYXNfZGVmaW5pdGl2YW1lbnRlIjp0cnVlLCJ2aXN1YWxpemFyX2ltYWdlbmVzIjp0cnVlLCJhZ3JlZ2FyX2ltYWdlbmVzIjp0cnVlLCJhY3R1YWxpemFyX2ltYWdlbmVzIjp0cnVlLCJlbGltaW5hcl9pbWFnZW5lcyI6dHJ1ZSwidmlzdWFsaXphcl9nYWxlcmlhcyI6dHJ1ZSwiYWdyZWdhcl9nYWxlcmlhcyI6dHJ1ZSwiYWN0dWFsaXphcl9nYWxlcmlhcyI6dHJ1ZSwiZWxpbWluYXJfZ2FsZXJpYXMiOnRydWUsInZpc3VhbGl6YXJfdmlkZW9zIjp0cnVlLCJhZ3JlZ2FyX3ZpZGVvcyI6dHJ1ZSwiYWN0dWFsaXphcl92aWRlb3MiOnRydWUsImVsaW1pbmFyX3ZpZGVvcyI6dHJ1ZX1dLCJpYXQiOjE2MTcwNzMxMzYsImV4cCI6MTYxNzEwMTkzNiwiYXVkIjoiaHR0cHM6Ly9lc3BlY2lhbGlzdGFzLmViZS5jb20ifQ.3TFpmPpkmiQIfOZIsZUPisfHDjc-C16STri_Mo2Vcnw");
+ console.log("Debuggeando"); 
+ var hoy=new Date();
+ var vigencia=new Date(usuario.token.exp);
+ console.log(hoy>vigencia);
 });
 
 
@@ -211,12 +215,20 @@ router.get('/editores/crear', async (req, res) => {
 
 });
 
+https://quizz-app-ebe.herokuapp.com/verify/:token
+
+router.get('/verify/:token', async (req, res) => {
+   var token=req.params.token;
+  res.render('editor/crear', );
+
+});
 
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
 
   console.log(req.body);
- 
+  console.log(req.body.grupo);
+  
   /*
   console.log(req.body.nivel);
   console.log(req.body.grado);
@@ -227,8 +239,8 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
 
 
  */
- 	//var contadorImagenes=0;
   
+   
   var i;
   //variable para construir el cuestionario como un array
   var cuestionario= [
@@ -309,15 +321,15 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     secuencia:req.body.Secuencias,
     nombreQuizz:req.body.nombreQuizz,
     creador:"Pendiente",
+    grupo: req.body.grupo,
+    intentos: req.body.intentos,
     cuestionario: cuestionario
        
        }
     
     );
-    //console.log(nuevoQuizz._id);
   
-       
-  
+      
 
   
 });
@@ -650,13 +662,15 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   //Recuperamos el quizz que contestó
   var quizz = await Quizz.findById(respuestaAlumnoElegida[0].quizz);
 
+  //console.log(respuestaAlumnoElegida);
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
   console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
   
    res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
-
 });
+
+
 
 router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
@@ -691,39 +705,42 @@ router.get('/alumnos/respuestas', (req, res) => {
 
 router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
-  //Boomer 5fce761f2e2106439e852306
-  // alumno Ignacio BP32G1BF  grupo RX87YY9E
-  /* console.log(req.body);
-  Revisor.revisar("5fce761f2e2106439e852306",req);
   
-    console.log(req.body);
-    var examencalificado = await Revisor.revisar("5fce761f2e2106439e852306", req);
-  
-    //Para Guardar en la BD
-  
-  console.log(req.body);
-  var examencalificado= await Revisor.revisar("BP32G1BF",req);
-  
-    //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-    //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-  
-    //console.log(examencalificado);
-  
-    /*  //Para Guardar en la BD
-     var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-    
-    console.log(examencalificado);
-    */
+  console.log(req.body)
   var examencalificado = await Revisor.revisar(idAlumno, req);
-
+  //console.log(examencalificado);
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
-  Registros.create(examencalificado);
-  res.render('alumnos/correccion');
+  //Registros.create(examencalificado);
+  var nuevoIntento= await Registros.create(examencalificado);
+  
+  //Recuperamos el quizz que contestó
+ var quizz = await Quizz.findById(nuevoIntento.quizz);
+  //console.log(quizz);
+  console.log(nuevoIntento.respuestas[0].respuestaA);
+  respuestaAlumnoElegida=[nuevoIntento];
+  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
+});
+/*
+router.get('/alumnos/revision/:id', async (req, res) => {
+
+  console.log(req.params.id);
+  //Recuperamos el registro del alumno que vamos a revisar
+  var respuestaAlumnoElegida = await Registros.find({ _id: req.params.id }).exec();
+
+  //Recuperamos el quizz que contestó
+  var quizz = await Quizz.findById(respuestaAlumnoElegida[0].quizz);
+
+  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
+
+  
+   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 
 });
-
+*/
 
 //----------Cuarto de pruebas------------///
 
@@ -813,7 +830,7 @@ router.get('/cuarto2', (req, res) => {
 })
 
 router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaCreadorQuizz2',{color:"#ffff99"});
+  res.render('plantillaRevision',{color:"#ffff99"});
 })
 
 router.get('/plantillaQuizz', (req, res) => {

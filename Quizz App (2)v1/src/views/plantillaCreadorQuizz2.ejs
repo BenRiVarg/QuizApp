@@ -295,7 +295,7 @@
 
     </div>
 
-
+  -->
     <div class="tipoOM cuestionario rounded-sm container mt-5 pt-5 nivel-Superior">
       <div class=" row justify-content-center mb-4 contenedorErrores">
       </div>
@@ -320,14 +320,14 @@
                 <div >
                   <input type="text" class="form-control opcion mb-3" placeholder="Verdadero" value="verdadero">
                   <button type="button" class="btn btn-info" onclick="seleccionarRespuesta(this)">Correcta</button></br>
-                  <button type="button" class="btn btn-danger mt-2" onclick="eliminar(this)">Eliminar Opción</button>
+                  <button type="button" class="btn btn-danger mt-2" onclick="borrarReactivoOM(this)">Eliminar Opción</button>
                 </div>
               </div>
               <div class="mb-3">
                 <div >
                   <input type="text" class="form-control opcion mb-3" placeholder="Falso" value="falso">
                   <button type="button" class="btn btn-info" onclick="seleccionarRespuesta(this)">Correcta</button></br>
-                  <button type="button" class="btn btn-danger mt-2" onclick="eliminar(this)">Eliminar Opción</button>
+                  <button type="button" class="btn btn-danger mt-2" onclick="borrarReactivoOM(this)">Eliminar Opción</button>
                 </div>
               </div>
             </div>
@@ -351,7 +351,7 @@
     </div>
 
     </div>
-    -->
+    
   </form>
 
   <p class="retroError" id="mensaje">Hay campos sin llenar</p>
