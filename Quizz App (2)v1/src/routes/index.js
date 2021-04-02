@@ -662,13 +662,15 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   //Recuperamos el quizz que contestó
   var quizz = await Quizz.findById(respuestaAlumnoElegida[0].quizz);
 
+  //console.log(respuestaAlumnoElegida);
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
   console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
   
    res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
-
 });
+
+
 
 router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
@@ -710,11 +712,35 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
-  Registros.create(examencalificado);
-  res.render('alumnos/correccion');
+  //Registros.create(examencalificado);
+  var nuevoIntento= await Registros.create(examencalificado);
+  
+  //Recuperamos el quizz que contestó
+ var quizz = await Quizz.findById(nuevoIntento.quizz);
+  //console.log(quizz);
+  console.log(nuevoIntento.respuestas[0].respuestaA);
+  respuestaAlumnoElegida=[nuevoIntento];
+  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
+});
+/*
+router.get('/alumnos/revision/:id', async (req, res) => {
+
+  console.log(req.params.id);
+  //Recuperamos el registro del alumno que vamos a revisar
+  var respuestaAlumnoElegida = await Registros.find({ _id: req.params.id }).exec();
+
+  //Recuperamos el quizz que contestó
+  var quizz = await Quizz.findById(respuestaAlumnoElegida[0].quizz);
+
+  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
+
+  
+   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 
 });
-
+*/
 
 //----------Cuarto de pruebas------------///
 
