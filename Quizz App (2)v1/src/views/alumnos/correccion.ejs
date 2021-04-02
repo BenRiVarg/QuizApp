@@ -1,12 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Resultados</title>
 </head>
-<body>
+
+<body onload="nobackbutton();">
     <h1>Resultados del examen</h1>
-    <p>Aquí se visualizará la calificación  del alumno así como retroalimentación de las respuestas correctas</p>
+    <p>Aquí se visualizará la calificación del alumno así como retroalimentación de las respuestas correctas</p>
+
+    <script type="text/javascript">
+        history.pushState(null, null, location.href);
+        history.back();
+        history.forward();
+        window.onpopstate = function () { history.go(1); };
+    </script>
+
+<!-- <div class="tablaEjercicio text-light" id="items<%= i %>">
+    <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
+
+        <div class="container">
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                <div class="col col-md-2">
+                    <div class="p-3">
+                        <div class="botonPregunta reactivo">
+                            <button type="button" class="opcion fs-3 botonNum text-center textoRp3">
+                                <%= j+1%>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-4">
+                    <div class="p-3">
+                        <div class="respuestaText textoRp" id="<%=i%>,<%=j%>">
+                            <%= quizz.cuestionario[i].pregunta[j]%>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-2">
+                    <div class="p-3">
+                        <div class="botonRespuesta textoRp4">
+                            <button type="button" class="opcion fs-3 botonNumRes  text-center"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-4">
+                    <div class="p-3">
+                        <div class="celdaRespuesta">
+                            <div class="respuestaText2 textoRp2">
+                                <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
+                                <%= quizz.cuestionario[i].respuesta[j]%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <% } %>
+
+
+</div> -->
 </body>
+
 </html>

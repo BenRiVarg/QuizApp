@@ -72,7 +72,7 @@
                         <% <!-- solo una respuesta posible-->
                           if (quizz.cuestionario[i].respuesta.length<=1) { %>
                             <div class="d-flex justify-content-center  ">
-                              <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
+                              <div class="card shadow-lg p-3 my-3 bg-body rounded col-sm-10 col-lg-10">
 
                                 <div class="card-body border border-1">
                                   <h4 align="center" class="text-light">
@@ -84,7 +84,7 @@
                                       <div class="col">
                                         <% for (var j=1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
 
-                                          <div class="form-check">
+                                          <div class="form-check ml-5">
                                             <input class="form-check-input" style="margin-top: 8px; margin-left: -32px !important; width: 25px; height: 25px;" type="radio" name="respuesta<%= i %>"
                                               value=" <%= quizz.cuestionario[i].pregunta[j]%>" id="flexRadioDefault1">
                                             <label class="form-check-label text-light fs-4" for="pregunta">
@@ -158,42 +158,49 @@
                         <div class="carousel-item <%= activo %>  <%= final %>">
                           <!--P Relacional-->
                           <div class="d-flex justify-content-center  ">
-                            <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
+                            <div class="card shadow-lg p-3 my-3 bg-body rounded col-sm-10 col-lg-10">
 
                               <% var Irelacional=i %>
                                 <div class="card-body border border-1">
-                                  <h4 class="display-7 text-light">Relaciona los items</h4><br>
+                                  <h4 class="display-6 text-light text-center fw-bold">Relaciona los items</h4><br>
                                   <div class="d-flex justify-content-center container">
-                                    <div class="row">
-                                      <table class="tablaEjercicio text-light" id="items<%= i %>">
-                                        <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
-                                          <div class="col">
-                                            <tr>
-
-                                              <td class="botonPregunta  reactivo mx-3 px-3"><button type="button" class="opcion fs-3">
-                                                  <%= j+1%>
-                                                </button> </td>
-                                              <td class="mx-3" id="<%=i%>,<%=j%>">
-                                                <%= quizz.cuestionario[i].pregunta[j]%>
-                                              </td>
-                                              <td class="botonRespuesta mx-3 px-3"><button class="opcion fs-3"></button> </td>
-                                              <td class="celdaRespuesta mx-3">
-                                                <div>
-                                                  <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
-                                                  <%= quizz.cuestionario[i].respuesta[j]%>
-
-                                                </div>
-                                              </td>
-                                            </tr>
-                                          </div>
-
-                                          <% } %>
-
-
-                                      </table>
+                                    
+                                        <div class="row" style="display: block;">
+                                          <table class="tablaEjercicio text-light" id="items<%= i %>">
+                                            <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
+                                              <div class="col">
+                                                <tr>
+                                        
+                                                  <td class="botonPregunta reactivo mx-3 mb-3 text-center" style="width: 100px;">
+                                                    <button type="button" class="opcion fs-3">
+                                                      <%= j+1%>
+                                                    </button>
+                                                  </td>
+                                                  <td class=" mb-3" id="<%=i%>,<%=j%> text-center" style="width: 320px; ">
+                                                    <%= quizz.cuestionario[i].pregunta[j]%>
+                                                  </td>
+                                                  <td class="botonRespuesta mx-3 text-center pl-3">
+                                                    <button class="opcion fs-3"></button>
+                                                  </td>
+                                                  <td class="celdaRespuesta mx-3 ">
+                                                    <div class="ml-3">
+                                                      <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
+                                                      <%= quizz.cuestionario[i].respuesta[j]%>
+                                        
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              </div>
+                                        
+                                              <% } %>
+                                        
+                                        
+                                          </table>
+                                          <input type="hidden" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
+                                        </div>
                                       <input type="hidden" class="contadorItems" value="<%= i %>"
                                         name="contadorItems<%= i %>">
-                                    </div>
+                                   
 
                                   </div>
                                   <input type="hidden" name="cuestionario<%= i %>"
@@ -462,6 +469,23 @@
       var QuizzTotales ="<%- quizz.cuestionario.length %>";
       getTotal(QuizzTotales);
 
+    </script>
+    <script>
+      /* window.location.hash = "no-back-button";
+        window.location.hash = "Again-No-back-button";//esta linea es necesaria para chrome
+        window.onhashchange = function () { window.location.hash = "no-back-button"; } */
+    </script>
+    <script>
+     /*  if (window.performance.navigation.type == 1) {
+          if (confirm('Desea Actualizar ? ')) {
+            location.href = "http://localhost:8443/alumnos/examen/5febb0a7e9f19b27bd271788";
+          }
+          else {
+            alert('Correcto');
+          }
+        } */
+
+        
     </script>
 </body>
 

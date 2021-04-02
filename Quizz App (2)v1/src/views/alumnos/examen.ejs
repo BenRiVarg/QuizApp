@@ -43,11 +43,11 @@
               </div>
               <br>
             </div>
-            <div class="col-md-10 ">
+            <div class="col-md-12 ">
               <div class="container col-md-10 text-center bg-light rounded-0">
                 <h4 class="display-7">Relaciona los items</h4>
                 <div class="container bg-light rounded-0">
-                  <table class="tablaEjercicio" id="items<%= i %>">
+                  <table class="tablaEjercicio" id="items<%= i %>" style="margin: 0 auto;">
                     <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
                       <tr>
 
@@ -57,7 +57,9 @@
                         <td id="<%=i%>,<%=j%>">
                           <%= quizz.cuestionario[i].pregunta[j]%>
                         </td>
-                        <td class="botonRespuesta"><button type="button"></button></td>
+                        <td class="botonRespuesta">
+                          <button type="button"></button>
+                        </td>
                         <td class="celdaRespuesta">
                           <div>
                             <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
@@ -71,7 +73,7 @@
                   </table>
                   <input type="hidden" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
 
-                  <div class="container-fluid col-md-10 text-center bg-light rounded-0">
+                  <div class="container-fluid col-md-10 text-center bg-light rounded-0 mt-5">
                     <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
 
                     <% break; case "tipoOM" : %>
