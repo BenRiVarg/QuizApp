@@ -666,7 +666,9 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
   console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
-  
+  console.log(respuestaAlumnoElegida[0].respuestas[1].respuestaA);
+  console.log(respuestaAlumnoElegida[0].respuestas[1].revision);
+
    res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 });
 
@@ -710,8 +712,6 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var examencalificado = await Revisor.revisar(idAlumno, req);
  // console.log(examencalificado);
 
-/*
-  //Registros.create(examencalificado);
   var nuevoIntento= await Registros.create(examencalificado);
   
   //Recuperamos el quizz que contestó
@@ -720,8 +720,7 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   respuestaAlumnoElegida=[nuevoIntento];
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
-  */
- res.end();
+ //res.end();
 });
 /*
 router.get('/alumnos/revision/:id', async (req, res) => {

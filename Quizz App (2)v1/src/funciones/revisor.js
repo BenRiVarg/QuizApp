@@ -116,9 +116,12 @@ exports.revisar = async function (alumno, req) {
 					var resultado = calificarOM(respuestaAlumno, cuestionarioAcalificar.pregunta, cuestionarioAcalificar.respuesta, 0);
 					console.log("OMS: " + resultado.revision);
 
+					//Empujamos para la calificación la respuesta
+					calificacionPorCuestionario.push(resultado.revision);
+
 					respuestaAlumno = resultado.respuestasAlumno;
 					resultado = resultado.revision;
-					calificacionPorCuestionario.push(resultado.revision);
+					
 				}
 
 
@@ -145,13 +148,21 @@ exports.revisar = async function (alumno, req) {
 				var resultado = calificarR(respuestaAlumno, cuestionarioAcalificar.respuesta, cuestionarioAcalificar.pregunta);
 				
 				//Ajuste de calificiación para preguntas Relacionales
-				if((resultado.revision.length)<(cuestionarioAcalificar.respuesta)){
+			
+				if((resultado.revision.length)<(cuestionarioAcalificar.respuesta.length)){
 					var revisionAjustada=resultado.revision;
-					for(var i=0;i<cuestionarioAcalificar.respuesta.length;i++){
-						revisionAjustada.push(false);
-					}
-					calificacionPorCuestionario.push(revisionAjustada);
-			   }
+					//Ajustamos el contador al tamaño de la respuesta que sí puso
+					var inicio=revisionAjustada.length;
+					 for(inicio;inicio<cuestionarioAcalificar.respuesta.length;inicio++){
+						 revisionAjustada.push(false);
+					 }
+					 console.log("Debugg")
+					 console.log(revisionAjustada);
+					 calificacionPorCuestionario.push(revisionAjustada);
+				}
+				else{
+					calificacionPorCuestionario.push(resultado.revision);
+				}
 
 				respuestaAlumno = resultado.respuestasAlumno;
 

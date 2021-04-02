@@ -14,32 +14,25 @@
 
 <body>
     <h1 class="text-center mt-5">Revisión de Respuestas</h1>
-        <input type="hidden" name="QuizzID" value="<%= quizz._id %>">
+    <p class="display-7 ml-5"> Quizz: <b><%= quizz.nombreQuizz %></b></p>
         <% 
              for(var i=0; i<quizz.cuestionario.length ; i++)
                  {%>
                      <% switch (quizz.cuestionario[i].tipo) {
                       case "tipoT" : %>
-      <p class="ml-5">ID del Examen</p>
-      <p>
-        <%= respuestaAlumnoElegida[0].cuestionarioID %>
-      </p>
-      <h6 class="ml-5">
-        <%= quizz.nombreQuizz %>
-      </h6>
-      <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-center">
         <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
 
-          <% if (respuestaAlumnoElegida[0].respuestas[0].revision[i]) { %>
+          <% if (respuestaAlumnoElegida[0].respuestas[i].revision[0]) { %>
             <div class="card-body border border-1 ">
               <h4 class="display-7">
                 <%= quizz.cuestionario[i].pregunta %>
               </h4><br>
-              <p class="display-7 text-success "> <b class="contestada bien"> Respuesta Correcta </b>
+              <p class="display-7 "> <b > Respuesta Correcta </b>
                 <%= quizz.cuestionario[i].respuesta %>
               </p>
 
-              <p class="display-7  "> <b>Tu Respuesta </b>
+              <p class="display-7 text-success "> <b class="contestada bien">Tu Respuesta </b>
                 <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>
               </p>
               <% } else { %>
