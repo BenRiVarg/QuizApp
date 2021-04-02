@@ -663,11 +663,9 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   var quizz = await Quizz.findById(respuestaAlumnoElegida[0].quizz);
 
   //console.log(respuestaAlumnoElegida);
-  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
-  console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
-  console.log(respuestaAlumnoElegida[0].respuestas[1].respuestaA);
-  console.log(respuestaAlumnoElegida[0].respuestas[1].revision);
+  console.log(respuestaAlumnoElegida[0].respuestas[2].respuestaA);
+  console.log(respuestaAlumnoElegida[0].respuestas[2].revision);
 
    res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 });

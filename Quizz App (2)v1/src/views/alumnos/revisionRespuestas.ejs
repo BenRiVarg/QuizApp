@@ -73,10 +73,9 @@
                           <td id="<%=i%>,<%=j%>">
                             <%= quizz.cuestionario[i].pregunta[j]%>
                           </td>
-
-                          <% if (respuestaAlumnoElegida [0].respuestas[0].revision[j]){ %>
+                          <% if (respuestaAlumnoElegida [0].respuestas[i].revision[j]){ %>
                             <!--Solución Correcta-->
-                            <td class="botonRespuesta mx-3 px-3 contestada bien"><button class="ml-3 opcion">
+                            <td class="botonRespuesta mx-3 px-3 bien"><button class="ml-3 opcion">
                                 <%=j+1%>
                               </button> </td>
                             <td class="celdaRespuesta mx-3">
@@ -88,11 +87,11 @@
 
                             <%}else { %>
                               <!--Solución Incorrecta-->
-                              <td class="botonRespuesta mx-3 px-3 contestada mal"><button class="ml-3 opcion">
+                              <td class="botonRespuesta mx-3 px-3 mal"><button class="ml-3 opcion">
                                   <%=j+1%>
                                 </button>
                                 <p class="d-inline text-danger ml-5 fw-bold">
-                                  <%= respuestaAlumnoElegida [0].respuestas[0].respuestaA[j] %>
+                                  <%= respuestaAlumnoElegida [0].respuestas[i].respuestaA[j] %>
                                 </p>
                               </td>
                               <td class="celdaRespuesta mx-3">
@@ -129,7 +128,7 @@
 
                       <div class="card-body border border-1">
                         <h4 class="display-7">
-                          <% <!--=quizz.cuestionario[i].pregunta -->%>Pregunta Para el Alumno OMMR
+                          <% <!--=quizz.cuestionario[i].pregunta -->%>++
                         </h4><br>
                         <div class="container">
                           <div class="row">
@@ -170,8 +169,7 @@
 
                                               <div class="card-body border border-1">
                                                 <h4 class="display-7">
-                                                  <% <!--=quizz.cuestionario[i].pregunta -->%>Pregunta Para el Alumno
-                                                    OMMR
+                                                  <%= quizz.cuestionario[i].pregunta[0] %>
                                                 </h4><br>
                                                 <div class="container">
                                                   <div class="row">
@@ -437,7 +435,7 @@
 
                       <div class="card-body border border-1">
                         <h4 class="display-7">
-                          <% <!--=quizz.cuestionario[i].pregunta -->%>Pregunta Para el Alumno OMMR
+                          <%=quizz.cuestionario[i].pregunta[0] %>
                         </h4><br>
                         <div class="container">
                           <div class="row">
@@ -478,8 +476,7 @@
 
                                               <div class="card-body border border-1">
                                                 <h4 class="display-7">
-                                                  <% <!--=quizz.cuestionario[i].pregunta -->%>Pregunta Para el Alumno
-                                                    OMMR
+                                                  <%=quizz.cuestionario[i].pregunta[0] %>
                                                 </h4><br>
                                                 <div class="container">
                                                   <div class="row">
