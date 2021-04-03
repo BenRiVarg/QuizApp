@@ -489,14 +489,6 @@ router.get('/docentes/estadisticas/:idalumno', async (req, res) => {
       apartado.push(intentoPorQuizz);
     }
 
-    /*
-    var claveQuizz="quizz"+i;
-    datosIntentos[claveQuizz]={
-      nombre: quizzI.nombreQuizz,
-      intentos:apartado
-    }
-    */
-
     var datosIntento = {
       nombre: quizzI.nombreQuizz,
       intentos: apartado
@@ -664,9 +656,10 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
   //console.log(respuestaAlumnoElegida);
 
-  console.log(respuestaAlumnoElegida[0].respuestas[2].respuestaA);
-  console.log(respuestaAlumnoElegida[0].respuestas[2].revision);
-
+  //console.log(respuestaAlumnoElegida[0].respuestas[2].respuestaA);
+  //console.log(respuestaAlumnoElegida[0].respuestas[2].revision);
+  console.log("Ejecutandose");
+  console.log(respuestaAlumnoElegida[0].calificacion);
    res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 });
 
@@ -708,36 +701,23 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   
   console.log(req.body)
   var examencalificado = await Revisor.revisar(idAlumno, req);
- // console.log(examencalificado);
+  console.log(examencalificado);
 
   var nuevoIntento= await Registros.create(examencalificado);
+  
   
   //Recuperamos el quizz que contestó
  var quizz = await Quizz.findById(nuevoIntento.quizz);
   console.log(nuevoIntento.respuestas[0].respuestaA);
   respuestaAlumnoElegida=[nuevoIntento];
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  console.log("Ejecutandose");
+  console.log(respuestaAlumnoElegida[0].calificacion);
   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
+  
  //res.end();
 });
-/*
-router.get('/alumnos/revision/:id', async (req, res) => {
 
-  console.log(req.params.id);
-  //Recuperamos el registro del alumno que vamos a revisar
-  var respuestaAlumnoElegida = await Registros.find({ _id: req.params.id }).exec();
-
-  //Recuperamos el quizz que contestó
-  var quizz = await Quizz.findById(respuestaAlumnoElegida[0].quizz);
-
-  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
-  console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
-
-  
-   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
-
-});
-*/
 
 //----------Cuarto de pruebas------------///
 

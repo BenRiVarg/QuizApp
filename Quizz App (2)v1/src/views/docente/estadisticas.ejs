@@ -55,8 +55,14 @@
 										<div class="card shadow p-3 mb-5 bg-body rounded">
 											<h4 class="card-header">Intento <%= iteracionInteto %></h4>
 											<div class="card-body">
-											  <h5 class="card-title">Tiempo: 00:10:25</h5>
-											  <p class="card-text">Calificacion: 98/100</p>
+												<% if(intento.calificacion){%>
+													<h5 class="card-title"> Tiempo: <%= intento.tiempo %></h5>
+													<p class="card-text">Calificacion: <%= intento.calificacion %>/100</p>
+													<%}
+													else{%>
+														<h5 class="card-title"> Tiempo: 00:10:25</h5>
+														<p class="card-text">Calificacion: 98/100</p>
+														<%}%>
 											  <a class="btn btn-outline-primary" href="/alumnos/revision/<%= intento._id%>" role="button">Ver Intento</a>
 											</div>
 										  </div><br>

@@ -191,33 +191,34 @@ exports.revisar = async function (alumno, req) {
 		iteracionCalificacion = iteracionCalificacion + 1;
 	}
 
-	/*
-	// seccion para guardar la calificacion
-	var calificacionGlobal = 0;// calificcacion que sera almacenada
-	for (var i = 0; i < cuestionariosCalificados.length; i++) { // ciclo que recorre la cantidad de cuestionarios por examen
+
+	for (var i = 0; i < calificacionPorCuestionario.length; i++) { // ciclo que recorre la cantidad de cuestionarios por examen
 		var aciertos = 0;// variable de numeros de aciertos por cuestionario
 		var calificacionCuestionario = 0; // aqui se guardara la calificacion del cuestionario
-		for (let j = 0; j < cuestionariosCalificados[i].revision.length; j++) {// cliclo para recorrer las respuestas del examen
-			if (cuestionariosCalificados[i].revision[j]) {// si es una respuesta correcta se aumenta el contador de aciertos
+		for (let j = 0; j < calificacionPorCuestionario[i].length; j++) {// cliclo para recorrer las respuestas del examen
+			console.log(calificacionPorCuestionario[i][j]);
+			if (calificacionPorCuestionario[i][j]) {// si es una respuesta correcta se aumenta el contador de aciertos
 				aciertos++;// aumento del contador
 			}
 		}// fin de ciclo for para preguntas
-		calificacionCuestionario = (aciertos / cuestionariosCalificados[i].revision.length) * 100;	// Se obtiene la calificacion promedio del cuestionario 
+		
+		calificacionCuestionario = (aciertos / calificacionPorCuestionario[i].length) * 100;	// Se obtiene la calificacion promedio del cuestionario 
 		// Se dividen los aciertos entre el total de preguntas y se multiplica por 1		
 		calificacionGlobal = calificacionGlobal + calificacionCuestionario;// Sumatoria de calificaciones por cuestionario para calculo global de calificacion
+		
 	}
-
-	
-	calificacionGlobal = calificacionGlobal / cuestionariosCalificados.length; // calculo de calificacion global diviendo la sumatoria entre la cantidad de cuestionarios
+	calificacionGlobal = calificacionGlobal / calificacionPorCuestionario.length; // calculo de calificacion global diviendo la sumatoria entre la cantidad de cuestionarios
 	//console.log(cuestionariosCalificados);
-	*/
+
+	calificacionGlobal=redondearLejosDeCero(calificacionGlobal);
 	console.log("Resultado");
-	console.log(calificacionPorCuestionario);
+	console.log(calificacionGlobal);
 	//----------TODO CORRECTO---------------
 	//asignamos un alumno para el registro
 	examencalificado.calificacion = calificacionGlobal; // se agrega la calificacion al objeto que se almacenara en la base de datos
 	examencalificado.alumno = alumno;
 	examencalificado.quizz = quizz._id;
+	examencalificado.tiempo=req.body.tiempo;
 	examencalificado.respuestas = cuestionariosCalificados;
 
 
@@ -437,6 +438,12 @@ function calificarRA(respuestaAlumno, respuestaBD) {
 	}
 
 	return revision;
+}
+
+
+//Funci+on para redondear las cifras
+function redondearLejosDeCero(numero){
+    return Math.sign(numero) * Math.floor(Math.abs(numero) + 0.5);
 }
 
 function igualacion(cadena) {

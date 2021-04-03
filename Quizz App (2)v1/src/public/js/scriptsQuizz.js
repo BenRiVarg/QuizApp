@@ -1,8 +1,23 @@
-// Set the date we're counting down to
-var countDownDate = new Date("Jan 5, 2022 15:37:25").getTime();
+var momentoActual=new Date();
 
+var temporizadorFQ=new Date();
+ var finQuizz=temporizadorFQ.getMinutes()+60;
+  console.log(finQuizz);
+  
+
+ console.log(momentoActual);
+ temporizadorFQ.setMinutes(finQuizz);
+ console.log(temporizadorFQ);
+// Set the date we're counting down to
+var countDownDate = temporizadorFQ.getTime();
+
+console.log(countDownDate);
+//console.log(tiempoQuizz);
+
+var tiempoDisponible=true;
 // Update the count down every 1 second
 var x = setInterval(function () {
+  if(tiempoDisponible){
   // Get today's date and time
   var now = new Date().getTime();
 
@@ -10,19 +25,21 @@ var x = setInterval(function () {
   var distance = countDownDate - now;
 
   // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Output the result in an element with id="demo"
-  document.getElementById("demo").innerHTML =
-    days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+  document.getElementById("cronometro").innerHTML =
+     hours + " : " + minutes + " : " + seconds + " ";
 
   // If the count down is over, write some text
   if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "EXPIRED";
+    caliz();
+    document.getElementById("cronometro").innerHTML = "EXPIRED";
+    tiempoDisponible=false;
+  }
   }
 }, 1000);
 

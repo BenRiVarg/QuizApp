@@ -313,9 +313,16 @@ function activarReactivo(){
         });
       }
 
+function tomarTiempo(){
+   var tiempo=document.getElementById("cronometro").textContent;
+   var strVar="";
+    strVar += "<input type=\"hidden\" name=\"tiempo\" value=\""+tiempo+"\">";
+   formulario.insertAdjacentHTML("beforeend",strVar);
+}
+
 function enviarQuizz(){
     envioRespuestasMate();
-    //document.getElementById("quizz").reset();
+    tomarTiempo();
     formulario.submit();
     impedimento++;
 }
