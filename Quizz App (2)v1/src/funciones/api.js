@@ -16,7 +16,8 @@ var URLbase = "https://gateway.ebe.jenios.mx/v1.0.0/devs/quizzes/sandbox";
 
 
 exports.Find = async function (recurso) {
-  var urlRecurso
+  
+  var urlRecurso;
   switch (recurso) {
     case "grados":
       urlRecurso = URLbase + "/grades";
@@ -34,7 +35,7 @@ exports.Find = async function (recurso) {
       urlRecurso = URLbase + "/sequences";
       break;
   }
-
+ 
   var resultado = await new Promise((resolve, reject) => {
     https.get(urlRecurso, options, (res) => {
       let data = '';
@@ -59,9 +60,8 @@ exports.Find = async function (recurso) {
     });
 
   });
-  return resultado
-}
-
+  return resultado;
+};
 
 exports.findByID = async function (recurso, recursoID) {
   var urlRecurso
@@ -123,6 +123,51 @@ exports.findByID = async function (recurso, recursoID) {
 
   });
   return resultado;
+}
+
+/*--Método para encontrar todos los registros en base a un ID
+      pide todos los datos (recursoBúsqueda)
+      de un recurso(idpeticion,recursoConocido)
+--**/
+exports.busqueda=async function(idpeticion,recursoConocido,recursoBusqueda){
+ 
+  var registros=await this.Find(recursoBusqueda);
+  var modificador;
+  var datosBusqueda;
+  switch (recursoBusqueda) {
+    case "grados":
+      modificador = "grades";
+      datosBusqueda=registros[modificador];
+      break;
+    case "materias":
+      modificador = "subjects";
+      datosBusqueda=registros[modificador];
+      break;
+    case "niveles":
+      modificador = "levels"
+      datosBusqueda=registros[modificador];
+      break;
+    case "bloques":
+      modificador = "blocks";
+      datosBusqueda=registros[modificador];
+      break;
+    case "secuencias":
+      modificador = "sequences";
+      datosBusqueda=registros[modificador];
+      break;
+  }
+  var datosfiltrados=[];
+  for(var i=0;i<datosBusqueda.length;i++){
+    if(idpeticion==datosBusqueda[i][recursoConocido])
+    datosfiltrados.push(datosBusqueda[i])
+  }
+ 
+
+  
+  return datosfiltrados;
+  
+ 
+  
 }
 
 
