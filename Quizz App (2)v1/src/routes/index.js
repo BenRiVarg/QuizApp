@@ -572,10 +572,21 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
   var estado = 'Pendiente de Revisión'; // variable por defecto para el estado de un quizz 
   var subject = await API.findByID("materias", materia);
   var grupo = await API.alumnos(idgrupo);
-  var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
   var datosCuestionario = [];
   data.nombreMateria = subject.nombre;
   data.urlImg = subject.portada;
+
+  //Filtro por grupo y Especialistas
+  var cuestionarios = await Quizz.find({ 
+    $or:[
+      { secuencia: {$eq: sec}, grupo:{$eq: idgrupo}},
+      { secuencia: {$eq: sec}, grupo:{$eq: "Creado por Especialista"}}
+        ]
+    
+          }).exec();
+
+
+
 
   for (let i = 0; i < grupo.length; i++) {
     if (grupo[i].id === idAlumno) {

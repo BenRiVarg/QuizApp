@@ -303,10 +303,9 @@
                                                                             <div class="row ">
                                                                               <div class="col  justify-content-start">
                                                                                   <% for (var j=1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
-
-                                                                                    <%if(j==respuestaAlumnoElegida[0].respuestas[0].respuestaA[llaveRA]){%> 
+                                                                                    <%if(j==respuestaAlumnoElegida[0].respuestas[i].respuestaA[llaveRA]){%> 
                                                                                         <!--Condicionales de Respuestas del Alumno-->
-                                                                                        <%if(j==respuestaAlumnoElegida[0].respuestas[0].revision[llaveRA]){%> 
+                                                                                        <%if(respuestaAlumnoElegida[0].respuestas[i].revision[llaveRA]){%> 
                                                                                           <!--Respuesta Correcta-->
                                                                                           <input class="form-check-input " type="checkbox"  id="flexRadioDefault1"
                                                                                           checked="checked">
