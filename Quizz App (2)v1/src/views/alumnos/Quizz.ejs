@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <form action="/alumnos/correccion/alumno/<#%=idAlumno%>" method="POST" id="quizz">
+  <form action="/alumnos/correccion/alumno/<%=idAlumno%>" method="POST" id="quizz">
     <input type="hidden" name="quizz" value="<%= quizz._id %>">
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
       <div class="carousel-inner">
@@ -107,7 +107,7 @@
                                 <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
 
                                   <div class="card-body border border-1">
-                                    <h4 class="display-7 text-light">
+                                    <h4 class="display-7 text-light text-center">
                                       <%= quizz.cuestionario[i].pregunta[0] %>
                                     </h4><br>
                                     <div class="container">

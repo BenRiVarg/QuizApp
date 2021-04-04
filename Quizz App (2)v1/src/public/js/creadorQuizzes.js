@@ -647,88 +647,6 @@ function preguntaRelacional(){
   contadorid++;
   
 
-  var strVar="";
-  strVar += '<div id=\"preg'+(contadorid)+'\" class=\"tipoR cuestionario cuestionario row justify-content-center mt-5 pt-5 container\">';
-  strVar += "                                  ";
-  strVar += "                                    <div class=\"col-md-4\">";
-  strVar += "                                      <div class=\"\">";
-  strVar += "                                          <div class=\"container text-center\">";
-  strVar += "                                            <h4 class=\"text-center\">Pregunta Relacional<\/h4><\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                          <br>";
-  strVar += "                                    <\/div>";
-  strVar += "                                    <div class=\"contenedorItem row justify-content-center mb-3\">";
-  strVar += "                                      <div class=\"container row justify-content-center mb-3\">";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control pregunta \"  placeholder=\"Pregunta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control respuesta \"  placeholder=\"Respuesta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                              <div class=\"\">";
-  strVar += "                                                <button class=\"btn btn-danger \" type=\"button\" onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-  strVar += "                                              <\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                      <\/div>";
-  strVar += "                                      <br>";
-  strVar += "                                      <div class=\"container row justify-content-center mb-3\">";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control pregunta \"  placeholder=\"Pregunta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control respuesta \"  placeholder=\"Respuesta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                              <div class=\"\">";
-  strVar += "                                                <button class=\"btn btn-danger \" type=\"button\" onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-  strVar += "                                              <\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                      <\/div>";
-  strVar += "                                      <br>";
-  strVar += "                                      <div class=\"container row justify-content-center mb-3\">";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control pregunta \"  placeholder=\"Pregunta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control respuesta \"  placeholder=\"Respuesta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                              <div class=\"\">";
-  strVar += "                                                <button class=\"btn btn-danger \" type=\"button\" onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-  strVar += "                                              <\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                      <\/div>";
-  strVar += "                                      <br>";
-  strVar += "                                      <div class=\"container row justify-content-center mb-4\">";
-  strVar += "                                        <div class=\"col-md-2 ml-0\" >";
-  strVar += "                                            <div class=\"\">";
-  strVar += "                                              <button class=\"btn btn-info \" type=\"button\" onclick=\"reactivoRelacional(this)\">Añadir Reactivo<\/button>";
-  strVar += "                                            <\/div>";
-  strVar += "                                        <\/div>";
-  strVar += "                                 ";
-  strVar += "                                      <\/div>";
-  strVar += "                                  <br>";
-  strVar += "                                  ";
-  strVar += "                ";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-danger col-md-2 text-center\" onclick=\"eliminar(this),habilitar()\">Quitar Pregunta<\/button>";
-  strVar += "                                  ";
-  strVar += "                                          ";
-  strVar += "                                    <\/div>         ";
-  strVar += "                    <\/div>               ";
-  strVar += "";
 
   var strVar="";
 strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoR cuestionario cuestionario mt-5 pt-5 container nivel-Superior\">";
@@ -739,7 +657,7 @@ strVar += "        <div class=\"col-12 col-md-12 col-lg-7\">";
 strVar += "          <div class=\"rounded-pill\">";
 strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
 strVar += "              style=\"width: 3rem; height:3rem;\">";
-strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px;\">"+contadorid+"<\/p>";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px;\">"+numeracionPregunta+"<\/p>";
 strVar += "            <\/a>";
 strVar += "          <\/div>";
 strVar += "          <div class=\"contenedorItem row justify-content-center mb-3\">";
@@ -836,7 +754,7 @@ strVar += "      <\/div>";
 strVar += "";
 strVar += "    <\/div>";
 
-
+numeracionPregunta++
 insertor.insertAdjacentHTML("beforeend",strVar);
 }
 
@@ -962,14 +880,14 @@ strVar += "              <div class=\"mb-3\">";
 strVar += "                <div class=\"\">";
 strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Verdadero\" value=\"verdadero\">";
 strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
-strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
+strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
 strVar += "                <\/div>";
 strVar += "              <\/div>";
 strVar += "              <div class=\"mb-3\">";
 strVar += "                <div class=\"\">";
 strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Falso\" value=\"falso\">";
 strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
-strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
+strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
 strVar += "                <\/div>";
 strVar += "              <\/div>";
 strVar += "            <\/div>";
@@ -1010,9 +928,9 @@ function reactivoOM(obj){
   var strVar="";
   strVar += " <div class=\"mb-3\">";
   strVar += "                <div >";
-  strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Falso\" value=\"falso\">";
+  strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Opción para el alumno\" >";
   strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
-  strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
+  strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
   strVar += "                <\/div>";
   strVar += "              <\/div>";
   
@@ -1040,6 +958,11 @@ function seleccionarRespuesta(obj){
 
 }
 
+function borrarReactivoOM(obj){
+  var contenedor=obj.parentElement.parentElement;
+  contenedor.remove()
+}
+/*------------- Terminan funciones de Pregunta Opción Múltiple-----*/
 function preguntaIT(){
 
   contadorid++;
@@ -1966,7 +1889,7 @@ function eliminar(obj){
   }
  
   objeto.remove();
-  numeracionPregunta--;
+  numeracionPregunta=numeracionPregunta-1;
 }
 
 
@@ -1978,8 +1901,10 @@ function validaciones(){
     error: false,
     str:"Hay Campos sin llenar",
   }
+  var intentos=document.getElementById("intentos");
   var cuestionarios=document.getElementsByClassName("cuestionario")[0];
   var nombreQuizz=document.getElementsByClassName("crearQ")[0];
+  console.log(typeof(intentos.value));
   //Filtro para la vista de Docentes
   var vista=document.getElementById("vista");
   if(!vista){
@@ -2021,6 +1946,7 @@ function validaciones(){
     revision.str="No hay preguntas en este Quizz"
    }
 
+   
 
    if(nombreQuizz.value.length==0){
     revision.error=true;
@@ -2088,6 +2014,7 @@ function crearQuizz(){
   validarPreguntaAbierta();
   validarPreguntaIT();
   validarPreguntaMate();
+  
     var validacion=validaciones();
    
     var errores=document.getElementsByClassName("Error")[0];
