@@ -64,9 +64,9 @@ const { isAuthenticated } = require('../auth/auth.js');
 
 //--JS Back--//
 
-const Revisor=require("../funciones/revisor.js")
-const API=require("../funciones/api.js");
-const Funciones=require("../funciones/funciones.js");
+const Revisor = require("../funciones/revisor.js")
+const API = require("../funciones/api.js");
+const Funciones = require("../funciones/funciones.js");
 const materia = require('../modelos/materia.js');
 const { resolve } = require('path');
 const { request } = require('http');
@@ -80,7 +80,7 @@ global.datosAlumnoSesion = {};
 
 router.get('/', async (req, res) => {
   res.render('index');
- var grupo=   await API.alumnos("R71MHRG4");
+  var grupo = await API.alumnos("R71MHRG4");
   console.log(grupo)
 });
 
@@ -207,16 +207,16 @@ router.get('/editores/aprobar', (req, res) => {
 
 router.get('/editores/crear', async (req, res) => {
 
-  res.render('editor/crear', );
+  res.render('editor/crear',);
 
 });
 
 
-router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
-  var imagenes=req.files;
+router.post('/editores/crear', upload.array('imgs'), async (req, res) => {
+  var imagenes = req.files;
 
   console.log(req.body);
- 
+
   /*
   console.log(req.body.nivel);
   console.log(req.body.grado);
@@ -227,99 +227,98 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
 
 
  */
- 	//var contadorImagenes=0;
-  
+  //var contadorImagenes=0;
+
   var i;
   //variable para construir el cuestionario como un array
-  var cuestionario= [
+  var cuestionario = [
   ];
 
   //Si al menos e envio un cuestionario diferente a Drag
-  if (req.body.tipo1){
-//Procesamiento de cada pregunta por la request
-  for (i = 0; i < req.body.numeroPreguntas; i++) {
-      var tipo="tipo"+(i+1);
-      var pregunta="pregunta"+(i+1);
-      var respuesta="respuesta"+(i+1);
+  if (req.body.tipo1) {
+    //Procesamiento de cada pregunta por la request
+    for (i = 0; i < req.body.numeroPreguntas; i++) {
+      var tipo = "tipo" + (i + 1);
+      var pregunta = "pregunta" + (i + 1);
+      var respuesta = "respuesta" + (i + 1);
 
       //filtro para relacionar preguntas e imágenes
-        if (req.body[tipo]=="tipoIT"){
+      if (req.body[tipo] == "tipoIT") {
 
-          //Definimos el valor con el que llega el nombre de la imagen
-          var imgKey="imagen"+(i+1);
-          var nombreImg=req.body[imgKey];
-          //
-          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
+        //Definimos el valor con el que llega el nombre de la imagen
+        var imgKey = "imagen" + (i + 1);
+        var nombreImg = req.body[imgKey];
+        //
+        var imagen = Funciones.buscarImagen(nombreImg, imagenes)
 
-          //Creamos un array para la estructura de la preguta
-          var preguntaImagen=[];
-          // En el primer espacio guardamos el nombre de la Imagen
-          preguntaImagen[0]=imagen.filename;
-          //En el segundo la pregunta
-          preguntaImagen[1]=req.body[pregunta];
-          //Y reasignamos el valor en la request
-          req.body[pregunta]=preguntaImagen;
+        //Creamos un array para la estructura de la preguta
+        var preguntaImagen = [];
+        // En el primer espacio guardamos el nombre de la Imagen
+        preguntaImagen[0] = imagen.filename;
+        //En el segundo la pregunta
+        preguntaImagen[1] = req.body[pregunta];
+        //Y reasignamos el valor en la request
+        req.body[pregunta] = preguntaImagen;
       }
 
 
       //Construcción de documentos de cuestionarios de manera iterativa
-      var contenidoCuestionario={
-        tipo:req.body[tipo],
-        pregunta:  req.body[pregunta],
+      var contenidoCuestionario = {
+        tipo: req.body[tipo],
+        pregunta: req.body[pregunta],
         respuesta: req.body[respuesta]
       }
 
-     
+
       cuestionario.push(contenidoCuestionario);
-      
-      
-    
 
-     
-  } 
-}
+
+
+
+
+    }
+  }
   //Lectura de Preguntas Drag
-  if(req.body.lienzos)
-  {
-    for(var j=0;j<req.body.lienzos;j++){
-      var claveLienzo="lienzo"+j;
-      var dataLienzo=JSON.parse(req.body[claveLienzo]);
+  if (req.body.lienzos) {
+    for (var j = 0; j < req.body.lienzos; j++) {
+      var claveLienzo = "lienzo" + j;
+      var dataLienzo = JSON.parse(req.body[claveLienzo]);
 
-      var imagenHTML=dataLienzo.pregunta[0].nombre;
+      var imagenHTML = dataLienzo.pregunta[0].nombre;
       //Buscamos el archivo al que está vinculada la imagen
-      var imagen=Funciones.buscarImagen(imagenHTML,imagenes);
+      var imagen = Funciones.buscarImagen(imagenHTML, imagenes);
       //Y lo reasignamos con el nombre con el que encontrará la imagen en la BD
-      dataLienzo.pregunta[0].nombre=imagen.filename;
+      dataLienzo.pregunta[0].nombre = imagen.filename;
       console.log(dataLienzo.pregunta[0].nombre)
-      var cuestionarioLienzo=dataLienzo;
+      var cuestionarioLienzo = dataLienzo;
       cuestionario.push(cuestionarioLienzo);
     }
   }
 
-  
-   //guardado en la BD
-   var nuevoQuizz= await Quizz.create( 
-      {
-      
 
-    nivel:req.body.nivel,
-    grado:req.body.grado,
-    materia:req.body.claveMateria,
-    bloque:req.body.bloques,
-    secuencia:req.body.Secuencias,
-    nombreQuizz:req.body.nombreQuizz,
-    creador:"Pendiente",
-    cuestionario: cuestionario
-       
-       }
-    
-    );
-    //console.log(nuevoQuizz._id);
-  
-       
-  
+  //guardado en la BD
+  var nuevoQuizz = await Quizz.create(
+    {
 
-  
+
+      nivel: req.body.nivel,
+      grado: req.body.grado,
+      materia: req.body.claveMateria,
+      bloque: req.body.bloques,
+      secuencia: req.body.Secuencias,
+      nombreQuizz: req.body.nombreQuizz,
+      creador: "Pendiente",
+      cuestionario: cuestionario
+
+    }
+
+  );
+  //console.log(nuevoQuizz._id);
+
+
+
+
+
 });
 
 
@@ -348,7 +347,7 @@ router.get('/docentes/editar', (req, res) => {
 
 router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
   var respuestaToken = await API.autenticacion(req.params.token);
-  if (respuestaToken) {
+  if (respuestaToken && (respuestaToken.token.usuario == req.params.idmaestro)) {
     var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro,);
     var data = {
       secuencia: req.params.idsecuencia,
@@ -375,7 +374,7 @@ router.get('/docentes/crear', async (req, res) => {
 
 router.get('/docentes/secuencia/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
   var respuestaToken = await API.autenticacion(req.params.token);
-  if (respuestaToken) {
+  if (respuestaToken && (respuestaToken.token.usuario == req.params.idmaestro)) {
     var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro, true);
 
     var data = {
@@ -456,7 +455,7 @@ router.get('/docentes/secuencia/grupo/:idgrupo/maestro/:idmaestro/materia/:idmat
 
 router.get('/docentes/estadisticas/:idalumno/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
   var respuestaToken = await API.autenticacion(req.params.token);
-  if (respuestaToken) {
+  if (respuestaToken && (respuestaToken.token.usuario == req.params.idmaestro)) {
     var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro, true);
 
     var data = {
@@ -573,7 +572,7 @@ router.get('/alumnos', async (req, res) => {
 
 router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
   var respuestaToken = await API.autenticacion(req.params.token);
-  if (respuestaToken) {
+  if (respuestaToken && (respuestaToken.token.usuario == req.params.idalumno)) {
     //data que se envia a la siguiente vista para ser mostrada
     var data = {
       nombreMateria: '',
@@ -677,8 +676,8 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
   console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
-  
-   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida });
+
+  res.render('alumnos/revisionRespuestas', { quizz, respuestaAlumnoElegida });
 
 });
 
@@ -701,7 +700,7 @@ router.get('/alumnos/examen/:id', async (req, res) => {
   const quizz = await Quizz.findById(req.params.id);
   res.render('alumnos/Quizz', { quizz });
 
-  
+
 
 
 
@@ -715,7 +714,7 @@ router.get('/alumnos/respuestas', (req, res) => {
 
 router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
-  
+
   var examencalificado = await Revisor.revisar(idAlumno, req);
 
   //Registros.create(examencalificado);
@@ -764,23 +763,23 @@ router.get("/pruebaAJAXsecuencias", async (req, res) => {
 });
 
 router.get("/pruebaAJAXgrados/:idnivel", async (req, res) => {
-  var grados = await API.busqueda(req.params.idnivel,"nivel","grados"); 
-  res.json(grados); 
+  var grados = await API.busqueda(req.params.idnivel, "nivel", "grados");
+  res.json(grados);
 });
 
 router.get("/pruebaAJAXmaterias/:idgrado", async (req, res) => {
-  var materias = await API.busqueda(req.params.idgrado,"grado","materias"); 
-  res.json(materias); 
+  var materias = await API.busqueda(req.params.idgrado, "grado", "materias");
+  res.json(materias);
 });
 
 
 router.get("/pruebaAJAXbloques/:idmateria", async (req, res) => {
-  var bloques = await API.busqueda(req.params.idmateria,"materia","bloques"); 
-  res.json(bloques); 
+  var bloques = await API.busqueda(req.params.idmateria, "materia", "bloques");
+  res.json(bloques);
 });
 
 router.get("/pruebaAJAXsecuencias/:idbloque", async (req, res) => {
-  var secuencias = await API.busqueda(req.params.idbloque,"bloque","secuencias"); 
+  var secuencias = await API.busqueda(req.params.idbloque, "bloque", "secuencias");
   res.json(secuencias);
 });
 
@@ -814,8 +813,8 @@ router.get('/cuarto2', (req, res) => {
   res.render('cuartoPruebas2', { color: "#ffff99" });
 })
 
-router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaCreadorQuizz2',{color:"#ffff99"});
+router.get('/plantillaRevision', (req, res) => {
+  res.render('plantillaCreadorQuizz2', { color: "#ffff99" });
 })
 
 router.get('/plantillaQuizz', (req, res) => {
