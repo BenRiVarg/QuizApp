@@ -30,7 +30,8 @@ conn.once('open', () => {
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection('uploads');
 });
-
+//URI SSD mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority
+//URI PRODUCCION mongodb+srv://QUIZ-API:PFEpkCKG5VcQDJNj@cluster0.lcjm4.mongodb.net/QUIZZES?retryWrites=true&w=majority
 // Create storage engine
 const storage = new GridFsStorage({
   url: 'mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority',
@@ -64,11 +65,12 @@ const { isAuthenticated } = require('../auth/auth.js');
 
 //--JS Back--//
 
-const Revisor = require("../funciones/revisor.js")
-const API = require("../funciones/api.js");
+const Revisor=require("../funciones/revisor.js")
+const API=require("../funciones/api.js");
+const Funciones=require("../funciones/funciones.js");
 const materia = require('../modelos/materia.js');
 const { resolve } = require('path');
-const { json } = require('body-parser');
+const { request } = require('http');
 
 //----Variables globales---//
 //Creación de una variable global para tener información disponible para las vistas de docentes
@@ -77,9 +79,13 @@ global.datosDocenteSesion = {};
 global.datosAlumnoSesion = {};
 // ------------||  R U T A S  ||----------------//
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   res.render('index');
-
+ var usuario=   await API.autenticacion("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQm13STdJUnYiLCJub21icmUiOiJJZ25hY2lvIFJ1YmVuIE9ydHXDsW8gQWxiYXJyYW4iLCJwZXJtaXNvcyI6W3sidmlzdWFsaXphcl9uaXZlbGVzX2FjYWTDqW1pY29zIjp0cnVlLCJhZ3JlZ2FyX25pdmVsZXNfYWNhZMOpbWljb3MiOnRydWUsImFjdHVhbGl6YXJfbml2ZWxlc19hY2Fkw6ltaWNvcyI6dHJ1ZSwiZWxpbWluYXJfbml2ZWxlc19hY2Fkw6ltaWNvcyI6dHJ1ZSwidmlzdWFsaXphcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiYWdyZWdhcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiYWN0dWFsaXphcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiZWxpbWluYXJfZ3JhZG9zX2RlX2VzdHVkaW8iOnRydWUsInZpc3VhbGl6YXJfbWF0ZXJpYXMiOnRydWUsImFncmVnYXJfbWF0ZXJpYXMiOnRydWUsImFjdHVhbGl6YXJfbWF0ZXJpYXMiOnRydWUsImVsaW1pbmFyX21hdGVyaWFzIjp0cnVlLCJ2aXN1YWxpemFyX3dpa2lzIjp0cnVlLCJhZ3JlZ2FyX3dpa2lzIjp0cnVlLCJhY3R1YWxpemFyX3dpa2lzIjp0cnVlLCJlbGltaW5hcl93aWtpcyI6dHJ1ZSwidmlzdWFsaXphcl9xdWl6emVzIjp0cnVlLCJ2aXN1YWxpemFyX2Jsb3F1ZXMiOnRydWUsImFncmVnYXJfYmxvcXVlcyI6dHJ1ZSwiYWN0dWFsaXphcl9ibG9xdWVzIjp0cnVlLCJlbGltaW5hcl9ibG9xdWVzIjp0cnVlLCJ2aXN1YWxpemFyX3NlY3VlbmNpYXMiOnRydWUsImFncmVnYXJfc2VjdWVuY2lhcyI6dHJ1ZSwiYWN0dWFsaXphcl9zZWN1ZW5jaWFzIjp0cnVlLCJlbGltaW5hcl9zZWN1ZW5jaWFzIjp0cnVlLCJ2aXN1YWxpemFyX2FtYml0b3MiOnRydWUsImFncmVnYXJfYW1iaXRvcyI6dHJ1ZSwiYWN0dWFsaXphcl9hbWJpdG9zIjp0cnVlLCJlbGltaW5hcl9hbWJpdG9zIjp0cnVlLCJ2aXN1YWxpemFyX3BzbHMiOnRydWUsImFncmVnYXJfcHNscyI6dHJ1ZSwiYWN0dWFsaXphcl9wc2xzIjp0cnVlLCJlbGltaW5hcl9wc2xzIjp0cnVlLCJ2aXN1YWxpemFyX2VqZXMiOnRydWUsImFncmVnYXJfZWplcyI6dHJ1ZSwiYWN0dWFsaXphcl9lamVzIjp0cnVlLCJlbGltaW5hcl9lamVzIjp0cnVlLCJ2aXN1YWxpemFyX3RlbWFzIjp0cnVlLCJhZ3JlZ2FyX3RlbWFzIjp0cnVlLCJhY3R1YWxpemFyX3RlbWFzIjp0cnVlLCJlbGltaW5hcl90ZW1hcyI6dHJ1ZSwidmlzdWFsaXphcl9wYWdpbmFzIjp0cnVlLCJhZ3JlZ2FyX3BhZ2luYXMiOnRydWUsImFjdHVhbGl6YXJfcGFnaW5hcyI6dHJ1ZSwiZWxpbWluYXJfcGFnaW5hcyI6dHJ1ZSwicmVzdGF1cmFyX3BhZ2luYXMiOnRydWUsImVsaW1pbmFyX3BhZ2luYXNfZGVmaW5pdGl2YW1lbnRlIjp0cnVlLCJ2aXN1YWxpemFyX2ltYWdlbmVzIjp0cnVlLCJhZ3JlZ2FyX2ltYWdlbmVzIjp0cnVlLCJhY3R1YWxpemFyX2ltYWdlbmVzIjp0cnVlLCJlbGltaW5hcl9pbWFnZW5lcyI6dHJ1ZSwidmlzdWFsaXphcl9nYWxlcmlhcyI6dHJ1ZSwiYWdyZWdhcl9nYWxlcmlhcyI6dHJ1ZSwiYWN0dWFsaXphcl9nYWxlcmlhcyI6dHJ1ZSwiZWxpbWluYXJfZ2FsZXJpYXMiOnRydWUsInZpc3VhbGl6YXJfdmlkZW9zIjp0cnVlLCJhZ3JlZ2FyX3ZpZGVvcyI6dHJ1ZSwiYWN0dWFsaXphcl92aWRlb3MiOnRydWUsImVsaW1pbmFyX3ZpZGVvcyI6dHJ1ZX1dLCJpYXQiOjE2MTcwNzMxMzYsImV4cCI6MTYxNzEwMTkzNiwiYXVkIjoiaHR0cHM6Ly9lc3BlY2lhbGlzdGFzLmViZS5jb20ifQ.3TFpmPpkmiQIfOZIsZUPisfHDjc-C16STri_Mo2Vcnw");
+ console.log("Debuggeando"); 
+ var hoy=new Date();
+ var vigencia=new Date(usuario.token.exp);
+ console.log(hoy>vigencia);
 });
 
 
@@ -204,73 +210,131 @@ router.get('/editores/aprobar', (req, res) => {
 });
 
 router.get('/editores/crear', async (req, res) => {
-  const materia = await Materia.find({});
 
-  res.render('editor/crear', { materia: materia });
+  res.render('editor/crear', );
 
 });
 
+https://quizz-app-ebe.herokuapp.com/verify/:token
 
+router.get('/verify/:token', async (req, res) => {
+   var token=req.params.token;
+  res.render('editor/crear', );
 
+});
 
-router.post('/editores/crear', upload.array('imagenes'), (req, res) => {
-  req.files
+router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
+  var imagenes=req.files;
+
   console.log(req.body);
+  console.log(req.body.grupo);
+  
+  /*
+  console.log(req.body.nivel);
+  console.log(req.body.grado);
+  console.log(req.body.claveMateria);
+  console.log(req.body.bloques);
+  console.log(req.body.Secuencias);
+  console.log(req.body.nombreQuizz);
 
-  var contadorImagenes = 0;
 
+ */
+  
+   
   var i;
   //variable para construir el cuestionario como un array
-  var cuestionario = [
+  var cuestionario= [
   ];
 
-
-  //Procesamiento de cada pregunta por la request
+  //Si al menos e envio un cuestionario diferente a Drag
+  if (req.body.tipo1){
+//Procesamiento de cada pregunta por la request
   for (i = 0; i < req.body.numeroPreguntas; i++) {
-    var tipo = "tipo" + (i + 1);
-    var pregunta = "pregunta" + (i + 1);
-    var respuesta = "respuesta" + (i + 1);
+      var tipo="tipo"+(i+1);
+      var pregunta="pregunta"+(i+1);
+      var respuesta="respuesta"+(i+1);
 
-    //filtro para relacionar preguntas e imágenes
-    if (req.body[tipo] == "tipoIT") {
+      //filtro para relacionar preguntas e imágenes
+        if (req.body[tipo]=="tipoIT"){
 
-      //apertura de un espacio en el array de preguntas
-      var preguntaImagen = req.body[pregunta];
-      //asignación de un archivo en ese primer espacio
-      preguntaImagen[0] = req.files[contadorImagenes].filename;
-      //Movimiento del contador para asignar correctamente imagenes.
-      contadorImagenes = contadorImagenes + 1;
+          //Definimos el valor con el que llega el nombre de la imagen
+          var imgKey="imagen"+(i+1);
+          var nombreImg=req.body[imgKey];
+          //
+          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
+
+          //Creamos un array para la estructura de la preguta
+          var preguntaImagen=[];
+          // En el primer espacio guardamos el nombre de la Imagen
+          preguntaImagen[0]=imagen.filename;
+          //En el segundo la pregunta
+          preguntaImagen[1]=req.body[pregunta];
+          //Y reasignamos el valor en la request
+          req.body[pregunta]=preguntaImagen;
+      }
 
 
+      //Construcción de documentos de cuestionarios de manera iterativa
+      var contenidoCuestionario={
+        tipo:req.body[tipo],
+        pregunta:  req.body[pregunta],
+        respuesta: req.body[respuesta]
+      }
+
+     
+      cuestionario.push(contenidoCuestionario);
+      
+      
+    
+
+     
+  } 
+}
+  //Lectura de Preguntas Drag
+  if(req.body.lienzos)
+  {
+    for(var j=0;j<req.body.lienzos;j++){
+      var claveLienzo="lienzo"+j;
+      var dataLienzo=JSON.parse(req.body[claveLienzo]);
+
+      var imagenHTML=dataLienzo.pregunta[0].nombre;
+      //Buscamos el archivo al que está vinculada la imagen
+      var imagen=Funciones.buscarImagen(imagenHTML,imagenes);
+      //Y lo reasignamos con el nombre con el que encontrará la imagen en la BD
+      dataLienzo.pregunta[0].nombre=imagen.filename;
+      console.log(dataLienzo.pregunta[0].nombre)
+      var cuestionarioLienzo=dataLienzo;
+      cuestionario.push(cuestionarioLienzo);
     }
-
-
-    //Construcción de documentos de cuestionarios de manera iterativa
-    var contenidoCuestionario = {
-      tipo: req.body[tipo],
-      pregunta: req.body[pregunta],
-      respuesta: req.body[respuesta]
-    }
-
-
-    cuestionario.push(contenidoCuestionario);
   }
 
-  Quizz.create(
-    //guardado en la BD
-    {
-      nivel: req.body.nivel,
-      grado: req.body.grado,
-      materia: req.body.claveMateria,
-      bloque: req.body.bloque,
-      secuencia: req.body.secuencia,
-      nombreQuizz: req.body.nombreQuizz,
-      creador: req.body.creador,
-      cuestionario: cuestionario
-    }
-  );
-  res.redirect("/editores/crear");
+  
+   //guardado en la BD
+   var nuevoQuizz= await Quizz.create( 
+      {
+      
+
+    nivel:req.body.nivel,
+    grado:req.body.grado,
+    materia:req.body.claveMateria,
+    bloque:req.body.bloques,
+    secuencia:req.body.Secuencias,
+    nombreQuizz:req.body.nombreQuizz,
+    creador:"Pendiente",
+    grupo: req.body.grupo,
+    intentos: req.body.intentos,
+    cuestionario: cuestionario
+       
+       }
+    
+    );
+  
+      
+
+  
 });
+
+
 
 
 router.get('/editores/editar', (req, res) => {
@@ -625,7 +689,8 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
   console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
 
-  res.render('alumnos/revisionRespuestas', { quizz, respuestaAlumnoElegida });
+  
+   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida });
 
 });
 
@@ -642,6 +707,17 @@ router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
 });
 
+router.get('/alumnos/examen/:id', async (req, res) => {
+
+
+  const quizz = await Quizz.findById(req.params.id);
+  res.render('alumnos/Quizz', { quizz });
+
+  
+
+
+
+});
 
 
 router.get('/alumnos/respuestas', (req, res) => {
@@ -651,31 +727,10 @@ router.get('/alumnos/respuestas', (req, res) => {
 
 router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
-  //Boomer 5fce761f2e2106439e852306
-  // alumno Ignacio BP32G1BF  grupo RX87YY9E
-  /* console.log(req.body);
-  Revisor.revisar("5fce761f2e2106439e852306",req);
   
-    console.log(req.body);
-    var examencalificado = await Revisor.revisar("5fce761f2e2106439e852306", req);
-  
-    //Para Guardar en la BD
-  
-  console.log(req.body);
-  var examencalificado= await Revisor.revisar("BP32G1BF",req);
-  
-    //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-    //var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-  
-    //console.log(examencalificado);
-  
-    /*  //Para Guardar en la BD
-     var examencalificado= await Revisor.revisar("5fce761f2e2106439e852306",req);
-    
-    console.log(examencalificado);
-    */
+  console.log(req.body)
   var examencalificado = await Revisor.revisar(idAlumno, req);
-
+  //console.log(examencalificado);
   //Registros.create(examencalificado);
   //res.render('alumnos/correccion');
 
@@ -689,9 +744,58 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
 
 //Boomer "5fce761f2e2106439e852306"
 
-router.get('/pruebaAJAX', (req, res) => {
-  res.json({ "estatus": "funciona" })
-})
+
+
+router.get("/pruebaAJAXniveles", async (req, res) => {
+  var niveles = await API.Find("niveles");
+  niveles = niveles.levels;
+  res.json(niveles);
+});
+
+router.get("/pruebaAJAXgrados", async (req, res) => {
+  var grados = await API.Find("grados");
+  grados = grados.grades;
+  res.json(grados);
+});
+
+router.get("/pruebaAJAXmaterias", async (req, res) => {
+  var materias = await API.Find("materias");
+  materias = materias.subjects;
+  res.json(materias);
+});
+
+router.get("/pruebaAJAXbloques", async (req, res) => {
+  var bloques = await API.Find("bloques");
+  bloques = bloques.blocks;
+  res.json(bloques);
+});
+
+router.get("/pruebaAJAXsecuencias", async (req, res) => {
+  var secuencias = await API.Find("secuencias");
+  secuencias = secuencias.sequences;
+  res.json(secuencias);
+});
+
+router.get("/pruebaAJAXgrados/:idnivel", async (req, res) => {
+  var grados = await API.busqueda(req.params.idnivel,"nivel","grados"); 
+  res.json(grados); 
+});
+
+router.get("/pruebaAJAXmaterias/:idgrado", async (req, res) => {
+  var materias = await API.busqueda(req.params.idgrado,"grado","materias"); 
+  res.json(materias); 
+});
+
+
+router.get("/pruebaAJAXbloques/:idmateria", async (req, res) => {
+  var bloques = await API.busqueda(req.params.idmateria,"materia","bloques"); 
+  res.json(bloques); 
+});
+
+router.get("/pruebaAJAXsecuencias/:idbloque", async (req, res) => {
+  var secuencias = await API.busqueda(req.params.idbloque,"bloque","secuencias"); 
+  res.json(secuencias);
+});
 
 
 router.get('/cuarto', (req, res) => {
@@ -723,13 +827,20 @@ router.get('/cuarto2', (req, res) => {
   res.render('cuartoPruebas2', { color: "#ffff99" });
 })
 
-router.get('/plantillaRevision', (req, res) => {
-  res.render('plantillaRevision', { color: "#ffff99" });
+router.get('/plantillaRevision',(req, res)=>{
+  res.render('plantillaRevision',{color:"#ffff99"});
 })
 
 router.get('/plantillaQuizz', (req, res) => {
   res.render('plantillaQuizzFinal', { color: "#ffff99" });
 })
+router.get('/rediseno', (req, res) => {
+  res.render('rediseno', { color: "#FFE8CD" });
+})
+
+router.get("/plantillaQuizzFinal", (req, res) => {
+  res.render("plantillaQuizzFinal", { color: "#ffff99" });
+});
 
 // @route POST /upload
 // @desc  Uploads file to DB
