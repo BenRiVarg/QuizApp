@@ -95,8 +95,8 @@ function matematicas(){
                    else{
                     if (!Number.isInteger(parseInt(caracter))){
                     strVar += " <div class=\"col-1 \"  >";
-                    strVar += "              <h1 class=\"text-center text-dark pt-4\">"+caracter+"<\/h1> ";
-                    strVar += "            <\/div>";
+                    strVar += "   <h1 class=\"text-center text-dark pt-4\">"+caracter+"<\/h1> ";
+                    strVar += " <\/div>";
                     }
                   }
 
@@ -160,6 +160,9 @@ function matematicas(){
   
      return resultado
   }
+
+  
+
 
 
 //-----------Terminan Funciones de Mate
