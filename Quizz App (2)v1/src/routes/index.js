@@ -671,7 +671,7 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   //console.log(respuestaAlumnoElegida[0].respuestas[2].revision);
   console.log("Ejecutandose");
   console.log(respuestaAlumnoElegida[0].calificacion);
-   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
+   res.render('alumnos/revisionRespuestas2',{ quizz,respuestaAlumnoElegida});
 });
 
 

@@ -176,12 +176,5 @@
                 }
                 return array;
             }
-            function reemplazarTexto(cadenaCruda, objetoReemplazos){
-                return cadenaCruda.replace(/%\w+%/g, function(reemplazo) {
-                    //console.log("reemplazo: ", reemplazo);
-                    return objetoReemplazos[reemplazo] || reemplazo;
-                });
-            }
-            //console.log("prueba reemplazo: ", reemplazarTexto('My Name is %NAME% and my age is %AGE%, the following %TOKEN% is invalid. y gano el 10% de lo que tú',  {"%NAME%": "Mike","%AGE%": "26","%EVENT%": "20"}));
         }
     }, false);
