@@ -98,11 +98,14 @@
                       %>
                 </td>
               -->
-
                 <td class="text-center">
-                  <a class="btn btn-info"
-                     href="/alumnos/examen/<%=datosCuestionario[j].id%>/alumno/<%= data.idAlumno%>"
-                     style="text-decoration: none;">Iniciar Intento</a>
+                  <% if(datosCuestionario[j].intentos<=datosCuestionario[j].oportunidades){%>
+                    <a class="btn btn-info"
+                    href="/alumnos/examen/<%=datosCuestionario[j].id%>/alumno/<%= data.idAlumno%>"
+                    style="text-decoration: none;">Iniciar Intento</a>
+                    <%}else{%>
+                      <div class="col-10 border border-primary text-primary mx-auto rounded p-1">No tienes más intentos</div>
+                    <%}%>
                 </td>
               </tr>
 

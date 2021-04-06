@@ -1,9 +1,6 @@
 
 //Tamaño Imágenes=1000*600
-//tipoAr 
-function caliz(){
-    alert("Sí va a Funcionar")
-}
+
 
 var formulario=document.getElementById("quizz");
 //Nos aseguramos de no estar guardando otros valores
@@ -170,40 +167,7 @@ function matematicas(){
 
 //-----------Terminan Funciones de Mate
 
-function moverDiv(){
-    var alto=document.getElementById("alto").value;
-    var ancho=document.getElementById("ancho").value;
-    var img=document.getElementById("imagenP");
 
-    console.log(ancho+"   "+alto);
-    console.log(img.width+"   "+img.height);
-
-    //Captura de los elementos reactivo
-    var divMovil=document.getElementsByClassName("texto-encima");
-    var textoMovil=document.getElementsByClassName("itemPregunta");
-
-    var limiteAncho=img.width-100;
-
-    var limiteAlto=img.height-30;
-
-    if(ancho>limiteAncho){
-        ancho=limiteAncho;
-    }
-    
-    if(alto>limiteAlto){
-        alto=limiteAlto;
-    }
-
-    divMovil[0].style.left=ancho+"px";
-    divMovil[0].style.top=alto+"px";
-
-    textoMovil[0].style.left=ancho+"px";
-    textoMovil[0].style.top=alto+"px";
-
-   
-  
-
-}
 
 
 function contadorItemsMultiples(){
@@ -216,7 +180,6 @@ function contadorItemsMultiples(){
         var claveI=cuestionariosMultiples[i].value;
     
         var selectorI="items"+claveI;
-        console.log(selectorI);
 
         //Conseguimos el elemento que contiene los items
         var itemsCuestionario=document.getElementById(selectorI);

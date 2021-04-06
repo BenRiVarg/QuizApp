@@ -2,16 +2,12 @@ var momentoActual=new Date();
 
 var temporizadorFQ=new Date();
  var finQuizz=temporizadorFQ.getMinutes()+60;
-  console.log(finQuizz);
   
 
- console.log(momentoActual);
  temporizadorFQ.setMinutes(finQuizz);
- console.log(temporizadorFQ);
 // Set the date we're counting down to
 var countDownDate = temporizadorFQ.getTime();
 
-console.log(countDownDate);
 //console.log(tiempoQuizz);
 
 var tiempoDisponible=true;

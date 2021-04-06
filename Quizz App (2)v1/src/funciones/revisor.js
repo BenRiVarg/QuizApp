@@ -1,19 +1,20 @@
 'use strict'
 const Quizz = require('../modelos/quizz.js');
 
-var examencalificado = {
-	alumno: "",
-	revisado: true,
-	quizz: "",
-	respuestas: Array,
-	calificacion: 0,
-};
-
-var calificacionGlobal=0;
-var calificacionPorCuestionario=[];
 
 exports.revisar = async function (alumno, req) {
 
+
+	var examencalificado = {
+		alumno: "",
+		revisado: true,
+		quizz: "",
+		respuestas: Array,
+		calificacion: 0,
+	};
+	
+	var calificacionGlobal=0;
+	var calificacionPorCuestionario=[];
 
 	var cuestionariosCalificados = [];
 	//Conseguimos el examen que vamos a calificar

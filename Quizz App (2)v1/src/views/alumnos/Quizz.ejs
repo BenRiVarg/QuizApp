@@ -39,17 +39,18 @@
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
       <div class="carousel-inner">
         <% var preguntaFinal=quizz.cuestionario.length-1 %>
-        <% for(var i=0; i<quizz.cuestionario.length ; i++) {%>
+        <% for(var c=0; c<quizz.cuestionario.length ; c++) {%>
+          <% var i=clavesCuestionarios[c]; %>
           <% var activo="" %>
           <% var final="" %>
-            <% if (i==0){ %>
+            <% if (c==0){ %>
               <% activo="active" %>
                 <%}%>
-                <% if (i==preguntaFinal){ %>
+                <% if (c==preguntaFinal){ %>
                   <% final="pregunta-Final" %>
                     <%}%>
                   <% switch (quizz.cuestionario[i].tipo) { case "tipoT" : %>
-                    <div class="carousel-item <%= activo %> <%= final %>">
+                    <div class="carousel-item <%= i %> <%= final %>">
                       <!--P Texto-->
                       <div class="d-flex justify-content-center ">
                         <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
@@ -468,6 +469,18 @@
 
     </script>
     <script>
+      var cookies=document.cookie;
+      var session=window.sessionStorage;
+      var local=window.localStorage;
+      var formularios=document.forms;
+
+      console.log("Galletas");
+      console.log(cookies);
+      console.log("Session");
+      console.log(session);
+      console.log("local")
+      console.log(local);
+      console.log(formularios);
       /* window.location.hash = "no-back-button";
         window.location.hash = "Again-No-back-button";//esta linea es necesaria para chrome
         window.onhashchange = function () { window.location.hash = "no-back-button"; } */

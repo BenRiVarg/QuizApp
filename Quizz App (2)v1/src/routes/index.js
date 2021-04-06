@@ -612,10 +612,26 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
 
     }
 
+    //Buscamos las veces que el alumno ha contestado un quizz en particular
+    var intentos= await Registros.find(
+      {quizz: {$eq: cuestionarios[y].id},
+      alumno: {$eq: idAlumno}}
+      ).exec();
+
+    intentos=intentos.length;
+
+    var oportunidades=100;
+    /*
+    if(cuestionarios[y].intentos){
+      oportunidades=Number.parseInt(cuestionarios[y].intentos);
+    }
+    */
     var datos = {
       id: cuestionarios[y]._id,
       nombre: cuestionarios[y].nombreQuizz,
-      estado: estado
+      estado: estado,
+      intentos: intentos,
+      oportunidades: oportunidades
     };
 
     datosCuestionario.push(datos);
@@ -623,12 +639,12 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
   }
 
 
-
+  console.log(datosCuestionario);
 
   //API.alumnos();
   const Quizzes = await Quizz.find({});
   res.render('alumnosQuizz/index', { quizzes: Quizzes, data, datosCuestionario });
-
+  
 });
 
 router.get('/alumnos/registro', async (req, res) => {
@@ -671,7 +687,7 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   //console.log(respuestaAlumnoElegida[0].respuestas[2].revision);
   console.log("Ejecutandose");
   console.log(respuestaAlumnoElegida[0].calificacion);
-   res.render('alumnos/revisionRespuestas2',{ quizz,respuestaAlumnoElegida});
+   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 });
 
 
@@ -681,8 +697,18 @@ router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
   const idAlumno = req.params.idAlumno;
   const quizz = await Quizz.findById(req.params.id);
-  res.render('alumnos/Quizz', { quizz, idAlumno });
+  var contadorCuestionarios=quizz.cuestionario.length;
+  
+  var clavesCuestionarios=[];
+  for(var i=0;i<contadorCuestionarios;i++){
+    clavesCuestionarios.push(i);
+  }
 
+  //Variable para mostrar los cuestionarios en un orden diferente a los alumnos
+  clavesCuestionarios=Funciones.shuffle(clavesCuestionarios);
+
+  console.log(clavesCuestionarios);
+  res.render('alumnos/Quizz', { quizz,clavesCuestionarios, idAlumno });
 
 
 
@@ -713,7 +739,7 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   console.log(req.body)
   var examencalificado = await Revisor.revisar(idAlumno, req);
   console.log(examencalificado);
-
+  
   var nuevoIntento= await Registros.create(examencalificado);
   
   

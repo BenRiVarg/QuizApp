@@ -1,9 +1,67 @@
       
         window.addEventListener("load", function(e){
+            //sonidos
+            var  seleccionarPregunta=new sound("/sonidos/seleccionaRR.mp3");
+            var asociarPregunta=new sound("/sonidos/asociaRR.mp3");
+
+            var preguntasRelacionales=document.getElementsByClassName("tablaEjercicio");
+            console.log(preguntasRelacionales.length);
+            
+            for(var tab=0;tab<preguntasRelacionales.length;tab++){
+
+                var tablaSelecta=document.querySelectorAll(".tablaEjercicio")[tab];
+                //   if(tablaSelecta){
+                   var preguntaSelecta;
+                   var filasReactivos = tablaSelecta.querySelectorAll("tr");
+                  //var filasReactivos = document.querySelectorAll(".tablaEjercicio tr");
+                   var respuestas = [];
+                   var botones = [];
+                 
+                   var tempPregunta;
+                   var tempBoton;
+                   var tempRespuesta;
+                   
+       
+                   
+                   Array.prototype.forEach.call(filasReactivos, function(fila){
+                       tempPregunta = fila.querySelector("td");
+                       tempRespuesta = fila.querySelector("td.celdaRespuesta");
+                       botonPregunta=fila.querySelector("td.botonPregunta");
+                       tempBoton = fila.querySelector("td.botonRespuesta");//Es la celda, no el botón en sí
+                       fila.respuesta = tempRespuesta;
+                       respuestas.push(tempRespuesta);
+                       botones.push(tempBoton);
+                       
+                      // tempRespuesta.parentNode.removeChild(tempRespuesta);
+       
+                       
+                       // Al apretar un botón, se revisa si la respuesta es correcta
+                       //Se marca correcta o incorrecta
+                       //Se procede a la siguiente pregunta
+                        
+       
+                       botonPregunta.addEventListener("click", alApretarPregunta, false);
+                       tempBoton.addEventListener("click", alApretarOpcion, false);
+                       
+                      
+                   });
+       
+                 shuffle(respuestas);
+            
+                   Array.prototype.forEach.call(filasReactivos, function(fila, index){
+                      
+                       fila.appendChild(respuestas[index]);
+                   });
+       
+                   function obtenerPreguntaSelecta(){
+                       return preguntaSelecta;
+                   }
+                
+            }
+            /*
             var tablaSelecta=document.querySelectorAll(".tablaEjercicio")[0];
-            if(tablaSelecta){
+         //   if(tablaSelecta){
             var preguntaSelecta;
-            var tablaSelecta=document.querySelectorAll(".tablaEjercicio")[0];
             var filasReactivos = tablaSelecta.querySelectorAll("tr");
            //var filasReactivos = document.querySelectorAll(".tablaEjercicio tr");
             var respuestas = [];
@@ -12,9 +70,7 @@
             var tempPregunta;
             var tempBoton;
             var tempRespuesta;
-            //sonidos
-            var  seleccionarPregunta=new sound("/sonidos/seleccionaRR.mp3");
-            var asociarPregunta=new sound("/sonidos/asociaRR.mp3");
+            
 
             
             Array.prototype.forEach.call(filasReactivos, function(fila){
@@ -28,11 +84,11 @@
                 
                // tempRespuesta.parentNode.removeChild(tempRespuesta);
 
-                /*
-                 Al apretar un botón, se revisa si la respuesta es correcta
-                 Se marca correcta o incorrecta
-                 Se procede a la siguiente pregunta
-                 */
+                
+                // Al apretar un botón, se revisa si la respuesta es correcta
+                //Se marca correcta o incorrecta
+                //Se procede a la siguiente pregunta
+                 
 
                 botonPregunta.addEventListener("click", alApretarPregunta, false);
                 tempBoton.addEventListener("click", alApretarOpcion, false);
@@ -43,13 +99,14 @@
             shuffle(respuestas);
      
             Array.prototype.forEach.call(filasReactivos, function(fila, index){
+               
                 fila.appendChild(respuestas[index]);
             });
 
             function obtenerPreguntaSelecta(){
                 return preguntaSelecta;
             }
-
+            */
 
             //Función de los botones Pregunta 
             function alApretarPregunta(e){
@@ -176,5 +233,5 @@
                 }
                 return array;
             }
-        }
+       // }
     }, false);
