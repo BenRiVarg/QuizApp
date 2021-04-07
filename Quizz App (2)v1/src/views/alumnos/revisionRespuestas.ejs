@@ -22,13 +22,21 @@
     }
   </style>
   <h1 class="text-center mt-5">Revisión de Respuestas</h1>
-  <p class="display-7 ml-5"> Quizz: <b>
+  <p class="display-7 text-primary ml-5"> Quizz: <b>
       <%= quizz.nombreQuizz %>
     </b></p>
-    <div class="cal">
+  <div class="row">
+    <div class="col cal">
       <h4>Calificacion:</h4>
-      <h3>(Calificacion)</h3>
+      <h3><%= respuestaAlumnoElegida[0].calificacion %></h3>
     </div>
+
+    <div class="col time">
+      <h4>Tiempo:</h4>
+      <h3><%= respuestaAlumnoElegida[0].tiempo %></h3>
+    </div>
+  </div>
+   
   <% for(var i=0; i<quizz.cuestionario.length ; i++) {%>
     <% switch (quizz.cuestionario[i].tipo) { case "tipoT" : %>
 
