@@ -9,8 +9,32 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const passport = require('passport');
+const session = require("express-session");
+const app = express();
 
+app.use(
+  session({
+    secret: "123456789",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
+/* app.listen(8443, (req, res) => {
+  console.log("SERVER UP!");
+});
+ */
+
+app.get("/", (req, res) => {
+  req.session.usuario = "Kevin López";
+  req.session.rol = "Admin";
+  req.session.visitas = req.session.visitas ? ++req.session.visitas : 1;
+  console.log(req.session);
+  res.send(`El usuario <strong>${req.session.usuario}</strong>
+        con el rol <strong>${req.session.rol}</strong>
+        ha visitado esta página <strong>${req.session.visitas}</strong> veces
+    `);
+});
 
 //Configuración del Body Parser
 router.use(bodyParser.urlencoded({ extendend: true }));
@@ -368,6 +392,7 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
   var bloque = await API.findByID("bloques", secuencia.bloque);
   var grado = await API.findByID("grados", materia.grado);
   var nivel = await API.findByID("niveles", grado.nivel);
+
   //Variable para conocer los ids de los quizzes  de una secuencia
   var quizzesSecuencia;
   //Variable para guardar los alumnos que tienen un progreso dentro de la secuencia
@@ -384,11 +409,30 @@ router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:ids
     quizzesSecuencia: quizzesSecuencia,
     alumnos: alumnos
   }
+  
+    req.session.nivel = nivel;
+    req.session.grado = grado;
+    req.session.grupo = grupo;
+    req.session.materia = materia;
+    req.session.bloque = bloque;
+    req.session.secuencia = secuencia;
+    req.session.usuario = req.params.idmaestro;
+    req.session.quizzesSecuencia = quizzesSecuencia;
+    req.session.alumnos = alumnos;
+    /* req.session.usuario = "Kevin López";
+    req.session.rol = "Admin"; */
+    req.session.visitas = req.session.visitas ? ++req.session.visitas : 1;
+    console.log(req.session);
+   /*  res.send(`El usuario <strong>${req.session.usuario}</strong>
+        con el rol <strong>${req.session.rol}</strong>
+        ha visitado esta página <strong>${req.session.visitas}</strong> veces
+    `); */
 
   datosDocenteSesion = datosSesion;
-  console.log("Datos Docente");
-  console.log(datosDocenteSesion);
+  /* console.log("Datos Docente");
+  console.log(datosDocenteSesion); */
   res.render('docente/index', { "datosVista": datosSesion });
+
 });
 
 router.get('/docentes/crear', async (req, res) => {
@@ -437,7 +481,9 @@ router.get('/docentes/secuencia', async (req, res) => {
       if (quizzContestado.length >= 1) {
         progreso = progreso + 1;
       }
-
+     /*  req.session.usuario = alumnosGrupo[i].nombre;
+      req.session.rol = "Alumno"; */
+      
     }
     //Si hay algún progreso
     if (progreso >= 1) {
@@ -458,7 +504,17 @@ router.get('/docentes/secuencia', async (req, res) => {
   }
   datosDocenteSesion.alumnos = alumnosProgreso;
   res.render('docente/secuencias', { datosDocenteSesion, alumnosProgreso, alumnos });
-
+  req.session.nivel ;
+  req.session.grado ;
+  req.session.grupo ;
+  req.session.materia ;
+  req.session.bloque ;
+  req.session.secuencia ;
+  req.session.usuario ;
+  req.session.quizzesSecuencia ;
+  req.session.alumnos ;
+  req.session.visitas = req.session.visitas ? ++req.session.visitas : 1;
+  console.log(req.session);
 });
 
 router.get('/docentes/estadisticas/:idalumno', async (req, res) => {
