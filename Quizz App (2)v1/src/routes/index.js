@@ -347,8 +347,9 @@ router.get('/docentes/editar', (req, res) => {
 
 router.get('/grupo/:idgrupo/maestro/:idmaestro/materia/:idmateria/secuencia/:idsecuencia/jwt/:token', async (req, res) => {
   var respuestaToken = await API.autenticacion(req.params.token);
-  if (respuestaToken && (respuestaToken.token.usuario == req.params.idmaestro)) {
-    var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro,);
+  //if (respuestaToken && (respuestaToken.token.usuario == req.params.idmaestro)) {
+  if(respuestaToken.acceso){
+  var datosDocenteSesion = await API.cargaDatos(req.params.idsecuencia, req.params.idmateria, req.params.idgrupo, req.params.idmaestro,);
     var data = {
       secuencia: req.params.idsecuencia,
       materia: req.params.idmateria,

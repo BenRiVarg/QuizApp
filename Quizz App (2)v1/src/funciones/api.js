@@ -255,16 +255,7 @@ exports.autenticacion = async function (JWTtoken) {
 
       let data = "";
       var estatus = res.statusCode;
-      /*
-      if (estatus == 200) {
-        //autenticacion aprobada
-        resolve(true);
-      }
-      else {
-        //Autenticación Fallida
-        resolve(false);
-      }
-      */
+     
       // console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
@@ -274,7 +265,32 @@ exports.autenticacion = async function (JWTtoken) {
       });
       res.on('end', () => {
         var respuestaURL=JSON.parse(data); //Capturar los datos recibidos como respuesta de la URL
-        resolve(respuestaURL);
+        
+        var token=respuestaURL.token;
+        //Definición de los datos del usuario;
+        var usuario={
+          id:token.usuario,
+          nombre: token.nombre
+        };
+
+        var validacion={
+          acceso: false,  //Valor para permitir el acceso en las ventanas en donde se hace la validación 
+          ususrio: usuario
+        };
+
+        var MomentoActual=new Date();
+        var vigencia= new Date(token.exp);
+
+        //Criterios de aceptación
+        criterio1= estatus == 200;
+        criterio2= MomentoActual>vigencia;
+        if(criterio1 && criterio2){
+          validacion.acceso=true;
+          resolve(validacion)
+        }
+        else{
+          resolve(validacion)
+        }
       });
     });
 
