@@ -342,7 +342,7 @@
                       <div class="row justify-content-center" style=" display:flex; background-color:lightblue">
                         <p class=" bien" id="mate<%=i%>" ><p class="">Tu respuesta es correcta<p class="correcta respuestasM text-success" id="respuestaM<%=i%>"> 
                             <div class="col-2"> <p   id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p></div>
-                            <div class="col-2"><p class="respuestasM respuestaEntera text-success" id="respuestaM<%=i%>">  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
+                            <div class="col-1"><p class="respuestasM respuestaEntera text-success" id="respuestaM<%=i%>" style="width: 0px; margin-left: -50px;">  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
                            
                            <!-- <p  id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p><p class="respuestasM text-success" id="respuestaM<%=i%>"> 
                             <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p>
@@ -351,9 +351,9 @@
                           <!--Solución Incorrecta Enteros-->
                           <div class="card-body border border-1 text-dark">
                         <div class="row justify-content-center" style="display: flex; background-color:lightblue">
-                          <p class=" mal " id="mate<%=i%>">tu respuesta es incorrecta</p>
+                          <p class="maltpM" id="mate<%=i%>">tu respuesta es incorrecta</p>
                           <div class="col-2"> <p   id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%> =</p></div>
-                          <div class="col-2  respuestaEntera text-danger"><p><%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
+                          <div class="col-1"><p class=" respuestaEntera text-danger" style="width: 0px; margin-left: -50px;"><%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
                           <% } %>
                         </div>
                         </div>
