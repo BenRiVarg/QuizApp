@@ -283,8 +283,7 @@ function calificarM(respuestaAlumno, respuestaBD) {
 
 //Calificación de Respuestas Relacionales (tambien devuelve lo que el alumno realmente contestó)
 function calificarR(respuestaAlumno, respuestaBD, preguntaBD) {
-	console.log("Respuesta Alumno R");
-	console.log(respuestaAlumno);
+
 	var resultado = {
 		revision: [],
 		respuestasAlumno: []
