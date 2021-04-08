@@ -1,10 +1,12 @@
-Este es un ejemplo de como responde la API de e-be y tiene un registro congruente de su estructura en la BD
-
 //Profesor Anonymous 604843e2742078293555c1d6 //--- Está en nuestra Base de datos 
 //Alumno Boomer 5fce761f2e2106439e852306      //--- Está en nuestra Base de datos 
-
-  //Registro de Grado { id: 'hQyk-Fhaq', nombre: '1º PRIMERO', nivel: '-AyDbZdUW' },
-  /*Registro de Materias 
+--------------MONGO URI DE IGNACIO------------
+mongodb+srv://QUIZ-API:PFEpkCKG5VcQDJNj@cluster0.lcjm4.mongodb.net/QUIZZES?retryWrites=true&w=majority
+-------------------
+  
+ //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
+ //Registro de Grado { id: 'hQyk-Fhaq', nombre: '1º PRIMERO', nivel: '-AyDbZdUW' },
+ *Registro de Materias 
     {
       id: 'T9iIq2yO-',
       nombre: 'LENGUA MATERNA 1',
@@ -12,8 +14,7 @@ Este es un ejemplo de como responde la API de e-be y tiene un registro congruent
       grado: 'hQyk-Fhaq',
       tipo: 'lm1'
     },
-  */
- //Registro de Nivel { id: '-AyDbZdUW', nombre: 'PRIMARIA' },
+ 
  //Registro de Bloque { id: 'dSnrbcbS1', nombre: 'BLOQUE 1', materia: 'T9iIq2yO-' },
  /*Registro de Secuencia
     {
@@ -22,6 +23,39 @@ Este es un ejemplo de como responde la API de e-be y tiene un registro congruent
       bloque: 'dSnrbcbS1'
     },
  */
+ 
+ Ejemplo de Tokens
+ {
+  estado: 200,
+  codigo: 'satisfactorio',
+  info: 'Se ha verificado exitosamente',
+  token: {
+    usuario: 'BmwI7IRv',
+    nombre: 'Ignacio Ruben Ortuño Albarran',
+    permisos: [ [Object] ],
+    iat: 1617073136,
+    exp: 1617101936,
+    aud: 'https://especialistas.ebe.com'
+  }
+}
+
+ ///Prueba de Fuego Kevin
+ 3RO PRIMARIA
+ LENGUA MATERNA 3
+ 
+ //IDS para encontrarla
+ primaria
+ -AyDbZdUW
+ Grado
+ YH5a2eGjy
+ Materia
+ KoBKiHIx1
+ 
+ Secuencia
+ YH5a2eGjy
+ 
+ 
+ GRUPO-----------------------------
   //El único grupo que conocemos "group_id": "RX87YY9E"
     grupo: 'RX87YY9E',
   alumnos: [
@@ -30,8 +64,34 @@ Este es un ejemplo de como responde la API de e-be y tiene un registro congruent
     { id: 'XT1GX44R', nombre: 'AGUSTIN' }
   ]
   
-  //Ruta de maestros con Profesor Anonymous como usuario(profesor)
+  
+  -------------------------
+  DOCENTE
+ localhost:8443/grupo/RX87YY9E/maestro/604843e2742078293555c1d6/materia/KoBKiHIx1/secuencia/YH5a2eGjy/jwt/token
+ 
+ ALUMNO
+ 192.168.1.178:8443/grupo/RX87YY9E/alumno/BP32G1BF/materia/KoBKiHIx1/secuencia/YH5a2eGjy/jwt/Token
+ 
+ HMATQHQT
+ 
+  ALUMNO
+ localhost:8443/grupo/HMATQHQT/alumno/1PA28DWK/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/Token
+ 
+ 
+ Profesores 
  localhost:8443/grupo/RX87YY9E/maestro/604843e2742078293555c1d6/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/token
  
- //Ruta alumnos con Ignacio como usuario (alumno)
- http://localhost:8443/grupo/RX87YY9E/alumno/BP32G1BF/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/Token
+  localhost:8443/grupo/A1L1RD9G/alumno/3CBNBNP3/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/Token
+ 
+ ------------HEROKU---------------
+ PROFESORES
+ https://quizz-app-ebe.herokuapp.com/grupo/RX87YY9E/maestro/604843e2742078293555c1d6/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/token
+ 
+ ALUMNOS
+ https://quizz-app-ebe.herokuapp.com/grupo/A1L1RD9G/alumno/3CBNBNP3/materia/T9iIq2yO-/secuencia/HU-dW413R/jwt/Token
+ 
+ https://quizz-app-ebe.herokuapp.com/editores/crear
+ 
+ 192.168.1.75:8443/alumnos
+ 
+ 192.168.1.65:8443/alumnos/examen/605a5f9585724b1c7366c4a9/alumno/1PA28DWK
