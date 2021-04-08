@@ -1,11 +1,10 @@
-var momentoActual=new Date();
+var momentoActual=new Date().getTime();
 
+var capturaTiempo="";
 var temporizadorFQ=new Date();
- var finQuizz=temporizadorFQ.getMinutes()+60;
-  console.log(finQuizz);
-  
+//Establecimiento del Fin del Quizz
+ var finQuizz=temporizadorFQ.getMinutes()+30;
 
- console.log(momentoActual);
  temporizadorFQ.setMinutes(finQuizz);
  console.log(temporizadorFQ);
 // Set the date we're counting down to
@@ -34,14 +33,31 @@ var x = setInterval(function () {
   document.getElementById("cronometro").innerHTML =
      hours + " : " + minutes + " : " + seconds + " ";
 
+  //Variable para recolectar el tiempo que el alumno ha invertido en el quizz
+  var delta=now-momentoActual;
+
+  var deltaHours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var deltaMinutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
+  var deltaSeconds = Math.floor((delta % (1000 * 60)) / 1000);
+  
+  console.log("Delta Minutes");
+  capturaTiempo= deltaHours + " : " + deltaMinutes + " : " + deltaSeconds + " ";
+  console.log(capturaTiempo);
   // If the count down is over, write some text
   if (distance < 0) {
-    caliz();
+    enviarQuizz();
     document.getElementById("cronometro").innerHTML = "EXPIRED";
     tiempoDisponible=false;
   }
   }
 }, 1000);
+
+function tomarTiempo(){
+  var strVar="";
+   strVar += "<input type=\"hidden\" name=\"tiempo\" value=\""+capturaTiempo+"\">";
+  formulario.insertAdjacentHTML("beforeend",strVar);
+}
+
 
 function sound(src) {
   this.sound = document.createElement("audio");
