@@ -211,7 +211,7 @@
                         </div>
                         <% break; case "tipoM" : %>
                           <div class="carousel-item <%= activo %>  <%= final %>">
-                            <!--P Texto-->
+                            <!--P Mate-->
                             <div class="d-flex justify-content-center ">
                               <div class="card shadow-lg p-3 my-3 bg-body text-center col-sm-10 col-lg-10">
 
@@ -225,7 +225,8 @@
                                 </div>
                               </div>
                             </div>
-                            <!--Termina P Texto-->
+                            <!--Termina P Mate-->
+                            <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
                           </div>
                           <% break; case "tipoIT" : %>
                             <div class="carousel-item <%= activo %>  <%= final %>">
