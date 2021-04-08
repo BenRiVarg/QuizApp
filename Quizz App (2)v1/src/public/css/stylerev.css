@@ -104,17 +104,18 @@
     display: table;
   }
   .fondor {
-    background-color: white;
+    background-color: white !important;
   }
   table td.celdaRespuesta {
-    background-color: white;
+    background-color: white !important;
   }
   table td:first-child {
-    background-color: white;
+    background-color: white !important;
   }
   .bg-light {
-    background-color: white;
+    background-color: white !important;
   }
+  
   .bg-success {
     background-color: #486f99 !important;
   }
