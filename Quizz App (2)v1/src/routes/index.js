@@ -738,8 +738,8 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   
   console.log(req.body)
   var examencalificado = await Revisor.revisar(idAlumno, req);
-  console.log(examencalificado);
-  /*
+  //console.log(examencalificado);
+  
   var nuevoIntento= await Registros.create(examencalificado);
   
   
@@ -751,8 +751,8 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   console.log("Ejecutandose");
   console.log(respuestaAlumnoElegida[0].calificacion);
   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
-  */
- res.end();
+  
+ //res.end();
 });
 
 
