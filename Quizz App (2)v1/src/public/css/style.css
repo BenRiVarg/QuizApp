@@ -103,17 +103,17 @@
     clear: both;
     display: table;
   }
-  .fondor{
-    background-color: #e2e8f3;
+  .fondor {
+    background-color: white !important;
   }
-  table td.celdaRespuesta{
-    background-color: #e2e8f3;
+  table td.celdaRespuesta {
+    background-color: white !important;
   }
-  table td:first-child{
-    background-color: #e2e8f3;
+  table td:first-child {
+    background-color: white !important;
   }
-  .bg-light{
-    background-color: #e2e8f3;
+  .bg-light {
+    background-color: white !important;
   }
   .bg-success {
     background-color: #486f99 !important;
@@ -124,6 +124,7 @@
   .cor{
     color:#258d19;
   }
+  
   /* Add Zoom Animation */
   .animate {
     -webkit-animation: animatezoom 0.3s;
