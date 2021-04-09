@@ -30,7 +30,8 @@ conn.once('open', () => {
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection('uploads');
 });
-
+//URI SSD mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority
+//URI PRODUCCION mongodb+srv://QUIZ-API:PFEpkCKG5VcQDJNj@cluster0.lcjm4.mongodb.net/QUIZZES?retryWrites=true&w=majority
 // Create storage engine
 const storage = new GridFsStorage({
   url: 'mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority',
@@ -80,8 +81,11 @@ global.datosAlumnoSesion = {};
 
 router.get('/', async (req, res) => {
   res.render('index');
- var grupo=   await API.alumnos("R71MHRG4");
-  console.log(grupo)
+ var usuario=   await API.autenticacion("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQm13STdJUnYiLCJub21icmUiOiJJZ25hY2lvIFJ1YmVuIE9ydHXDsW8gQWxiYXJyYW4iLCJwZXJtaXNvcyI6W3sidmlzdWFsaXphcl9uaXZlbGVzX2FjYWTDqW1pY29zIjp0cnVlLCJhZ3JlZ2FyX25pdmVsZXNfYWNhZMOpbWljb3MiOnRydWUsImFjdHVhbGl6YXJfbml2ZWxlc19hY2Fkw6ltaWNvcyI6dHJ1ZSwiZWxpbWluYXJfbml2ZWxlc19hY2Fkw6ltaWNvcyI6dHJ1ZSwidmlzdWFsaXphcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiYWdyZWdhcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiYWN0dWFsaXphcl9ncmFkb3NfZGVfZXN0dWRpbyI6dHJ1ZSwiZWxpbWluYXJfZ3JhZG9zX2RlX2VzdHVkaW8iOnRydWUsInZpc3VhbGl6YXJfbWF0ZXJpYXMiOnRydWUsImFncmVnYXJfbWF0ZXJpYXMiOnRydWUsImFjdHVhbGl6YXJfbWF0ZXJpYXMiOnRydWUsImVsaW1pbmFyX21hdGVyaWFzIjp0cnVlLCJ2aXN1YWxpemFyX3dpa2lzIjp0cnVlLCJhZ3JlZ2FyX3dpa2lzIjp0cnVlLCJhY3R1YWxpemFyX3dpa2lzIjp0cnVlLCJlbGltaW5hcl93aWtpcyI6dHJ1ZSwidmlzdWFsaXphcl9xdWl6emVzIjp0cnVlLCJ2aXN1YWxpemFyX2Jsb3F1ZXMiOnRydWUsImFncmVnYXJfYmxvcXVlcyI6dHJ1ZSwiYWN0dWFsaXphcl9ibG9xdWVzIjp0cnVlLCJlbGltaW5hcl9ibG9xdWVzIjp0cnVlLCJ2aXN1YWxpemFyX3NlY3VlbmNpYXMiOnRydWUsImFncmVnYXJfc2VjdWVuY2lhcyI6dHJ1ZSwiYWN0dWFsaXphcl9zZWN1ZW5jaWFzIjp0cnVlLCJlbGltaW5hcl9zZWN1ZW5jaWFzIjp0cnVlLCJ2aXN1YWxpemFyX2FtYml0b3MiOnRydWUsImFncmVnYXJfYW1iaXRvcyI6dHJ1ZSwiYWN0dWFsaXphcl9hbWJpdG9zIjp0cnVlLCJlbGltaW5hcl9hbWJpdG9zIjp0cnVlLCJ2aXN1YWxpemFyX3BzbHMiOnRydWUsImFncmVnYXJfcHNscyI6dHJ1ZSwiYWN0dWFsaXphcl9wc2xzIjp0cnVlLCJlbGltaW5hcl9wc2xzIjp0cnVlLCJ2aXN1YWxpemFyX2VqZXMiOnRydWUsImFncmVnYXJfZWplcyI6dHJ1ZSwiYWN0dWFsaXphcl9lamVzIjp0cnVlLCJlbGltaW5hcl9lamVzIjp0cnVlLCJ2aXN1YWxpemFyX3RlbWFzIjp0cnVlLCJhZ3JlZ2FyX3RlbWFzIjp0cnVlLCJhY3R1YWxpemFyX3RlbWFzIjp0cnVlLCJlbGltaW5hcl90ZW1hcyI6dHJ1ZSwidmlzdWFsaXphcl9wYWdpbmFzIjp0cnVlLCJhZ3JlZ2FyX3BhZ2luYXMiOnRydWUsImFjdHVhbGl6YXJfcGFnaW5hcyI6dHJ1ZSwiZWxpbWluYXJfcGFnaW5hcyI6dHJ1ZSwicmVzdGF1cmFyX3BhZ2luYXMiOnRydWUsImVsaW1pbmFyX3BhZ2luYXNfZGVmaW5pdGl2YW1lbnRlIjp0cnVlLCJ2aXN1YWxpemFyX2ltYWdlbmVzIjp0cnVlLCJhZ3JlZ2FyX2ltYWdlbmVzIjp0cnVlLCJhY3R1YWxpemFyX2ltYWdlbmVzIjp0cnVlLCJlbGltaW5hcl9pbWFnZW5lcyI6dHJ1ZSwidmlzdWFsaXphcl9nYWxlcmlhcyI6dHJ1ZSwiYWdyZWdhcl9nYWxlcmlhcyI6dHJ1ZSwiYWN0dWFsaXphcl9nYWxlcmlhcyI6dHJ1ZSwiZWxpbWluYXJfZ2FsZXJpYXMiOnRydWUsInZpc3VhbGl6YXJfdmlkZW9zIjp0cnVlLCJhZ3JlZ2FyX3ZpZGVvcyI6dHJ1ZSwiYWN0dWFsaXphcl92aWRlb3MiOnRydWUsImVsaW1pbmFyX3ZpZGVvcyI6dHJ1ZX1dLCJpYXQiOjE2MTcwNzMxMzYsImV4cCI6MTYxNzEwMTkzNiwiYXVkIjoiaHR0cHM6Ly9lc3BlY2lhbGlzdGFzLmViZS5jb20ifQ.3TFpmPpkmiQIfOZIsZUPisfHDjc-C16STri_Mo2Vcnw");
+ console.log("Debuggeando"); 
+ var hoy=new Date();
+ var vigencia=new Date(usuario.token.exp);
+ console.log(hoy>vigencia);
 });
 
 
@@ -211,12 +215,20 @@ router.get('/editores/crear', async (req, res) => {
 
 });
 
+https://quizz-app-ebe.herokuapp.com/verify/:token
+
+router.get('/verify/:token', async (req, res) => {
+   var token=req.params.token;
+  res.render('editor/crear', );
+
+});
 
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
 
   console.log(req.body);
- 
+  console.log(req.body.grupo);
+  
   /*
   console.log(req.body.nivel);
   console.log(req.body.grado);
@@ -227,8 +239,8 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
 
 
  */
- 	//var contadorImagenes=0;
   
+   
   var i;
   //variable para construir el cuestionario como un array
   var cuestionario= [
@@ -309,15 +321,15 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     secuencia:req.body.Secuencias,
     nombreQuizz:req.body.nombreQuizz,
     creador:"Pendiente",
+    grupo: req.body.grupo,
+    intentos: req.body.intentos,
     cuestionario: cuestionario
        
        }
     
     );
-    //console.log(nuevoQuizz._id);
   
-       
-  
+      
 
   
 });
@@ -477,14 +489,6 @@ router.get('/docentes/estadisticas/:idalumno', async (req, res) => {
       apartado.push(intentoPorQuizz);
     }
 
-    /*
-    var claveQuizz="quizz"+i;
-    datosIntentos[claveQuizz]={
-      nombre: quizzI.nombreQuizz,
-      intentos:apartado
-    }
-    */
-
     var datosIntento = {
       nombre: quizzI.nombreQuizz,
       intentos: apartado
@@ -568,10 +572,21 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
   var estado = 'Pendiente de Revisión'; // variable por defecto para el estado de un quizz 
   var subject = await API.findByID("materias", materia);
   var grupo = await API.alumnos(idgrupo);
-  var cuestionarios = await Quizz.find({ secuencia: sec }).exec();
   var datosCuestionario = [];
   data.nombreMateria = subject.nombre;
   data.urlImg = subject.portada;
+
+  //Filtro por grupo y Especialistas
+  var cuestionarios = await Quizz.find({ 
+    $or:[
+      { secuencia: {$eq: sec}, grupo:{$eq: idgrupo}},
+      { secuencia: {$eq: sec}, grupo:{$eq: "Creado por Especialista"}}
+        ]
+    
+          }).exec();
+
+
+
 
   for (let i = 0; i < grupo.length; i++) {
     if (grupo[i].id === idAlumno) {
@@ -597,10 +612,26 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
 
     }
 
+    //Buscamos las veces que el alumno ha contestado un quizz en particular
+    var intentos= await Registros.find(
+      {quizz: {$eq: cuestionarios[y].id},
+      alumno: {$eq: idAlumno}}
+      ).exec();
+
+    intentos=intentos.length;
+
+    var oportunidades=100;
+    /*
+    if(cuestionarios[y].intentos){
+      oportunidades=Number.parseInt(cuestionarios[y].intentos);
+    }
+    */
     var datos = {
       id: cuestionarios[y]._id,
       nombre: cuestionarios[y].nombreQuizz,
-      estado: estado
+      estado: estado,
+      intentos: intentos,
+      oportunidades: oportunidades
     };
 
     datosCuestionario.push(datos);
@@ -608,12 +639,12 @@ router.get('/grupo/:idgrupo/alumno/:idalumno/materia/:idmateria/secuencia/:idsec
   }
 
 
-
+  console.log(datosCuestionario);
 
   //API.alumnos();
   const Quizzes = await Quizz.find({});
   res.render('alumnosQuizz/index', { quizzes: Quizzes, data, datosCuestionario });
-
+  
 });
 
 router.get('/alumnos/registro', async (req, res) => {
@@ -643,27 +674,41 @@ router.get('/alumnos/registro', async (req, res) => {
 
 router.get('/alumnos/revision/:id', async (req, res) => {
 
+  console.log(req.params.id);
   //Recuperamos el registro del alumno que vamos a revisar
   var respuestaAlumnoElegida = await Registros.find({ _id: req.params.id }).exec();
 
   //Recuperamos el quizz que contestó
   var quizz = await Quizz.findById(respuestaAlumnoElegida[0].quizz);
 
-  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
-  console.log(respuestaAlumnoElegida[0].respuestas[0].revision);
+  //console.log(respuestaAlumnoElegida);
 
-  
-   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida });
-
+  //console.log(respuestaAlumnoElegida[0].respuestas[2].respuestaA);
+  //console.log(respuestaAlumnoElegida[0].respuestas[2].revision);
+  console.log("Ejecutandose");
+  console.log(respuestaAlumnoElegida[0].calificacion);
+   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 });
+
+
 
 router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
 
   const idAlumno = req.params.idAlumno;
   const quizz = await Quizz.findById(req.params.id);
-  res.render('alumnos/Quizz', { quizz, idAlumno });
+  var contadorCuestionarios=quizz.cuestionario.length;
+  
+  var clavesCuestionarios=[];
+  for(var i=0;i<contadorCuestionarios;i++){
+    clavesCuestionarios.push(i);
+  }
 
+  //Variable para mostrar los cuestionarios en un orden diferente a los alumnos
+  clavesCuestionarios=Funciones.shuffle(clavesCuestionarios);
+
+  console.log(clavesCuestionarios);
+  res.render('alumnos/Quizz', { quizz,clavesCuestionarios, idAlumno });
 
 
 
@@ -691,14 +736,23 @@ router.get('/alumnos/respuestas', (req, res) => {
 router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
   
+  console.log(req.body)
   var examencalificado = await Revisor.revisar(idAlumno, req);
-
-  //Registros.create(examencalificado);
-  //res.render('alumnos/correccion');
-
-  Registros.create(examencalificado);
-  res.render('alumnos/correccion');
-
+  //console.log(examencalificado);
+  
+  var nuevoIntento= await Registros.create(examencalificado);
+  
+  
+  //Recuperamos el quizz que contestó
+ var quizz = await Quizz.findById(nuevoIntento.quizz);
+  console.log(nuevoIntento.respuestas[0].respuestaA);
+  respuestaAlumnoElegida=[nuevoIntento];
+  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  console.log("Ejecutandose");
+  console.log(respuestaAlumnoElegida[0].calificacion);
+  res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
+  
+ //res.end();
 });
 
 
@@ -790,7 +844,7 @@ router.get('/cuarto2', (req, res) => {
 })
 
 router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaCreadorQuizz2',{color:"#ffff99"});
+  res.render('plantillaRevision',{color:"#ffff99"});
 })
 
 router.get('/plantillaQuizz', (req, res) => {

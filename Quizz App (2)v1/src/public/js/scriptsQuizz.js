@@ -1,8 +1,20 @@
-// Set the date we're counting down to
-var countDownDate = new Date("Jan 5, 2022 15:37:25").getTime();
+var momentoActual=new Date().getTime();
 
+var capturaTiempo="";
+var temporizadorFQ=new Date();
+//Establecimiento del Fin del Quizz
+ var finQuizz=temporizadorFQ.getMinutes()+30;
+
+ temporizadorFQ.setMinutes(finQuizz);
+// Set the date we're counting down to
+var countDownDate = temporizadorFQ.getTime();
+
+//console.log(tiempoQuizz);
+
+var tiempoDisponible=true;
 // Update the count down every 1 second
 var x = setInterval(function () {
+  if(tiempoDisponible){
   // Get today's date and time
   var now = new Date().getTime();
 
@@ -10,21 +22,40 @@ var x = setInterval(function () {
   var distance = countDownDate - now;
 
   // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Output the result in an element with id="demo"
-  document.getElementById("demo").innerHTML =
-    days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+  document.getElementById("cronometro").innerHTML =
+     hours + " : " + minutes + " : " + seconds + " ";
 
+  //Variable para recolectar el tiempo que el alumno ha invertido en el quizz
+  var delta=now-momentoActual;
+
+  var deltaHours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var deltaMinutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
+  var deltaSeconds = Math.floor((delta % (1000 * 60)) / 1000);
+  
+  console.log("Delta Minutes");
+  capturaTiempo= deltaHours + " : " + deltaMinutes + " : " + deltaSeconds + " ";
+  console.log(capturaTiempo);
   // If the count down is over, write some text
   if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "EXPIRED";
+    enviarQuizz();
+    document.getElementById("cronometro").innerHTML = "EXPIRED";
+    tiempoDisponible=false;
+  }
   }
 }, 1000);
+
+function tomarTiempo(){
+  var strVar="";
+   strVar += "<input type=\"hidden\" name=\"tiempo\" value=\""+capturaTiempo+"\">";
+  formulario.insertAdjacentHTML("beforeend",strVar);
+}
+
 
 function sound(src) {
   this.sound = document.createElement("audio");

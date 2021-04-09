@@ -71,8 +71,14 @@
     <br>
     <div class="text-center">
       <p class="display-6">Nombre del Quizz:</p>
-
+      <input type="hidden" name="grupo" value="Creado por Especialista">
       <input class="crearQ" type="text" placeholder="Coloca el nombre:" name="nombreQuizz">
+
+    </div>
+    <div class="text-center mt-3">
+      <p class="display-6">Intentos Permitidos:</p>
+      
+      <input class="crearQ" type="number" id="intentos"  value="1" min="1"; name="intentos">
 
     </div>
     <!-- Inserto de nuevas preguntas-->
@@ -110,7 +116,7 @@
         <a  onclick="preguntaAbierta(), sumahref(this.id)" id="ref" class="w3-bar-item w3-button btn"  >Insertar Pregunta Abierta</a>
         </sapn>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para agregar pregunta relacional" delay="0" tabindex="0" class="d-inline-block" >
-        <button  id="btn1" class="btn1 btn w3-bar-item w3-button" onclick="preguntaRelacional(), desabilitado()"><a id="ref2" onclick="sumahref(this.id)" >Insertar Pregunta Relacional</a></button>
+        <button  id="btn1" class="btn1 btn w3-bar-item w3-button" onclick="preguntaRelacional()"><a id="ref2" onclick="sumahref(this.id)" >Insertar Pregunta Relacional</a></button>
         </span>
         <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear una pregunta de opcion multiple" delay="0" tabindex="0" class="d-inline-block" >
         <a onclick="preguntaOM(), sumahref(this.id)" class="w3-bar-item w3-button btn" id="ref3">Insertar Pregunta Opción Múltiple</a></button>
@@ -121,9 +127,11 @@
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para creaa una pregunta de matematicas" delay="0" tabindex="0" class="d-inline-block" >
         <a onclick="preguntaMatematicas(), sumahref(this.id)" class="btn w3-bar-item w3-button" id="ref5" onclick="sumahref(this.id)" >Insertar Pregunta de Matemáticas</a>
       </span>
+    <!--
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable" delay="0" tabindex="0" class="d-inline-block" >
         <buton onclick="preguntaArrastrar()" class="w3-bar-item w3-button" ><a id="ref6" class="" onclick="sumahref(this.id)" >Inserta Pregunta Arrastrable</a></button>
       </span>
+    -->
     </nav>
   </div>
   

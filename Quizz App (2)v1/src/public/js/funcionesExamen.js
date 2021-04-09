@@ -1,17 +1,20 @@
 
 //Tamaño Imágenes=1000*600
-//tipoAr 
-function caliz(){
-    alert("Sí va a Funcionar")
-}
 
+
+var formulario=document.getElementById("quizz");
+//Nos aseguramos de no estar guardando otros valores
+formulario.reset()
+
+var impedimento=1
+console.log(impedimento);
 //Variable para recuperar las respuestas del alumno
 var respuestasAlumnoD=[];
 var retornable=document.getElementsByClassName("retornable")[0];
 matematicas();
 contadorItemsMultiples();
 
-//----------Empiezan FUncioens de Mate-----//
+//----------Empiezan Funciones de Mate-----//
 function matematicas(){
  var preguntasMate=document.getElementsByClassName("mate");
  var identificadoresMate=document.querySelectorAll("input.tipoMate");
@@ -164,40 +167,7 @@ function matematicas(){
 
 //-----------Terminan Funciones de Mate
 
-function moverDiv(){
-    var alto=document.getElementById("alto").value;
-    var ancho=document.getElementById("ancho").value;
-    var img=document.getElementById("imagenP");
 
-    console.log(ancho+"   "+alto);
-    console.log(img.width+"   "+img.height);
-
-    //Captura de los elementos reactivo
-    var divMovil=document.getElementsByClassName("texto-encima");
-    var textoMovil=document.getElementsByClassName("itemPregunta");
-
-    var limiteAncho=img.width-100;
-
-    var limiteAlto=img.height-30;
-
-    if(ancho>limiteAncho){
-        ancho=limiteAncho;
-    }
-    
-    if(alto>limiteAlto){
-        alto=limiteAlto;
-    }
-
-    divMovil[0].style.left=ancho+"px";
-    divMovil[0].style.top=alto+"px";
-
-    textoMovil[0].style.left=ancho+"px";
-    textoMovil[0].style.top=alto+"px";
-
-   
-  
-
-}
 
 
 function contadorItemsMultiples(){
@@ -306,7 +276,16 @@ function activarReactivo(){
         });
       }
 
+function tomarTiempo(){
+   var tiempo=document.getElementById("cronometro").textContent;
+   var strVar="";
+    strVar += "<input type=\"hidden\" name=\"tiempo\" value=\""+tiempo+"\">";
+   formulario.insertAdjacentHTML("beforeend",strVar);
+}
+
 function enviarQuizz(){
     envioRespuestasMate();
-    document.getElementById("quizz").submit();
+    tomarTiempo();
+    formulario.submit();
+    impedimento++;
 }

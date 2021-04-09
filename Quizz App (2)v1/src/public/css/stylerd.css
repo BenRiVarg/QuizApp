@@ -155,6 +155,7 @@ img {
   transform: translateY(-7px);
 }
 
+
 @media only screen and (max-width: 600px) {
   .btn-flotante {
     font-size: 14px;
@@ -173,13 +174,47 @@ img {
   }
 }
  */
+
 .contenedorimg {
   height: 360px;
 }
 
 .img-fluid {
-  width: 320px !important;
+  width: 1020px !important;
   height: 358px;
   margin: 0 auto;
   background-size: cover;
+}
+
+.botonNum {
+  margin-left: 63px;
+}
+
+.respuestaText {
+  margin-left: -50px;
+  font-size: 20px;
+}
+
+.botonNumRes {
+  margin-left: 63px;
+}
+
+.respuestaText2 {
+  margin-left: -50px;
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 1350px) {
+  tr #elementos .textoRp {
+    padding-left: 45px !important;
+    width: 100px;
+  }
+  tr #elementos .textoRp2 {
+    width: 320px;
+    padding-left: 15px !important;
+  }
+  tr #elementos .textoRp3 {
+    padding-left: 20px !important;
+  }
+  
 }
