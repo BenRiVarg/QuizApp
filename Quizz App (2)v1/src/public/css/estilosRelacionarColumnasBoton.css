@@ -91,7 +91,10 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-  html, body, table, #main {
+  html,
+  body,
+  table,
+  #main {
     margin: 0;
     padding: 0;
     font-size: 14px;
@@ -121,7 +124,6 @@ body {
   padding-left: 16px;
   /* ancho de la imagen más un poco */
   margin-left: 10px;
-  opacity: 0.75;
 }
 
 table {
@@ -172,7 +174,7 @@ table td.boton.contestada button {
   border-radius: 0;
 }
 
-table td.boton.contestada+td {
+table td.boton.contestada + td {
   background-color: #e6ecff;
 }
 
@@ -243,12 +245,14 @@ img#botonCerrarRetro:hover:after {
   text-align: center;
 }
 
-#retroFinalMensaje div.bien, #retroFinalMensaje div.mal {
+#retroFinalMensaje div.bien,
+#retroFinalMensaje div.mal {
   float: left;
   height: 16px;
 }
 
-#retroFinalMensaje, div#conclusion {
+#retroFinalMensaje,
+div#conclusion {
   text-align: center;
 }
 
@@ -281,7 +285,10 @@ body.examen {
   background-color: #ffd9b3;
 }
 
-html h1, h2, h3, h4 {
+html h1,
+h2,
+h3,
+h4 {
   color: Black;
 }
 
@@ -324,7 +331,7 @@ html h1, h2, h3, h4 {
 }
 
 .opcion {
-  background-color: #C06500;
+  background-color: #c06500;
   width: 50px;
   height: 50px;
   color: white;
