@@ -1,9 +1,6 @@
 
 //Tamaño Imágenes=1000*600
-//tipoAr 
-function caliz(){
-    alert("Sí va a Funcionar")
-}
+
 
 //Variable para recuperar las respuestas del alumno
 var respuestasAlumnoD=[];
@@ -52,7 +49,7 @@ function matematicas(){
              strVar += "              <\/div>";
              strVar += "              <div class=\"col-1 pt-4\"  >";
              strVar += "                  <div class=\"pt-1 \">";
-             strVar += "                    <input type=\"number\"   class=\"alumnoResponde\" pt-2\">";
+             strVar += "                    <input type=\"number\" min=\"0\"  class=\"alumnoResponde\" pt-2\">";
              strVar += "                  <\/div >";
              strVar += "                  ";
              strVar += "              <\/div>";
