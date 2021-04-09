@@ -134,7 +134,6 @@
           </div>
           <!--P Relacional-->
           <% break; case "tipoOM" : %>
-
             <% <!-- solo una respuesta posible-->
 
               if (quizz.cuestionario[i].respuesta.length<=1) { %>
@@ -149,7 +148,7 @@
 
                       <div class="card-body  border border-1 fondor">
                         <h4 class="display-7">
-                          <% <!--=quizz.cuestionario[i].pregunta -->%>++
+                          <%= quizz.cuestionario[i].pregunta[0] %>
                         </h4><br>
                         <div class="container">
                           <div class="row">
@@ -308,7 +307,7 @@
                                                                   <!--Empieza Revisión OMM-->
                                                                   <div class="d-flex justify-content-center">
                                                                     <div
-                                                                      class="card shadow-lg p-3 my-3 bg-body rounded col-sm-10 col-lg-10">
+                                                                      class="card shadow-lg p-3 my-3 bg-body rounded col-sm-10 col-lg-10 bg-success">
 
                                                                       <div class="card-body border border-1 fondor">
                                                                         <h4
@@ -467,283 +466,7 @@
                                                       </div>
                                                     </div>
                                                     <!--P Relacional-->
-                                                    <% break; case "tipoOM" : %>
-
-                                                      <% <!-- solo una respuesta posible-->
-
-                                                        if (quizz.cuestionario[i].respuesta.length<=1) { %>
-
-
-                                                          <% if((!(respuestaAlumnoElegida
-                                                            [0].respuestas[i].revision[0]))&&((respuestaAlumnoElegida[0].respuestas[i].respuestaA[0])==0))
-                                                            { %>
-
-
-                                                            <div class="d-flex justify-content-center">
-                                                              <div
-                                                                class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
-
-                                                                <div class="card-body border border-1 fondor">
-                                                                  <h4 class="display-7">
-                                                                    <%=quizz.cuestionario[i].pregunta[0] %>
-                                                                  </h4><br>
-                                                                  <div class="container">
-                                                                    <div class="row">
-
-                                                                      <% for (var k=1;
-                                                                        k<quizz.cuestionario[i].pregunta.length; k++)
-                                                                        {%>
-                                                                        <% if
-                                                                          (quizz.cuestionario[i].pregunta[k]==quizz.cuestionario[i].respuesta[0]){
-                                                                          %>
-                                                                          <div class="form-check">
-                                                                            <p
-                                                                              class="display-6 text-danger text-center">
-                                                                              <b class="mal mr-3"></b>No contestaste
-                                                                            </p>
-                                                                            <input class="form-check-input" type="radio"
-                                                                              name="respuesta<%= i %>"
-                                                                              value=" <%= quizz.cuestionario[i].pregunta[j]%>"
-                                                                              id="flexRadioDefault1" checked="checked">
-                                                                            <label
-                                                                              class="form-check-label  text-success"
-                                                                              for="pregunta">
-                                                                              <%= quizz.cuestionario[i].pregunta[k]%>
-                                                                            </label>
-                                                                          </div>
-
-                                                                          <%}else { %>
-                                                                            <div class="form-check">
-                                                                              <input class="form-check-input"
-                                                                                type="radio" name="respuesta<%= i %>"
-                                                                                value=" <%= quizz.cuestionario[i].pregunta[j]%>"
-                                                                                id="flexRadioDefault1">
-                                                                              <label class="form-check-label "
-                                                                                for="pregunta">
-                                                                                <%= quizz.cuestionario[i].pregunta[k]%>
-                                                                              </label>
-                                                                            </div>
-                                                                            <% } %>
-
-
-                                                                              <% } %>
-
-
-                                                                                <%}else { %>
-                                                                                  <% if (respuestaAlumnoElegida
-                                                                                    [0].respuestas[i].revision[0]){ %>
-                                                                                    <!--Respuesta alumno Correcta-->
-
-                                                                                    <div
-                                                                                      class="d-flex justify-content-center">
-                                                                                      <div
-                                                                                        class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
-
-                                                                                        <div
-                                                                                          class="card-body border border-1 fondor">
-                                                                                          <h4 class="display-7">
-                                                                                            <%=quizz.cuestionario[i].pregunta[0]
-                                                                                              %>
-                                                                                          </h4><br>
-                                                                                          <div class="container">
-                                                                                            <div class="row">
-
-                                                                                              <% for (var k=1;
-                                                                                                k<quizz.cuestionario[i].pregunta.length;
-                                                                                                k++) {%>
-                                                                                                <% if
-                                                                                                  (respuestaAlumnoElegida
-                                                                                                  [0].respuestas[i].respuestaA[0]==k){
-                                                                                                  %>
-                                                                                                  <div
-                                                                                                    class="form-check">
-                                                                                                    <p
-                                                                                                      class="display-6 text-success text-center">
-                                                                                                      <b
-                                                                                                        class="bien pr-4"></b>¡Correcto!
-                                                                                                    </p>
-                                                                                                    <input
-                                                                                                      class="form-check-input"
-                                                                                                      type="radio"
-                                                                                                      id="flexRadioDefault1"
-                                                                                                      checked="checked">
-                                                                                                    <label
-                                                                                                      class="form-check-label  text-success"
-                                                                                                      for="pregunta">
-                                                                                                      <%=
-                                                                                                        quizz.cuestionario[i].pregunta[k]%>
-                                                                                                    </label>
-                                                                                                  </div>
-
-                                                                                                  <%}else { %>
-                                                                                                    <div
-                                                                                                      class="form-check">
-                                                                                                      <input
-                                                                                                        class="form-check-input"
-                                                                                                        type="radio"
-                                                                                                        id="flexRadioDefault1">
-                                                                                                      <label
-                                                                                                        class="form-check-label "
-                                                                                                        for="pregunta">
-                                                                                                        <%=
-                                                                                                          quizz.cuestionario[i].pregunta[k]%>
-                                                                                                      </label>
-                                                                                                    </div>
-                                                                                                    <% } %>
-
-
-
-
-                                                                                                      <% } %>
-
-
-                                                                                                        <% } %>
-                                                                                                          <% } %>
-
-                                                                                            </div>
-
-                                                                                          </div>
-                                                                                        </div>
-                                                                                      </div>
-                                                                                    </div>
-
-                                                                    </div>
-                                                                  </div>
-                                                                </div>
-                                                              </div>
-
-
-
-
-                                                              <!-- Multiples Respuestas-->
-                                                              else { %>
-                                                              <!--Empieza Revisión OMM-->
-                                                              <div class="d-flex justify-content-center">
-                                                                <div
-                                                                  class="card shadow-lg p-3 my-3 bg-body rounded col-sm-10 col-lg-10">
-
-                                                                  <div class="card-body border border-1 fondor">
-                                                                    <h4
-                                                                      class="display-7 contestada mb-0 pb-0 text-center">
-                                                                      <%= quizz.cuestionario[i].pregunta[0] %>
-                                                                    </h4><br>
-                                                                    <div class="container">
-                                                                      <!--Si el alumno no ha contestado nada-->
-                                                                      <% var
-                                                                        resultado=respuestaAlumnoElegida[0].respuestas[0].respuestaA[0]%>
-                                                                        <% if(resultado==0){%>
-                                                                          <div
-                                                                            class="justify-content-center text-danger mt-0 pt-0">
-                                                                            No has contestado nada para esta
-                                                                            pregunta
-                                                                          </div>
-                                                                          <%}%>
-                                                                            <!--Comienzan las revisiones por lo que envió el alumno-->
-                                                                            <% var llaveRA=0 %>
-                                                                              <div class="row ">
-                                                                                <div class="col  justify-content-start">
-                                                                                  <% for (var j=1;
-                                                                                    j<quizz.cuestionario[i].pregunta.length;
-                                                                                    j++) {%>
-
-                                                                                    <%if(j==respuestaAlumnoElegida[0].respuestas[0].respuestaA[llaveRA]){%>
-                                                                                      <!--Condicionales de Respuestas del Alumno-->
-                                                                                      <%if(j==respuestaAlumnoElegida[0].respuestas[0].revision[llaveRA]){%>
-                                                                                        <!--Respuesta Correcta-->
-                                                                                        <input class="form-check-input "
-                                                                                          type="checkbox"
-                                                                                          id="flexRadioDefault1"
-                                                                                          checked="checked">
-                                                                                        <label class="form-check-label"
-                                                                                          for="pregunta">
-                                                                                          <p
-                                                                                            class="ml-2  bien text-success">
-                                                                                            <%=
-                                                                                              quizz.cuestionario[i].pregunta[j]
-                                                                                              %>
-                                                                                          </p>
-                                                                                        </label><br>
-                                                                                        <%} else{%>
-                                                                                          <!--Respuesta Incorrecta-->
-                                                                                          <input
-                                                                                            class="form-check-input"
-                                                                                            type="checkbox"
-                                                                                            checked="checked">
-                                                                                          <label
-                                                                                            class="form-check-label"
-                                                                                            for="pregunta">
-                                                                                            <p
-                                                                                              class="ml-2 mal text-danger">
-                                                                                              <%=
-                                                                                                quizz.cuestionario[i].pregunta[j]
-                                                                                                %>
-                                                                                            </p>
-                                                                                          </label><br>
-                                                                                          <%} %>
-                                                                                            <!--Aumentamos la clave que mueve las respuestas del alumno-->
-                                                                                            <% llaveRA=llaveRA+1; %>
-                                                                                              <%}else{%>
-                                                                                                <% var
-                                                                                                  respuestaNeutra=true
-                                                                                                  %>
-                                                                                                  <% for(var
-                                                                                                    k=0;k<=(quizz.cuestionario[i].respuesta.length-1);k++){%>
-                                                                                                    <!--Respuesta Correcta vacía-->
-                                                                                                    <%
-                                                                                                      if(quizz.cuestionario[i].respuesta[k]==quizz.cuestionario[i].pregunta[j]){%>
-                                                                                                      <input
-                                                                                                        class="form-check-input "
-                                                                                                        type="checkbox"
-                                                                                                        id="flexRadioDefault1">
-                                                                                                      <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="pregunta">
-                                                                                                        <p
-                                                                                                          class="ml-2 text-success">
-                                                                                                          <%=
-                                                                                                            quizz.cuestionario[i].pregunta[j]
-                                                                                                            %>
-                                                                                                        </p>
-                                                                                                      </label><br>
-                                                                                                      <% var
-                                                                                                        respuestaNeutra=false%>
-                                                                                                        <% break %>
-                                                                                                          <%}%>
-                                                                                                            <%}%>
-                                                                                                              <%
-                                                                                                                if(respuestaNeutra){%>
-                                                                                                                <!--Respuestas vacías-->
-                                                                                                                <input
-                                                                                                                  class="form-check-input"
-                                                                                                                  type="checkbox"
-                                                                                                                  id="flexRadioDefault1">
-                                                                                                                <label
-                                                                                                                  class="form-check-label"
-                                                                                                                  for="pregunta">
-                                                                                                                  <p
-                                                                                                                    class="ml-2 ">
-                                                                                                                    <%=
-                                                                                                                      quizz.cuestionario[i].pregunta[j]
-                                                                                                                      %>
-                                                                                                                  </p>
-                                                                                                                </label><br>
-                                                                                                                <%}%>
-                                                                                                                  <%} %>
-                                                                                                                    <% }
-                                                                                                                      %>
-                                                                                </div>
-                                                                              </div>
-                                                                              <!---->
-                                                                    </div>
-                                                                  </div>
-                                                                </div>
-                                                              </div>
-                                                              <!--Termina Múltiple Respuesta -->
-
-                                                              <% } %>
-
-                                                            </div>
-                                                            <% break; case "tipoIT" : %>
+                                                    <% break; case "tipoIT" : %>
                                                               <% if
                                                                 (respuestaAlumnoElegida[0].respuestas[i].revision[0]){
                                                                 %>
@@ -829,9 +552,10 @@
                                                                             <% if (respuestaAlumnoElegida[0].respuestas[i].revision[0]){ %>
                                                                               <!--Solución Correcta-->
                                                                               <div class="card-body border border-1 text-dark fondor">
+                                                                                <p class="display-6 bien"  >Tu respuesta es correcta</p>
                                                                                 <div class="row justify-content-center" style="background-color:lightblue">
                                                                                   <p class="mate bien" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %></p>
-                                                                                  <p class="contestada bien" id="mate<%=i%>" ><p class="">tu respuesta es correcta<p class="correcta respuestasM text-success" id="respuestaM<%=i%>"> 
+                                                                                  <p class="correcta respuestasM text-success" id="respuestaM<%=i%>"> 
                                                                                     <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[1] %>_<%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[2] %>   </p>
                                                                                   
                                                                                     <%}else { %>
@@ -863,7 +587,7 @@
                                                                                   <%}else { %>
                                                                                   <!--Solución Incorrecta Enteros-->
                                                                                   <div class="card-body border border-1 text-dark fondor">
-                                                                                    <p class=" display-6 maltpM" id="mate<%=i%>">Tu respuesta es incorrecta</p>
+                                                                                    <p class=" display-6 mal" id="mate<%=i%>">Tu respuesta es incorrecta</p>
                                                                                 <div class="row justify-content-center" style="display: flex; background-color:lightblue">
                                                                                   
                                                                                   <div class="col-2 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%> =</p></div>
