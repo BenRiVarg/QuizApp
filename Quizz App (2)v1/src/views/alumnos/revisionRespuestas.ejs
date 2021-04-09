@@ -822,77 +822,82 @@
 
 
                                                                     <% break; case "tipoM" : %>
+                                                                    <% if (respuestaAlumnoElegida[0].respuestas[i].respuestaA[0]!="NaN"){%><!--El alumno Contestó algo-->
                                                                       <div class="d-flex justify-content-center ">
                                                                         <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
-                                                                          <div class="card-body border border-1 fondor">
-                                                                         <!-- <% if (respuestaAlumnoElegida
-                                                                            [0].respuestas[i].revision[0]){ %>
-                                                                             //Solución Correcta
-                                                                            <div class="card-body border border-1 fondor">
-                                                                              <h4 class="display-7 contestada bien ">
-                                                                                //Resuelve la siguiente expresión
-                                                                              </h4><br>
-                                                                              <div class="row justify-content-center"
-                                                                                style="background-color:lightblue">
-                                                                                <p class="mate bien" id="mate<%=i%>">
-                                                                                  <%= quizz.cuestionario[i].pregunta[0]
-                                                                                    %>
-                                                                                    <p>
-                                                                                    <p class="respuestasM"
-                                                                                      id="respuestaM<%=i%>">
-                                                                                      <%=
-                                                                                        respuestaAlumnoElegida[0].respuestas[0].respuestaA[0]
-                                                                                        %>
-                                                                                    </p>
+                                                                          <% if (respuestaAlumnoElegida[0].respuestas[i].respuestaA[2]){ %> <!--Proceso con Fracciones-->
+                                                                            <% if (respuestaAlumnoElegida[0].respuestas[i].revision[0]){ %>
+                                                                              <!--Solución Correcta-->
+                                                                              <div class="card-body border border-1 text-dark">
+                                                                                <div class="row justify-content-center" style="background-color:lightblue">
+                                                                                  <p class="mate bien" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %></p>
+                                                                                  <p class="contestada bien" id="mate<%=i%>" ><p class="">tu respuesta es correcta<p class="correcta respuestasM text-success" id="respuestaM<%=i%>"> 
+                                                                                    <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[1] %>_<%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[2] %>   </p>
+                                                                                  
                                                                                     <%}else { %>
-                                                                                      //Solución Incorrecta
-                                                                                      <div
-                                                                                        class="card-body border border-1 fondor">
-                                                                                        <h4
-                                                                                          class="display-7 contestada mal ">
-                                                                                          Resuelve la
-                                                                                            siguiente expresión
-                                                                                        </h4><br>
-                                                                                        <div
-                                                                                          class="row justify-content-center"
-                                                                                          style="background-color:lightblue">
-                                                                                          <p class="mate mal"
-                                                                                            id="mate<%=i%>">
-                                                                                            <%=
-                                                                                              quizz.cuestionario[i].pregunta[0]
-                                                                                              %>
-                                                                                              <p>
-                                                                                              <p class="respuestasM"
-                                                                                                id="respuestaM<%=i%>">
-                                                                                                <%=
-                                                                                                  respuestaAlumnoElegida[0].respuestas[0].respuestaA[0]
-                                                                                                  %>
-                                                                                              </p>
-                                                                                              <% } %>
-                                                                                                <div
-                                                                                                  class="align-self-first">
-                                                                                                </div>
+                                                                                    <!--Solución Incorrecta-->
+                                                                                    <div class="card-body border border-1 text-dark">
+                                                                                    <div class="row justify-content-center" style="background-color:lightblue">
+                                                                                    <p class="mate mal" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%></p>
+                                                                                    <p class="contestada mal " id="mate<%=i%>"><p class="" >tu respuesta es incorrecta<p class="incorrecta respuestasM text-danger" id="respuestasM<%=i%>">
+                                                                                  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[1] %>_<%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[2] %>   </p>
+                                                                                <% } %>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                          </div>
+                                                                          <% }else { %>
 
-                                                                                        </div>
-                                                                                      </div>
+                                                                            <% if (respuestaAlumnoElegida[0].respuestas[i].revision[0]){ %> <!--Proceso con Enteros-->
+                                                                              <!--Solución correcta Enteros-->
+                                                                            <div class="card-body border border-1 text-dark">
+                                                                              <div class="row justify-content-center" style=" display:flex; background-color:lightblue">
+                                                                                <p class=" bien" id="mate<%=i%>" >Tu respuesta es correcta</p>
+                                                                                    <div class="col-2 "> <p   id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p></div>
+                                                                                    <div class="col-1 "><p class="respuestaEntera text-success" id="respuestaM<%=i%>" style="width: 100px; margin-left: -80px;">  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
+                                                                                   
+                                                                                   <!-- <p  id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p><p class="respuestasM text-success" id="respuestaM<%=i%>"> 
+                                                                                    <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p>
+                                                                                    -->
+                                                                                  <%}else { %>
+                                                                                  <!--Solución Incorrecta Enteros-->
+                                                                                  <div class="card-body border border-1 text-dark">
+                                                                                <div class="row justify-content-center" style="display: flex; background-color:lightblue">
+                                                                                  <p class="maltpM" id="mate<%=i%>">tu respuesta es incorrecta</p>
+                                                                                  <div class="col-2 "> <p   id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%> =</p></div>
+                                                                                  <div class="col-1 "><p class=" respuestaEntera text-danger" style="width: 100px; margin-left: -80px;"><%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
+                                                                                  <% } %>
+                                                                                </div>
+                                                                                </div>
                                                                               </div>
                                                                             </div>
-                                                                        </div>
-                                                                      </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  -->
-                  </div>
-      </div>
-    </div>
-
-
+                                                                          
+                                                                          
+                                                                            <%}%>
+                                                                            <%}<!--Termina respuesta que contestó-->
+                                                                            else{%>
+                                                                                  <!--El alumno no contestó nada-->
+                                                                                  <div class="d-flex justify-content-center ">
+                                                                                    <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
+                                                                                      <div class="card-body border border-1 text-dark">
+                                                                                        <div class="row justify-content-center" style="background-color:lightblue">
+                                                                                          <h4 class="display-7 contestada mal">
+                                                                                            No has contestado nada 
+                                                                                          </h4><br>
+                                                                                          <div class="row justify-content-center" style="background-color:lightblue">
+                                                                                            <p class="mate">5_5 + 3_5</p>
+                                                                                            <p class="respuestasM"> <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %></p>
+                                                                                            <div class="align-self-first">
+                                                                                
+                                                                                            </div>
+                                                                                        <!--FIn-->
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                    <!--FIn-->
+                                                                                    <%}
+                                                                                    %>                                                                      
       <% break; } %>
         <% } %>
 
@@ -900,125 +905,7 @@
             integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
             crossorigin="anonymous"></script>
           <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-          <script>
-
-
-            matematicas();
-            function matematicas() {
-              var preguntasMate = document.getElementsByClassName("mate");
-              var respuestasMate = document.getElementsByClassName("respuestasM")
-              var strVar = "";
-
-
-
-              //Busqueda de los espacios para poner preguntas de matemáticas
-              for (i = 0; i < preguntasMate.length; i++) {
-                var pregunta = preguntasMate[i].textContent;
-                var respuesta = respuestasMate[i].textContent;
-
-                //Eliminación de todos los espacios en blanco
-                pregunta = pregunta.replace(/\s+/g, '');
-                respuesta = respuesta.replace(/\s+/g, '');
-                //limipiamos la variable
-                strVar = "";
-                //Proceso sin fracciones
-                if (pregunta.search("_") == -1) {
-                  //Conversión de la expresión a HTML
-                  for (j = 0; j < pregunta.length; j++) {
-                    var caracter = pregunta.slice(j, j + 1);
-                    if (Number.isInteger(parseInt(caracter))) {
-                      strVar += "  <div class=\"col-1 col-sm-5\"  >";
-                      strVar += "            <h1 class=\"text-center text-dark\">" + caracter + "<\/h1>";
-                      strVar += "          <\/div>";
-                    }
-                    else {
-                      strVar += "<div class=\"col-1 align-middle\"  >";
-                      strVar += "            <h1 class=\"text-center text-succes \">" + caracter + "<\/h1> ";
-                      strVar += "          <\/div>";
-                    }
-                  }
-
-
-
-
-                  /*
-                  console.log("Criterio:"+preguntasMate[i].className);
-                  console.log("Criterio:"+preguntasMate[i].className.search("correcta"))
-                  console.log("Criterio:"+(preguntasMate[i].className.search("correcta"))!=-1);
-                  */
-                  if ((preguntasMate[i].className.search("bien")) != -1) {
-                    console.log("La respuseta es correcta");
-                    //Añadir elementos para dar retroalimentación al alumno
-                    strVar += "  <div class=\"col-1\"  >";
-                    strVar += "              <h1 class=\"text-center text-dark pt-4\">=<\/h1> ";
-                    strVar += "            <\/div>";
-                    strVar += "  <div class=\"col-1 col-sm-5\"  >";
-                    strVar += "            <h1 class=\"text-center text-success\">" + respuesta + "<\/h1>";
-                    strVar += "          <\/div>";
-                  }
-                  else {
-                    console.log("La respuseta es incorrecta");
-                    //Añadir elementos para dar retroalimentación al alumno
-                    strVar += "  <div class=\"col-1\"  >";
-                    strVar += "              <h1 class=\"text-center text-dark pt-4\">=<\/h1> ";
-                    strVar += "            <\/div>";
-                    strVar += "  <div class=\"col-1 col-sm-5\"  >";
-                    strVar += "            <h1 class=\"text-center text-danger\">" + respuesta + "<\/h1>";
-                    strVar += "          <\/div>";
-                  }
-
-                  preguntasMate[i].parentElement.insertAdjacentHTML("beforeend", strVar);
-                }//if
-                else {//Proceso con Fracciones
-                  for (j = 1; j < pregunta.length; j++) {
-                    var caracter = pregunta.slice(j - 1, j);
-                    //Construcción de la fracción
-                    if (caracter == "_") {
-
-                      strVar += "   <div class=\"col-1 \"  >";
-                      strVar += "              <h1 class=\"text-center text-dark\">" + pregunta.slice(j - 2, j - 1) + "<\/h1>";
-                      strVar += "               <h1 class=\"border-top border-dark text-center text-center text-dark\">" + pregunta.slice(j, j + 1) + "<\/h1>";
-                      strVar += "            <\/div>";
-
-                      j = j + 1;
-                    }
-                    //Operandos
-                    else {
-                      if (!Number.isInteger(parseInt(caracter))) {
-                        strVar += " <div class=\"col-1 \"  >";
-                        strVar += "              <h1 class=\"text-center text-dark pt-4\">" + pregunta.slice(j - 1, j) + "<\/h1> ";
-                        strVar += "            <\/div>";
-                      }
-                    }
-
-                  }
-                  //Añadir elementos para enviar respuesta
-                  strVar += "  <div class=\"col-1\"  >";
-                  strVar += "              <h1 class=\"text-center text-dark pt-4\">=<\/h1> ";
-                  strVar += "            <\/div>";
-                  strVar += "            <div class=\"col-3 \"  >";
-                  strVar += "                <div class=\"pt-3\">";
-                  strVar += "                  <input type=\"number\" name=\"\" id=\"\" class=\" pt-2 col-12\">";
-                  strVar += "                <\/div >";
-                  strVar += "                <div class=\"pt-1\">";
-                  strVar += "                  <input type=\"number\" name=\"\" id=\"\" class=\" pt-2 col-12\">";
-                  strVar += "                <\/div>";
-                  strVar += "            <\/div>";
-
-                  preguntasMate[i].parentElement.insertAdjacentHTML("beforeend", strVar);
-                  //   preguntasMate[i].remove();
-                }
-              }//for preguntas
-              /*
-               //Removemos todos los <P> para que no sea confuso
-            var destructor=preguntasMate.length;
-             for(var i=0;i<destructor;i++){
-              preguntasMate[0].remove();
-              respuestasMate[0].remove();
-             }
-             */
-            }
-          </script>
+         
           <!-- <body onload="nobackbutton();">-->
 
           <!--
