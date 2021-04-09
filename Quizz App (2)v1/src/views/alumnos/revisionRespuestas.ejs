@@ -828,7 +828,7 @@
                                                                           <% if (respuestaAlumnoElegida[0].respuestas[i].respuestaA[2]){ %> <!--Proceso con Fracciones-->
                                                                             <% if (respuestaAlumnoElegida[0].respuestas[i].revision[0]){ %>
                                                                               <!--Solución Correcta-->
-                                                                              <div class="card-body border border-1 text-dark">
+                                                                              <div class="card-body border border-1 text-dark fondor">
                                                                                 <div class="row justify-content-center" style="background-color:lightblue">
                                                                                   <p class="mate bien" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %></p>
                                                                                   <p class="contestada bien" id="mate<%=i%>" ><p class="">tu respuesta es correcta<p class="correcta respuestasM text-success" id="respuestaM<%=i%>"> 
@@ -836,7 +836,7 @@
                                                                                   
                                                                                     <%}else { %>
                                                                                     <!--Solución Incorrecta-->
-                                                                                    <div class="card-body border border-1 text-dark">
+                                                                                    <div class="card-body border border-1 text-dark fondor">
                                                                                     <div class="row justify-content-center" style="background-color:lightblue">
                                                                                     <p class="mate mal" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%></p>
                                                                                     <p class="contestada mal " id="mate<%=i%>"><p class="" >tu respuesta es incorrecta<p class="incorrecta respuestasM text-danger" id="respuestasM<%=i%>">
@@ -850,9 +850,9 @@
 
                                                                             <% if (respuestaAlumnoElegida[0].respuestas[i].revision[0]){ %> <!--Proceso con Enteros-->
                                                                               <!--Solución correcta Enteros-->
-                                                                            <div class="card-body border border-1 text-dark">
+                                                                            <div class="card-body border border-1 text-dark fondor">
+                                                                              <p class=" bien display-6" id="mate<%=i%>" >Tu respuesta es correcta</p>
                                                                               <div class="row justify-content-center" style=" display:flex; background-color:lightblue">
-                                                                                <p class=" bien" id="mate<%=i%>" >Tu respuesta es correcta</p>
                                                                                     <div class="col-2 "> <p   id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p></div>
                                                                                     <div class="col-1 "><p class="respuestaEntera text-success" id="respuestaM<%=i%>" style="width: 100px; margin-left: -80px;">  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
                                                                                    
@@ -861,7 +861,7 @@
                                                                                     -->
                                                                                   <%}else { %>
                                                                                   <!--Solución Incorrecta Enteros-->
-                                                                                  <div class="card-body border border-1 text-dark">
+                                                                                  <div class="card-body border border-1 text-dark fondor">
                                                                                 <div class="row justify-content-center" style="display: flex; background-color:lightblue">
                                                                                   <p class="maltpM" id="mate<%=i%>">tu respuesta es incorrecta</p>
                                                                                   <div class="col-2 "> <p   id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%> =</p></div>
@@ -879,7 +879,7 @@
                                                                                   <!--El alumno no contestó nada-->
                                                                                   <div class="d-flex justify-content-center ">
                                                                                     <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
-                                                                                      <div class="card-body border border-1 text-dark">
+                                                                                      <div class="card-body border border-1 text-dark fondor">
                                                                                         <div class="row justify-content-center" style="background-color:lightblue">
                                                                                           <h4 class="display-7 contestada mal">
                                                                                             No has contestado nada 
