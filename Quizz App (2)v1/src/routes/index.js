@@ -844,7 +844,7 @@ router.get('/cuarto2', (req, res) => {
 })
 
 router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaRevision',{color:"#ffff99"});
+  res.render('plantillaCreadorQuizz2',{color:"#ffff99"});
 })
 
 router.get('/plantillaQuizz', (req, res) => {
