@@ -103,27 +103,7 @@
     clear: both;
     display: table;
   }
-  .fondor {
-    background-color: white !important;
-  }
-  table td.celdaRespuesta {
-    background-color: white !important;
-  }
-  table td:first-child {
-    background-color: white !important;
-  }
-  .bg-light {
-    background-color: white !important;
-  }
-  .bg-success {
-    background-color: #486f99 !important;
-}
-  .cal{
-    margin-left: 50px;
-  }
-  .cor{
-    color:#258d19;
-  }
+  
   
   /* Add Zoom Animation */
   .animate {

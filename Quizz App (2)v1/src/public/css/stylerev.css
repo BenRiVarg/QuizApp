@@ -115,9 +115,14 @@
   .bg-light {
     background-color: white !important;
   }
-
   .bg-success {
     background-color: #486f99 !important;
+}
+  .cal{
+    margin-left: 50px;
+  }
+  .cor{
+    color:#258d19;
   }
   img {
     width: 250px;
