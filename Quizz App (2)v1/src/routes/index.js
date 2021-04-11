@@ -707,7 +707,10 @@ router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
   //Variable para mostrar los cuestionarios en un orden diferente a los alumnos
   clavesCuestionarios=Funciones.shuffle(clavesCuestionarios);
 
-  console.log(clavesCuestionarios);
+  console.log(quizz);
+  console.log("DEMO");
+  console.log(quizz.cuestionario[0].pregunta[0] )
+  
   res.render('alumnos/Quizz', { quizz,clavesCuestionarios, idAlumno });
 
 
