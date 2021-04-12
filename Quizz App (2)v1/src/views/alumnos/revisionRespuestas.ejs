@@ -82,7 +82,7 @@
             <div class="card bg-success shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
 
               <div class="card-body border border-1 fondor">
-                <h4 class="display-7">Relaciona los Items</h4><br>
+                <h4 class="display-7"><%= quizz.cuestionario[i].instrucciones%></h4><br>
                 <div class="d-flex justify-content-center container fondor">
                   <div class="row fondor">
                     <table class="tablaEjercicio fondor">
@@ -578,8 +578,8 @@
                                                                             <div class="card-body border border-1 text-dark fondor">
                                                                               <p class=" bien display-6" id="mate<%=i%>" >Tu respuesta es correcta</p>
                                                                               <div class="row justify-content-center" style=" display:flex; background-color:lightblue">
-                                                                                    <div class="col-2 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p></div>
-                                                                                    <div class="col-1 "><p class=" display-6 respuestaEntera text-success" id="respuestaM<%=i%>" style="width: 100px; margin-left: -30px;">  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
+                                                                                    <div class="col-3 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p></div>
+                                                                                    <div class="col-1 "><p class=" display-6 respuestaEntera text-success" id="respuestaM<%=i%>" style="width: 100px; margin-left: -60px;">  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
                                                                                    
                                                                                    <!-- <p  id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p><p class="respuestasM text-success" id="respuestaM<%=i%>"> 
                                                                                     <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p>
@@ -590,8 +590,8 @@
                                                                                     <p class=" display-6 mal" id="mate<%=i%>">Tu respuesta es incorrecta</p>
                                                                                 <div class="row justify-content-center" style="display: flex; background-color:lightblue">
                                                                                   
-                                                                                  <div class="col-2 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%> =</p></div>
-                                                                                  <div class="col-1 "><p class=" display-6 respuestaEntera text-danger" style="width: 100px; margin-left: -30px;"><%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
+                                                                                  <div class="col-3 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%> =</p></div>
+                                                                                  <div class="col-1 "><p class=" display-6 respuestaEntera text-danger" style="width: 100px; margin-left: -60px;"><%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
                                                                                   <% } %>
                                                                                 </div>
                                                                                 </div>
@@ -771,8 +771,16 @@
              var respuestasE=document.getElementsByClassName("respuestaEntera");
           
               for(var r=0; r<respuestasE.length; r++){
-                var cifra=Number.parseFloat(respuestasE[r].textContent);
+                var valorRespuesta=respuestasE[r].textContent;
+                valorRespuesta=respuesta.replace(/\s+/g, '');
+                if(respuesta=="NaN"){ //Si el alumno no contestó Nada
+                  var cifra=0
                   respuestasE[r].textContent=cifra;
+                }
+                else{
+                var cifra=Number.parseFloat(valorRespuesta);
+                  respuestasE[r].textContent=cifra;
+                }
               }
                   
           

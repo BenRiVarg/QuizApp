@@ -665,6 +665,10 @@ strVar += "            <div class=\"container row justify-content-center mb-3\">
 strVar += "              <div class=\"mb-4\">";
 strVar += "                <h3 class=\"text-center\">Pregunta Relacional<\/h3>";
 strVar += "              <\/div>";
+strVar += "               <div class=\"mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Relaciona las columnas\">";
+strVar += "              <\/div>";
 strVar += "              <div class=\"col-md-5\">";
 strVar += "                <div class=\"\">";
 strVar += "                  <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Pregunta\">";
@@ -742,7 +746,7 @@ strVar += "        <\/div>";
 strVar += "        <div class=\"col-12 col-md-12 col-lg-5\">";
 strVar += "          <h4 class=\"text-primary\">Intrucciones<\/h4>";
 strVar += "          <p class=\"fs-5 justify-content-center text\">1.- Se debe colocar la respuesta y pregunta en orden 1-1, para que";
-strVar += "            pueda evaluar correctamente. <\/p>";
+strVar += "            pueda evaluar correctamente.No olvides definir las instrucciones para el  Alumno <\/p>";
 strVar += "          <P class=\"fs-5 justify-content-center text\">2.- El botón de QuitarReactivo sirve para quitar preguntas, en";
 strVar += "            caso de que hayas agregado demás.<\/P>";
 strVar += "          <p class=\"fs-5 justify-content-center text\">3.- Añadir Reactivo sirve para agregar más columnas a relacionar.";
@@ -1104,8 +1108,13 @@ function envioPreguntaRelacional(){
     tipoHTML.value="tipoR";
     //inserción
     cuestionarios[i].appendChild(tipoHTML);
-    
+
+    var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;
+
+    //Obtención de las preguntas y respuestas
    var reactivos=cuestionarios[i].querySelectorAll("div.contenedorItem input.pregunta");
+
    for(j=0;j<reactivos.length;j++){
     var pregunta = cuestionarios[i].querySelectorAll("div.contenedorItem input.pregunta");
     pregunta[j].name="pregunta"+contador;
@@ -1130,7 +1139,7 @@ function validarPreguntaRelacional(){
       var elementosValidacion=[];
       
       var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
-      
+      var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0].value;
       var reactivos=cuestionario.querySelectorAll("div.contenedorItem input.pregunta");
 
       for(j=0;j<reactivos.length;j++){
@@ -1160,9 +1169,9 @@ function validarPreguntaRelacional(){
 
      
      
-
+      console.log(!instrucciones);
     // Si hay errores y No hay mensaje
-    if( error && (!errorHTML)){
+    if( (error || !instrucciones) && (!errorHTML)){
       //Escribe mensaje
       var strVar="";
           strVar += "      <div class=\" row justify-content-center mb-4\">";
@@ -1175,7 +1184,7 @@ function validarPreguntaRelacional(){
       
       }
 
-      if(!error && errorHTML){
+      if( (!error && instrucciones) && errorHTML){
         errorHTML.remove();
       }
     
@@ -1390,7 +1399,7 @@ function validarPreguntaOM(){
     for(i=0;i<cuestionarios.length;i++){
       cuestionario=cuestionarios[i];
       var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
-      console.log(contenedorErrores);
+      //console.log(contenedorErrores);
       var elementosValidacion=[];
       //Selección de la pregunta que aparecerá para el alumno
       var pregunta = cuestionario.querySelectorAll("div.pregunta input.pregunta")[0];
@@ -1414,7 +1423,7 @@ function validarPreguntaOM(){
 
       
       for(var k=0;k<elementosValidacion.length;k++){
-        console.log(elementosValidacion[k]);
+       // console.log(elementosValidacion[k]);
         var valorCampo=elementosValidacion[k].value
         if(valorCampo.length==0){
           
@@ -1424,8 +1433,57 @@ function validarPreguntaOM(){
         
         }
       }
+      console.log("errorHTML");
+      console.log(errorHTML);
+      console.log("errorRespuesta");
+      console.log(errorRespuesta);
+
+      console.log("respuesta");
+      console.log(!respuesta);
+      console.log("errorHTML Boolean");
+      console.log(!errorRespuesta);
 
       if(error && !errorHTML){
+        console.log("ejecutandose");
+        var strVar="";
+            strVar += "  <div class=\"Error container\">";
+            strVar += "          <div class=\" row justify-content-center\">";
+            strVar += "            <div class=\" fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+            strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
+            strVar += "            <\/div>";
+            strVar += "          <\/div>";
+            strVar += "        <\/div>";
+    contenedorErrores.insertAdjacentHTML("afterbegin",strVar);  
+  }
+
+  if(!error&& errorHTML){
+    errorHTML.remove()
+  }
+
+  
+  if(!respuesta && !errorRespuesta){
+    var strVar="";
+        strVar += "<div class=\" ErrorR container\">";
+        strVar += "          <div class=\" row justify-content-center mb-3\">";
+        strVar += "            <div class=\" fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+        strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: No has seleccionado una Respuesta<\/p>";
+        strVar += "            <\/div>";
+        strVar += "          <\/div>";
+        strVar += "        <\/div>";
+    contenedorErrores.insertAdjacentHTML("beforeend",strVar);
+  }
+  
+
+  if(respuesta && errorRespuesta){
+    errorRespuesta.remove();
+  }
+      /*
+      if(!error&& errorHTML){
+        errorHTML.remove()
+      }
+
+      if(error && !errorHTML){
+        console.log("ejecutandose");
         var strVar="";
             strVar += "  <div class=\"Error container\">";
             strVar += "          <div class=\" row justify-content-center\">";
@@ -1438,9 +1496,7 @@ function validarPreguntaOM(){
   }
   
 
-      if(!error&& errorHTML){
-        errorHTML.remove()
-      }
+      
 
   if(!respuesta && !errorRespuesta){
     var strVar="";
@@ -1457,7 +1513,7 @@ function validarPreguntaOM(){
   if(respuesta && errorRespuesta){
     errorRespuesta.remove();
   }
-  
+  */
       }
 }
 

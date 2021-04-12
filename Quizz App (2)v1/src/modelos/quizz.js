@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 
 const cuestionario = Schema({
     tipo: { type: 'String' },
+    instrucciones:{ type: 'String' },
     pregunta: Array,
     respuesta: Array
 });
