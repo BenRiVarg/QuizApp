@@ -11,7 +11,6 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 
 
-
 //Configuración del Body Parser
 router.use(bodyParser.urlencoded({ extendend: true }));
 router.use(bodyParser.json());
@@ -186,6 +185,7 @@ router.post('/administrador/borrar', (req, res) => {
 
 //----------EDITORES
 
+
 router.get('/editores', async (req, res) => {
   const materia = await Materia.find({});
 
@@ -194,6 +194,45 @@ router.get('/editores', async (req, res) => {
 });
 
 
+router.get('/editores/editar', async (req, res) => {
+   //Boomer "5fce761f2e2106439e852306"
+  var registros = await Registros.find({ alumno: "5fce761f2e2106439e852306" }, { "quizz": 1, "_id": 1 }).exec();
+
+  //Variable solo con los nombres del Quizz
+  nombreQuizz = [];
+  quizzNombreBD = await Quizz.find({ _id: registros[0].quizz }).exec();
+
+
+  /* var materiasBD = await Materia.find({}); */
+
+
+  for (var i = 0; i < registros.length; i++) {
+    quizzNombreBD = await Quizz.find({ _id: registros[i].quizz }, { "nombreQuizz": 1, "_id": 0 }).exec();
+
+    nombreQuizz.push(quizzNombreBD[0].nombreQuizz);
+  }
+
+
+  res.render('editor/editar', { registros, nombreQuizz  });
+});
+
+/* router.get("/editor/edit/:id", async (req, res, next) => {
+  const task = await Task.findById(req.params.id);
+  console.log(task);
+  res.render("edit", { task });
+});
+
+router.post('/edit/:id', async (req, res, next) => {
+  const { id } = req.params;
+  await Task.update({_id: id}, req.body);
+  res.redirect('/');
+});
+*/
+router.get('/delete/:id', async (req, res, next) => {
+  let { id } = req.params.id;
+  await Quizz.remove({ _id: id });
+  res.redirect('/editores/editar');
+});
 
 router.post('/materias', async (req, res) => {
   Materia.create({ nombre: req.body.nombre });
@@ -550,6 +589,38 @@ router.get('/alumnos', async (req, res) => {
 
 });
 
+router.get('/editor', async (req, res) => {
+  const materiasBD = await Materia.find({});
+
+  var x;
+  var materias = [];
+
+  for (x in materiasBD) {
+    var cuestionarios = await Quizz.find({
+      claveMateria: materiasBD[x]._id,
+    }).exec();
+    var datosCuestionario = [];
+
+    for (y in cuestionarios) {
+      var datos = {
+        id: cuestionarios[y]._id,
+        nombre: cuestionarios[y].nombreQuizz,
+      };
+      datosCuestionario.push(datos);
+    }
+
+    var materiasObj = {
+      materia: materiasBD[x].nombre,
+      registros: datosCuestionario,
+    };
+
+    materias.push(materiasObj);
+  }
+
+  const Quizzes = await Quizz.find({});
+  res.render('editor/editar', { quizzes: Quizzes, materias });
+});
+
 //----Alumnos------------------
 //MiddleWare aplicado
 //router.get('/alumnos',isAuthenticated,async (req,res)=>{
@@ -669,8 +740,12 @@ router.get('/alumnos/registro', async (req, res) => {
 
   res.render('alumnos/registro', { registros, nombreQuizz, materiasBD });
 
-
 });
+
+/* router.get('/editor/editar', async (req, res) => {
+  console.log("esta funcionando");
+    res.send("hello world");
+}); */
 
 router.get('/alumnos/revision/:id', async (req, res) => {
 
