@@ -285,14 +285,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for (var j = 0; j < registros.length; j++) { %>
+                        <% for (var j = 0; j < Quizzes.length; j++) { %>
                             <tr>
-                                <td><%= nombreQuizz[j]%></td>
+                                <td><%= Quizzes[j].nombreQuizz %></td>
                                 <td>
-                                    <a href="" class="btn btn-info text-light">
+                                    <a href="/editar/<%= Quizzes[j]._id %>" class="btn btn-info text-light">
                                         Editar
                                     </a>
-                                    <a class="btn border-shadow btn-danger delete" data-id=<%= registros[j]._id%> >
+                                    <a class="btn border-shadow btn-danger delete" data-id="" >
                                         Borrar
                                     </a>
                                 </td>

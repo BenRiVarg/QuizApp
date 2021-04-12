@@ -1991,7 +1991,7 @@ function envioQuizz(){
     envioPreguntaMate();
     envioPreguntaIT();
   var formulario=document.getElementById("formularioQuizz");
-
+ // console.log(formulario);
   /*--------Apartado para Enviar la Pregunta Drag----
   var datosEnvio=new FormData(formulario);
  
@@ -2000,7 +2000,7 @@ function envioQuizz(){
   var request = new XMLHttpRequest();
   request.open("POST", "/editores/crear");
   request.send(datosEnvio);-----------*/
-  formulario.submit();
+   formulario.submit();
 }
 
 function crearQuizz(){

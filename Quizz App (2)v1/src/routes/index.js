@@ -137,12 +137,16 @@ router.post('/administrador/crear', (req, res) => {
 
 // vista del formulario con datos actuales del usuario a editar
 router.get('/administrador/editar/:id', async (req, res) => {
+  
   const user = await Usuario.findById(req.params.id);
 
   res.render('administrador/editar', { user });
 
 });
 
+router.post('/administrador/editar',async(req, res)=>{
+  
+});
 
 
 //envío por post para guardar los cambios
@@ -196,43 +200,127 @@ router.get('/editores', async (req, res) => {
 
 router.get('/editores/editar', async (req, res) => {
    //Boomer "5fce761f2e2106439e852306"
-  var registros = await Registros.find({ alumno: "5fce761f2e2106439e852306" }, { "quizz": 1, "_id": 1 }).exec();
 
   //Variable solo con los nombres del Quizz
-  nombreQuizz = [];
-  quizzNombreBD = await Quizz.find({ _id: registros[0].quizz }).exec();
+  var Quizzes= await Quizz.find({},{"nombreQuizz": 1, "_id": 1});
+ 
+  
+  //res.end();
+  res.render('editor/editar', { Quizzes  });
+});
+
+router.get('/editar/:idQuizz', async (req, res) => {
+  var quizz=await Quizz.findById(req.params.idQuizz);
+  res.render("crudEditar",{quizz});
+});
 
 
-  /* var materiasBD = await Materia.find({}); */
+
+router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
+  console.log("Recibiendo Información")
+  var imagenes=req.files;
+
+  console.log(req.body);
+  console.log(req.body.grupo);
+  
+  /*
+  console.log(req.body.nivel);
+  console.log(req.body.grado);
+  console.log(req.body.claveMateria);
+  console.log(req.body.bloques);
+  console.log(req.body.Secuencias);
+  console.log(req.body.nombreQuizz);
 
 
-  for (var i = 0; i < registros.length; i++) {
-    quizzNombreBD = await Quizz.find({ _id: registros[i].quizz }, { "nombreQuizz": 1, "_id": 0 }).exec();
+ */
+  
+   
+  var i;
+  //variable para construir el cuestionario como un array
+  var cuestionario= [
+  ];
 
-    nombreQuizz.push(quizzNombreBD[0].nombreQuizz);
+  //Si al menos e envio un cuestionario diferente a Drag
+  if (req.body.tipo1){
+//Procesamiento de cada pregunta por la request
+  for (i = 0; i < req.body.numeroPreguntas; i++) {
+      var tipo="tipo"+(i+1);
+      var pregunta="pregunta"+(i+1);
+      var respuesta="respuesta"+(i+1);
+
+      //filtro para relacionar preguntas e imágenes
+        if (req.body[tipo]=="tipoIT"){
+
+          //Definimos el valor con el que llega el nombre de la imagen
+          var imgKey="imagen"+(i+1);
+          var nombreImg=req.body[imgKey];
+          //
+          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
+
+          //Creamos un array para la estructura de la preguta
+          var preguntaImagen=[];
+          // En el primer espacio guardamos el nombre de la Imagen
+          preguntaImagen[0]=imagen.filename;
+          //En el segundo la pregunta
+          preguntaImagen[1]=req.body[pregunta];
+          //Y reasignamos el valor en la request
+          req.body[pregunta]=preguntaImagen;
+      }
+
+
+      //Construcción de documentos de cuestionarios de manera iterativa
+      var contenidoCuestionario={
+        tipo:req.body[tipo],
+        pregunta:  req.body[pregunta],
+        respuesta: req.body[respuesta]
+      }
+
+     
+      cuestionario.push(contenidoCuestionario);
+      
+      
+    
+
+     
+  } 
+}
+  //Lectura de Preguntas Drag
+  if(req.body.lienzos)
+  {
+    for(var j=0;j<req.body.lienzos;j++){
+      var claveLienzo="lienzo"+j;
+      var dataLienzo=JSON.parse(req.body[claveLienzo]);
+
+      var imagenHTML=dataLienzo.pregunta[0].nombre;
+      //Buscamos el archivo al que está vinculada la imagen
+      var imagen=Funciones.buscarImagen(imagenHTML,imagenes);
+      //Y lo reasignamos con el nombre con el que encontrará la imagen en la BD
+      dataLienzo.pregunta[0].nombre=imagen.filename;
+      console.log(dataLienzo.pregunta[0].nombre)
+      var cuestionarioLienzo=dataLienzo;
+      cuestionario.push(cuestionarioLienzo);
+    }
   }
+  console.log(cuestionario)
+  
+  const idQuizz = req.body.idQuizz;
 
-
-  res.render('editor/editar', { registros, nombreQuizz  });
+  Quizz.findByIdAndUpdate(idQuizz, {
+    cuestionario:cuestionario
+  }, (error, user) => {
+    console.log(error, idQuizz);
+    res.redirect('/editores/editar');
+  }
+  );
+  
+  
 });
-
-/* router.get("/editor/edit/:id", async (req, res, next) => {
-  const task = await Task.findById(req.params.id);
-  console.log(task);
-  res.render("edit", { task });
-});
-
-router.post('/edit/:id', async (req, res, next) => {
-  const { id } = req.params;
-  await Task.update({_id: id}, req.body);
-  res.redirect('/');
-});
-*/
 router.get('/delete/:id', async (req, res, next) => {
   let { id } = req.params.id;
   await Quizz.remove({ _id: id });
   res.redirect('/editores/editar');
 });
+
 
 router.post('/materias', async (req, res) => {
   Materia.create({ nombre: req.body.nombre });
@@ -919,7 +1007,7 @@ router.get('/cuarto2', (req, res) => {
 })
 
 router.get('/plantillaRevision',(req, res)=>{
-  res.render('plantillaRevision',{color:"#ffff99"});
+  res.render('plantillaCreadorQuizz2',{color:"#ffff99"});
 })
 
 router.get('/plantillaQuizz', (req, res) => {
