@@ -33,6 +33,7 @@
 
   <form action="/editores/crear" id="formularioQuizz" method="POST" enctype="multipart/form-data" align="center">
     <div class="row justify-content-center mt-5 pt-5">
+      <input type="hidden" name="grupo" value="Creado por Especialista">
       <div class="col-lg-7">
         <select id="nivel" class="form-select form-select-lg mb-3 select nivel-0" aria-label=".form-select-lg example" name="nivel" required>
           <option selected>Nivel</option>
@@ -78,7 +79,7 @@
     <div id="insercion">
 
     </div>
-    
+    <!--
     <div class="justify-content-center mt-5 pt-5 nivel-Superior" >
         <div class="contenedorErrores">
         
@@ -189,7 +190,8 @@
     </div>
 
 
-
+  -->
+  
     <div class="tipoR cuestionario cuestionario mt-5 pt-5 container nivel-Superior">
       <div class="contenedorErrores">
       </div>
@@ -206,6 +208,11 @@
               <div class="mb-4">
                 <h3 class="text-center">Pregunta Relacional</h3>
               </div>
+              <div class="mb-4 text-center mx-auto">
+                <label for="formGroupExampleInput" class="form-label">Instrucciones</label>
+                <input type="text" class="form-control instrucciones" placeholder="Instrucciones para el alumno" value="Relaciona las columnas">
+              </div>
+        
               <div class="col-md-5">
                 <div class="">
                   <input type="text" class="form-control pregunta" placeholder="Pregunta">
@@ -294,8 +301,8 @@
       </div>
 
     </div>
-
   
+    <!--
     <div class="tipoOM cuestionario rounded-sm container mt-5 pt-5 nivel-Superior">
       <div class=" row justify-content-center mb-4 contenedorErrores">
       </div>
@@ -351,14 +358,14 @@
     </div>
 
     </div>
-    
+  -->
   </form>
 
   <p class="retroError" id="mensaje">Hay campos sin llenar</p>
   <div class="boton3">
     <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu Quizz" delay="0"
       tabindex="0" class="d-inline-block">
-      <button type="button" class="btn-flotante" onclick="crearQuizz()">Crear Quizz</button>
+      <button type="button" class="btn-flotante" onclick="validarPreguntaRelacional()">Crear Quizz</button>
     </span>
   </div>
 
