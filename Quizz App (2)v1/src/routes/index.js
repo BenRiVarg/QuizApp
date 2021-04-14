@@ -215,6 +215,18 @@ router.get('/editar/:idQuizz', async (req, res) => {
 });
 
 
+router.post("/editar/borrar/:idQuizz", (req, res) => {
+  const idQuizz = req.body.id;
+
+  Quizz.findByIdAndRemove(idQuizz, function (err) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.redirect("/editor");
+    }
+  });
+});
+
 
 router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   console.log("Recibiendo Información")

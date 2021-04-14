@@ -292,9 +292,10 @@
                                     <a href="/editar/<%= Quizzes[j]._id %>" class="btn btn-info text-light">
                                         Editar
                                     </a>
-                                    <a class="btn border-shadow btn-danger delete" data-id="" >
-                                        Borrar
-                                    </a>
+                                    <form action="/editores/editar/borrar" method="POST">
+                                        <input type="hidden" name="id" value="<%= Quizzes._id %>">
+                                        <input type="submit" style="background-color: lightcoral; width: 400 px;" value="Borrar">
+                                    </form>
                                 </td>
                             </tr>                        
                             <% } %>
