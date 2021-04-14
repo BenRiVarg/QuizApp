@@ -233,7 +233,7 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
 
   console.log(req.body);
-  /*
+  
   
   //console.log(req.body.nivel);
   //console.log(req.body.grado);
@@ -265,7 +265,8 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
           //Definimos el valor con el que llega el nombre de la imagen
           var imgKey="imagen"+(i+1);
           var nombreImg=req.body[imgKey];
-          //
+          
+          if(nombreImg!="existente"){
           var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
 
           //Creamos un array para la estructura de la preguta
@@ -276,6 +277,10 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
           preguntaImagen[1]=req.body[pregunta];
           //Y reasignamos el valor en la request
           req.body[pregunta]=preguntaImagen;
+          }
+          else{
+            console.log("Proceso de Imagen existente");
+          }
       }
 
 
@@ -314,6 +319,7 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   }
   console.log(cuestionario)
   
+  /*
   const idQuizz = req.body.idQuizz;
 
   Quizz.findByIdAndUpdate(idQuizz, {
@@ -446,8 +452,8 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   }
 
   
-   //guardado en la BD
-   var nuevoQuizz= await Registros.create(
+    //guardado en la BD
+    var nuevoQuizz= await Quizz.create( 
       {
       
 
@@ -464,7 +470,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
        
        }
     
-   );
+    );
   
 });
 

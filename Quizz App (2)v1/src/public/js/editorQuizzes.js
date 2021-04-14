@@ -62,7 +62,8 @@ function envioQuizzEditado(){
      numeroHTML.type = "hidden";
      numeroHTML.name="numeroPreguntas";
      numeroHTML.value = numeroPreguntas;
-
+     
+     editarIT();
      insertor.appendChild(numeroHTML);
      formulario.submit();
 }
