@@ -1,5 +1,5 @@
 //Archivo para editar los quizzes
-
+previsualizarITEdicion();
 function editarIT(){
    
     var i=0;
@@ -53,6 +53,52 @@ function editarIT(){
     
   }
 
+  function previsualizarITEdicion(){
+      var inputImagenes=document.getElementsByClassName("editableIT");
+      
+      for (var t=0;t<inputImagenes.length;t++){
+          console.log(t);
+          
+          inputImagenes[t].onchange= function (e) {
+            var identificadorIDN=(this.id);
+            var identificadorIDN=identificadorIDN.slice(5,6)
+            var idpreView="prevIT"+identificadorIDN;
+            
+            var previewHTML=document.getElementById(idpreView);
+
+            // Creamos el objeto de la clase FileReader
+            let reader = new FileReader();
+
+            // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+            reader.readAsDataURL(e.target.files[0]);
+
+            // Le decimos que cuando este listo ejecute el código interno
+            reader.onload = function () {
+               
+                image = document.createElement("img");
+                image.className="img-fluid";
+                image.alt="Imagen Quizz-ebe"
+                image.src = reader.result;
+
+                    
+                //Si ya hay una imagen
+                if(previewHTML.children[0]){
+                previewHTML.children[0].remove()
+                previewHTML.appendChild(image)
+                }
+                else{
+                previewHTML.appendChild(image);
+                }
+            
+            }
+        };
+          
+        
+      }
+      
+   
+    
+  }
 function envioQuizzEditado(){
     var formulario=document.getElementById("formularioQuizz");
  

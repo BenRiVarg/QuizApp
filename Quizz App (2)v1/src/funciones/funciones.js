@@ -1,18 +1,6 @@
 'use strict'
-
-//Función para buscar imagenes en base a su nombre original en el array de imagenes.
-//Se aplica para la creación de examenes
-exports.buscarImagen=function(imagenBuscada,arrayImagenes){
-   
-    var i;
-    for( i in arrayImagenes){
-        if(imagenBuscada==arrayImagenes[i].originalname){
-            return arrayImagenes[i];
-        }
-      }
-    
-}
-
+const Imagenes = require('../modelos/imagenes.js');
+const Chunks = require('../modelos/chunks.js');
 //Función para revolver los elmentos de un array.
 exports.shuffle= function(array) {
     var currentIndex = array.length
@@ -31,4 +19,18 @@ exports.shuffle= function(array) {
         array[randomIndex] = temporaryValue;
     }
     return array;
+}
+
+//----------------FUNCIONES PARA IMAGENES---------------//
+//Función para buscar imagenes en base a su nombre original en el array de imagenes.
+//Se aplica para la creación de examenes
+exports.buscarImagen=function(imagenBuscada,arrayImagenes){
+   
+    var i;
+    for( i in arrayImagenes){
+        if(imagenBuscada==arrayImagenes[i].originalname){
+            return arrayImagenes[i];
+        }
+      }
+    
 }

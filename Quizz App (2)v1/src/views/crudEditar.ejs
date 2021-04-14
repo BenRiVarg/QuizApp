@@ -296,12 +296,15 @@
                         <p class="fs-5 justify-content-center text">Seleccione la imagen a cargar, y defina pregunta y respuesta </p>
                         <div class="mb-5">
                           <h3 class="text-center">Imagen cargada</h3>
-                          <img class="img-fluid" src="/image/<%= quizz.cuestionario[i].pregunta[0] %>" alt="imagen Quizz quizz-ebe">
+                          <div id="prevIT<%= i %>" class="mx-auto">
+                            <img class="img-fluid" src="/image/<%= quizz.cuestionario[i].pregunta[0] %>" alt="imagen Quizz quizz-ebe">
+                          </div><br>
+                          
                         </div>
                       </div> 
-                      <input required="" type="file" id="imgIT1" accept="image/*" class="imgs" name="imgs"> <input required=""
+                      <input required="" type="file" id="imgIT<%= i %>" accept="image/*" class="editableIT imgs" name="imgs"> <input required=""
                         type="hidden" class="imagenrequest">
-                      <div id="prevIT1" class="mx-auto"></div><br>
+                     
                       <div class="mb-3"> <label for="formGroupExampleInput" class="form-label">Pregunta</label> <input type="text"
                           class="form-control pregunta" placeholder="Escriba la pregunta" value="<%= quizz.cuestionario[i].pregunta[1]%>"> </div>
                       <div class="mb-3"> <label for="formGroupExampleInput2" class="form-label">Respuesta</label> <input required=""
