@@ -1481,7 +1481,7 @@ function envioPreguntaIT(){
   //Captura de la imagen
   var imagen = cuestionarios[i].querySelectorAll("input.imgs");
   var valorImagen=imagen[0].files[0].name;
-
+  
     //Creación de un espacio en blanco en un array para enviar el id de la imagen
   var imagenHTML = cuestionarios[i].querySelectorAll("input.imagenrequest");
   imagenHTML[0].name="imagen"+contador;
@@ -1974,7 +1974,8 @@ function validaciones(){
   }
 // Envío Final de todos los elementos
 function envioQuizz(){
-  
+  var formulario=document.getElementById("formularioQuizz");
+ 
      //creación e inserción de un elemento con el número de preguntas del cuestionario
     var numeroPreguntas=document.getElementsByClassName("cuestionario").length;
     var numeroHTML=document.createElement("INPUT");
@@ -1990,7 +1991,6 @@ function envioQuizz(){
     
     envioPreguntaMate();
     envioPreguntaIT();
-  var formulario=document.getElementById("formularioQuizz");
  // console.log(formulario);
   /*--------Apartado para Enviar la Pregunta Drag----
   var datosEnvio=new FormData(formulario);
@@ -2001,6 +2001,7 @@ function envioQuizz(){
   request.open("POST", "/editores/crear");
   request.send(datosEnvio);-----------*/
    formulario.submit();
+   formulario.reset();
 }
 
 function crearQuizz(){

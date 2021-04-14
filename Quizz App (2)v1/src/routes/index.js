@@ -233,18 +233,17 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
 
   console.log(req.body);
-  console.log(req.body.grupo);
-  
   /*
-  console.log(req.body.nivel);
-  console.log(req.body.grado);
-  console.log(req.body.claveMateria);
-  console.log(req.body.bloques);
-  console.log(req.body.Secuencias);
-  console.log(req.body.nombreQuizz);
+  
+  //console.log(req.body.nivel);
+  //console.log(req.body.grado);
+  //console.log(req.body.claveMateria);
+  //console.log(req.body.bloques);
+  //console.log(req.body.Secuencias);
+  //console.log(req.body.nombreQuizz);
 
 
- */
+ 
   
    
   var i;
@@ -324,7 +323,7 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
     res.redirect('/editores/editar');
   }
   );
-  
+  */
   
 });
 router.get('/delete/:id', async (req, res, next) => {
@@ -366,18 +365,17 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
 
   console.log(req.body);
-  console.log(req.body.grupo);
   
-  /*
-  console.log(req.body.nivel);
-  console.log(req.body.grado);
-  console.log(req.body.claveMateria);
-  console.log(req.body.bloques);
-  console.log(req.body.Secuencias);
-  console.log(req.body.nombreQuizz);
+  
+  //console.log(req.body.nivel);
+  //console.log(req.body.grado);
+  //console.log(req.body.claveMateria);
+  //console.log(req.body.bloques);
+  //console.log(req.body.Secuencias);
+  //console.log(req.body.nombreQuizz);
 
 
- */
+ 
   
    
   var i;
@@ -449,7 +447,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
 
   
    //guardado en la BD
-   var nuevoQuizz= await Quizz.create( 
+   var nuevoQuizz= await Registros.create(
       {
       
 
@@ -466,10 +464,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
        
        }
     
-    );
-  
-      
-
+   );
   
 });
 
