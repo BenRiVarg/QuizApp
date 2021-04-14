@@ -235,7 +235,11 @@
                                 <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
                                   <div class="card-body border border-1">
                                     <div class="row">
-                                      <div class=" col-lg-6 col-sm-12">
+                                      <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="text-center contenedorimg">
+                                          <img src="/image/<%= quizz.cuestionario[i].pregunta[0] %>" class="card-img-top img-fluid" alt="Imagen del Quizz">
+                                        </div>
+                                      <div class="col-lg-12 col-sm-12 col-md-12 mt-5">
                                         <h4 class="display-7 text-light">
                                           <%= quizz.cuestionario[i].pregunta[1] %>
                                         </h4>
@@ -243,12 +247,6 @@
                                           aria-label="Respuesta" name="respuesta<%= i %>">
 
                                       </div>
-                                      <div class="col-6 col-lg-6 col-sm-12">
-                                        <div class="col-sm-12 text-center contenedorimg">
-                                          <img src="/image/<%= quizz.cuestionario[i].pregunta[0] %>"
-                                            class="card-img-top img-fluid" alt="Imagen del Quizz">
-                                        </div>
-
                                       </div>
                                     </div>
                                   </div>
