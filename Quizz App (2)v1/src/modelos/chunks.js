@@ -7,7 +7,7 @@ const Schema= mongoose.Schema;
 
 
 var modeloChunk = Schema ({
-    files_id: {type:String}
+    files_id: mongoose.ObjectId
 });
 
 
