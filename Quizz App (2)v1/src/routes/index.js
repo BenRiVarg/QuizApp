@@ -698,11 +698,15 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
 
 
-router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
+router.get('/alumnos/examen/:id/alumno/:idAlumno/materia/:materia', async (req, res) => {
 
 
   const idAlumno = req.params.idAlumno;
   const quizz = await Quizz.findById(req.params.id);
+  //Optimización de Cuestionarios//
+  /*var quizPrueba=await Quizz.findById(req.params.id).lean();
+  console.log(quizPrueba.nombreQuizz);
+  */
   var contadorCuestionarios=quizz.cuestionario.length;
   
   var clavesCuestionarios=[];
@@ -713,11 +717,9 @@ router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
   //Variable para mostrar los cuestionarios en un orden diferente a los alumnos
   clavesCuestionarios=Funciones.shuffle(clavesCuestionarios);
 
-  console.log(quizz);
-  console.log("DEMO");
-  console.log(quizz.cuestionario[0].pregunta[0] )
-  
-  res.render('alumnos/Quizz', { quizz,clavesCuestionarios, idAlumno });
+  var materia=req.params.materia;
+  console.log(clavesCuestionarios);
+  res.render('alumnos/Quizz', { materia,quizz,clavesCuestionarios, idAlumno });
 
 
 
