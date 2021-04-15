@@ -36,7 +36,7 @@
   </div>
   <form action="/alumnos/correccion/alumno/<%=idAlumno%>" method="POST" id="quizz">
     <input type="hidden" name="quizz" value="<%= quizz._id %>">
-    <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+    <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false pause">
       <div class="carousel-inner">
         <% var preguntaFinal=quizz.cuestionario.length-1 %>
         <% for(var i=0; i<quizz.cuestionario.length ; i++) {%>
@@ -318,7 +318,25 @@
                               </div>
                               <% break } %>
                                 <% } %>
+                              <div class="carousel-item">
+                                <div class="d-flex justify-content-center ">
+                                  <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
+          
+                                    <div class="card-body border border-1 ">
+                                      <h2 style="color: seashell;">Hasta aqui termina el quizz,</h2>
+                                      <h2 style="color: seashell;">envia tus respuestas con el botón de abajo</h2>
+                                      <h2 style="color: seashell;">suerte!!!</h2>
+                                      <div class="btn-flotante">
+                                        <button onclick="enviarQuizz()" class="btn fw-bold text-light Enviar" value="Enviar Respuestas"><h5> Enviar
+                                         respuestas</h5></button> 
+                                      </div>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            
 
+
+                              </div>
       </div>
     </div>
 
@@ -343,10 +361,7 @@
       </div>
     </div>
    
-   <div class="btn-flotante">
-     <button onclick="enviarQuizz()" class="btn fw-bold text-light Enviar" value="Enviar Respuestas">Enviar
-      respuestas</button> 
-   </div>
+   
     
   </div>
   
