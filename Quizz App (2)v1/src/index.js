@@ -58,7 +58,7 @@ server.listen(app.get('port'),()=>{
 //URI PRODUCCION mongodb+srv://QUIZ-API:PFEpkCKG5VcQDJNj@cluster0.lcjm4.mongodb.net/QUIZZES?retryWrites=true&w=majority
 
 //Conexión a la BD
-mongoose.connect('mongodb+srv://QUIZ-API:PFEpkCKG5VcQDJNj@cluster0.lcjm4.mongodb.net/QUIZZES?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true } ,(err, res) =>{
+mongoose.connect('mongodb+srv://BVargas:p%213acE27@cluster0.4nutt.mongodb.net/Sistema_Quizz?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true } ,(err, res) =>{
    if (err) throw err
   console.log("Conexion con Mongo establecida");
   /*app.listen(app.get('port'), ()=>{console.log("Quizz app funcionando en : localhost:"+ app.get('port'))
