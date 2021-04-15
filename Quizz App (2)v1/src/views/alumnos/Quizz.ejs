@@ -25,7 +25,7 @@
       <%= quizz.nombreQuizz %>
     </h1>
   </div>
-  <input type="hidden" name="tiempo" value="">
+  <input type="hidden" autocomplete="off" name="tiempo" value="">
   <div class="container text-right">
     <div class="time">
       <div style="width: 500px; margin: 0 auto;">
@@ -35,7 +35,7 @@
     </div>
   </div>
   <form action="/alumnos/correccion/alumno/<%=idAlumno%>" method="POST" id="quizz">
-    <input type="hidden" name="quizz" value="<%= quizz._id %>">
+    <input type="hidden" name="quizz" autocomplete="off" value="<%= quizz._id %>">
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
       <div class="carousel-inner">
         <% var preguntaFinal=quizz.cuestionario.length-1 %>
@@ -59,9 +59,9 @@
                             <h4 class="display-7 text-light">
                               <% <!--=quizz.cuestionario[i].pregunta -->%><%= quizz.cuestionario[i].pregunta %>
                             </h4><br>
-                            <input type="text" class="form-control pb-3" placeholder="Respuesta" aria-label="Respuesta"
+                            <input type="text" autocomplete="off" class="form-control pb-3" placeholder="Respuesta" aria-label="Respuesta"
                               name="respuesta<%= i %>">
-                            <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
+                            <input type="hidden" autocomplete="off" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
 
                           </div>
                         </div>
@@ -87,7 +87,7 @@
                                         <% for (var j=1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
 
                                           <div class="form-check ml-5">
-                                            <input class="form-check-input" style="margin-top: 8px; margin-left: -32px !important; width: 25px; height: 25px;" type="radio" name="respuesta<%= i %>"
+                                            <input class="form-check-input" autocomplete="off" style="margin-top: 8px; margin-left: -32px !important; width: 25px; height: 25px;" type="radio" name="respuesta<%= i %>"
                                               value=" <%= quizz.cuestionario[i].pregunta[j]%>" id="flexRadioDefault1">
                                             <label class="form-check-label text-light fs-4" for="pregunta">
                                               <%= quizz.cuestionario[i].pregunta[j]%>
@@ -123,7 +123,7 @@
 
                                           <div class="text-light" id="items<%= i %>">
                                             <% for (var j=1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
-                                              <input class="form-check-input reactivo" type="checkbox"
+                                              <input autocomplete="off" class="form-check-input reactivo" type="checkbox"
                                                 name="respuesta<%= i %>,<%= j %>"
                                                 value="<%= quizz.cuestionario[i].pregunta[j] %>">
                                               <label for="pregunta">
@@ -132,9 +132,9 @@
                                               <br>
                                               <% } %>
                                           </div>
-                                          <input type="hidden" class="contadorItems" value="<%= i %>"
+                                          <input type="hidden" autocomplete="off" class="contadorItems" value="<%= i %>"
                                             name="contadorItems<%= i %>">
-                                          <input type="hidden" name="respuesta<%= i %>" value="multiple">
+                                          <input type="hidden" autocomplete="off" name="respuesta<%= i %>" value="multiple">
 
                                         </div>
 
@@ -151,7 +151,7 @@
                               <% } %>
 
 
-                                <input type="hidden" name="cuestionario<%= i %>"
+                                <input type="hidden" autocomplete="off" name="cuestionario<%= i %>"
                                   value="<%= quizz.cuestionario[i]._id %>">
 
                                 <!--Termina Pregunta OM-->
@@ -186,7 +186,7 @@
                                                   </td>
                                                   <td class="celdaRespuesta mx-3 ">
                                                     <div class="ml-3">
-                                                      <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
+                                                      <input class="apartadoBD" autocomplete="off" type="hidden" name="r<%=i%>,<%=j%>">
                                                       <%= quizz.cuestionario[i].respuesta[j]%>
                                         
                                                     </div>
@@ -198,10 +198,10 @@
                                         
                                         
                                           </table>
-                                          <input type="hidden" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
+                                          <input type="hidden" autocomplete="off" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
                                         </div>
                                   </div>
-                                  <input type="hidden" name="cuestionario<%= i %>"
+                                  <input type="hidden" autocomplete="off" name="cuestionario<%= i %>"
                                     value="<%= quizz.cuestionario[i]._id %>">
                                 </div>
                             </div>
@@ -220,13 +220,13 @@
                                     <p class="mate">
                                       <%= quizz.cuestionario[i].pregunta[0] %>
                                     </p>
-                                    <input class="tipoMate" id="<%= i %>" type="hidden">
+                                    <input class="tipoMate" autocomplete="off" id="<%= i %>" type="hidden">
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <!--Termina P Mate-->
-                            <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
+                            <input type="hidden" autocomplete="off" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
                           </div>
                           <% break; case "tipoIT" : %>
                             <div class="carousel-item <%= activo %>  <%= final %>">
@@ -243,7 +243,7 @@
                                         <h4 class="display-7 text-light">
                                           <%= quizz.cuestionario[i].pregunta[1] %>
                                         </h4>
-                                        <input type="text" class="form-control-lg  mb-5" placeholder="Respuesta"
+                                        <input type="text" autocomplete="off" class="form-control-lg  mb-5" placeholder="Respuesta"
                                           aria-label="Respuesta" name="respuesta<%= i %>">
 
                                       </div>
@@ -253,7 +253,7 @@
                                 </div>
                               </div>
 
-                              <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
+                              <input type="hidden" autocomplete="off" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
                               <!--Termina Pregunta IT-->
 
                             </div>

@@ -55,7 +55,7 @@ function matematicas(){
              strVar += "              <\/div>";
              strVar += "              <div class=\"col-1 pt-4\"  >";
              strVar += "                  <div class=\"pt-1 \">";
-             strVar += "                    <input type=\"number\"   class=\"alumnoResponde\" pt-2\">";
+             strVar += "                    <input type=\"number\" autocomplete=\"off\"  class=\"alumnoResponde\" pt-2\">";
              strVar += "                  <\/div >";
              strVar += "                  ";
              strVar += "              <\/div>";
@@ -111,10 +111,10 @@ function matematicas(){
            strVar += "            <\/div>";
            strVar += "            <div class=\"col-3\"  >";
            strVar += "                <div class=\"pt-3 \">";
-           strVar += "                  <input type=\"number\" class=\"numerador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
+           strVar += "                  <input type=\"number\" autocomplete=\"off\" class=\"numerador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
            strVar += "                <\/div >";
            strVar += "                <div class=\"pt-1\">";
-           strVar += "                  <input type=\"number\"  class=\"denominador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
+           strVar += "                  <input type=\"number\" autocomplete=\"off\"  class=\"denominador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
            strVar += "                <\/div>";
            strVar += "            <\/div>";
 
@@ -222,9 +222,9 @@ function envioRespuestasMate(){
             
 
             var strVar="";
-            strVar += " <input type=\"hidden\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+respuestaAlumno+"\">";
-            strVar += " <input type=\"hidden\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+numeradorAlumno[0].value+"\">";
-            strVar += " <input type=\"hidden\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+denominadorAlumno[0].value+"\">";
+            strVar += " <input type=\"hidden\" autocomplete=\"off\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+respuestaAlumno+"\">";
+            strVar += " <input type=\"hidden\" autocomplete=\"off\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+numeradorAlumno[0].value+"\">";
+            strVar += " <input type=\"hidden\" autocomplete=\"off\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+denominadorAlumno[0].value+"\">";
             preguntaMate.insertAdjacentHTML("beforeend",strVar);
         }
     }
@@ -279,7 +279,7 @@ function activarReactivo(){
 function tomarTiempo(){
    var tiempo=document.getElementById("cronometro").textContent;
    var strVar="";
-    strVar += "<input type=\"hidden\" name=\"tiempo\" value=\""+tiempo+"\">";
+    strVar += "<input type=\"hidden\" autocomplete=\"off\" name=\"tiempo\" value=\""+tiempo+"\">";
    formulario.insertAdjacentHTML("beforeend",strVar);
 }
 
