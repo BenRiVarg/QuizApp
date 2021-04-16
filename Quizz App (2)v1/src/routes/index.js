@@ -399,7 +399,7 @@ router.get('/visualizar/:idQuizz', async (req, res) => {
   console.log(quizz.materia);
   var materiaQuizz= await API.findByID("materias",quizz.materia);
   console.log(materiaQuizz);
-  res.render('editor/previsualizar'{materiaQuizz});
+  res.render('editor/previsualizar',{materiaQuizz});
 
 });
 
