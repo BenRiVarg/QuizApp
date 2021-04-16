@@ -225,14 +225,24 @@ router.get('/editar/:idQuizz', async (req, res) => {
 });
 
 
-router.post("/editor/borrar/:idQuizz", (req, res) => {
-  const idQuizz = req.body.id;
-
+router.get('/editores/borrar/:idQuizz', async (req, res) => {
+  const idQuizz = req.params.idQuizz;
+  var quizz=await Quizz.findById(idQuizz);
+  console.log(quizz);
+  var cuestionarios=quizz.cuestionario;
+  for(var i=0;i<cuestionarios.length; i++){
+    if(cuestionarios[i].tipo=="tipoIT"){
+      //Borrado de las imagenes del Quizz
+     Funciones.eliminarImagen(cuestionarios[i].pregunta[0]);
+    }
+    
+  }
+  
   Quizz.findByIdAndRemove(idQuizz, function (err) {
     if (err) {
       res.send(err);
     } else {
-      res.redirect("/editor");
+      res.redirect("/editores/editar");
     }
   });
 });
@@ -384,8 +394,12 @@ router.get('/editores/crear', async (req, res) => {
 
 });
 
-router.get('/visualizar/:idQuizz', (req, res) => {
-  res.render('editor/previsualizar');
+router.get('/visualizar/:idQuizz', async (req, res) => {
+  var quizz= await Quizz.findById(req.params.idQuizz).lean();
+  console.log(quizz.materia);
+  var materiaQuizz= await API.findByID("materias",quizz.materia);
+  console.log(materiaQuizz);
+  res.render('editor/previsualizar'{materiaQuizz});
 
 });
 
