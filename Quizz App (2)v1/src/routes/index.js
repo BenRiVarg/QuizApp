@@ -397,9 +397,10 @@ router.get('/editores/crear', async (req, res) => {
 router.get('/visualizar/:idQuizz', async (req, res) => {
   var quizz= await Quizz.findById(req.params.idQuizz).lean();
   console.log(quizz.materia);
-  var materiaQuizz= await API.findByID("materias",quizz.materia);
-  console.log(materiaQuizz);
-  res.render('editor/previsualizar',{materiaQuizz});
+  var materia= await API.findByID("materias",quizz.materia);
+  materia=materia.nombre;
+  console.log(materia);
+  res.render('editor/previsualizar',{materia,quizz});
 
 });
 
