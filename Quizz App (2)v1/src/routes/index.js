@@ -197,13 +197,13 @@ router.post('/administrador/borrar', (req, res) => {
 
 });
 
-//----------EDITORES
+//----------ESPECIALISTAS
 
 
-router.get('/editores', async (req, res) => {
+router.get('/verify/:token', async (req, res) => {
   const materia = await Materia.find({});
-
-  res.render('editor/index', { materia: materia });
+  var Quizzes= await Quizz.find({},{"nombreQuizz": 1, "_id": 1});
+  res.render('editor/index', { Quizzes });
 
 });
 
@@ -396,21 +396,19 @@ router.get('/editores/crear', async (req, res) => {
 
 router.get('/visualizar/:idQuizz', async (req, res) => {
   var quizz= await Quizz.findById(req.params.idQuizz).lean();
-  console.log(quizz.materia);
   var materia= await API.findByID("materias",quizz.materia);
   materia=materia.nombre;
-  console.log(materia);
   res.render('editor/previsualizar',{materia,quizz});
 
 });
 
-
+/*
 router.get('/verify/:token', async (req, res) => {
    var token=req.params.token;
   res.render('editor/crear', );
 
 });
-
+*/
 
 
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
