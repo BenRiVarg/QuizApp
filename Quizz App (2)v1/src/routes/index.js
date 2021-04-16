@@ -271,25 +271,43 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
 
       //filtro para relacionar preguntas e imágenes
         if (req.body[tipo]=="tipoIT"){
+          //Valores para tratar los datos anteriores de la imagen
+          var antiguaImgKey="antiguaIMG"+(i+1);
+          var antiguaImg=req.body[antiguaImgKey];
 
           //Definimos el valor con el que llega el nombre de la imagen
           var imgKey="imagen"+(i+1);
           var nombreImg=req.body[imgKey];
-          
-          if(nombreImg!="existente"){
-          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
 
           //Creamos un array para la estructura de la preguta
           var preguntaImagen=[];
+
+          if(nombreImg!="existente"){
+            //Proceso para nuevas imagenes
+          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
+
+          
           // En el primer espacio guardamos el nombre de la Imagen
           preguntaImagen[0]=imagen.filename;
           //En el segundo la pregunta
           preguntaImagen[1]=req.body[pregunta];
           //Y reasignamos el valor en la request
           req.body[pregunta]=preguntaImagen;
+          
+          //Borrado de la imagen anterior de la BD
+          if(antiguaImg){
+          Funciones.eliminarImagen(antiguaImg);
+          }
           }
           else{
-            console.log("Proceso de Imagen existente");
+            //console.log("Proceso de Imagen existente");
+
+            // En el primer espacio guardamos el nombre de la Imagen
+            preguntaImagen[0]=antiguaImg;
+            //En el segundo la pregunta
+            preguntaImagen[1]=req.body[pregunta];
+            //Y reasignamos el valor en la request
+            req.body[pregunta]=preguntaImagen;
           }
       }
 
@@ -327,19 +345,19 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
       cuestionario.push(cuestionarioLienzo);
     }
   }
-  console.log(cuestionario)
   
-  /*
+  console.log(cuestionario);
   const idQuizz = req.body.idQuizz;
 
   Quizz.findByIdAndUpdate(idQuizz, {
     cuestionario:cuestionario
   }, (error, user) => {
+    console.log("Error")
     console.log(error, idQuizz);
     res.redirect('/editores/editar');
   }
   );
-  */
+  
   
 });
 router.get('/delete/:id', async (req, res, next) => {
@@ -358,10 +376,7 @@ router.post('/materias', async (req, res) => {
 
 
 
-router.get('/editores/aprobar', (req, res) => {
-  res.render('editor/aprobar');
 
-});
 
 router.get('/editores/crear', async (req, res) => {
 
@@ -369,13 +384,19 @@ router.get('/editores/crear', async (req, res) => {
 
 });
 
-https://quizz-app-ebe.herokuapp.com/verify/:token
+router.get('/visualizar/:idQuizz', (req, res) => {
+  res.render('editor/previsualizar');
+
+});
+
 
 router.get('/verify/:token', async (req, res) => {
    var token=req.params.token;
   res.render('editor/crear', );
 
 });
+
+
 
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;

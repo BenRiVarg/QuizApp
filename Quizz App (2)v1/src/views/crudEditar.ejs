@@ -290,6 +290,7 @@
                       </a>
                     </div>
                     <div class="container tipoIT cuestionario mt-4 col-md-7">
+                      <p class="d-none procesoIT">antigua</p>
                       <div class="text-center">
                         <h3>Pregunta Texto-Imagen</h3>
                         <h4 class="text-primary">Intrucciones</h4>
@@ -304,7 +305,7 @@
                       </div> 
                       <input required="" type="file" id="imgIT<%= i %>" accept="image/*" class="editableIT imgs" name="imgs"> <input required=""
                         type="hidden" class="imagenrequest">
-                     
+                     <input type="hidden" class="antiguaIMG" value="<%= quizz.cuestionario[i].pregunta[0] %>">
                       <div class="mb-3"> <label for="formGroupExampleInput" class="form-label">Pregunta</label> <input type="text"
                           class="form-control pregunta" placeholder="Escriba la pregunta" value="<%= quizz.cuestionario[i].pregunta[1]%>"> </div>
                       <div class="mb-3"> <label for="formGroupExampleInput2" class="form-label">Respuesta</label> <input required=""
@@ -333,14 +334,14 @@
 
   
   <div class=" col-10 shadow  mb-5 bg-body rounded mensajeExito " id="msgE">
-    <p class="encabezado"> Quizz creado con Éxito.</p>
-    <p class="contenido"> La página será recargada en Breve</p>
+    <p class="encabezado"> Quizz Modificado con Éxito.</p>
+    <p class="contenido"> Redireccionando...</p>
   </div>
 
   <div class="boton3">
     <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu Quizz" delay="0"
       tabindex="0" class="d-inline-block">
-      <button type="button" class="btn-flotante" onclick="envioQuizzEditado()">Modificar Quizz</button>
+      <button type="button" class="btn-flotante" onclick="editarQuizz()">Modificar Quizz</button>
     </span>
   </div>
 

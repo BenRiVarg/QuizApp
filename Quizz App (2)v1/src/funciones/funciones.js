@@ -38,6 +38,7 @@ exports.buscarImagen=function(imagenBuscada,arrayImagenes){
 
 exports.eliminarImagen= async function(nombreImagen){
     var  imagen= await Imagenes.find({filename: nombreImagen}).exec();
+   
     var imagenID=imagen[0]._id;
     
     if(!imagenID){
@@ -56,7 +57,7 @@ exports.eliminarImagen= async function(nombreImagen){
     
     //Borrado de la imagen
     await Imagenes.deleteOne({filename: nombreImagen});
-
+    
     
 }
 
