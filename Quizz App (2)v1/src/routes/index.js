@@ -225,7 +225,7 @@ router.get('/editar/:idQuizz', async (req, res) => {
 });
 
 
-router.post("/editar/borrar/:idQuizz", (req, res) => {
+router.post("/editor/borrar/:idQuizz", (req, res) => {
   const idQuizz = req.body.id;
 
   Quizz.findByIdAndRemove(idQuizz, function (err) {

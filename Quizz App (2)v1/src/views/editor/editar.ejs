@@ -249,6 +249,7 @@
             background-color: var(--dark);
             color: var(--border);
         }
+       
     </style>
 </head>
 
@@ -295,10 +296,15 @@
                                     <a href="/editar/<%= Quizzes[j]._id %>" class="btn btn-info text-light">
                                         Editar
                                     </a>
-                                    <form action="/editores/editar/borrar" method="POST">
-                                        <input type="hidden" name="id" value="<%= Quizzes._id %>">
-                                        <input type="submit" style="background-color: lightcoral; width: 400 px;" value="Borrar">
+
+                                    <!-- <a href="/editor/borrar/<%= Quizzes[j]._id %>" class="btn btn-danger text-light">
+                                        Borrar
+                                    </a> -->
+                                    <form action="/editor/borrar/<%= Quizzes[j]._id %>" method="POST">
+                                        <input type="hidden" name="id" value="<%= Quizzes[j]._id %>">
+                                        <input type="submit" class="btn btn-danger text-light" value="Borrar">
                                     </form>
+                                    
                                 </td>
                             </tr>                        
                             <% } %>
