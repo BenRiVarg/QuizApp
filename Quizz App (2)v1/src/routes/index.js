@@ -1037,7 +1037,6 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   console.log("Ejecutandose");
   console.log(respuestaAlumnoElegida[0].calificacion);
   console.log(respuestaAlumnoElegida[0].tiempo);
-  console.log(respuestaAlumnoElegida[0].respuestas[5].respuestaA[0]);
    res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 });
 
@@ -1113,6 +1112,7 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   var idAlumno = req.params.idAlumno;
   
   console.log(req.body)
+  
   var examencalificado = await Revisor.revisar(idAlumno, req);
   //console.log(examencalificado);
   
@@ -1127,7 +1127,6 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   console.log("Ejecutandose");
   console.log(respuestaAlumnoElegida[0].calificacion);
   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
-  
  //res.end();
 });
 
