@@ -1039,8 +1039,33 @@ router.get('/alumnos/revision/:id', async (req, res) => {
    res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 });
 
+router.get('/alumnos/examen/:id/alumno/:idAlumno/materia/:materia', async (req, res) => {
 
 
+  const idAlumno = req.params.idAlumno;
+  const quizz = await Quizz.findById(req.params.id);
+  //Optimización de Cuestionarios//
+  /*var quizPrueba=await Quizz.findById(req.params.id).lean();
+  console.log(quizPrueba.nombreQuizz);
+  */
+  var contadorCuestionarios=quizz.cuestionario.length;
+  
+  var clavesCuestionarios=[];
+  for(var i=0;i<contadorCuestionarios;i++){
+    clavesCuestionarios.push(i);
+  }
+
+  //Variable para mostrar los cuestionarios en un orden diferente a los alumnos
+  clavesCuestionarios=Funciones.shuffle(clavesCuestionarios);
+
+  var materia=req.params.materia;
+  res.render('alumnos/Quizz', { materia,quizz,clavesCuestionarios, idAlumno });
+
+
+
+
+});
+/*
 router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
 
@@ -1062,7 +1087,7 @@ router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
 
 
-});
+});*/
 
 router.get('/alumnos/examen/:id', async (req, res) => {
 
