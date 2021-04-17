@@ -538,9 +538,6 @@
                                                                   </div>
                                                                   <!--P Imagen-->
                                                                   <% } %>
-
-
-
                                                                     <% break; case "tipoM" : %>
                                                                     <% if (respuestaAlumnoElegida[0].respuestas[i].respuestaA[0]!="NaN"){%><!--El alumno Contestó algo-->
                                                                       <div class="d-flex justify-content-center ">
@@ -575,8 +572,8 @@
                                                                             <div class="card-body border border-1 text-dark fondor">
                                                                               <p class=" bien display-6" id="mate<%=i%>" >Tu respuesta es correcta</p>
                                                                               <div class="row justify-content-center" style=" display:flex; background-color:lightblue">
-                                                                                    <div class="col-3 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p></div>
-                                                                                    <div class="col-1 "><p class=" display-6 respuestaEntera text-success" id="respuestaM<%=i%>" style="width: 100px; margin-left: -60px;">  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
+                                                                                    <div class="col-2 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p></div>
+                                                                                    <div class="col-1 "><p class=" display-6 respuestaEntera text-success" id="respuestaM<%=i%>" style="width: 100px; margin-left: -30px;">  <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
                                                                                    
                                                                                    <!-- <p  id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0] %> =</p><p class="respuestasM text-success" id="respuestaM<%=i%>"> 
                                                                                     <%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p>
@@ -587,8 +584,8 @@
                                                                                     <p class=" display-6 mal" id="mate<%=i%>">Tu respuesta es incorrecta</p>
                                                                                 <div class="row justify-content-center" style="display: flex; background-color:lightblue">
                                                                                   
-                                                                                  <div class="col-3 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%> =</p></div>
-                                                                                  <div class="col-1 "><p class=" display-6 respuestaEntera text-danger" style="width: 100px; margin-left: -60px;"><%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
+                                                                                  <div class="col-2 "> <p  class="display-6" id="mate<%=i%>"><%= quizz.cuestionario[i].pregunta[0]%> =</p></div>
+                                                                                  <div class="col-1 "><p class=" display-6 respuestaEntera text-danger" style="width: 100px; margin-left: -30px;"><%= respuestaAlumnoElegida[0].respuestas[i].respuestaA[0] %>  </p></div>
                                                                                   <% } %>
                                                                                 </div>
                                                                                 </div>
@@ -630,7 +627,7 @@
           <script>
 
 
-            //matematicas();
+            matematicas();
            function matematicas(){
             var preguntasMate=document.getElementsByClassName("mate");
             var respuestasMate=document.getElementsByClassName("respuestasM")
