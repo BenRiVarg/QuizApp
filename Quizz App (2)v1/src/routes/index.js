@@ -251,7 +251,6 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
       var tipo="tipo"+(i+1);
       var pregunta="pregunta"+(i+1);
       var respuesta="respuesta"+(i+1);
-      var instrucciones="instrucciones"+(i+1);
 
       //filtro para relacionar preguntas e imágenes
         if (req.body[tipo]=="tipoIT"){
@@ -272,14 +271,10 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
           req.body[pregunta]=preguntaImagen;
       }
 
-      var instruccionesCuestionario;
-      if(instrucciones){
-        instruccionesCuestionario=req.body[instrucciones];
-      }
+
       //Construcción de documentos de cuestionarios de manera iterativa
       var contenidoCuestionario={
         tipo:req.body[tipo],
-        instrucciones: instruccionesCuestionario,
         pregunta:  req.body[pregunta],
         respuesta: req.body[respuesta]
       }
@@ -1047,9 +1042,6 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
 
 router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
-
-
-router.get('/alumnos/examen/:id/alumno/:idAlumno/materia/:materia', async (req, res) => {
 
 
   const idAlumno = req.params.idAlumno;
