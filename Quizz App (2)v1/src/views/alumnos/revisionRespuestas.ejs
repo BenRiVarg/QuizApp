@@ -101,10 +101,10 @@
                                 <%=j+1%>
                               </button> </td>
                             <td class="celdaRespuesta mx-3">
+                              <p class="d-inline text-success ml-5 ">Correcta:</p>
                               <p class="d-inline text-success">
                                 <%= quizz.cuestionario[i].respuesta[j]%>
                               </p>
-                              <p class="d-inline text-success ml-5 ">¡Correcto!</p>
                             </td>
 
                             <%}else { %>
@@ -199,8 +199,8 @@
                                                       <% if (respuestaAlumnoElegida [0].respuestas[i].respuestaA[0]==k){
                                                         %>
                                                         <div class="form-check">
-                                                          <p class="display-6 text-success text-center"><b
-                                                              class="bien pr-4"></b>¡Correcto!</p>
+                                                          <p class="display-7 text-success"><b
+                                                              class="bien pr-3"></b>¡Correcto!</p>
                                                           <input class="form-check-input" type="radio"
                                                             id="flexRadioDefault1" checked="checked">
                                                           <label class="form-check-label  text-success" for="pregunta">
@@ -476,12 +476,18 @@
                                                                     class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
                                                                     <div class="card-body border border-1 fondor">
                                                                       <div class="row">
-                                                                        <div class=" col-lg-6 col-sm-12">
+                                                                        <div class=" col-lg-12 col-md-12 col-sm-12">
+                                                                          <div class="text-center contenedorimg">
+                                                                            <img class="img-fluid" src="/image/<%= quizz.cuestionario[i].pregunta[0] %>" alt="imagen Quizz quizz-ebe">
+                                                                          </div>
+                                                                        
+                                                                        </div>
+                                                                        <div class=" col-lg-12 col-md-12 col-sm-12">
                                                                           <h4 class="display-7">
                                                                             <%= quizz.cuestionario[i].pregunta[1] %>
                                                                           </h4><br>
                                                                           <p class=" text-center"><a
-                                                                              class="contestada bien mr-1"></a><b
+                                                                              class="contestada bien"></a><b
                                                                               class=" text-primary">
                                                                               <%=
                                                                                 respuestaAlumnoElegida[0].respuestas[i].respuestaA[0]
@@ -491,14 +497,7 @@
                                                                           </p>
 
                                                                         </div>
-                                                                        <div class=" col-lg-6 col-sm-12">
-                                                                          <div class="col-lg-10  col-sm-12 text-center">
-                                                                            <img class="img-fluid"
-                                                                              src="/image/<%= quizz.cuestionario[i].pregunta[0] %>"
-                                                                              alt="imagen Quizz quizz-ebe">
-                                                                          </div>
-
-                                                                        </div>
+                                                                       
                                                                       </div>
                                                                     </div>
                                                                   </div>
@@ -511,7 +510,13 @@
                                                                       class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
                                                                       <div class="card-body border border-1 fondor">
                                                                         <div class="row">
-                                                                          <div class=" col-lg-6 col-sm-12">
+                                                                          <div class="col-lg-8 col-md-12 col-sm-12" style="float: none; margin: 0 auto;">
+                                                                            <div class="text-center" style="margin: 0 auto !important;">
+                                                                              <img class="img-fluid" src="/image/<%= quizz.cuestionario[i].pregunta[0] %>" alt="imagen Quizz quizz-ebe">
+                                                                            </div>
+                                                                          
+                                                                          </div>
+                                                                          <div class=" col-lg-12 col-md-12 col-sm-12">
                                                                             <h4 class="display-7">
                                                                               <%= quizz.cuestionario[i].pregunta[1] %>
                                                                             </h4><br>
@@ -526,15 +531,7 @@
                                                                             </p>
 
                                                                           </div>
-                                                                          <div class=" col-lg-6 col-sm-12">
-                                                                            <div
-                                                                              class="col-lg-10  col-sm-12 text-center">
-                                                                              <img class="img-fluid"
-                                                                                src="/image/<%= quizz.cuestionario[i].pregunta[0] %>"
-                                                                                alt="imagen Quizz quizz-ebe">
-                                                                            </div>
-
-                                                                          </div>
+                                                                         
                                                                         </div>
                                                                       </div>
                                                                     </div>
