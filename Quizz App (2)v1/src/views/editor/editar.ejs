@@ -214,6 +214,10 @@
                 <div class="mb-4">
                   <h3 class="text-center">Pregunta Relacional</h3>
                 </div>
+                <div class="mb-4 text-center mx-auto">
+                    <label for="formGroupExampleInput" class="form-label">Instrucciones</label>
+                    <input type="text" class="form-control instrucciones" placeholder="Instrucciones para el alumno" value="<%= quizz.cuestionario[i].instrucciones%>">
+                  </div>
                 <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
                 <div class="container row justify-content-center mb-3">
                   
@@ -339,6 +343,7 @@
    <%} %>
     <!---->
     <!-- Inserto de nuevas preguntas-->
+    <p class="d-none" id="npQuizz"><%= (i+1) %></p>
     <div id="insercion">
 
     </div>

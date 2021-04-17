@@ -25,6 +25,10 @@ var lienzo={
             }
             //Simulación de un solo lienzo
 objetosDrag[0]=lienzo;
+
+function setNumeroPreguntas(numero){
+  numeracionPregunta=numero
+}
 //Función para nombrar los tipos de preguntas, y agregarles un contador para que no se pierdan en la request
 function contadorTipo(){
     tipo="tipo"+contador;

@@ -1,5 +1,7 @@
 //Archivo para editar los quizzes
-
+var numeroPreguntasQuizz=document.getElementById("npQuizz").textContent;
+setNumeroPreguntas(numeroPreguntasQuizz);
+//console.log(numeroPreguntasQuizzes);
 //Proceso especial para envío de imágenes
 previsualizarITEdicion();
 function editarIT(){

@@ -349,16 +349,17 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   console.log(cuestionario);
   const idQuizz = req.body.idQuizz;
 
-  /*
+  
   Quizz.findByIdAndUpdate(idQuizz, {
     cuestionario:cuestionario
   }, (error, user) => {
     console.log("Error")
     console.log(error, idQuizz);
-    res.redirect('/editores/editar');
+    var link="/visualizar/"+idQuizz;
+    res.redirect(link);
   }
   );
-  */
+  
   
 });
 
