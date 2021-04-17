@@ -201,8 +201,38 @@ router.post('/administrador/borrar', (req, res) => {
 
 
 router.get('/verify/:token', async (req, res) => {
-  const materia = await Materia.find({});
-  var Quizzes= await Quizz.find({},{"nombreQuizz": 1, "_id": 1});
+  var Quizzes= await Quizz.find({},{"nombreQuizz": 1, "_id": 1}).lean();
+/*
+  var Registro= await Registros.find({quizz:Quizzes[0]._id}).lean();
+  var contestado=false;
+  if(Registro.length>0){
+    contestado=true;
+  }
+  var registro={
+    id:Quizzes[0]._id,
+    nombre: Quizzes[0].nombreQuizz,
+    contestado: contestado
+  }
+  */
+  var quizz;
+  var datosQuizz=[];
+  
+  for( quizz in Quizzes){
+    var QuizzAnalizado=Quizzes[quizz];
+    var Registro= await Registros.find({quizz:Quizzes[0]._id}).lean();
+    var contestado=false;
+    if(Registro.length>0){
+      contestado=true;
+    }
+    var registro={
+      id:Quizzes[0]._id,
+      nombre: Quizzes[0].nombreQuizz,
+      contestado: contestado
+    }
+
+    datosQuizz.push(registro);
+  }
+  console.log(datosQuizz);
   res.render('editor/index', { Quizzes });
 
 });
