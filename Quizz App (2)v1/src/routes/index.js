@@ -1036,6 +1036,8 @@ router.get('/alumnos/revision/:id', async (req, res) => {
   //console.log(respuestaAlumnoElegida[0].respuestas[2].revision);
   console.log("Ejecutandose");
   console.log(respuestaAlumnoElegida[0].calificacion);
+  console.log(respuestaAlumnoElegida[0].tiempo);
+  console.log(respuestaAlumnoElegida[0].respuestas[5].respuestaA[0]);
    res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 });
 
