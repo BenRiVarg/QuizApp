@@ -4,7 +4,7 @@
 
 var formulario=document.getElementById("quizz");
 //Nos aseguramos de no estar guardando otros valores
-formulario.reset()
+//formulario.reset()
 
 var impedimento=1
 console.log(impedimento);
@@ -279,7 +279,7 @@ function activarReactivo(){
 function tomarTiempo(){
    var tiempo=document.getElementById("cronometro").textContent;
    var strVar="";
-    strVar += "<input type=\"hidden\" autocomplete=\"off\" name=\"tiempo\" value=\""+tiempo+"\">";
+    strVar += "<input type=\"hidden\" name=\"tiempo\" value=\""+tiempo+"\">";
    formulario.insertAdjacentHTML("beforeend",strVar);
 }
 

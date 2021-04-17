@@ -23,6 +23,28 @@ body {
   font-weight: 600;
 }
 
+.preview {
+  color: #450c74;
+  margin: auto;
+  padding-top: 0px;
+  text-align: center;
+}
+
+.btnModificar {
+  position: relative;
+  margin-right: 1000px;
+  width: 150px;
+  height: 50px;
+  font-weight: 100;
+}
+
+.btnAprobar {
+  position: relative;
+  margin-right: 1000px;
+  width: 150px;
+  height: 50px;
+}
+
 .progress-bar {
   background-color: #ce002b;
 }
@@ -170,6 +192,12 @@ img {
     padding: 12px 20px;
     bottom: 20px;
     right: 20px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .acomodado {
+    width: 600px;
   }
 }
 

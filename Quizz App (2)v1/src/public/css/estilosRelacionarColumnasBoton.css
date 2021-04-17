@@ -91,10 +91,7 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-  html,
-  body,
-  table,
-  #main {
+  html, body, table, #main {
     margin: 0;
     padding: 0;
     font-size: 14px;
@@ -285,10 +282,7 @@ body.examen {
   background-color: #ffd9b3;
 }
 
-html h1,
-h2,
-h3,
-h4 {
+html h1, h2, h3, h4 {
   color: Black;
 }
 

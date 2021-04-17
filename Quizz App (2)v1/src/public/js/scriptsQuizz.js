@@ -38,9 +38,6 @@ var x = setInterval(function () {
   var deltaMinutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
   var deltaSeconds = Math.floor((delta % (1000 * 60)) / 1000);
   
-  console.log("Delta Minutes");
-  capturaTiempo= deltaHours + " : " + deltaMinutes + " : " + deltaSeconds + " ";
-  console.log(capturaTiempo);
   // If the count down is over, write some text
   if (distance < 0) {
     enviarQuizz();
