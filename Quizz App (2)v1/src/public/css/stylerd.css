@@ -5,6 +5,17 @@ body {
   margin-top: 5px;
 }
 
+.acomodado {
+  position: fixed;
+  margin-left: 580px;
+  width: 250px !important;
+  margin-bottom: 25px;
+}
+
+.figure {
+  display: flex;
+}
+
 .figure h6 {
   position: relative;
   top: -4px;
@@ -29,10 +40,11 @@ body {
   padding-top: 0px;
   text-align: center;
 }
+
 .btnModificar {
   position: relative;
   margin-right: 1000px;
-  width: 200px;
+  width: 150px;
   height: 50px;
   font-weight: 100;
 }
@@ -40,7 +52,7 @@ body {
 .btnAprobar {
   position: relative;
   margin-right: 1000px;
-  width: 200px;
+  width: 150px;
   height: 50px;
 }
 
@@ -191,6 +203,12 @@ img {
     padding: 12px 20px;
     bottom: 20px;
     right: 20px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .acomodado {
+    width: 600px;
   }
 }
 
