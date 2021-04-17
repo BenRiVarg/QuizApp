@@ -274,7 +274,8 @@ function envioQuizzEditado(){
      editarIT();
 
      insertor.appendChild(numeroHTML);
-     
+     var formulario=document.getElementById("formularioQuizz");
+     formulario.submit();
 }
 
 function editarQuizz(){
