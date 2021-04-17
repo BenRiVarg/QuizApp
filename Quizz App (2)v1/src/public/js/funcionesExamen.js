@@ -4,7 +4,7 @@
 
 var formulario=document.getElementById("quizz");
 //Nos aseguramos de no estar guardando otros valores
-formulario.reset()
+//formulario.reset()
 
 var impedimento=1
 console.log(impedimento);

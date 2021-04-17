@@ -207,6 +207,132 @@ router.get('/verify/:token', async (req, res) => {
 
 });
 
+router.get('/visualizar/:idQuizz', async (req, res) => {
+  var quizz= await Quizz.findById(req.params.idQuizz).lean();
+  var materia= await API.findByID("materias",quizz.materia);
+  materia=materia.nombre;
+  res.render('editor/previsualizar',{materia,quizz});
+
+});
+
+
+router.get('/editores/crear', async (req, res) => {
+
+  res.render('editor/crear', );
+
+});
+
+router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
+  var imagenes=req.files;
+
+  console.log(req.body);
+  
+  
+  //console.log(req.body.nivel);
+  //console.log(req.body.grado);
+  //console.log(req.body.claveMateria);
+  //console.log(req.body.bloques);
+  //console.log(req.body.Secuencias);
+  //console.log(req.body.nombreQuizz);
+
+
+ 
+  
+   
+  var i;
+  //variable para construir el cuestionario como un array
+  var cuestionario= [
+  ];
+
+  //Si al menos e envio un cuestionario diferente a Drag
+  if (req.body.tipo1){
+//Procesamiento de cada pregunta por la request
+  for (i = 0; i < req.body.numeroPreguntas; i++) {
+      var tipo="tipo"+(i+1);
+      var pregunta="pregunta"+(i+1);
+      var respuesta="respuesta"+(i+1);
+
+      //filtro para relacionar preguntas e imágenes
+        if (req.body[tipo]=="tipoIT"){
+
+          //Definimos el valor con el que llega el nombre de la imagen
+          var imgKey="imagen"+(i+1);
+          var nombreImg=req.body[imgKey];
+          //
+          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
+
+          //Creamos un array para la estructura de la preguta
+          var preguntaImagen=[];
+          // En el primer espacio guardamos el nombre de la Imagen
+          preguntaImagen[0]=imagen.filename;
+          //En el segundo la pregunta
+          preguntaImagen[1]=req.body[pregunta];
+          //Y reasignamos el valor en la request
+          req.body[pregunta]=preguntaImagen;
+      }
+
+
+      //Construcción de documentos de cuestionarios de manera iterativa
+      var contenidoCuestionario={
+        tipo:req.body[tipo],
+        pregunta:  req.body[pregunta],
+        respuesta: req.body[respuesta]
+      }
+
+     
+      cuestionario.push(contenidoCuestionario);
+      
+      
+    
+
+     
+  } 
+}
+  //Lectura de Preguntas Drag
+  if(req.body.lienzos)
+  {
+    for(var j=0;j<req.body.lienzos;j++){
+      var claveLienzo="lienzo"+j;
+      var dataLienzo=JSON.parse(req.body[claveLienzo]);
+
+      var imagenHTML=dataLienzo.pregunta[0].nombre;
+      //Buscamos el archivo al que está vinculada la imagen
+      var imagen=Funciones.buscarImagen(imagenHTML,imagenes);
+      //Y lo reasignamos con el nombre con el que encontrará la imagen en la BD
+      dataLienzo.pregunta[0].nombre=imagen.filename;
+      console.log(dataLienzo.pregunta[0].nombre)
+      var cuestionarioLienzo=dataLienzo;
+      cuestionario.push(cuestionarioLienzo);
+    }
+  }
+
+  
+    //guardado en la BD
+    var nuevoQuizz= await Quizz.create( 
+      {
+      
+
+    nivel:req.body.nivel,
+    grado:req.body.grado,
+    materia:req.body.claveMateria,
+    bloque:req.body.bloques,
+    secuencia:req.body.Secuencias,
+    nombreQuizz:req.body.nombreQuizz,
+    creador:"Pendiente",
+    grupo: req.body.grupo,
+    intentos: req.body.intentos,
+    cuestionario: cuestionario
+       
+       }
+    
+    );
+
+    var link="/visualizar/"+nuevoQuizz.id;
+    res.redirect(link)
+  
+});
+
+
 
 router.get('/editores/:token/editar/:idQuizz', async (req, res) => {
   var quizz=await Quizz.findById(req.params.idQuizz);
@@ -350,7 +476,26 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   const idQuizz = req.body.idQuizz;
 
   
+  /*  nivel:req.body.nivel,
+    grado:req.body.grado,
+    materia:req.body.claveMateria,
+    bloque:req.body.bloques,
+    secuencia:req.body.Secuencias,
+    nombreQuizz:req.body.nombreQuizz,
+    creador:"Pendiente",
+    grupo: req.body.grupo,
+    intentos: req.body.intentos,
+    cuestionario: cuestionario*/ 
   Quizz.findByIdAndUpdate(idQuizz, {
+    nivel:req.body.nivel,
+    grado:req.body.grado,
+    materia:req.body.claveMateria,
+    bloque:req.body.bloques,
+    secuencia:req.body.Secuencias,
+    nombreQuizz:req.body.nombreQuizz,
+    creador:"Pendiente",
+    grupo: req.body.grupo,
+    intentos: req.body.intentos,
     cuestionario:cuestionario
   }, (error, user) => {
     console.log("Error")
@@ -361,29 +506,6 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   );
   
   
-});
-
-
-router.get('/editores/borrar/:idQuizz', async (req, res) => {
-  const idQuizz = req.params.idQuizz;
-  var quizz=await Quizz.findById(idQuizz);
-  console.log(quizz);
-  var cuestionarios=quizz.cuestionario;
-  for(var i=0;i<cuestionarios.length; i++){
-    if(cuestionarios[i].tipo=="tipoIT"){
-      //Borrado de las imagenes del Quizz
-     Funciones.eliminarImagen(cuestionarios[i].pregunta[0]);
-    }
-    
-  }
-  
-  Quizz.findByIdAndRemove(idQuizz, function (err) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.redirect("/editores/editar");
-    }
-  });
 });
 
 
@@ -510,162 +632,29 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   
 });
 
-router.get('/delete/:id', async (req, res, next) => {
-  let { id } = req.params.id;
-  await Quizz.remove({ _id: id });
-  res.redirect('/editores/editar');
-});
+router.get('/editores/borrar/:idQuizz', async (req, res) => {
 
-
-router.post('/materias', async (req, res) => {
-  Materia.create({ nombre: req.body.nombre });
-  res.redirect("/editores");
-
-});
-
-
-
-
-
-
-router.get('/editores/crear', async (req, res) => {
-
-  res.render('editor/crear', );
-
-});
-
-router.get('/visualizar/:idQuizz', async (req, res) => {
-  var quizz= await Quizz.findById(req.params.idQuizz).lean();
-  var materia= await API.findByID("materias",quizz.materia);
-  materia=materia.nombre;
-  res.render('editor/previsualizar',{materia,quizz});
-
-});
-
-/*
-router.get('/verify/:token', async (req, res) => {
-   var token=req.params.token;
-  res.render('editor/crear', );
-
-});
-*/
-
-
-router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
-  var imagenes=req.files;
-
-  console.log(req.body);
-  
-  
-  //console.log(req.body.nivel);
-  //console.log(req.body.grado);
-  //console.log(req.body.claveMateria);
-  //console.log(req.body.bloques);
-  //console.log(req.body.Secuencias);
-  //console.log(req.body.nombreQuizz);
-
-
- 
-  
-   
-  var i;
-  //variable para construir el cuestionario como un array
-  var cuestionario= [
-  ];
-
-  //Si al menos e envio un cuestionario diferente a Drag
-  if (req.body.tipo1){
-//Procesamiento de cada pregunta por la request
-  for (i = 0; i < req.body.numeroPreguntas; i++) {
-      var tipo="tipo"+(i+1);
-      var pregunta="pregunta"+(i+1);
-      var respuesta="respuesta"+(i+1);
-
-      //filtro para relacionar preguntas e imágenes
-        if (req.body[tipo]=="tipoIT"){
-
-          //Definimos el valor con el que llega el nombre de la imagen
-          var imgKey="imagen"+(i+1);
-          var nombreImg=req.body[imgKey];
-          //
-          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
-
-          //Creamos un array para la estructura de la preguta
-          var preguntaImagen=[];
-          // En el primer espacio guardamos el nombre de la Imagen
-          preguntaImagen[0]=imagen.filename;
-          //En el segundo la pregunta
-          preguntaImagen[1]=req.body[pregunta];
-          //Y reasignamos el valor en la request
-          req.body[pregunta]=preguntaImagen;
-      }
-
-
-      //Construcción de documentos de cuestionarios de manera iterativa
-      var contenidoCuestionario={
-        tipo:req.body[tipo],
-        pregunta:  req.body[pregunta],
-        respuesta: req.body[respuesta]
-      }
-
-     
-      cuestionario.push(contenidoCuestionario);
-      
-      
-    
-
-     
-  } 
-}
-  //Lectura de Preguntas Drag
-  if(req.body.lienzos)
-  {
-    for(var j=0;j<req.body.lienzos;j++){
-      var claveLienzo="lienzo"+j;
-      var dataLienzo=JSON.parse(req.body[claveLienzo]);
-
-      var imagenHTML=dataLienzo.pregunta[0].nombre;
-      //Buscamos el archivo al que está vinculada la imagen
-      var imagen=Funciones.buscarImagen(imagenHTML,imagenes);
-      //Y lo reasignamos con el nombre con el que encontrará la imagen en la BD
-      dataLienzo.pregunta[0].nombre=imagen.filename;
-      console.log(dataLienzo.pregunta[0].nombre)
-      var cuestionarioLienzo=dataLienzo;
-      cuestionario.push(cuestionarioLienzo);
+  const idQuizz = req.params.idQuizz;
+  var quizz=await Quizz.findById(idQuizz);
+  console.log(quizz);
+  var cuestionarios=quizz.cuestionario;
+  for(var i=0;i<cuestionarios.length; i++){
+    if(cuestionarios[i].tipo=="tipoIT"){
+      //Borrado de las imagenes del Quizz
+     Funciones.eliminarImagen(cuestionarios[i].pregunta[0]);
     }
-  }
-
-  
-    //guardado en la BD
-    var nuevoQuizz= await Quizz.create( 
-      {
-      
-
-    nivel:req.body.nivel,
-    grado:req.body.grado,
-    materia:req.body.claveMateria,
-    bloque:req.body.bloques,
-    secuencia:req.body.Secuencias,
-    nombreQuizz:req.body.nombreQuizz,
-    creador:"Pendiente",
-    grupo: req.body.grupo,
-    intentos: req.body.intentos,
-    cuestionario: cuestionario
-       
-       }
     
-    );
+  }
+  
+  Quizz.findByIdAndRemove(idQuizz, function (err) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.redirect("/verify/Token");
+    }
+  });
   
 });
-
-
-
-
-router.get('/editores/editar', (req, res) => {
-  res.render('editor/editar');
-
-});
-
 
 //---- DOCENTES
 
