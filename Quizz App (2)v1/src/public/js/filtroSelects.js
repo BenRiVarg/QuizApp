@@ -3,6 +3,10 @@
 var niveles=document.getElementsByClassName("select");
       
 var arrNiveles=[];
+
+///Funcionalidad para Edición 
+var primercambio=true;
+
 for(var i=0;i<niveles.length;i++){
 
   arrNiveles[i]=niveles[i];
@@ -10,6 +14,22 @@ for(var i=0;i<niveles.length;i++){
 }
 
 
+var pivoteEdicion=document.getElementById("ventanaEdicion");
+   
+if(pivoteEdicion){
+  //Funcionalidad para la ventana de Edición
+  console.log("Editando....");
+  var nivel=document.getElementById("nivel");
+  nivel.addEventListener("click",function(e){
+    e.preventDefault();
+    inicioEdicion()});
+}
+else{
+  //Funcionalidad para la ventana de creación
+  inicioCrecion();
+}
+
+function inicioCrecion(){
 $.getJSON("/pruebaAJAXniveles", function (niveles) {
     for (var i = 0; i < niveles.length; i++) {
       var nombres = (niveles[i].nombre);
@@ -20,9 +40,8 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
     }
      
   });
-
-   
-
+}
+  
   $('#nivel').on('change', async function () {
         console.log(this.value);
         var grados= await getGrados(this.value);
@@ -41,8 +60,10 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
         document.getElementById("grados").innerHTML +=
           "<option value='" + (grados[i].id) + "'>" + (grados[i].nombre) + "</option>";
         }
-       document.getElementById("grados").style.display = "block"; 
+       document.getElementById("grados").style.display = "block";
+       
     });
+  
 
       $('#grados').on('change', async function () {
           console.log(this.value);
@@ -178,3 +199,24 @@ $.getJSON("/pruebaAJAXniveles", function (niveles) {
     }
    
     
+    function inicioEdicion(){
+      console.log(primercambio);
+      if(primercambio){
+        console.log("Ejecutandose")
+          var nivel=document.getElementById("nivel");
+        $.getJSON("/pruebaAJAXniveles", function (niveles) {
+          nivel.innerHTML =""
+          nivel.innerHTML+="<option>Nivel</option>";
+          for (var i = 0; i < niveles.length; i++) {
+            var nombres = (niveles[i].nombre);
+            var id = (niveles[i].id);
+            nivel.innerHTML +=
+              "<option value='"+ id +"'>" + nombres + "</option>";
+          
+          }
+          
+        });
+        primercambio=false;
+        }
+  }
+  
