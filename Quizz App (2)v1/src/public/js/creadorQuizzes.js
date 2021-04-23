@@ -25,10 +25,6 @@ var lienzo={
             }
             //Simulación de un solo lienzo
 objetosDrag[0]=lienzo;
-
-function setNumeroPreguntas(numero){
-  numeracionPregunta=numero
-}
 //Función para nombrar los tipos de preguntas, y agregarles un contador para que no se pierdan en la request
 function contadorTipo(){
     tipo="tipo"+contador;
@@ -64,6 +60,10 @@ strVar += "            <h3>Pregunta Abierta<\/h3>";
 strVar += "            <h4 class=\"text-primary\">Intrucciones<\/h4>";
 strVar += "            <p class=\"fs-5 justify-content-center text\">Escribe la pregunta y la respuesta que quieras que tenga.<\/p>";
 strVar += "          <\/div>";
+strVar += "               <div class=\"col-md-7 mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Escribe pregunta y respuesta\">";
+strVar += "              <\/div>";
 strVar += "          <div class=\"col-md-7\" style=\"margin: 0 auto;\">";
 strVar += "            <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
 strVar += "            <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Escriba la pregunta\">";
@@ -871,12 +871,16 @@ strVar += "      <div class=\"row\">";
 strVar += "        <div class=\"col-12 col-md-12 col-lg-6 justify-content-center\">";
 strVar += "          <div class=\"rounded-pill\">";
 strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
-strVar += "              style=\"width: 3rem; height:3rem;\">";
+strVar += "              style=\"width: 3rem; height:3rem;\">";strVar += "";
 strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 16px;\">"+numeracionPregunta+"<\/p>";
 strVar += "            <\/a>";
 strVar += "          <\/div>";
 strVar += "          <div class=\"text-center\">";
 strVar += "            <h3>Pregunta de Opción Múltiple<\/h3>";
+strVar += "               <div class=\"mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Escribe si la pregunta es verdadera o falsa \">";
+strVar += "              <\/div>";
 strVar += "            <div class=\"pregunta mt-3\">";
 strVar += "              <!--  -->";
 strVar += "              <input type=\"text\" class=\"form-control pregunta \" placeholder=\"Pregunta para el alumno\">";
@@ -995,6 +999,10 @@ strVar += "              <h4 class=\"text-primary\">Intrucciones<\/h4>";
 strVar += "              <p class=\"fs-5 justify-content-center text\">Seleccione la imagen a cargar, y defina pregunta y respuesta";
 strVar += "              <\/p>";
 strVar += "            <\/div>";
+strVar += "               <div class=\"mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde la pregunta de acuerdo a la imagen \">";
+strVar += "              <\/div>";
 strVar += "            <input required type=\"file\" id=\"imgIT"+contadorPreV+"\" accept=\"image\/*\" class=\"imgs\" name=\"imgs\">";
 strVar += "            <input required type=\"hidden\" class=\"imagenrequest\">";
 strVar += "            <div id=\"prevIT"+contadorPreV+"\" class=\"mx-auto\"><\/div>";
@@ -1081,6 +1089,10 @@ strVar += "              3_4";
 strVar += "            <\/p>";
 strVar += "";
 strVar += "          <\/div>";
+strVar += "               <div class=\"col-md-7 mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Escribe la respuesta de la operación \">";
+strVar += "              <\/div>";
 strVar += "          <div class=\"col-md-7\" style=\"margin: 0 auto;\">";
 strVar += "            <label for=\"formGroupExampleInput\" class=\"form-label\">Expresión<\/label>";
 strVar += "            <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Escriba la expresión a mostrar al alumno\">";
@@ -1541,7 +1553,7 @@ function envioPreguntaIT(){
   //Captura de la imagen
   var imagen = cuestionarios[i].querySelectorAll("input.imgs");
   var valorImagen=imagen[0].files[0].name;
-  
+
     //Creación de un espacio en blanco en un array para enviar el id de la imagen
   var imagenHTML = cuestionarios[i].querySelectorAll("input.imagenrequest");
   imagenHTML[0].name="imagen"+contador;
@@ -2034,8 +2046,7 @@ function validaciones(){
   }
 // Envío Final de todos los elementos
 function envioQuizz(){
-  var formulario=document.getElementById("formularioQuizz");
- 
+  
      //creación e inserción de un elemento con el número de preguntas del cuestionario
     var numeroPreguntas=document.getElementsByClassName("cuestionario").length;
     var numeroHTML=document.createElement("INPUT");
@@ -2051,7 +2062,8 @@ function envioQuizz(){
     
     envioPreguntaMate();
     envioPreguntaIT();
- // console.log(formulario);
+  var formulario=document.getElementById("formularioQuizz");
+
   /*--------Apartado para Enviar la Pregunta Drag----
   var datosEnvio=new FormData(formulario);
  
@@ -2060,8 +2072,7 @@ function envioQuizz(){
   var request = new XMLHttpRequest();
   request.open("POST", "/editores/crear");
   request.send(datosEnvio);-----------*/
-   formulario.submit();
-   formulario.reset();
+  formulario.submit();
 }
 
 function crearQuizz(){
