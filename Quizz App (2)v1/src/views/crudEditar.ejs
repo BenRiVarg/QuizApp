@@ -10,13 +10,12 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
-  <link rel="stylesheet" type="text/css" href="/css/editoresEditar.css">
+  <link rel="stylesheet" type="text/css" href="/css/editoresCrear.css">
 
-  <title>Editar Quizz</title>
+  <title>Crear Examen</title>
 </head>
 
 <body data-spy="scroll" data-target="#insercion" data-offset="50" >
-    <p class="d-none" id="ventanaEdicion"></p>
   <div class="mallaExito" id="malla"></div>
 <!-- Page Content -->
   <div class="w3-light-gray w3-nav-bar">
@@ -29,7 +28,7 @@
   <br>
   <div class="row justify-content-center mt-5 pt-5">
     <header class="text-center mb-5">
-      <h1>Editar Quizz</h1>
+      <h1>Crea un nuevo exámen</h1>
     </header>
   </div>
 
@@ -37,39 +36,34 @@
     <input type="hidden" value="<%= quizz._id %>" name="idQuizz">
     <div class="row justify-content-center mt-5 pt-5">
       <div class="col-lg-7">
-        <p class="fs-5">Nivel:</p>
         <select id="nivel" class="form-select form-select-lg mb-3 select nivel-0" aria-label=".form-select-lg example" name="nivel" required>
-            <option selected value="<%= datosQuizz.nivel.id %>"><%= datosQuizz.nivel.nombre %></option>
+          <option selected>Nivel</option>
 
         </select>
       </div>
       <div class="col-lg-7">
-          <p class="fs-5">Grado:</p>
         <select id="grados" class="form-select form-select-lg mb-3 select nivel-1" aria-label=".form-select-sm example" name="grado"  required>
-            <option selected value="<%= datosQuizz.grado.id %>"><%= datosQuizz.grado.nombre %></option>
+          <option selected>Grado</option>
         
         </select>
         
       </div>
       <div class="col-lg-7">
-        <p class="fs-5">Materia:</p>
       <select id="materias" class="form-select form-select-lg mb-3 select nivel-2" aria-label=".form-select-lg example" name="claveMateria" required>
-        <option selected value="<%= datosQuizz.materia.id %>"><%= datosQuizz.materia.nombre %></option>
+        <option selected>Materia</option>
       
       </select>
       </div>
       <div class="col-lg-7">
-        <p class="fs-5">Bloque:</p>
         <select id="bloques" class="form-select form-select-lg mb-3 select nivel-3" aria-label=".form-select-lg example" name="bloques" required>
-            <option selected value="<%= datosQuizz.bloque.id %>"><%= datosQuizz.bloque.nombre %></option>
+          <option selected>Bloque</option>
       
         </select>
       </div>
       <div class="col-lg-7">
-        <p class="fs-5">Secuencia:</p>
         <select id="secuencias" class="form-select form-select-lg mb-3 select nivel-4" aria-label=".form-select-lg example" name="Secuencias"
           required>
-          <option selected value="<%= datosQuizz.secuencia.id %>"><%= datosQuizz.secuencia.nombre %></option>
+          <option selected>Secuencias</option>
       
         </select>
       </div>
@@ -99,7 +93,7 @@
                 <div class="rounded-pill">
                   <a class="position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1"
                     style="width: 3rem; height:3rem; margin-left: 210px;">
-                    <p class="fs-4" style="padding-top: 4px;"><%= i+1 %></p>
+                    <p class="fs-4" style="padding-top: 4px;">3</p>
                   </a>
                 </div>
                 <div class="text-center mb-5 mt-5">
@@ -136,7 +130,7 @@
                         <div class="rounded-pill">
                           <a class="position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1"
                             style="width: 3rem; height:3rem;">
-                            <p class="fs-4" style="padding-top: 4px; padding-left: 16px;"><%= i+1 %></p>
+                            <p class="fs-4" style="padding-top: 4px; padding-left: 16px;">5</p>
                           </a>
                         </div>
                         <div class="text-center">
@@ -206,7 +200,7 @@
               <div class="rounded-pill">
                 <a class="position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1"
                   style="width: 3rem; height:3rem;">
-                  <p class="fs-4" style="padding-top: 4px;"><%= i+1 %></p>
+                  <p class="fs-4" style="padding-top: 4px;">4</p>
                 </a>
               </div>
               
@@ -214,10 +208,6 @@
                 <div class="mb-4">
                   <h3 class="text-center">Pregunta Relacional</h3>
                 </div>
-                <div class="mb-4 text-center mx-auto">
-                    <label for="formGroupExampleInput" class="form-label">Instrucciones</label>
-                    <input type="text" class="form-control instrucciones" placeholder="Instrucciones para el alumno" value="<%= quizz.cuestionario[i].instrucciones%>">
-                  </div>
                 <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
                 <div class="container row justify-content-center mb-3">
                   
@@ -266,7 +256,7 @@
                   <div class="rounded-pill">
                     <a class="position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1"
                       style="width: 3rem; height:3rem; margin-left: 203px;">
-                      <p class="fs-4" style="padding-top: 4px; padding-left: 15px;"><%= i+1 %></p>
+                      <p class="fs-4" style="padding-top: 4px; padding-left: 15px;">2</p>
                     </a>
                   </div>
                   <div class="text-center">
@@ -305,7 +295,7 @@
                     <div class="rounded-pill">
                       <a class="position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1"
                         style="width: 3rem; height:3rem; margin-left: 198px;">
-                        <p class="fs-4" style="padding-top: 4px; padding-left: 15px;"><%= i+1 %></p>
+                        <p class="fs-4" style="padding-top: 4px; padding-left: 15px;">1</p>
                       </a>
                     </div>
                     <div class="container tipoIT cuestionario mt-4 col-md-7">
@@ -343,7 +333,6 @@
    <%} %>
     <!---->
     <!-- Inserto de nuevas preguntas-->
-    <p class="d-none" id="npQuizz"><%= (i+1) %></p>
     <div id="insercion">
 
     </div>
@@ -361,7 +350,7 @@
   <div class="boton3">
     <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu Quizz" delay="0"
       tabindex="0" class="d-inline-block">
-      <button type="button" class="btn-flotante" onclick="envioQuizzEditado()">Modificar Quizz</button>
+      <button type="button" class="btn-flotante" onclick="editarQuizz()">Modificar Quizz</button>
     </span>
   </div>
 

@@ -160,7 +160,7 @@ body {
   background: #fff;
 }
 
-/*.nav1,*/
+.nav1,
 .dropdown-content {
   z-index: 1;
   display: block;
@@ -265,68 +265,55 @@ body {
   opacity: 0;
 }
 
-#grados {
-  display: none;
-}
-#materias {
-  display: none;
-}
-#bloques {
-  display: none;
-}
-#secuencias {
-  display: none;
-}
-
 @media only screen and (max-width: 1024px) {
   /*
-  .button1 {
-    z-index: 7;
-    width: 43px;
-    height: 43px;
-    background-color: blue;
-    border-radius: 100%;
-    transition: all o.5s ease-in-out;
-    box-shadow: (0, 0, 0, 0.3);
-    cursor: pointer;
-    position: fixed;
-    bottom: 200px;
-    right: 55px;
-  }
-
-  .nav1,
-  .dropdown-content {
-    z-index: 1;
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    background: white;
-    width: 250px;
-    border-radius: 5px;
-    transform: translateY(0%);
-    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 25px;
-    right: 200px;
-  }
-
-  .dropdown-content a:hover {
-    background-color: royalblue;
-  }
-
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  #toggle:checked ~ .nav1 {
-    opacity: 1;
-    transform: translateX(-30%);
-  }
-  #toggle:checked ~ .button1 {
-    transform: rotate(135deg);
-    box-shadow: 0, 0, 0, transparent;
-  }
-
-  */
+    .button1 {
+      z-index: 7;
+      width: 43px;
+      height: 43px;
+      background-color: blue;
+      border-radius: 100%;
+      transition: all o.5s ease-in-out;
+      box-shadow: (0, 0, 0, 0.3);
+      cursor: pointer;
+      position: fixed;
+      bottom: 200px;
+      right: 55px;
+    }
+  
+    .nav1,
+    .dropdown-content {
+      z-index: 1;
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      background: white;
+      width: 250px;
+      border-radius: 5px;
+      transform: translateY(0%);
+      box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.1);
+      position: fixed;
+      bottom: 25px;
+      right: 200px;
+    }
+  
+    .dropdown-content a:hover {
+      background-color: royalblue;
+    }
+  
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    #toggle:checked ~ .nav1 {
+      opacity: 1;
+      transform: translateX(-30%);
+    }
+    #toggle:checked ~ .button1 {
+      transform: rotate(135deg);
+      box-shadow: 0, 0, 0, transparent;
+    }
+  
+    */
 }

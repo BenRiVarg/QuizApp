@@ -16,9 +16,18 @@
 
 <body style="background-color:#FFE8CD" >
   <div class="col ">
-    <div class="figure" style="margin-right: 473px !important;">
+    <div class="figure" >
       <h6><%= materia %></h6>
+      <p class="display-4 preview" style="margin: 0 auto; padding: 0;">Previsualización</p>
     </div>
+    
+    <div class="acomodado mb-5">
+      <div class="row">
+        <div class="col"> <a href="/editores/:token/editar/<%= quizz._id %>" class="btn btn-primary btnModificar" >Modificar</a></div>
+        <div class="col mt-2"> <a href="/verify/token" class="btn btn-info btnAprobar" >Aprobar</a></div>
+      </div>
+    </div>
+    
   </div>
   <div class="container text-center">
     <h1 class="display-4 mt-3">
@@ -26,7 +35,7 @@
     </h1>
   </div>
   <input type="hidden" autocomplete="off" name="tiempo" value="">
-  <div class="container text-right">
+  <div class="container text-right mt-4">
     <div class="time">
       <div style="width: 500px; margin: 0 auto;">
         <h1 class="text-center mt-2">Tiempo:</h1>
@@ -34,13 +43,13 @@
       </div>
     </div>
   </div>
-  <form action="/alumnos/correccion/alumno/<%=idAlumno%>" method="POST" id="quizz">
+  <form action="#" >
     <input type="hidden" name="quizz" autocomplete="off" value="<%= quizz._id %>">
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
       <div class="carousel-inner">
         <% var preguntaFinal=quizz.cuestionario.length-1 %>
         <% for(var c=0; c<quizz.cuestionario.length ; c++) {%>
-          <% var i=clavesCuestionarios[c]; %>
+          <% var i=c; %>
           <% var activo="" %>
           <% var final="" %>
             <% if (c==0){ %>
@@ -50,7 +59,7 @@
                   <% final="pregunta-Final" %>
                     <%}%>
                   <% switch (quizz.cuestionario[i].tipo) { case "tipoT" : %>
-                    <div class="carousel-item <%= i %> <%= activo %> <%= final %>">
+                    <div class="carousel-item <%= activo %> <%= final %>">
                       <!--P Texto-->
                       <div class="d-flex justify-content-center ">
                         <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
@@ -215,8 +224,8 @@
                             <div class="d-flex justify-content-center ">
                               <div class="card shadow-lg p-3 my-3 bg-body text-center col-sm-10 col-lg-10">
                                 <div class="card-body border border-1 border-rounded">
-                                  <p class="display-6 text-light">Resuleve la siguiente expresión</p>
-                                  <div class="row justify-content-center" style="background-color:white; margin-top: 80px;">
+                                  <p class="display-6 text-dark">Resuleve la siguiente expresión</p>
+                                  <div class="row justify-content-center" style="background-color:#FFE8CD; margin-top: 80px;">
                                     <p class="mate">
                                       <%= quizz.cuestionario[i].pregunta[0] %>
                                     </p>
@@ -343,10 +352,7 @@
       </div>
     </div>
    
-   <div class="btn-flotante">
-     <button onclick="enviarQuizz()" class="btn fw-bold text-light Enviar" value="Enviar Respuestas">Enviar
-      respuestas</button> 
-   </div>
+   
     
   </div>
   

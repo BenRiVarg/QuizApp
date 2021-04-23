@@ -38,9 +38,8 @@ var x = setInterval(function () {
   var deltaMinutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
   var deltaSeconds = Math.floor((delta % (1000 * 60)) / 1000);
   
-  console.log("Delta Minutes");
-  capturaTiempo= deltaHours + " : " + deltaMinutes + " : " + deltaSeconds + " ";
-  console.log(capturaTiempo);
+  capturaTiempo=deltaHours+":"+deltaMinutes+":"+deltaSeconds;
+
   // If the count down is over, write some text
   if (distance < 0) {
     enviarQuizz();
@@ -51,6 +50,8 @@ var x = setInterval(function () {
 }, 1000);
 
 function tomarTiempo(){
+  
+  //console.log(capturaTiempo);
   var strVar="";
    strVar += "<input type=\"hidden\" name=\"tiempo\" value=\""+capturaTiempo+"\">";
   formulario.insertAdjacentHTML("beforeend",strVar);
