@@ -429,6 +429,7 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
       var tipo="tipo"+(i+1);
       var pregunta="pregunta"+(i+1);
       var respuesta="respuesta"+(i+1);
+      var instrucciones="instrucciones"+(i+1);
 
       //filtro para relacionar preguntas e imágenes
         if (req.body[tipo]=="tipoIT"){
@@ -472,10 +473,18 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
           }
       }
 
+      var instruccionesCuestionario;
+      //Si existen las instrucciones del cuestionario
+      if(req.body[instrucciones] && req.body[instrucciones].length!=0){
+        instruccionesCuestionario=req.body[instrucciones];
+      }
+
+
 
       //Construcción de documentos de cuestionarios de manera iterativa
       var contenidoCuestionario={
         tipo:req.body[tipo],
+        instrucciones: instruccionesCuestionario,
         pregunta:  req.body[pregunta],
         respuesta: req.body[respuesta]
       }
@@ -511,11 +520,21 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   const idQuizz = req.body.idQuizz;
 
   Quizz.findByIdAndUpdate(idQuizz, {
+    nivel:req.body.nivel,
+    grado:req.body.grado,
+    materia:req.body.claveMateria,
+    bloque:req.body.bloques,
+    secuencia:req.body.Secuencias,
+    nombreQuizz:req.body.nombreQuizz,
+    creador:"Pendiente",
+    grupo: req.body.grupo,
+    intentos: req.body.intentos,
     cuestionario:cuestionario
   }, (error, user) => {
     console.log("Error")
     console.log(error, idQuizz);
-    res.redirect('/editores/editar');
+    var link="/visualizar/"+idQuizz;
+    res.redirect(link);
   }
   );
   
