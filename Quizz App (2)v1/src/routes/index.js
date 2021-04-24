@@ -258,7 +258,7 @@ router.get('/editores/crear', async (req, res) => {
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
 
-  console.log(req.body);
+ // console.log(req.body);
   
   
   //console.log(req.body.nivel);
@@ -284,6 +284,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
       var tipo="tipo"+(i+1);
       var pregunta="pregunta"+(i+1);
       var respuesta="respuesta"+(i+1);
+      var instrucciones="instrucciones"+(i+1);
 
       //filtro para relacionar preguntas e imágenes
         if (req.body[tipo]=="tipoIT"){
@@ -304,10 +305,16 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
           req.body[pregunta]=preguntaImagen;
       }
 
+      var instruccionesCuestionario;
+      //Si existen las instrucciones del cuestionario
+      if(req.body[instrucciones] && req.body[instrucciones].length!=0){
+        instruccionesCuestionario=req.body[instrucciones];
+      }
 
       //Construcción de documentos de cuestionarios de manera iterativa
       var contenidoCuestionario={
         tipo:req.body[tipo],
+        instrucciones: instruccionesCuestionario,
         pregunta:  req.body[pregunta],
         respuesta: req.body[respuesta]
       }
@@ -339,7 +346,6 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     }
   }
 
-  
     //guardado en la BD
     var nuevoQuizz= await Quizz.create( 
       {
@@ -361,7 +367,9 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     );
 
     var link="/visualizar/"+nuevoQuizz.id;
-    res.redirect(link)
+    res.redirect(link);
+
+   //res.end();
   
 });
 
@@ -390,157 +398,6 @@ router.get('/editores/:token/editar/:idQuizz', async (req, res) => {
  // console.log(datosQuizz.nivel);
   res.render("editor/editar",{quizz,datosQuizz});
 });
-
-/*
-router.get('/editar/:idQuizz', async (req, res) => {
-  var quizz=await Quizz.findById(req.params.idQuizz);
-  res.render("editor/editar",{quizz});
-});
-*/
-router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
-  console.log("Recibiendo Información")
-  var imagenes=req.files;
-
-  console.log(req.body);
-  
-  
-  //console.log(req.body.nivel);
-  //console.log(req.body.grado);
-  //console.log(req.body.claveMateria);
-  //console.log(req.body.bloques);
-  //console.log(req.body.Secuencias);
-  //console.log(req.body.nombreQuizz);
-
-
- 
-  
-   
-  var i;
-  //variable para construir el cuestionario como un array
-  var cuestionario= [
-  ];
-
-  //Si al menos e envio un cuestionario diferente a Drag
-  if (req.body.tipo1){
-//Procesamiento de cada pregunta por la request
-  for (i = 0; i < req.body.numeroPreguntas; i++) {
-      var tipo="tipo"+(i+1);
-      var pregunta="pregunta"+(i+1);
-      var respuesta="respuesta"+(i+1);
-
-      //filtro para relacionar preguntas e imágenes
-        if (req.body[tipo]=="tipoIT"){
-          //Valores para tratar los datos anteriores de la imagen
-          var antiguaImgKey="antiguaIMG"+(i+1);
-          var antiguaImg=req.body[antiguaImgKey];
-
-          //Definimos el valor con el que llega el nombre de la imagen
-          var imgKey="imagen"+(i+1);
-          var nombreImg=req.body[imgKey];
-
-          //Creamos un array para la estructura de la preguta
-          var preguntaImagen=[];
-
-          if(nombreImg!="existente"){
-            //Proceso para nuevas imagenes
-          var imagen=Funciones.buscarImagen(nombreImg,imagenes) 
-
-          
-          // En el primer espacio guardamos el nombre de la Imagen
-          preguntaImagen[0]=imagen.filename;
-          //En el segundo la pregunta
-          preguntaImagen[1]=req.body[pregunta];
-          //Y reasignamos el valor en la request
-          req.body[pregunta]=preguntaImagen;
-          
-          //Borrado de la imagen anterior de la BD
-          if(antiguaImg){
-          Funciones.eliminarImagen(antiguaImg);
-          }
-          }
-          else{
-            //console.log("Proceso de Imagen existente");
-
-            // En el primer espacio guardamos el nombre de la Imagen
-            preguntaImagen[0]=antiguaImg;
-            //En el segundo la pregunta
-            preguntaImagen[1]=req.body[pregunta];
-            //Y reasignamos el valor en la request
-            req.body[pregunta]=preguntaImagen;
-          }
-      }
-
-
-      //Construcción de documentos de cuestionarios de manera iterativa
-      var contenidoCuestionario={
-        tipo:req.body[tipo],
-        pregunta:  req.body[pregunta],
-        respuesta: req.body[respuesta]
-      }
-
-     
-      cuestionario.push(contenidoCuestionario);
-      
-      
-    
-
-     
-  } 
-}
-  //Lectura de Preguntas Drag
-  if(req.body.lienzos)
-  {
-    for(var j=0;j<req.body.lienzos;j++){
-      var claveLienzo="lienzo"+j;
-      var dataLienzo=JSON.parse(req.body[claveLienzo]);
-
-      var imagenHTML=dataLienzo.pregunta[0].nombre;
-      //Buscamos el archivo al que está vinculada la imagen
-      var imagen=Funciones.buscarImagen(imagenHTML,imagenes);
-      //Y lo reasignamos con el nombre con el que encontrará la imagen en la BD
-      dataLienzo.pregunta[0].nombre=imagen.filename;
-      console.log(dataLienzo.pregunta[0].nombre)
-      var cuestionarioLienzo=dataLienzo;
-      cuestionario.push(cuestionarioLienzo);
-    }
-  }
-  
-  console.log(cuestionario);
-  const idQuizz = req.body.idQuizz;
-
-  
-  /*  nivel:req.body.nivel,
-    grado:req.body.grado,
-    materia:req.body.claveMateria,
-    bloque:req.body.bloques,
-    secuencia:req.body.Secuencias,
-    nombreQuizz:req.body.nombreQuizz,
-    creador:"Pendiente",
-    grupo: req.body.grupo,
-    intentos: req.body.intentos,
-    cuestionario: cuestionario*/ 
-  Quizz.findByIdAndUpdate(idQuizz, {
-    nivel:req.body.nivel,
-    grado:req.body.grado,
-    materia:req.body.claveMateria,
-    bloque:req.body.bloques,
-    secuencia:req.body.Secuencias,
-    nombreQuizz:req.body.nombreQuizz,
-    creador:"Pendiente",
-    grupo: req.body.grupo,
-    intentos: req.body.intentos,
-    cuestionario:cuestionario
-  }, (error, user) => {
-    console.log("Error")
-    console.log(error, idQuizz);
-    var link="/visualizar/"+idQuizz;
-    res.redirect(link);
-  }
-  );
-  
-  
-});
-
 
 router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   console.log("Recibiendo Información")
@@ -664,6 +521,7 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   
   
 });
+
 
 router.get('/editores/borrar/:idQuizz', async (req, res) => {
 

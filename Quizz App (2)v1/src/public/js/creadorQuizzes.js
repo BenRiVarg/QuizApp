@@ -647,124 +647,124 @@ function previsualizarDraw(){
       ActivarLienzo();
       }
 
-function preguntaRelacional(){
-  contadorid++;
-  
-
-
-  var strVar="";
-strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoR cuestionario cuestionario mt-5 pt-5 container nivel-Superior\">";
-strVar += "      <div class=\"contenedorErrores\">";
-strVar += "      <\/div>";
-strVar += "      <div class=\"row text-center\">";
-strVar += "        <div class=\"col-12 col-md-12 col-lg-7\">";
-strVar += "          <div class=\"rounded-pill\">";
-strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
-strVar += "              style=\"width: 3rem; height:3rem;\">";
-strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px;\">"+numeracionPregunta+"<\/p>";
-strVar += "            <\/a>";
-strVar += "          <\/div>";
-strVar += "          <div class=\"contenedorItem row justify-content-center mb-3\">";
-strVar += "            <div class=\"container row justify-content-center mb-3\">";
-strVar += "              <div class=\"mb-4\">";
-strVar += "                <h3 class=\"text-center\">Pregunta Relacional<\/h3>";
-strVar += "              <\/div>";
-strVar += "               <div class=\"mb-4 text-center mx-auto\">";
-strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
-strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Relaciona las columnas\">";
-strVar += "              <\/div>";
-strVar += "              <div class=\"col-md-5\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Pregunta\">";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "              <div class=\"col-md-5\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <input type=\"text\" class=\"form-control respuesta \" placeholder=\"Respuesta\">";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "              <div class=\"col-md-2\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
-strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "            <\/div>";
-strVar += "            <br>";
-strVar += "            <div class=\"container row justify-content-center mb-3\">";
-strVar += "              <div class=\"col-md-5\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Pregunta\">";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "              <div class=\"col-md-5\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <input type=\"text\" class=\"form-control respuesta\" placeholder=\"Respuesta\">";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "              <div class=\"col-md-2\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
-strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "            <\/div>";
-strVar += "            <br>";
-strVar += "            <div class=\"container row justify-content-center mb-3\">";
-strVar += "              <div class=\"col-md-5\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <input type=\"text\" class=\"form-control pregunta \" placeholder=\"Pregunta\">";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "              <div class=\"col-md-5\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <input type=\"text\" class=\"form-control respuesta \" placeholder=\"Respuesta\">";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "              <div class=\"col-md-2\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
-strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "            <\/div>";
-strVar += "            <br>";
-strVar += "            <div class=\"container row justify-content-center mb-4\">";
-strVar += "              <div class=\"col-md-3 ml-0\">";
-strVar += "                <div class=\"\">";
-strVar += "                  <button class=\"btn btn-info \" type=\"button\" onclick=\"reactivoRelacional(this)\">Añadir";
-strVar += "                    Reactivo<\/button>";
-strVar += "                <\/div>";
-strVar += "              <\/div>";
-strVar += "";
-strVar += "            <\/div>";
-strVar += "            <br>";
-strVar += "";
-strVar += "            <div class=\"col-md-3 mr-2 text-center\">";
-strVar += "              <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar";
-strVar += "                Pregunta<\/button>";
-strVar += "            <\/div>";
-strVar += "";
-strVar += "          <\/div>";
-strVar += "        <\/div>";
-strVar += "        <div class=\"col-12 col-md-12 col-lg-5\">";
-strVar += "          <h4 class=\"text-primary\">Intrucciones<\/h4>";
-strVar += "          <p class=\"fs-5 justify-content-center text\">1.- Se debe colocar la respuesta y pregunta en orden 1-1, para que";
-strVar += "            pueda evaluar correctamente.No olvides definir las instrucciones para el  Alumno <\/p>";
-strVar += "          <P class=\"fs-5 justify-content-center text\">2.- El botón de QuitarReactivo sirve para quitar preguntas, en";
-strVar += "            caso de que hayas agregado demás.<\/P>";
-strVar += "          <p class=\"fs-5 justify-content-center text\">3.- Añadir Reactivo sirve para agregar más columnas a relacionar.";
-strVar += "          <\/p>";
-strVar += "          <p class=\"fs-5 justify-content-center text\">4.- El botón QuitarPregunta sirve para eliminar la pregunta en";
-strVar += "            caso de que no se ocupe colocar ninguna relacional.<\/p>";
-strVar += "        <\/div>";
-strVar += "      <\/div>";
-strVar += "";
-strVar += "    <\/div>";
-
-numeracionPregunta++
-insertor.insertAdjacentHTML("beforeend",strVar);
-}
+      function preguntaRelacional(){
+        contadorid++;
+        
+      
+      
+        var strVar="";
+      strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoR cuestionario cuestionario mt-5 pt-5 container nivel-Superior\">";
+      strVar += "      <div class=\"contenedorErrores\">";
+      strVar += "      <\/div>";
+      strVar += "      <div class=\"row text-center\">";
+      strVar += "        <div class=\"col-12 col-md-12 col-lg-7\">";
+      strVar += "          <div class=\"rounded-pill\">";
+      strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
+      strVar += "              style=\"width: 3rem; height:3rem;\">";
+      strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px;\">"+numeracionPregunta+"<\/p>";
+      strVar += "            <\/a>";
+      strVar += "          <\/div>";
+      strVar += "          <div class=\"contenedorItem row justify-content-center mb-3\">";
+      strVar += "            <div class=\"container row justify-content-center mb-3\">";
+      strVar += "              <div class=\"mb-4\">";
+      strVar += "                <h3 class=\"text-center\">Pregunta Relacional<\/h3>";
+      strVar += "              <\/div>";
+      strVar += "               <div class=\"mb-4 text-center mx-auto\">";
+      strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+      strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Relaciona las columnas\">";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Pregunta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control respuesta \" placeholder=\"Respuesta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-2\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
+      strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "            <\/div>";
+      strVar += "            <br>";
+      strVar += "            <div class=\"container row justify-content-center mb-3\">";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Pregunta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control respuesta\" placeholder=\"Respuesta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-2\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
+      strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "            <\/div>";
+      strVar += "            <br>";
+      strVar += "            <div class=\"container row justify-content-center mb-3\">";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control pregunta \" placeholder=\"Pregunta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control respuesta \" placeholder=\"Respuesta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-2\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
+      strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "            <\/div>";
+      strVar += "            <br>";
+      strVar += "            <div class=\"container row justify-content-center mb-4\">";
+      strVar += "              <div class=\"col-md-3 ml-0\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <button class=\"btn btn-info \" type=\"button\" onclick=\"reactivoRelacional(this)\">Añadir";
+      strVar += "                    Reactivo<\/button>";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "";
+      strVar += "            <\/div>";
+      strVar += "            <br>";
+      strVar += "";
+      strVar += "            <div class=\"col-md-3 mr-2 text-center\">";
+      strVar += "              <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar";
+      strVar += "                Pregunta<\/button>";
+      strVar += "            <\/div>";
+      strVar += "";
+      strVar += "          <\/div>";
+      strVar += "        <\/div>";
+      strVar += "        <div class=\"col-12 col-md-12 col-lg-5\">";
+      strVar += "          <h4 class=\"text-primary\">Intrucciones<\/h4>";
+      strVar += "          <p class=\"fs-5 justify-content-center text\">1.- Se debe colocar la respuesta y pregunta en orden 1-1, para que";
+      strVar += "            pueda evaluar correctamente.No olvides definir las instrucciones para el  Alumno <\/p>";
+      strVar += "          <P class=\"fs-5 justify-content-center text\">2.- El botón de QuitarReactivo sirve para quitar preguntas, en";
+      strVar += "            caso de que hayas agregado demás.<\/P>";
+      strVar += "          <p class=\"fs-5 justify-content-center text\">3.- Añadir Reactivo sirve para agregar más columnas a relacionar.";
+      strVar += "          <\/p>";
+      strVar += "          <p class=\"fs-5 justify-content-center text\">4.- El botón QuitarPregunta sirve para eliminar la pregunta en";
+      strVar += "            caso de que no se ocupe colocar ninguna relacional.<\/p>";
+      strVar += "        <\/div>";
+      strVar += "      <\/div>";
+      strVar += "";
+      strVar += "    <\/div>";
+      
+      numeracionPregunta++
+      insertor.insertAdjacentHTML("beforeend",strVar);
+      }
 
 
 //función para crear más reactivos en preguntas relacionales
@@ -1109,7 +1109,6 @@ strVar += "    <\/div>";
 insertor.insertAdjacentHTML("beforeend",strVar);
 numeracionPregunta++;
 }
-
 
 
 function envioPreguntaRelacional(){
