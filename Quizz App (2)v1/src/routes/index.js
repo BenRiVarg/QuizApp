@@ -214,9 +214,10 @@ router.get('/verify/:token', async (req, res) => {
     contestado: contestado
   }
   */
+  /*
   var quizz;
   var datosQuizz=[];
-  
+ 
   for( quizz in Quizzes){
     var QuizzAnalizado=Quizzes[quizz];
     var Registro= await Registros.find({quizz:Quizzes[0]._id}).lean();
@@ -232,7 +233,9 @@ router.get('/verify/:token', async (req, res) => {
 
     datosQuizz.push(registro);
   }
+  
   console.log(datosQuizz);
+  */
   res.render('editor/index', { Quizzes });
 
 });
