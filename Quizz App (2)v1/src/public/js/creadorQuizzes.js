@@ -665,7 +665,6 @@ function previsualizarDraw(){
       strVar += "            <\/a>";
       strVar += "          <\/div>";
       strVar += "          <div class=\"contenedorItem row justify-content-center mb-3\">";
-      strVar += "            <div class=\"container row justify-content-center mb-3\">";
       strVar += "              <div class=\"mb-4\">";
       strVar += "                <h3 class=\"text-center\">Pregunta Relacional<\/h3>";
       strVar += "              <\/div>";
@@ -673,6 +672,7 @@ function previsualizarDraw(){
       strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
       strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Relaciona las columnas\">";
       strVar += "              <\/div>";
+      strVar += "            <div class=\"container row justify-content-center mb-3\">";
       strVar += "              <div class=\"col-md-5\">";
       strVar += "                <div class=\"\">";
       strVar += "                  <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Pregunta\">";
@@ -999,13 +999,13 @@ strVar += "              <h4 class=\"text-primary\">Intrucciones<\/h4>";
 strVar += "              <p class=\"fs-5 justify-content-center text\">Seleccione la imagen a cargar, y defina pregunta y respuesta";
 strVar += "              <\/p>";
 strVar += "            <\/div>";
-strVar += "               <div class=\"mb-4 text-center mx-auto\">";
-strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
-strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde la pregunta de acuerdo a la imagen \">";
-strVar += "              <\/div>";
 strVar += "            <input required type=\"file\" id=\"imgIT"+contadorPreV+"\" accept=\"image\/*\" class=\"imgs\" name=\"imgs\">";
 strVar += "            <input required type=\"hidden\" class=\"imagenrequest\">";
 strVar += "            <div id=\"prevIT"+contadorPreV+"\" class=\"mx-auto\"><\/div>";
+strVar += "              <div class=\"mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde la pregunta de acuerdo a la imagen \">";
+strVar += "              <\/div>";
 strVar += "            <div class=\"mb-3\">";
 strVar += "              <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
 strVar += "              <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Escriba la pregunta\">";
@@ -1240,6 +1240,9 @@ function envioPreguntaAbierta(){
     tipoHTML.value="tipoT";
     //inserción
     cuestionarios[i].appendChild(tipoHTML);
+
+    var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;    
     
     
     var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
@@ -1392,7 +1395,10 @@ function envioPreguntaOM(){
         cuestionarios[i].appendChild(respuestaHTML);
 
         }
-        
+    
+    var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
+    
          //Se agrega el tipo de pregunta por medio de un elemento hidden
       var tipoHTML=contadorTipo();
       //Definición del tipo de pregunta
@@ -1538,7 +1544,8 @@ function envioPreguntaIT(){
   //Rastreo del div por su clase, que define el tipo de pregunta
   var cuestionarios=document.getElementsByClassName("tipoIT");
   
-  
+   var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
   //Clasificación de los elementos enviados para no tener conflictos en la request
   for(i=0;i<cuestionarios.length;i++){
   
@@ -1660,6 +1667,8 @@ function envioPreguntaMate(){
   //Rastreo del div por su clase, que define el tipo de pregunta
   var cuestionarios=document.getElementsByClassName("tipoM");
   
+  var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
   
   //Clasificación de los elementos enviados para no tener conflictos en la request
   for(i=0;i<cuestionarios.length;i++){
