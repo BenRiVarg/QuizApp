@@ -1028,7 +1028,7 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   
   var nuevoIntento= await Registros.create(examencalificado);
   
-  
+  /*
   //Recuperamos el quizz que contestó
  var quizz = await Quizz.findById(nuevoIntento.quizz);
   console.log(nuevoIntento.respuestas[0].respuestaA);
@@ -1037,8 +1037,12 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   console.log("Ejecutandose");
   console.log(respuestaAlumnoElegida[0].calificacion);
   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
- //res.end();
+
+ */
+ res.end();
 });
+
+
 
 
 //----------Cuarto de pruebas------------///

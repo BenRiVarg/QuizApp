@@ -22,6 +22,7 @@ var modeloQuizz = Schema ({
     intentos:{type:String},
     estado:{type: 'String', enum:['revisado','por revisar'], default:"por revisar"},
     creador:{type: String},
+    contestado: {type: Boolean, default: false},
     cuestionario:[cuestionario]
 });
 
