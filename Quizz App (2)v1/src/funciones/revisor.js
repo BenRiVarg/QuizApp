@@ -21,7 +21,6 @@ exports.revisar = async function (alumno, req) {
 	var quizz = await Quizz.findById(req.body.quizz);
 
 
-
 	//Extracción de los cuestionarios de ese quizz
 	var cuestionariosBD = quizz.cuestionario;
 	var cuestionario;
@@ -223,6 +222,7 @@ exports.revisar = async function (alumno, req) {
 	examencalificado.respuestas = cuestionariosCalificados;
 
 
+	//Actualizamos los datos del quizz que se contestó para que se sepa que ya fu
 
 	return examencalificado;
 }

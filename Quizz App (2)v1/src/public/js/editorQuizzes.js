@@ -4,6 +4,7 @@ setNumeroPreguntas(numeroPreguntasQuizz);
 //console.log(numeroPreguntasQuizzes);
 //Proceso especial para envío de imágenes
 previsualizarITEdicion();
+
 function editarIT(){
    
     var i=0;
@@ -36,7 +37,10 @@ function editarIT(){
         imagenHTML[0].name="imagen"+contador;
         imagenHTML[0].value=valorImagen;
 
-        
+        var instrucciones=cuestionarios[i].querySelectorAll("input.instrucciones")[0];
+       // instrucciones.name="instruccion"+contador;
+
+        console.log(instrucciones)
         var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
         pregunta[0].name="pregunta"+contador;
 
@@ -90,6 +94,7 @@ function editarIT(){
     
     
   }
+
 
   //Para las preguntas de Imagenes que ya estaban creadas
   function previsualizarITEdicion(){

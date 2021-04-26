@@ -519,6 +519,7 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   console.log(cuestionario);
   const idQuizz = req.body.idQuizz;
 
+  /*
   Quizz.findByIdAndUpdate(idQuizz, {
     nivel:req.body.nivel,
     grado:req.body.grado,
@@ -537,7 +538,9 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
     res.redirect(link);
   }
   );
-  
+  */
+
+  res.end();
   
 });
 
