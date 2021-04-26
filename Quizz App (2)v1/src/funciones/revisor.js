@@ -222,7 +222,9 @@ exports.revisar = async function (alumno, req) {
 	examencalificado.respuestas = cuestionariosCalificados;
 
 
-	//Actualizamos los datos del quizz que se contestó para que se sepa que ya fu
+	//Actualizamos los datos del quizz que se contestó para que se sepa que ya fue contestado
+	var quizz_Contestado = quizz.contestado;
+	//console.log(quizz_Contestado);
 
 	return examencalificado;
 }

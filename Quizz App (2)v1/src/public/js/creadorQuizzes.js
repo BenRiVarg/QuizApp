@@ -62,7 +62,7 @@ strVar += "            <p class=\"fs-5 justify-content-center text\">Escribe la 
 strVar += "          <\/div>";
 strVar += "               <div class=\"col-md-7 mb-4 text-center mx-auto\">";
 strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
-strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Escribe pregunta y respuesta\">";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde lo que se te solicita\">";
 strVar += "              <\/div>";
 strVar += "          <div class=\"col-md-7\" style=\"margin: 0 auto;\">";
 strVar += "            <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
@@ -879,7 +879,7 @@ strVar += "          <div class=\"text-center\">";
 strVar += "            <h3>Pregunta de Opción Múltiple<\/h3>";
 strVar += "               <div class=\"mb-4 text-center mx-auto\">";
 strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
-strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Escribe si la pregunta es verdadera o falsa \">";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde verdadero o falso a la pregunta \">";
 strVar += "              <\/div>";
 strVar += "            <div class=\"pregunta mt-3\">";
 strVar += "              <!--  -->";
@@ -1091,7 +1091,7 @@ strVar += "";
 strVar += "          <\/div>";
 strVar += "               <div class=\"col-md-7 mb-4 text-center mx-auto\">";
 strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
-strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Escribe la respuesta de la operación \">";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Resuelve la expresión \">";
 strVar += "              <\/div>";
 strVar += "          <div class=\"col-md-7\" style=\"margin: 0 auto;\">";
 strVar += "            <label for=\"formGroupExampleInput\" class=\"form-label\">Expresión<\/label>";
@@ -1544,8 +1544,10 @@ function envioPreguntaIT(){
   //Rastreo del div por su clase, que define el tipo de pregunta
   var cuestionarios=document.getElementsByClassName("tipoIT");
   
+  /*
    var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
     instrucciones.name="instrucciones"+contador;  
+    */
   //Clasificación de los elementos enviados para no tener conflictos en la request
   for(i=0;i<cuestionarios.length;i++){
   
@@ -1555,6 +1557,11 @@ function envioPreguntaIT(){
   tipoHTML.value="tipoIT";
   //inserción
   cuestionarios[i].appendChild(tipoHTML);
+
+    
+   var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
+    
   
   //Captura de la imagen
   var imagen = cuestionarios[i].querySelectorAll("input.imgs");
@@ -1667,8 +1674,7 @@ function envioPreguntaMate(){
   //Rastreo del div por su clase, que define el tipo de pregunta
   var cuestionarios=document.getElementsByClassName("tipoM");
   
-  var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
-    instrucciones.name="instrucciones"+contador;  
+ 
   
   //Clasificación de los elementos enviados para no tener conflictos en la request
   for(i=0;i<cuestionarios.length;i++){
@@ -1681,7 +1687,10 @@ function envioPreguntaMate(){
   cuestionarios[i].appendChild(tipoHTML);
   
  
-
+     
+  var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
+    
 
   var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
   pregunta[0].name="pregunta"+contador;

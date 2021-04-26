@@ -258,7 +258,7 @@ router.get('/editores/crear', async (req, res) => {
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
 
- // console.log(req.body);
+  console.log(req.body);
   
   
   //console.log(req.body.nivel);
@@ -365,7 +365,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
        }
     
     );
-
+       
     var link="/visualizar/"+nuevoQuizz.id;
     res.redirect(link);
 
@@ -477,7 +477,7 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
       if(req.body[instrucciones] && req.body[instrucciones].length!=0){
         instruccionesCuestionario=req.body[instrucciones];
       }
-      
+
       /*
       console.log("------------------------");
       console.log(instrucciones);
@@ -1032,10 +1032,10 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   
   var examencalificado = await Revisor.revisar(idAlumno, req);
   //console.log(examencalificado);
-  
+  /*
   var nuevoIntento= await Registros.create(examencalificado);
   
-  /*
+  
   //Recuperamos el quizz que contestó
  var quizz = await Quizz.findById(nuevoIntento.quizz);
   console.log(nuevoIntento.respuestas[0].respuestaA);
