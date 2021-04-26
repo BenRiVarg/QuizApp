@@ -25,6 +25,12 @@ function editarIT(){
     //Variable para diferenciar del proceso de antiguas preguntas de nuevas
     var pivoteProceso=cuestionarios[i].querySelectorAll("p.procesoIT")[0];
 
+    var instrucciones=cuestionarios[i].querySelectorAll("input.instrucciones")[0];
+
+        instrucciones.name="instrucciones"+contador;
+
+       //console.log(instrucciones.value);
+
     if(!pivoteProceso){
         //Pregunta Nueva
         console.log("Pregunta Nueva");
@@ -37,10 +43,7 @@ function editarIT(){
         imagenHTML[0].name="imagen"+contador;
         imagenHTML[0].value=valorImagen;
 
-        var instrucciones=cuestionarios[i].querySelectorAll("input.instrucciones")[0];
-       // instrucciones.name="instruccion"+contador;
 
-        console.log(instrucciones)
         var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
         pregunta[0].name="pregunta"+contador;
 

@@ -2083,6 +2083,10 @@ function envioQuizz(){
   formulario.submit();
 }
 
+function setNumeroPreguntas(numero){
+  numeracionPregunta=numero
+}
+
 function crearQuizz(){
   
 

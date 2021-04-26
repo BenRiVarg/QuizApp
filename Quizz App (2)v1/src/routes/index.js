@@ -414,8 +414,6 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   //console.log(req.body.nombreQuizz);
 
 
- 
-  
    
   var i;
   //variable para construir el cuestionario como un array
@@ -474,11 +472,17 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
       }
 
       var instruccionesCuestionario;
+      
       //Si existen las instrucciones del cuestionario
       if(req.body[instrucciones] && req.body[instrucciones].length!=0){
         instruccionesCuestionario=req.body[instrucciones];
       }
-
+      
+      /*
+      console.log("------------------------");
+      console.log(instrucciones);
+      console.log(instruccionesCuestionario)
+      */
 
 
       //Construcción de documentos de cuestionarios de manera iterativa
@@ -519,7 +523,7 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
   console.log(cuestionario);
   const idQuizz = req.body.idQuizz;
 
-  /*
+  
   Quizz.findByIdAndUpdate(idQuizz, {
     nivel:req.body.nivel,
     grado:req.body.grado,
@@ -538,9 +542,9 @@ router.post('/editores/editar',upload.array('imgs'), async (req,res)=>{
     res.redirect(link);
   }
   );
-  */
+  
 
-  res.end();
+  //res.end();
   
 });
 
