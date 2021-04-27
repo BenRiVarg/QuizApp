@@ -223,9 +223,21 @@ exports.revisar = async function (alumno, req) {
 
 
 	//Actualizamos los datos del quizz que se contestó para que se sepa que ya fue contestado
+	console.log("--------------");
 	var quizz_Contestado = quizz.contestado;
-	//console.log(quizz_Contestado);
+	console.log(quizz_Contestado);
 
+	if(!quizz_Contestado){
+		console.log(quizz._id);
+		Quizz.findByIdAndUpdate(quizz._id, {
+			contestado: true
+		},(error, user) => {
+			console.log("Error")
+			console.log(error,quizz._id);
+		  }
+		);
+		//console.log("Actualizar contestar");
+	}
 	return examencalificado;
 }
 

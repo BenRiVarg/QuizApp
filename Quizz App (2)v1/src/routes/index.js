@@ -201,7 +201,7 @@ router.post('/administrador/borrar', (req, res) => {
 
 
 router.get('/verify/:token', async (req, res) => {
-  var Quizzes= await Quizz.find({},{"nombreQuizz": 1, "_id": 1}).lean();
+  var Quizzes= await Quizz.find({},{"nombreQuizz": 1, "_id": 1,"contestado": 1}).lean();
 /*
   var Registro= await Registros.find({quizz:Quizzes[0]._id}).lean();
   var contestado=false;

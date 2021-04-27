@@ -56,14 +56,26 @@
                             <tr>
                                 <td><%= Quizzes[j].nombreQuizz %></td>
                                 <td>
-                                    <a href="/visualizar/<%= Quizzes[j]._id %>" class="btn btn-primary text-light">
-                                        Ver
-                                    </a>
-                                    <a href="/editores/token/editar/<%= Quizzes[j]._id %>" class="btn btn-info text-light">
-                                        Editar
-                                    </a>
-
-                                    <button type="button" class="btn btn-danger" onclick="borrar(this)">Borrar</button>
+                                    <% if(Quizzes[j].contestado){%>
+                                            <p class=" display-7 text-danger"> Este Quizz ya fue contestado por alguien</p>
+                                            <a href="/visualizar/<%= Quizzes[j]._id %>" class="btn btn-primary text-light ">
+                                                Ver
+                                            </a>
+                                            <a href="/editores/token/editar/<%= Quizzes[j]._id %>" class="btn btn-info text-light disabled">
+                                                Editar
+                                            </a>
+                                            <button type="button" class="btn btn-danger disabled" onclick="borrar(this)">Borrar</button>
+                                        <%}
+                                        else{%>
+                                            <a href="/visualizar/<%= Quizzes[j]._id %>" class="btn btn-primary text-light">
+                                                Ver
+                                            </a>
+                                            <a href="/editores/token/editar/<%= Quizzes[j]._id %>" class="btn btn-info text-light">
+                                                Editar
+                                            </a>
+                                            <button type="button" class="btn btn-danger" onclick="borrar(this)">Borrar</button>
+                                            <%}
+                                        %>
                                 </td>
                             </tr>                        
                             <% } %>
