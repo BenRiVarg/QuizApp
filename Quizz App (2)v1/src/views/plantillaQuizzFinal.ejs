@@ -16,7 +16,7 @@
     <script src="/mobileD/demo/demo.js"></script>
     <script type="text/javascript" src="/js/relacionarColumnasBoton.js"></script> 
     <title>Hacer Examen</title>   
-<body style="background-color:;  <%= color %>">
+<body style="background-color:lightseagreen">
   <div class="container text-center" >
     <h1 class= "display-4 mt-3">Titulo del Quizz</h1>
   </div>
@@ -39,7 +39,7 @@
           <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
             
             <div class="card-body border border-1 ">
-              <h4 class="display-7" ><% <!--= quizz.cuestionario[i].pregunta -->%>Pregunta Para el Alumno</h4><br>
+              <h4 class="display-7" ><% <!--= quizz.cuestionario[i].pregunta -->%>Pregunta 1</h4><br>
               <input type="text" class="form-control pb-3" placeholder="Respuesta" aria-label="Respuesta" name="respuesta<%<!--= i -->%>">
               <input type="hidden" name="cuestionario<%<!--= i -->%>" value="<%<!--= quizz.cuestionario[i]._id -->%>" class="contestada bien">
             

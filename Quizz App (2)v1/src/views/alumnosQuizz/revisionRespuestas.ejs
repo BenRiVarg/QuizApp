@@ -5,13 +5,15 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/estilosRelacionarColumnasBoton.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    
+    <link rel="stylesheet" href="/mobileD/release/default.css">
+    <link rel="stylesheet" href="/mobileD/release/icons.css">
+    <link rel="stylesheet" href="/mobileD/release/debug.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revision</title>
 </head>
 <body>
-    <h1 class="text-center mt-5">Revisión de Respuestas</h1>
+    <h1>Revisión de Respuestas
         <input type="hidden" name="QuizzID" value="<%= quizz._id %>">
         <% 
              for(var i=0; i<quizz.cuestionario.length ; i++)
@@ -208,7 +210,26 @@
                                           
                                             <% } %>
                                     <% } %>
-                                        
+                                          <!--
+                                          <div class="col">
+                                          
+                                          
+                                            <input class="form-check-input" type="checkbox"   id="flexRadioDefault1" %>">
+                                            <label class="form-check-label" for="pregunta">
+                                              Item
+                                            </label><br>
+                                          </div>
+                                          <div class="col">  
+                                              <input class="form-check-input" type="checkbox"   id="flexRadioDefault1" %>">
+                                              <label class="form-check-label" for="pregunta">
+                                                Item
+                                              </label><br>
+                                              <input class="form-check-input" type="checkbox"  id="flexRadioDefault1" %>">
+                                              <label class="form-check-label" for="pregunta">
+                                                Item
+                                              </label><br>
+                                            </div>
+                                          -->
                                         </div>
                             
                                       </div>
@@ -226,79 +247,13 @@
 
                      <!-- Multiples Respuestas-->
                      else { %>
-                          <!--Empieza Revisión OMM-->
-                            <div class="d-flex justify-content-center">
-                              <div class="card shadow-lg p-3 my-3 bg-body rounded col-sm-10 col-lg-10">
+                           <h4 align="center"><%= quizz.cuestionario[i].pregunta[0] %></h4>
 
-                                <div class="card-body border border-1">
-                                  <h4 class="display-7 contestada mb-0 pb-0 text-center">
-                                    <%= quizz.cuestionario[i].pregunta[0] %>
-                                  </h4><br>
-                                  <div class="container">
-                                    <!--Si el alumno no ha contestado nada-->
-                                    <% var resultado=respuestaAlumnoElegida[0].respuestas[0].respuestaA[0]%>
-                                    <% if(resultado==0){%>
-                                      <div class="justify-content-center text-danger mt-0 pt-0">
-                                        No has contestado nada para esta pregunta
-                                      </div>
-                                      <%}%>
-                                      <!--Comienzan las revisiones por lo que envió el alumno-->
-                                      <% var llaveRA=0 %>
-                                      <div class="row ">
-                                        <div class="col  justify-content-start">
-                                            <% for (var j=1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
-
-                                              <%if(j==respuestaAlumnoElegida[0].respuestas[0].respuestaA[llaveRA]){%> 
-                                                  <!--Condicionales de Respuestas del Alumno-->
-                                                  <%if(j==respuestaAlumnoElegida[0].respuestas[0].revision[llaveRA]){%> 
-                                                    <!--Respuesta Correcta-->
-                                                    <input class="form-check-input " type="checkbox"  id="flexRadioDefault1"
-                                                    checked="checked">
-                                                    <label class="form-check-label" for="pregunta">
-                                                      <p class="ml-2  bien text-success"><%= quizz.cuestionario[i].pregunta[j] %></p>
-                                                    </label><br>
-                                                      <%}
-                                                      else{%>
-                                                    <!--Respuesta Incorrecta-->
-                                                    <input class="form-check-input" type="checkbox" checked="checked">
-                                                  <label class="form-check-label" for="pregunta">
-                                                    <p class="ml-2 mal text-danger"><%= quizz.cuestionario[i].pregunta[j] %></p> 
-                                                  </label><br>
-                                                      <%}
-                                                    %>
-                                                    <!--Aumentamos la clave que mueve las respuestas del alumno-->
-                                              <% llaveRA=llaveRA+1; %>
-                                                <%}else{%>
-                                                      <% var respuestaNeutra=true %>
-                                                              <% for(var k=0;k<=(quizz.cuestionario[i].respuesta.length-1);k++){%>
-                                                                <!--Respuesta Correcta vacía-->
-                                                                    <% if(quizz.cuestionario[i].respuesta[k]==quizz.cuestionario[i].pregunta[j]){%>
-                                                                      <input class="form-check-input " type="checkbox"  id="flexRadioDefault1" >
-                                                                      <label class="form-check-label" for="pregunta">
-                                                                        <p class="ml-2 text-success"><%= quizz.cuestionario[i].pregunta[j] %></p>
-                                                                      </label><br>
-                                                                      <% var respuestaNeutra=false%>
-                                                                      <% break %>
-                                                                      <%}%>
-                                                                <%}%>
-                                                                <% if(respuestaNeutra){%>
-                                                                                  <!--Respuestas vacías-->
-                                                                      <input class="form-check-input" type="checkbox"  id="flexRadioDefault1" >
-                                                                      <label class="form-check-label" for="pregunta">
-                                                                        <p class="ml-2 "><%= quizz.cuestionario[i].pregunta[j] %></p> 
-                                                                      </label><br>
-                                                                  <%}%>
-                                                  <%}
-                                                %>
-                                              <% } %>
-                                        </div>
-                                      </div>
-                                      <!---->
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <!--Termina Múltiple Respuesta -->
+                           <% for (var j = 1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
+                             <input type="checkbox"  name="pregunta" value="<%= quizz.cuestionario[i].pregunta[j] %>">
+                             <label for="pregunta"><%= respuestaAlumnoElegida[0] %></label><br>
+                             <br>
+                           <% } %>
 
                          <% }
                      %>  

@@ -1,7 +1,7 @@
 @media (min-width: 720px) {
   img {
     width: 250px;
-   /*  margin: 0 auto !important; */
+    margin: 0 auto !important;
   }
   html h1,
   h2,
@@ -225,7 +225,7 @@
   z-index: 1;
 }
 
-/*--- Back drag branch ----*/
+/*--- Estilo de la Pregunta Drag ----*/
 :root {
   --altolienzo: 550px;
   --ancholienzo: 580px;
@@ -244,15 +244,16 @@
   display: inline-block;
   width: var(--ancholienzo);
   height: var(--altolienzo);
-  background-color: #99ffcc;
+  background-color: lightcyan;
 }
 
-.imagenAcomodo{
-  margin-top: 195px;
+.img-PLienzo {
+  z-index: 0;
 }
 
-.centrado{
-  margin: 0 auto !important;
+.img-replica {
+  position: absolute;
+  z-index: 0;
 }
 
 .recuadro {
@@ -260,26 +261,26 @@
   height: 50px;
   background-color: black;
   opacity: 0.5;
-}
-
-#elemento {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 1;
-}
-#e-replica {
-  position: absolute;
-  top: 0px;
-  left: 0px;
   z-index: 1;
 }
 
-.elementoReplica {
+.reactivoDrag {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  width: 100px;
+  height: 50px;
+  background-color: black;
+  opacity: 0.5;
   z-index: 1;
+}
+
+.flecha {
+  position: absolute;
+  z-index: 2;
+}
+
+.respuesta-reactivo {
+  width: 100px;
+  z-index: 3;
 }
 
 .centrado {

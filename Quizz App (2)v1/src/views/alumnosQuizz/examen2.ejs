@@ -19,7 +19,7 @@
     <title>Hacer Examen</title>
 
    
-<body style="background-color:lightseagreen ;" >
+<body style="background-color:  <%= color %> ;" >
   
       <div class="container text-center" >
         <h1 class= "display-4 mt-3"><%= quizz.nombreQuizz %></h1><!--Titulo del Quizz-->
@@ -37,7 +37,10 @@
         <br>
             <form action="/alumnos/correccion" method="POST" id=quizz>
               <input type="hidden" name="quizz" value="<%= quizz._id %>">
-             
+               <!--Empieza Carrusel-->
+              <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+                  <div class="carousel-inner">
+                   <!--Pausa Carrusel-->
                     <% for(var i=0; i<quizz.cuestionario.length ; i++)
                     {%>
                       <!--Para poder asignar el inicio del quizz-->
@@ -66,7 +69,7 @@
                         <%
                         <!-- solo una respuesta posible-->
                         if (quizz.cuestionario[i].respuesta.length<=1) { %>
-                          <div class="d-flex justify-content-center  ">
+                          <div class="d-flex justify-content-center  carousel-item">
                             <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
                               
                               <div class="card-body border border-1">
@@ -98,7 +101,7 @@
                         <% }
                         <!-- Multiples Respuestas-->
                         else { %>
-                          <div class="d-flex justify-content-center  ">
+                          <div class="d-flex justify-content-center  carousel-item">
                             <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
                               
                               <div class="card-body border border-1">
@@ -140,7 +143,7 @@
                       <% break;
                       case "tipoR":%>
                         <!--P Relacional-->
-                      <div class="d-flex justify-content-center  ">
+                      <div class="d-flex justify-content-center  carousel-item">
                         <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
                           
                           <div class="card-body border border-1">
@@ -178,7 +181,7 @@
                         </div>
                       </div>
 
-                      <!--Termina P Relacional-->
+                      <!--P Relacional-->
                       <% break;
                       case "tipoM" : %>
 
@@ -204,7 +207,10 @@
                         }  %>
                     <% } 
              %>
-                      
+                        <!--Reanuda Carrusel-->
+                  </div>
+              </div>
+                              <!--Fin Carrusel-->
   
              
               <button onclick="enviarQuizz()" class="btn btn-outline-primary Enviar" value="Enviar Respuestas">Enviar respuestas</button>
