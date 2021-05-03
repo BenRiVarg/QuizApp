@@ -7,12 +7,13 @@ root {
   width: var(--ancholienzo);
   height: var(--altolienzo);
   background-color: #99ffcc;
+  margin: 0 auto !important;
 }
 
-.img-replica {
-  position: absolute;
-  z-index: 0;
-}
+
+
+
+
 
 .reactivo {
   position: absolute;
@@ -30,3 +31,4 @@ root {
 .respuesta-reactivo {
   z-index: 0.3;
 }
+

@@ -247,6 +247,14 @@
   background-color: #99ffcc;
 }
 
+.imagenAcomodo{
+  margin-top: 195px;
+}
+
+.centrado{
+  margin: 0 auto !important;
+}
+
 .recuadro {
   width: 100px;
   height: 50px;

@@ -205,7 +205,31 @@ function flechaHoDerecha() {
   var strVar = "";
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
-    strVar += '<img class=" flecha imagenes elementoDrag" id="fid'+contadorIDrag+'"src="/img/flecha.png" alt="">';
+    strVar += '<img class=" flecha hor elementoDrag" id="fid'+contadorIDrag+'"src="/img/flechah.png" alt="">';
+    contadorIDrag++
+   
+  }
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
+  arrastrable();
+}
+function flechaAbajo() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar += '<img class=" flecha arriba elementoDrag" id="fid'+contadorIDrag+'"src="/img/flechav3.png" alt="">';
+    contadorIDrag++
+   
+  }
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
+  arrastrable();
+}
+function flechaArriba() {
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar += '<img class=" flecha arriba elementoDrag" height="70px !important;" id="fid'+contadorIDrag+'"src="/img/flechav3.png" alt="">';
     contadorIDrag++
    
   }
@@ -218,7 +242,7 @@ function flechaHoIzquierda() {
   var strVar = "";
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
-    strVar += '<img class="flecha imagenes elementoDrag" id="fdi"'+contadorIDrag+'" src="/img/flechaHoIz.png" alt="">';
+    strVar += '<img class="flecha hor elementoDrag" id="fdi"'+contadorIDrag+'" src="/img/flechah.png" alt="">';
     contadorIDrag++
   }
   var lienzo=document.getElementById("lienzo0");
@@ -232,7 +256,7 @@ function flechaDiaDerecha() {
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
     strVar +=
-      '<img class="flecha diagonal elementoDrag" id="fsd'+contadorIDrag+'" src="/img/flechadiaderecha.png" alt="">';
+      '<img class="flecha diagonal elementoDrag" id="fsd'+contadorIDrag+'" src="/img/diagonalderinvertida2.png" alt="">';
     contadorIDrag++
     }
 
@@ -246,7 +270,7 @@ function flechaDiaIzquierda() {
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
     strVar +=
-      '<img class="flecha diagonal elementoDrag" id="fsi'+contadorIDrag+'" src="/img/flechadigaiz.png" alt="">';
+      '<img class="flecha diagonal elementoDrag" id="fsi'+contadorIDrag+'" src="/img/diagonalderinvertida.png" alt="">';
       contadorIDrag++;
     }
 
@@ -274,7 +298,7 @@ function flechaDiaIzquierdaInv() {
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
     strVar +=
-      '<img class="flecha diagonal elementoDrag" id="fai'+contadorIDrag+'" src="/img/diagonalizinvertida.png" alt="">';
+      '<img class="flecha diagonal elementoDrag" id="fai'+contadorIDrag+'" src="/img/diagonalderinvertida2.png" alt="">';
     contadorIDrag++;
     }
 
@@ -506,8 +530,8 @@ function previsualizarDraw(){
             console.log("Resultado de la función")
           
             //Espacio centrado en base al tamaño del lienzo
-            var leftAjustado= Math.round((770-this.width)/2);
-            var topAjustado= Math.round((550-this.height)/2);
+            var leftAjustado= Math.round((550-this.width)/2);
+            var topAjustado= Math.round((450-this.height)/2);
             
        
             
