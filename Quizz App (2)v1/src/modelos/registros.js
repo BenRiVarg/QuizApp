@@ -14,8 +14,6 @@ var modeloRegistro = Schema ({
     alumno:{type:String},
     revisado:{type: Boolean, default: false },
     quizz: {type:String},
-    calificacion: {type: Number},
-    tiempo:{type:String},
     respuestas:[respuestas]
 });
 

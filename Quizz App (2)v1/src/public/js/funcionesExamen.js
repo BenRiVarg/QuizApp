@@ -1,20 +1,17 @@
 
 //Tamaño Imágenes=1000*600
+//tipoAr 
+function caliz(){
+    alert("Sí va a Funcionar")
+}
 
-
-var formulario=document.getElementById("quizz");
-//Nos aseguramos de no estar guardando otros valores
-//formulario.reset()
-
-var impedimento=1
-console.log(impedimento);
 //Variable para recuperar las respuestas del alumno
 var respuestasAlumnoD=[];
 var retornable=document.getElementsByClassName("retornable")[0];
 matematicas();
 contadorItemsMultiples();
 
-//----------Empiezan Funciones de Mate-----//
+//----------Empiezan FUncioens de Mate-----//
 function matematicas(){
  var preguntasMate=document.getElementsByClassName("mate");
  var identificadoresMate=document.querySelectorAll("input.tipoMate");
@@ -55,7 +52,7 @@ function matematicas(){
              strVar += "              <\/div>";
              strVar += "              <div class=\"col-1 pt-4\"  >";
              strVar += "                  <div class=\"pt-1 \">";
-             strVar += "                    <input type=\"number\" autocomplete=\"off\"  class=\"alumnoResponde\" pt-2\">";
+             strVar += "                    <input type=\"number\"   class=\"alumnoResponde\" pt-2\">";
              strVar += "                  <\/div >";
              strVar += "                  ";
              strVar += "              <\/div>";
@@ -111,10 +108,10 @@ function matematicas(){
            strVar += "            <\/div>";
            strVar += "            <div class=\"col-3\"  >";
            strVar += "                <div class=\"pt-3 \">";
-           strVar += "                  <input type=\"number\" autocomplete=\"off\" class=\"numerador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
+           strVar += "                  <input type=\"number\" class=\"numerador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
            strVar += "                <\/div >";
            strVar += "                <div class=\"pt-1\">";
-           strVar += "                  <input type=\"number\" autocomplete=\"off\"  class=\"denominador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
+           strVar += "                  <input type=\"number\"  class=\"denominador\" name=\"\" id=\"\" class=\" pt-2\" min=\"0\">";
            strVar += "                <\/div>";
            strVar += "            <\/div>";
 
@@ -167,7 +164,40 @@ function matematicas(){
 
 //-----------Terminan Funciones de Mate
 
+function moverDiv(){
+    var alto=document.getElementById("alto").value;
+    var ancho=document.getElementById("ancho").value;
+    var img=document.getElementById("imagenP");
 
+    console.log(ancho+"   "+alto);
+    console.log(img.width+"   "+img.height);
+
+    //Captura de los elementos reactivo
+    var divMovil=document.getElementsByClassName("texto-encima");
+    var textoMovil=document.getElementsByClassName("itemPregunta");
+
+    var limiteAncho=img.width-100;
+
+    var limiteAlto=img.height-30;
+
+    if(ancho>limiteAncho){
+        ancho=limiteAncho;
+    }
+    
+    if(alto>limiteAlto){
+        alto=limiteAlto;
+    }
+
+    divMovil[0].style.left=ancho+"px";
+    divMovil[0].style.top=alto+"px";
+
+    textoMovil[0].style.left=ancho+"px";
+    textoMovil[0].style.top=alto+"px";
+
+   
+  
+
+}
 
 
 function contadorItemsMultiples(){
@@ -222,9 +252,9 @@ function envioRespuestasMate(){
             
 
             var strVar="";
-            strVar += " <input type=\"hidden\" autocomplete=\"off\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+respuestaAlumno+"\">";
-            strVar += " <input type=\"hidden\" autocomplete=\"off\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+numeradorAlumno[0].value+"\">";
-            strVar += " <input type=\"hidden\" autocomplete=\"off\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+denominadorAlumno[0].value+"\">";
+            strVar += " <input type=\"hidden\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+respuestaAlumno+"\">";
+            strVar += " <input type=\"hidden\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+numeradorAlumno[0].value+"\">";
+            strVar += " <input type=\"hidden\" name=\"respuesta"+identificadoresMate[i].id+"\" value=\""+denominadorAlumno[0].value+"\">";
             preguntaMate.insertAdjacentHTML("beforeend",strVar);
         }
     }
@@ -276,16 +306,7 @@ function activarReactivo(){
         });
       }
 
-function tomarTiempo(){
-   var tiempo=document.getElementById("cronometro").textContent;
-   var strVar="";
-    strVar += "<input type=\"hidden\" name=\"tiempo\" value=\""+tiempo+"\">";
-   formulario.insertAdjacentHTML("beforeend",strVar);
-}
-
 function enviarQuizz(){
     envioRespuestasMate();
-    tomarTiempo();
-    formulario.submit();
-    impedimento++;
+    document.getElementById("quizz").submit();
 }

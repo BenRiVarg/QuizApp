@@ -1,67 +1,8 @@
       
         window.addEventListener("load", function(e){
-            //sonidos
-            var  seleccionarPregunta=new sound("/sonidos/seleccionaRR.mp3");
-            var asociarPregunta=new sound("/sonidos/asociaRR.mp3");
 
-            var preguntasRelacionales=document.getElementsByClassName("tablaEjercicio");
-            console.log(preguntasRelacionales.length);
-            
-            for(var tab=0;tab<preguntasRelacionales.length;tab++){
-
-                var tablaSelecta=document.querySelectorAll(".tablaEjercicio")[tab];
-                //   if(tablaSelecta){
-                   var preguntaSelecta;
-                   var filasReactivos = tablaSelecta.querySelectorAll("tr");
-                  //var filasReactivos = document.querySelectorAll(".tablaEjercicio tr");
-                   var respuestas = [];
-                   var botones = [];
-                 
-                   var tempPregunta;
-                   var tempBoton;
-                   var tempRespuesta;
-                   
-       
-                   
-                   Array.prototype.forEach.call(filasReactivos, function(fila){
-                       tempPregunta = fila.querySelector("td");
-                       tempRespuesta = fila.querySelector("td.celdaRespuesta");
-                       botonPregunta=fila.querySelector("td.botonPregunta");
-                       tempBoton = fila.querySelector("td.botonRespuesta");//Es la celda, no el botón en sí
-                       fila.respuesta = tempRespuesta;
-                       respuestas.push(tempRespuesta);
-                       botones.push(tempBoton);
-                       
-                      // tempRespuesta.parentNode.removeChild(tempRespuesta);
-       
-                       
-                       // Al apretar un botón, se revisa si la respuesta es correcta
-                       //Se marca correcta o incorrecta
-                       //Se procede a la siguiente pregunta
-                        
-       
-                       botonPregunta.addEventListener("click", alApretarPregunta, false);
-                       tempBoton.addEventListener("click", alApretarOpcion, false);
-                       
-                      
-                   });
-       
-                 shuffle(respuestas);
-            
-                   Array.prototype.forEach.call(filasReactivos, function(fila, index){
-                      
-                       fila.appendChild(respuestas[index]);
-                   });
-       
-                   function obtenerPreguntaSelecta(){
-                       return preguntaSelecta;
-                   }
-                
-            }
-            /*
+            var preguntaSelecta="0,0";
             var tablaSelecta=document.querySelectorAll(".tablaEjercicio")[0];
-         //   if(tablaSelecta){
-            var preguntaSelecta;
             var filasReactivos = tablaSelecta.querySelectorAll("tr");
            //var filasReactivos = document.querySelectorAll(".tablaEjercicio tr");
             var respuestas = [];
@@ -70,9 +11,6 @@
             var tempPregunta;
             var tempBoton;
             var tempRespuesta;
-            
-
-            
             Array.prototype.forEach.call(filasReactivos, function(fila){
                 tempPregunta = fila.querySelector("td");
                 tempRespuesta = fila.querySelector("td.celdaRespuesta");
@@ -84,45 +22,36 @@
                 
                // tempRespuesta.parentNode.removeChild(tempRespuesta);
 
-                
-                // Al apretar un botón, se revisa si la respuesta es correcta
-                //Se marca correcta o incorrecta
-                //Se procede a la siguiente pregunta
-                 
+                /*
+                 Al apretar un botón, se revisa si la respuesta es correcta
+                 Se marca correcta o incorrecta
+                 Se procede a la siguiente pregunta
+                 */
 
                 botonPregunta.addEventListener("click", alApretarPregunta, false);
                 tempBoton.addEventListener("click", alApretarOpcion, false);
 
-               
             });
 
             shuffle(respuestas);
      
             Array.prototype.forEach.call(filasReactivos, function(fila, index){
-               
                 fila.appendChild(respuestas[index]);
             });
 
             function obtenerPreguntaSelecta(){
                 return preguntaSelecta;
             }
-            */
+
 
             //Función de los botones Pregunta 
             function alApretarPregunta(e){
-                seleccionarPregunta.stop();
-                seleccionarPregunta.reload();
+                
                 e.stopPropagation();
                 e.preventDefault();
-                console.log(e.currentTarget.nextElementSibling);
                 //Revisamos si no está nada más selecto
                 antiguoElemento=document.getElementById(preguntaSelecta);
                 nuevoElemento=e.currentTarget.nextElementSibling;
-
-                if(!antiguoElemento){
-                    antiguoElemento=e.currentTarget.nextElementSibling;
-                    console.log(antiguoElemento)
-                }
                 if(antiguoElemento===nuevoElemento){
                     //Mismo elemento que el click
                
@@ -136,25 +65,20 @@
                         //Selecciona
                         preguntaSelecta=e.currentTarget.nextElementSibling.id;
                         e.currentTarget.nextElementSibling.className+="selecta";
-                        e.currentTarget.nextElementSibling.style.backgroundColor =
-                          "#FFE8CD";
-                        e.currentTarget.nextElementSibling.style.color =
-                        "black";
+                        e.currentTarget.nextElementSibling.style.backgroundColor="lightgreen";
                     }
 
                 }
                 else{
                     //diferente elemento que el click
-                    antiguoElemento.style.backgroundColor="#f69100";
-                    antiguoElemento.style.color="white";
+                    antiguoElemento.style.backgroundColor="white";
                     preguntaSelecta=nuevoElemento.id;
                     nuevoElemento.className+="selecta";
-                    nuevoElemento.style.backgroundColor = "#FFE8CD";
-                    nuevoElemento.style.color = "black";
+                    nuevoElemento.style.backgroundColor="lightgreen";
                 }
             
              
-                seleccionarPregunta.play();
+                
                 console.log(preguntaSelecta);
             }
             //Función de los Botones Respuesta
@@ -163,8 +87,7 @@
 
                 e.stopPropagation();
                 e.preventDefault();
-                asociarPregunta.stop();
-                asociarPregunta.reload();
+
                 //Extracción del elemento respuesta
                  var preguntaSelecta=document.getElementById(obtenerPreguntaSelecta());
                 
@@ -173,9 +96,7 @@
 
                 var respuestaSeleccionada=e.currentTarget.nextElementSibling;
                 
-                respuestaSeleccionada.style.backgroundColor=" #ffc380";
                 
-
                 if(antiguo=document.getElementById("antigua"+preguntaSelecta.id)){
                     console.log("hay un duplicado");
                     var nuevo=e.currentTarget.nextElementSibling;
@@ -183,7 +104,7 @@
                     antiguo.id=" ";
                     antiguo.previousElementSibling.querySelector("button").innerHTML="";
                     var antiguaRequest=antiguo.children[0].children[0];
-                    antiguo.style.backgroundColor="#f69100";
+                    //antiguo.style.backgroundColor="red";
                     //---Eliminación de las respuestas para la Request--//
                     antiguaRequest.value="";
 
@@ -210,7 +131,7 @@
                     
                 }
                 
-                asociarPregunta.play();
+                
             }
 
 
@@ -233,5 +154,11 @@
                 }
                 return array;
             }
-       // }
-    }, false);
+            function reemplazarTexto(cadenaCruda, objetoReemplazos){
+                return cadenaCruda.replace(/%\w+%/g, function(reemplazo) {
+                    //console.log("reemplazo: ", reemplazo);
+                    return objetoReemplazos[reemplazo] || reemplazo;
+                });
+            }
+            //console.log("prueba reemplazo: ", reemplazarTexto('My Name is %NAME% and my age is %AGE%, the following %TOKEN% is invalid. y gano el 10% de lo que tú',  {"%NAME%": "Mike","%AGE%": "26","%EVENT%": "20"}));
+        }, false);

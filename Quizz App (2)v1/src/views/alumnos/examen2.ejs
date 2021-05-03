@@ -16,10 +16,10 @@
     <script src="/mobileD/release/scroll-behaviour.min.js"></script>
     <script src="/mobileD/demo/demo.js"></script>
     <script type="text/javascript" src="/js/relacionarColumnasBoton.js"></script>
-    <title>Hacer </title>
+    <title>Hacer Examen</title>
 
    
-<body style="background-color:lightseagreen ;" >
+<body style="background-color:  <%= color %> ;" >
   
       <div class="container text-center" >
         <h1 class= "display-4 mt-3"><%= quizz.nombreQuizz %></h1><!--Titulo del Quizz-->
@@ -37,7 +37,10 @@
         <br>
             <form action="/alumnos/correccion" method="POST" id=quizz>
               <input type="hidden" name="quizz" value="<%= quizz._id %>">
-             
+               <!--Empieza Carrusel-->
+              <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+                  <div class="carousel-inner">
+                   <!--Pausa Carrusel-->
                     <% for(var i=0; i<quizz.cuestionario.length ; i++)
                     {%>
                       <!--Para poder asignar el inicio del quizz-->
@@ -54,8 +57,8 @@
                           
                           <div class="card-body border border-1 ">
                             <h4 class="display-7" ><% <!--= quizz.cuestionario[i].pregunta -->%><%= quizz.cuestionario[i].pregunta %></h4><br>
-                            <input type="text" autocomplete="off" class="form-control pb-3" placeholder="Respuesta" aria-label="Respuesta" name="respuesta<%= i %>">
-                            <input type="hidden" autocomplete="off" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
+                            <input type="text" class="form-control pb-3" placeholder="Respuesta" aria-label="Respuesta" name="respuesta<%= i %>">
+                            <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
                                                 
                           </div>
                         </div>
@@ -66,7 +69,7 @@
                         <%
                         <!-- solo una respuesta posible-->
                         if (quizz.cuestionario[i].respuesta.length<=1) { %>
-                          <div class="d-flex justify-content-center  ">
+                          <div class="d-flex justify-content-center  carousel-item">
                             <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
                               
                               <div class="card-body border border-1">
@@ -78,7 +81,7 @@
                                     <% for (var j = 1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
     
                                       <div class="form-check">
-                                        <input class="form-check-input" autocomplete="off" type="radio" name="respuesta<%= i %>" value=" <%= quizz.cuestionario[i].pregunta[j]%>"id="flexRadioDefault1">
+                                        <input class="form-check-input" type="radio" name="respuesta<%= i %>" value=" <%= quizz.cuestionario[i].pregunta[j]%>"id="flexRadioDefault1">
                                         <label class="form-check-label" for="pregunta">
                                           <%= quizz.cuestionario[i].pregunta[j]%>
                                         </label>
@@ -98,7 +101,7 @@
                         <% }
                         <!-- Multiples Respuestas-->
                         else { %>
-                          <div class="d-flex justify-content-center  ">
+                          <div class="d-flex justify-content-center  carousel-item">
                             <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
                               
                               <div class="card-body border border-1">
@@ -112,13 +115,13 @@
 
                                       <div id="items<%= i %>">
                                         <% for (var j = 1; j<quizz.cuestionario[i].pregunta.length; j++) {%>
-                                          <input class="form-check-input reactivo" autocomplete="off" type="checkbox"  name="respuesta<%= i %>,<%= j %>" value="<%= quizz.cuestionario[i].pregunta[j] %>">
+                                          <input class="form-check-input reactivo" type="checkbox"  name="respuesta<%= i %>,<%= j %>" value="<%= quizz.cuestionario[i].pregunta[j] %>">
                                           <label for="pregunta"><%= quizz.cuestionario[i].pregunta[j] %></label>
                                           <br>
                                         <% } %>
                                       </div>
-                                      <input type="hidden" autocomplete="off" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
-                                      <input type="hidden" autocomplete="off" name="respuesta<%= i %>" value="multiple">
+                                      <input type="hidden" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
+                                      <input type="hidden" name="respuesta<%= i %>" value="multiple">
 
                                   </div>
                       
@@ -140,7 +143,7 @@
                       <% break;
                       case "tipoR":%>
                         <!--P Relacional-->
-                      <div class="d-flex justify-content-center  ">
+                      <div class="d-flex justify-content-center  carousel-item">
                         <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
                           
                           <div class="card-body border border-1">
@@ -157,7 +160,7 @@
                                       <td class="botonRespuesta mx-3 px-3"><button></button> </td>
                                       <td class="celdaRespuesta mx-3">
                                         <div>
-                                          <input autocomplete="off"  class="apartadoBD"type="hidden" name="r<%=i%>,<%=j%>">
+                                          <input  class="apartadoBD"type="hidden" name="r<%=i%>,<%=j%>">
                                           <%= quizz.cuestionario[i].respuesta[j]%>
   
                                         </div>
@@ -169,16 +172,16 @@
 
                     
                                 </table>
-                                <input type="hidden" autocomplete="off" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
+                                <input type="hidden" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
                               </div>
 
                             </div>
-                            <input type="hidden" autocomplete="off" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
+                            <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
                           </div>
                         </div>
                       </div>
 
-                      <!--Termina P Relacional-->
+                      <!--P Relacional-->
                       <% break;
                       case "tipoM" : %>
 
@@ -193,7 +196,7 @@
                                     <div class="align-self-first">
                                 
                                     </div>
-                                    <input autocomplete="off" class="tipoMate" id="<%= i %>" type="hidden" >        
+                                    <input class="tipoMate" id="<%= i %>" type="hidden" >        
                                 </div>
                               </div>
                             </div>
@@ -204,7 +207,10 @@
                         }  %>
                     <% } 
              %>
-                      
+                        <!--Reanuda Carrusel-->
+                  </div>
+              </div>
+                              <!--Fin Carrusel-->
   
              
               <button onclick="enviarQuizz()" class="btn btn-outline-primary Enviar" value="Enviar Respuestas">Enviar respuestas</button>

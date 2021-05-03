@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/mobileD/release/default.css">
   <link rel="stylesheet" href="/mobileD/release/icons.css">
   <link rel="stylesheet" href="/mobileD/release/debug.css">
+<!--   <link rel="stylesheet" href="/css/drag.css"> -->
   <title>Hacer Examen</title>
 </head>
 
@@ -43,11 +44,11 @@
               </div>
               <br>
             </div>
-            <div class="col-md-12 ">
+            <div class="col-md-10 ">
               <div class="container col-md-10 text-center bg-light rounded-0">
                 <h4 class="display-7">Relaciona los items</h4>
                 <div class="container bg-light rounded-0">
-                  <table class="tablaEjercicio" id="items<%= i %>" style="margin: 0 auto;">
+                  <table class="tablaEjercicio" id="items<%= i %>">
                     <% for (var j=0; j<quizz.cuestionario[i].pregunta.length; j++) {%>
                       <tr>
 
@@ -57,9 +58,7 @@
                         <td id="<%=i%>,<%=j%>">
                           <%= quizz.cuestionario[i].pregunta[j]%>
                         </td>
-                        <td class="botonRespuesta">
-                          <button type="button"></button>
-                        </td>
+                        <td class="botonRespuesta"><button type="button"></button></td>
                         <td class="celdaRespuesta">
                           <div>
                             <input class="apartadoBD" type="hidden" name="r<%=i%>,<%=j%>">
@@ -73,7 +72,7 @@
                   </table>
                   <input type="hidden" class="contadorItems" value="<%= i %>" name="contadorItems<%= i %>">
 
-                  <div class="container-fluid col-md-10 text-center bg-light rounded-0 mt-5">
+                  <div class="container-fluid col-md-10 text-center bg-light rounded-0">
                     <input type="hidden" name="cuestionario<%= i %>" value="<%= quizz.cuestionario[i]._id %>">
 
                     <% break; case "tipoOM" : %>
@@ -180,31 +179,8 @@
                               <!-- Empieza Pregunta Drag-->
                               <div class="contanier-fluid p-5 tipoAr" id="main">
 
+                                <h3 class="text-center">Activado</h3>
                                 <h4 class="text-center">Coloca las palabras en el lugar correcto.</h4>
-                                <div class="row mt-3">
-                                  <div class="col-lg-6 sm-12  text-center">
-                                    <div class="col-lg-12 ">
-                                      <!--Lienzo-->
-                                      <div class="replica row mx-auto "id="<%= i %>">
-                                        <% var iteracionLienzo=i%>
-                                        <div class="col-12">
-                                        
-                                          <img id="<%= quizz.cuestionario[i].pregunta[0].coordenadas[0].id%>"src="/image/<%= quizz.cuestionario[i].pregunta[0].nombre %>" class="img-fluid img-replica">
-                                        </div>
-                    
-                                      </div>
-                                      <!--Lienzo-->
-                                    </div>
-                                  </div>
-                              
-                                  <div class="col-lg-4 sm-12 text-center mt-5  contenedor-palabras">
-                                    <div
-                                      class="row bg-primary py-3 shadow p-3 mb-5 bg-body rounded-3 border border-dark">
-                                      <div class="mt-2">
-                                        <h3 class="text-light mb-3">Palabras:</h3>
-                                        <div class="contenedor">
-                                          <%var respuestas=quizz.cuestionario[i].respuesta %>
-                                          <% respuestas.forEach (function (respuesta){ %>
 
                                 <div class="col-lg-6 sm-12 text-center mt-5" style="margin: 0 auto;">
                                   <div
@@ -226,8 +202,14 @@
                                         <h4 id="tituloR" class="text-dark"></h4>
                                         <div id="demo" type="hidden" class="respuestaDrag text-dark">
                                         </div>
-                              
-                                       
+                                        <div id="demo2" type="hidden" class="respuestaDrag text-dark">
+                                        </div>
+                                        <div id="demo3" type="hidden" class="respuestaDrag text-dark">
+                                        </div>
+                                        <div id="demo4" type="hidden" class="respuestaDrag text-dark">
+                                        </div>
+                                        <div id="demo5" type="hidden" class="respuestaDrag text-dark">
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -276,100 +258,92 @@
   <script src="/js/drag.js"></script>
   <script type="text/javascript" src="/js/relacionarColumnasBoton.js"></script>
   <script src="/js/funcionesExamen.js" type="text/javascript"></script>
-  
-  <!--Invalidadndo campos si no existe ninguna pregunta Drag-->
-
-<% if (iteracionLienzo!==undefined) { %>
   <script>
-    var preguntasAr=document.getElementsByClassName("tipoAr");
-  if(preguntasAr){
-  
-    for(var r=0;r<preguntasAr.length;r++){
-      var replica=preguntasAr[r].querySelectorAll("div.replica")[0];
-      insertorReplica=replica.children[0]
-    
-     
-      //Reacomodo de Imagen
-      var idImagen="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].id %>"
-      var imagen =document.getElementById(idImagen);
-   
-      imagen.style.top="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].top %>"+"px";
-      imagen.style.left="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].left %>"+"px";
+      var preguntasAr=document.getElementsByClassName("tipoAr");
+    if(preguntasAr){
+      for(var r=0;r<preguntasAr.length;r++){
+        var replica=preguntasAr[r].querySelectorAll("div.replica")[0];
+        insertorReplica=replica.children[0]
       
-
-      var reactivos=<%-JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[1])%>;//"<%-  JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[1]) %>";
-      var flechas=<%-JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[2])%>;
-      
-      for( x in reactivos){
-        var reactivo=document.createElement("DIV");
-        reactivo.id=reactivos[x].id;
-         reactivo.className="reactivo";
-         reactivo.style.top=reactivos[x].top+"px";
-         reactivo.style.left=reactivos[x].left+"px";
-         insertorReplica.appendChild(reactivo);
-      }
-
-      for(y in flechas){
-
-        //Obtención de los Datos para ver que tipo de Flecha es
-        var claveFlecha=flechas[y].id
-        var tipoFlecha=claveFlecha.substr(0,3);
-        var imagenFlecha=document.createElement("IMG");
-        switch(tipoFlecha){
-          case "fid":
-          imagenFlecha.src="/img/flecha.png";
-          imagenFlecha.className="flecha imagenes";
-          imagenFlecha.style.top=flechas[y].top+"px";
-          imagenFlecha.style.left=flechas[y].left+"px";
-          break;
-          case "fdi":
-          imagenFlecha.src="/img/flechaHoIz.png.png";
-          imagenFlecha.className="flecha imagenes";
-          imagenFlecha.style.top=flechas[y].top+"px";
-          imagenFlecha.style.left=flechas[y].left+"px";
-          break;
-          case "fsi":
-          imagenFlecha.src="/img/flechadigaiz.png";
-          imagenFlecha.className="flecha diagonal";
-          imagenFlecha.style.top=flechas[y].top+"px";
-          imagenFlecha.style.left=flechas[y].left+"px";
-          break;
-          case "fsd":
-          imagenFlecha.src="/img/flechadiaderecha.png";
-          imagenFlecha.className="flecha diagonal";
-          imagenFlecha.style.top=flechas[y].top+"px";
-          imagenFlecha.style.left=flechas[y].left+"px";
-          break;
-          case "fai":
-          imagenFlecha.src="/img/diagonalizinvertida.png";
-          imagenFlecha.className="flecha diagonal";
-          imagenFlecha.style.top=flechas[y].top+"px";
-          imagenFlecha.style.left=flechas[y].left+"px";
-          break;
-          case "fad":
-          imagenFlecha.src="/img/diagonalderinvertida.png";
-          imagenFlecha.className="flecha diagonal";
-          imagenFlecha.style.top=flechas[y].top+"px";
-          imagenFlecha.style.left=flechas[y].left+"px";
-          break;
-
-        }
        
+        //Reacomodo de Imagen
+        var idImagen="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].id %>"
+        var imagen =document.getElementById(idImagen);
+     
+        imagen.style.top="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].top %>"+"px";
+        imagen.style.left="<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].left %>"+"px";
+        
 
-        insertorReplica.appendChild(imagenFlecha);
+        var reactivos=<%-JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[1])%>;//"<%-  JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[1]) %>";
+        var flechas=<%-JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[2])%>;
+        
+        for( x in reactivos){
+          var reactivo=document.createElement("DIV");
+          reactivo.id=reactivos[x].id;
+           reactivo.className="reactivo";
+           reactivo.style.top=reactivos[x].top+"px";
+           reactivo.style.left=reactivos[x].left+"px";
+           insertorReplica.appendChild(reactivo);
+        }
+
+        for(y in flechas){
+
+          //Obtención de los Datos para ver que tipo de Flecha es
+          var claveFlecha=flechas[y].id
+          var tipoFlecha=claveFlecha.substr(0,3);
+          var imagenFlecha=document.createElement("IMG");
+          switch(tipoFlecha){
+            case "fid":
+            imagenFlecha.src="/img/flecha.png";
+            imagenFlecha.className="flecha imagenes";
+            imagenFlecha.style.top=flechas[y].top+"px";
+            imagenFlecha.style.left=flechas[y].left+"px";
+            break;
+            case "fdi":
+            imagenFlecha.src="/img/flechaHoIz.png.png";
+            imagenFlecha.className="flecha imagenes";
+            imagenFlecha.style.top=flechas[y].top+"px";
+            imagenFlecha.style.left=flechas[y].left+"px";
+            break;
+            case "fsi":
+            imagenFlecha.src="/img/flechadigaiz.png";
+            imagenFlecha.className="flecha diagonal";
+            imagenFlecha.style.top=flechas[y].top+"px";
+            imagenFlecha.style.left=flechas[y].left+"px";
+            break;
+            case "fsd":
+            imagenFlecha.src="/img/flechadiaderecha.png";
+            imagenFlecha.className="flecha diagonal";
+            imagenFlecha.style.top=flechas[y].top+"px";
+            imagenFlecha.style.left=flechas[y].left+"px";
+            break;
+            case "fai":
+            imagenFlecha.src="/img/diagonalizinvertida.png";
+            imagenFlecha.className="flecha diagonal";
+            imagenFlecha.style.top=flechas[y].top+"px";
+            imagenFlecha.style.left=flechas[y].left+"px";
+            break;
+            case "fad":
+            imagenFlecha.src="/img/diagonalderinvertida.png";
+            imagenFlecha.className="flecha diagonal";
+            imagenFlecha.style.top=flechas[y].top+"px";
+            imagenFlecha.style.left=flechas[y].left+"px";
+            break;
+
+          }
+         
+
+          insertorReplica.appendChild(imagenFlecha);
+        }
+      
+
+        arrastrable();
+        activarReactivo();
       }
-    
-
-      arrastrable();
-      activarReactivo();
+      
+     
     }
-    
-   
-  }
-</script>
-  <% }
-    %> "
-
+  </script>
 </body>
 
 </html>

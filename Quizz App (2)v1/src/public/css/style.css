@@ -103,8 +103,6 @@
     clear: both;
     display: table;
   }
-  
-  
   /* Add Zoom Animation */
   .animate {
     -webkit-animation: animatezoom 0.3s;
@@ -227,7 +225,7 @@
   z-index: 1;
 }
 
-/*--- Estilo de la Pregunta Drag ----*/
+/*--- Back drag branch ----*/
 :root {
   --altolienzo: 550px;
   --ancholienzo: 580px;
@@ -246,16 +244,7 @@
   display: inline-block;
   width: var(--ancholienzo);
   height: var(--altolienzo);
-  background-color: lightcyan;
-}
-
-.img-PLienzo {
-  z-index: 0;
-}
-
-.img-replica {
-  position: absolute;
-  z-index: 0;
+  background-color: #99ffcc;
 }
 
 .imagenAcomodo{
@@ -271,26 +260,26 @@
   height: 50px;
   background-color: black;
   opacity: 0.5;
+}
+
+#elemento {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+}
+#e-replica {
+  position: absolute;
+  top: 0px;
+  left: 0px;
   z-index: 1;
 }
 
-.reactivoDrag {
+.elementoReplica {
   position: absolute;
-  width: 100px;
-  height: 50px;
-  background-color: black;
-  opacity: 0.5;
+  top: 0px;
+  left: 0px;
   z-index: 1;
-}
-
-.flecha {
-  position: absolute;
-  z-index: 2;
-}
-
-.respuesta-reactivo {
-  width: 100px;
-  z-index: 3;
 }
 
 .centrado {
