@@ -5,7 +5,7 @@
  var finQuizz=momentoActual.getMinutes()+30;
 
  console.log(finQuizz);
- var tiempoQuizz=momentoActual//.setMinutes(finQuizz);
+ var tiempoQuizz=momentoActual
 
 
  tiempoQuizz.setMinutes(finQuizz);

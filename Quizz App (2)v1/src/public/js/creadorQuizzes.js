@@ -1,19 +1,26 @@
 //--------JS PARA LA INYECCIÓN DE PREGUNTAS EN EL DOM DE EDITORES/CREAR Y EL PROCESAMIENTO PARA SU ENVÍO----------//
 
+
+
 //Variable para hacer la inserción de elementos dentro del cuertpo del HTML
 var insertor=document.getElementById("insercion");
 //Variable global para "enumerar" todas las preguntas,respuestas y tipo  de un cuestionario para la request
 var contador=1;
 //Variable para elementos que deben ser Previsualiados
 var contadorPreV=1;
+var errores;
+//
 //---Variables para la pregunta Drag--//
 var objetosDrag=[];
+var contadorid = 0 ;
+var numeracionPregunta=1;
 var lienzo={
             id:0,
             img:[],
             pregunta:[],
             respuesta:[],
             flecha:[]
+
 
             }
             //Simulación de un solo lienzo
@@ -24,38 +31,63 @@ function contadorTipo(){
 
      //Creación de un elemento hidden para registrar el tipo de pregunta
      var tipoHTML=document.createElement("INPUT");
+     
      tipoHTML.type="hidden";
      tipoHTML.name=tipo;
     return tipoHTML;
 }
 
+
 //Función para crear las preguntas abiertas en el cuerpo del HTML
 function preguntaAbierta(){
 
-    
-  
+  contadorid++;
+
 var strVar="";
-strVar += "<div class=\"tipoT cuestionario cuestionario row justify-content-center mt-5 pt-5\">";
-strVar += "                    <div class=\"container text-center\">";
-strVar += "                      <h4>Pregunta Abierta<\/h4>";
-strVar += "                    <\/div>";
-strVar += "                        <div class=\"col-md-7 \">";
-strVar += "                          <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
-strVar += "                          <input type=\"text\" class=\"form-control pregunta\"  placeholder=\"Escriba la pregunta\">";
-strVar += "                        <\/div>";
-strVar += "                        <div class=\"col-md-7 \">";
-strVar += "                          <label for=\"formGroupExampleInput2\" class=\"form-label\">Respuesta<\/label>";
-strVar += "                            <input type=\"text\" class=\"form-control respuesta \"  placeholder=\"Escriba la respuesta\">";
-strVar += "                            ";
-strVar += "                            ";
-strVar += "                        <\/div>";
-strVar += "                        <div class=\"editar col-md-7\" role=\"group\" aria-label=\"Basic mixed styles example\" align=\"left\" float=\"left\">";
-strVar += "                              <br>";
-strVar += "                              <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
-strVar += "                            <\/div>";
-strVar += "                  <\/div>";
+strVar += "   <div id=\"preg"+(contadorid)+"\" class=\"tipoT cuestionario cuestionario  justify-content-center mt-5 pt-5 nivel-Superior\">";
+strVar += "      <div class=\"container contenedorErrores\">";
+strVar += "      <\/div>";
+strVar += "      <div class=\"row text-center\">";
+strVar += "        <div class=\"col-12\">";
+strVar += "          <div class=\"rounded-pill\">";
+strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
+strVar += "              style=\"width: 3rem; height:3rem; margin-left: 210px;\">";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px;\">"+numeracionPregunta+"<\/p>";
+strVar += "            <\/a>";
+strVar += "          <\/div>";
+strVar += "          <div class=\"text-center mb-5 mt-5\">";
+strVar += "            <h3>Pregunta Abierta<\/h3>";
+strVar += "            <h4 class=\"text-primary\">Intrucciones<\/h4>";
+strVar += "            <p class=\"fs-5 justify-content-center text\">Escribe la pregunta y la respuesta que quieras que tenga.<\/p>";
+strVar += "          <\/div>";
+strVar += "               <div class=\"col-md-7 mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde lo que se te solicita\">";
+strVar += "              <\/div>";
+strVar += "          <div class=\"col-md-7\" style=\"margin: 0 auto;\">";
+strVar += "            <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
+strVar += "            <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Escriba la pregunta\">";
+strVar += "          <\/div>";
+strVar += "          <div class=\"col-md-7\" style=\"margin: 0 auto;\">";
+strVar += "            <label for=\"formGroupExampleInput2\" class=\"form-label\">Respuesta<\/label>";
+strVar += "            <input type=\"text\" class=\"form-control respuesta \" placeholder=\"Escriba la respuesta\">";
+strVar += "";
+strVar += "";
+strVar += "          <\/div>";
+strVar += "          <div class=\"editar col-md-7\" role=\"group\" aria-label=\"Basic mixed styles example\" style=\"margin: 0 auto;\">";
+strVar += "            <br>";
+strVar += "            <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
+strVar += "          <\/div>";
+strVar += "";
+strVar += "        <\/div>";
+strVar += "      <\/div>";
+strVar += "";
+strVar += "    <\/div>";
+
 insertor.insertAdjacentHTML("beforeend",strVar);
 
+  
+numeracionPregunta++;
        
 } 
 
@@ -91,7 +123,7 @@ function palabras() {
   /* el ciclo for lo utilizo para saber cuantas son las veces que va a inyectar la etiqueta con la palabra */
   for (var i = 0; i < palabraPartida.length; i++) {
     var id="drag"+contadorIDrag;
-    strVar += '<div id=\"'+id+'\" class="palabraid text-dark fw-bold text-center elementoDrag" style=\"width:90px;\">';
+    strVar += '<div id=\"'+id+'\" class="palabraid text-dark fw-bold text-center elementoDrag" style=\"width:100px;\">';
     strVar += "" + palabraPartida[i] + " </div>";
 
     contadorIDrag++;
@@ -182,6 +214,7 @@ function comprobarDrag(event) {
 }
 
 function arrastrable() {
+  console.log("Activandose");
   $(".elementoDrag").draggable({
     revert: "invalid",
     cursor: "move",
@@ -309,7 +342,7 @@ function flechaDiaIzquierdaInv() {
 
 
 
-
+function ActivarLienzo(){
   //Eventos ligados a clase lienzo
   $(".lienzo").droppable({
     drop: function (event, ui) {
@@ -351,7 +384,7 @@ function flechaDiaIzquierdaInv() {
 
     }
   });
-
+}
 
 function activarReactivo(){
 $(".reactivo").droppable({
@@ -530,8 +563,8 @@ function previsualizarDraw(){
             console.log("Resultado de la función")
           
             //Espacio centrado en base al tamaño del lienzo
-            var leftAjustado= Math.round((550-this.width)/2);
-            var topAjustado= Math.round((450-this.height)/2);
+            var leftAjustado= Math.round((580-this.width)/2);
+            var topAjustado= Math.round((550-this.height)/2);
             
        
             
@@ -539,6 +572,7 @@ function previsualizarDraw(){
             imageDatos.style.position="absolute";
             imageDatos.style.top=topAjustado+"px";
             imageDatos.style.left=leftAjustado+"px";
+            imageDatos.className="img-PLienzo"
 
             var datos={
               tipoElemento: "img",
@@ -570,12 +604,12 @@ function previsualizarDraw(){
     };
 }
 
-previsualizarDraw();
 //----Terminan funciones Drag--------//
 
       function preguntaArrastrar() {
+        contadorid++;
                 var strVar="";
-        strVar += "<div class=\"tipoAr cuestionario\">";
+        strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoAr cuestionario\">";
         strVar += "    <div class=\"row mt-3\">";
         strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
         strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
@@ -634,99 +668,127 @@ previsualizarDraw();
       insertor.insertAdjacentHTML("beforeend",strVar);   
 
       previsualizarDraw();
+      ActivarLienzo();
       }
 
-
+      function preguntaRelacional(){
+        contadorid++;
+        
       
       
+        var strVar="";
+      strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoR cuestionario cuestionario mt-5 pt-5 container nivel-Superior\">";
+      strVar += "      <div class=\"contenedorErrores\">";
+      strVar += "      <\/div>";
+      strVar += "      <div class=\"row text-center\">";
+      strVar += "        <div class=\"col-12 col-md-12 col-lg-7\">";
+      strVar += "          <div class=\"rounded-pill\">";
+      strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
+      strVar += "              style=\"width: 3rem; height:3rem;\">";
+      strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px;\">"+numeracionPregunta+"<\/p>";
+      strVar += "            <\/a>";
+      strVar += "          <\/div>";
+      strVar += "          <div class=\"contenedorItem row justify-content-center mb-3\">";
+      strVar += "              <div class=\"mb-4\">";
+      strVar += "                <h3 class=\"text-center\">Pregunta Relacional<\/h3>";
+      strVar += "              <\/div>";
+      strVar += "               <div class=\"mb-4 text-center mx-auto\">";
+      strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+      strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Relaciona las columnas\">";
+      strVar += "              <\/div>";
+      strVar += "            <div class=\"container row justify-content-center mb-3\">";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Pregunta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control respuesta \" placeholder=\"Respuesta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-2\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
+      strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "            <\/div>";
+      strVar += "            <br>";
+      strVar += "            <div class=\"container row justify-content-center mb-3\">";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Pregunta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control respuesta\" placeholder=\"Respuesta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-2\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
+      strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "            <\/div>";
+      strVar += "            <br>";
+      strVar += "            <div class=\"container row justify-content-center mb-3\">";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control pregunta \" placeholder=\"Pregunta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-5\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <input type=\"text\" class=\"form-control respuesta \" placeholder=\"Respuesta\">";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "              <div class=\"col-md-2\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
+      strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "            <\/div>";
+      strVar += "            <br>";
+      strVar += "            <div class=\"container row justify-content-center mb-4\">";
+      strVar += "              <div class=\"col-md-3 ml-0\">";
+      strVar += "                <div class=\"\">";
+      strVar += "                  <button class=\"btn btn-info \" type=\"button\" onclick=\"reactivoRelacional(this)\">Añadir";
+      strVar += "                    Reactivo<\/button>";
+      strVar += "                <\/div>";
+      strVar += "              <\/div>";
+      strVar += "";
+      strVar += "            <\/div>";
+      strVar += "            <br>";
+      strVar += "";
+      strVar += "            <div class=\"col-md-3 mr-2 text-center\">";
+      strVar += "              <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar";
+      strVar += "                Pregunta<\/button>";
+      strVar += "            <\/div>";
+      strVar += "";
+      strVar += "          <\/div>";
+      strVar += "        <\/div>";
+      strVar += "        <div class=\"col-12 col-md-12 col-lg-5\">";
+      strVar += "          <h4 class=\"text-primary\">Intrucciones<\/h4>";
+      strVar += "          <p class=\"fs-5 justify-content-center text\">1.- Se debe colocar la respuesta y pregunta en orden 1-1, para que";
+      strVar += "            pueda evaluar correctamente.No olvides definir las instrucciones para el  Alumno <\/p>";
+      strVar += "          <P class=\"fs-5 justify-content-center text\">2.- El botón de QuitarReactivo sirve para quitar preguntas, en";
+      strVar += "            caso de que hayas agregado demás.<\/P>";
+      strVar += "          <p class=\"fs-5 justify-content-center text\">3.- Añadir Reactivo sirve para agregar más columnas a relacionar.";
+      strVar += "          <\/p>";
+      strVar += "          <p class=\"fs-5 justify-content-center text\">4.- El botón QuitarPregunta sirve para eliminar la pregunta en";
+      strVar += "            caso de que no se ocupe colocar ninguna relacional.<\/p>";
+      strVar += "        <\/div>";
+      strVar += "      <\/div>";
+      strVar += "";
+      strVar += "    <\/div>";
       
-
-function preguntaRelacional(){
-  var strVar="";
-  strVar += " <div class=\"tipoR cuestionario cuestionario row justify-content-center mt-5 pt-5 container\">";
-  strVar += "                                  ";
-  strVar += "                                    <div class=\"col-md-4\">";
-  strVar += "                                      <div class=\"\">";
-  strVar += "                                          <div class=\"container text-center\">";
-  strVar += "                                            <h4 class=\"text-center\">Pregunta Relacional<\/h4><\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                          <br>";
-  strVar += "                                    <\/div>";
-  strVar += "                                    <div class=\"contenedorItem row justify-content-center mb-3\">";
-  strVar += "                                      <div class=\"container row justify-content-center mb-3\">";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control pregunta \"  placeholder=\"Pregunta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control respuesta \"  placeholder=\"Respuesta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                              <div class=\"\">";
-  strVar += "                                                <button class=\"btn btn-danger \" type=\"button\" onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-  strVar += "                                              <\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                      <\/div>";
-  strVar += "                                      <br>";
-  strVar += "                                      <div class=\"container row justify-content-center mb-3\">";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control pregunta \"  placeholder=\"Pregunta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control respuesta \"  placeholder=\"Respuesta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                              <div class=\"\">";
-  strVar += "                                                <button class=\"btn btn-danger \" type=\"button\" onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-  strVar += "                                              <\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                      <\/div>";
-  strVar += "                                      <br>";
-  strVar += "                                      <div class=\"container row justify-content-center mb-3\">";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control pregunta \"  placeholder=\"Pregunta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                                <div class=\"\">";
-  strVar += "                                                    <input type=\"text\" class=\"form-control respuesta \"  placeholder=\"Respuesta\">";
-  strVar += "                                                <\/div>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <div class=\"col-md-2 \" >";
-  strVar += "                                              <div class=\"\">";
-  strVar += "                                                <button class=\"btn btn-danger \" type=\"button\" onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-  strVar += "                                              <\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                      <\/div>";
-  strVar += "                                      <br>";
-  strVar += "                                      <div class=\"container row justify-content-center mb-4\">";
-  strVar += "                                        <div class=\"col-md-2 ml-0\" >";
-  strVar += "                                            <div class=\"\">";
-  strVar += "                                              <button class=\"btn btn-info \" type=\"button\" onclick=\"reactivoRelacional(this)\">Añadir Reactivo<\/button>";
-  strVar += "                                            <\/div>";
-  strVar += "                                        <\/div>";
-  strVar += "                                 ";
-  strVar += "                                      <\/div>";
-  strVar += "                                  <br>";
-  strVar += "                                  ";
-  strVar += "                ";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-danger col-md-2 text-center\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
-  strVar += "                                  ";
-  strVar += "                                          ";
-  strVar += "                                    <\/div>         ";
-  strVar += "                    <\/div>               ";
-  strVar += "";
-
-insertor.insertAdjacentHTML("beforeend",strVar);
-}
+      numeracionPregunta++
+      insertor.insertAdjacentHTML("beforeend",strVar);
+      }
 
 
 //función para crear más reactivos en preguntas relacionales
@@ -736,24 +798,26 @@ function reactivoRelacional(obj){
       var contenedorCuestionario=obj.parentElement.parentElement.parentElement.previousElementSibling;
       
       var strVar="";
-      strVar += "<div class=\"container row justify-content-center mb-3\">";
-      strVar += "                                            <div class=\"col-md-2 \" >";
-      strVar += "                                                <div class=\"\">";
-      strVar += "                                                    <input type=\"text\" class=\"form-control pregunta \"  placeholder=\"Pregunta\">";
-      strVar += "                                                <\/div>";
-      strVar += "                                            <\/div>";
-      strVar += "                                            <div class=\"col-md-2 \" >";
-      strVar += "                                                <div class=\"\">";
-      strVar += "                                                    <input type=\"text\" class=\"form-control respuesta \"  placeholder=\"Respuesta\">";
-      strVar += "                                                <\/div>";
-      strVar += "                                            <\/div>";
-      strVar += "                                            <div class=\"col-md-2 \" >";
-      strVar += "                                              <div class=\"\">";
-      strVar += "                                                <button class=\"btn btn-danger \" type=\"button\" onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
-      strVar += "                                              <\/div>";
-      strVar += "                                          <\/div>";
-      strVar += "                                      <\/div>";
-      strVar += "                                      <br>";
+strVar += " <div class=\"container row justify-content-center mb-3\">";
+strVar += "              <div class=\"col-md-5\">";
+strVar += "                <div class=\"\">";
+strVar += "                  <input type=\"text\" class=\"form-control pregunta \" placeholder=\"Pregunta\">";
+strVar += "                <\/div>";
+strVar += "              <\/div>";
+strVar += "              <div class=\"col-md-5\">";
+strVar += "                <div class=\"\">";
+strVar += "                  <input type=\"text\" class=\"form-control respuesta \" placeholder=\"Respuesta\">";
+strVar += "                <\/div>";
+strVar += "              <\/div>";
+strVar += "              <div class=\"col-md-2\">";
+strVar += "                <div class=\"\">";
+strVar += "                  <button class=\"btn btn-danger \" type=\"button\"";
+strVar += "                    onclick=\"quitarReactivoRelacional(this)\">QuitarReactivo<\/button>";
+strVar += "                <\/div>";
+strVar += "              <\/div>";
+strVar += "            <\/div>";
+strVar += "            <br>";
+
 
       contenedorCuestionario.insertAdjacentHTML("afterend",strVar);
 
@@ -819,72 +883,94 @@ function dibujarLienzo(){
 
 function preguntaOM(){
 
-  var strVar="";
-  strVar += " <div class=\"tipoOM cuestionario rounded-sm  \">";
-  strVar += "                      <div class=\"row\">";
-  strVar += "                         ";
-  strVar += "                              <div class=\"col-lg-12 col-md-6 col-sm-6 row justify-content-center mt-5 pt-5\">";
-  strVar += "                                    <div  class=\"text-center\">";
-  strVar += "                                          <h3>Pregunta de Opción Múltiple<\/h3>";
-  strVar += "                                          <div class=\"col-md-6 pregunta mx-auto mt-3\">";
-  strVar += "                                            <div class=\"text-center\">";
-  strVar += "                                              <p class=\"text-primary\"><b>Instruciones: <\/b> Para hacer una pregunta Verdadero-Falso , solo define la pregunta al alumno y selecciona correcta. SI deseas opción Multiple,define la pregunta del alumno, borra los campos y escribe las respuestas que desees y finalmente selecciona las correctas<\/p>";
-  strVar += "                                            <\/div>";
-  strVar += "                                            <input type=\"text\" class=\"form-control pregunta \"  placeholder=\"Pregunta para el alumno\">";
-  strVar += "                                          <\/div>";
-  strVar += "                                    <\/div>";
-  strVar += "                                    <div class=\" col-lg-12 col-md-6 col-sm-6 reactivos row justify-content-center mt-5 pt-3\"  align=\"center\">";
-  strVar += "                                          <div class=\"mb-3 \" >";
-  strVar += "                                            <div class=\"col-md-6 py-2\">";
-  strVar += "                                              <input type=\"text\" class=\"form-control opcion mb-2\"  placeholder=\"Verdadero\" value=\"verdadero\">";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button>";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
-  strVar += "                                            <\/div>";
-  strVar += "                                          ";
-  strVar += "                                          <\/div>";
-  strVar += "                                          <div class=\"mb-3 \" >";
-  strVar += "                                            <div class=\"col-md-6 py-2\">";
-  strVar += "                                              <input type=\"text\" class=\"form-control opcion mb-2\"  placeholder=\"Falso\" value=\"falso\">";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button>";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
-  strVar += "                                            <\/div>";
-  strVar += "                                          <\/div>";
-  strVar += "                                    <\/div>";
-  strVar += "                               ";
-  strVar += "                               <\/div>";
-  strVar += "                      <\/div>";
-  strVar += "                        <div class=\"editar text-center mt-3\" role=\"group\" aria-label=\"Basic mixed styles example\">";
-  strVar += "                          <button type=\"button\" class=\"btn btn-success\" onclick=\"reactivoOM(this)\">Agregar Reactivo<\/button>";
-  strVar += "                          <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
-  strVar += "                        <\/div>";
-  strVar += "                  <\/div>";
-
+  contadorid++;
   
+
+  var strVar="";
+strVar += "";
+strVar += "    <div id=\"preg"+(contadorid)+"\" class=\"tipoOM cuestionario rounded-sm container mt-5 pt-5 nivel-Superior\">";
+strVar += "      <div class=\" row justify-content-center mb-4 contenedorErrores\">";
+strVar += "      <\/div>";
+strVar += "      <div class=\"row\">";
+strVar += "        <div class=\"col-12 col-md-12 col-lg-6 justify-content-center\">";
+strVar += "          <div class=\"rounded-pill\">";
+strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
+strVar += "              style=\"width: 3rem; height:3rem;\">";strVar += "";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 16px;\">"+numeracionPregunta+"<\/p>";
+strVar += "            <\/a>";
+strVar += "          <\/div>";
+strVar += "          <div class=\"text-center\">";
+strVar += "            <h3>Pregunta de Opción Múltiple<\/h3>";
+strVar += "               <div class=\"mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde verdadero o falso a la pregunta \">";
+strVar += "              <\/div>";
+strVar += "            <div class=\"pregunta mt-3\">";
+strVar += "              <!--  -->";
+strVar += "              <input type=\"text\" class=\"form-control pregunta \" placeholder=\"Pregunta para el alumno\">";
+strVar += "            <\/div>";
+strVar += "          <\/div>";
+strVar += "          <div class=\"reactivos mt-4 text-center\">";
+strVar += "            <div class=\"row\">";
+strVar += "              <div class=\"mb-3\">";
+strVar += "                <div class=\"\">";
+strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Verdadero\" value=\"verdadero\">";
+strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
+strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
+strVar += "                <\/div>";
+strVar += "              <\/div>";
+strVar += "              <div class=\"mb-3\">";
+strVar += "                <div class=\"\">";
+strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Falso\" value=\"falso\">";
+strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
+strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
+strVar += "                <\/div>";
+strVar += "              <\/div>";
+strVar += "            <\/div>";
+strVar += "          <\/div>";
+strVar += "          <div class=\"editar mt-3 text-center\" role=\"group\" aria-label=\"Basic mixed styles example\">";
+strVar += "            <button type=\"button\" class=\"btn btn-success\" onclick=\"reactivoOM(this)\">Agregar Reactivo<\/button>";
+strVar += "            <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button>";
+strVar += "          <\/div>";
+strVar += "        <\/div>";
+strVar += "        <div class=\"col-12 col-md-12 col-lg-6\">";
+strVar += "          <div class=\"text-center\">";
+strVar += "            <h4 class=\"text-primary\">Intrucciones<\/h4>";
+strVar += "            <p class=\"fs-5 justify-content-center text\">Para hacer una pregunta Verdadero-Falso , solo define la";
+strVar += "              pregunta al alumno y selecciona la opción correcta. Si deseas opción Multiple,define la pregunta del alumno,";
+strVar += "              borra los campos de verdadero y falso y escribe las respuestas que desees . Finalmente selecciona las correctas<\/p>";
+strVar += "          <\/div>";
+strVar += "        <\/div>";
+strVar += "";
+strVar += "";
+strVar += "      <\/div>";
+strVar += "    <\/div>";
+strVar += "";
+strVar += "    <\/div>";
+
   
 
 insertor.insertAdjacentHTML("beforeend",strVar);
+numeracionPregunta++;
 }
 
 //Función para la creación de una opción en preguntas de opción múltiple
 function reactivoOM(obj){
 
   //búsqueda del div donde se inyectará el nuevo reactivo
-  var contenedor=obj.parentElement.previousElementSibling.children[0].querySelectorAll("div div.reactivos")[0];
-
-  console.log(contenedor);
+  var contenedor=obj.parentElement.previousElementSibling;//children[0].querySelectorAll("div div.reactivos")[0];
 
   
   var strVar="";
-  strVar += "   <div class=\"mb-3 \" >";
-  strVar += "                                            <div class=\"col-md-6 py-2\">";
-  strVar += "                                              <input type=\"text\" class=\"form-control opcion mb-2\"  placeholder=\"Opción\">";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button>";
-  strVar += "                                            <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Eliminar Opción<\/button>";
-  strVar += "                                            <\/div>";
-  strVar += "                                          ";
-  strVar += "                                          <\/div>";
+  strVar += " <div class=\"mb-3\">";
+  strVar += "                <div >";
+  strVar += "                  <input type=\"text\" class=\"form-control opcion mb-3\" placeholder=\"Opción para el alumno\" >";
+  strVar += "                  <button type=\"button\" class=\"btn btn-info\" onclick=\"seleccionarRespuesta(this)\">Correcta<\/button><\/br>";
+  strVar += "                  <button type=\"button\" class=\"btn btn-danger mt-2\" onclick=\"borrarReactivoOM(this)\">Eliminar Opción<\/button>";
+  strVar += "                <\/div>";
+  strVar += "              <\/div>";
   
-
+  
   contenedor.insertAdjacentHTML("beforeend",strVar);
   
 }
@@ -908,38 +994,67 @@ function seleccionarRespuesta(obj){
 
 }
 
+function borrarReactivoOM(obj){
+  var contenedor=obj.parentElement.parentElement;
+  contenedor.remove()
+}
+/*------------- Terminan funciones de Pregunta Opción Múltiple-----*/
 function preguntaIT(){
-  var strVar="";
-strVar += "  <div class=\"row justify-content-center mt-5 pt-5\" id=\"insercion\">";
-strVar += "                ";
-strVar += "                <div class=\"container tipoIT cuestionario mt-4 col-md-7 \">";
-strVar += "                    <div class=\"text-center\">";
-strVar += "                      <p class=\"display-6\">Pregunta Texto-Imagen<\/p>";
-strVar += "                      <p class=\"text-primary\"><b>Instruciones: <\/b> Seleccione la imagen a cargar, y defina pregunta y respuesta<\/p>";
-strVar += "                    <\/div>";
-strVar += "                    <input required type=\"file\" id=\"imgIT"+contadorPreV+"\" accept=\"image\/*\" class=\"imgs\" name=\"imgs\">";
-strVar += "                    <input required type=\"hidden\" class=\"imagenrequest\">";
-strVar += "                    <div id=\"prevIT"+contadorPreV+"\"  class=\"mx-auto\"><\/div>";
-strVar += "                    <div class=\"mb-3\">";
-strVar += "                      <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
-strVar += "                      <input type=\"text\" class=\"form-control pregunta\"  placeholder=\"Escriba la pregunta\">";
-strVar += "                    <\/div>";
-strVar += "                    <div class=\"mb-3\">";
-strVar += "                        <label for=\"formGroupExampleInput2\" class=\"form-label\">Respuesta<\/label>";
-strVar += "                        <input required type=\"text\" class=\"form-control respuesta \"  placeholder=\"Escriba la respuesta\">";
-strVar += "                    <\/div>";
-strVar += "                    <div class=\"editar\" role=\"group\" aria-label=\"Basic mixed styles example\" float=\"left\" align=\"left\">";
-strVar += "                    <br>";
-strVar += "                    <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\" align=\"left\">Quitar Pregunta<\/button>";
-strVar += "                  <\/div>";
-strVar += "                 <\/div>";
+
+  contadorid++;
+
+var strVar="";
+strVar += "<div id=\"preg"+(contadorid)+"\" class=\"justify-content-center mt-5 pt-5 nivel-Superior\" >";
+strVar += "      <div class=\"contenedorErrores\">";
+strVar += "      ";
+strVar += "     <\/div>";
+strVar += "      <div class=\"row\">";
+strVar += "        <div class=\"col-12\">";
+strVar += "          <div class=\"rounded-pill\">";
+strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
+strVar += "              style=\"width: 3rem; height:3rem; margin-left: 198px;\">";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 15px;\">"+numeracionPregunta+"<\/p>";
+strVar += "            <\/a>";
+strVar += "          <\/div>";
+strVar += "          <div class=\"container tipoIT cuestionario mt-4 col-md-7 \">";
+strVar += "            <div class=\"text-center\">";
+strVar += "              <h3>Pregunta Texto-Imagen<\/h3>";
+strVar += "              <h4 class=\"text-primary\">Intrucciones<\/h4>";
+strVar += "              <p class=\"fs-5 justify-content-center text\">Seleccione la imagen a cargar, y defina pregunta y respuesta";
+strVar += "              <\/p>";
+strVar += "            <\/div>";
+strVar += "            <input required type=\"file\" id=\"imgIT"+contadorPreV+"\" accept=\"image\/*\" class=\"imgs\" name=\"imgs\">";
+strVar += "            <input required type=\"hidden\" class=\"imagenrequest\">";
+strVar += "            <div id=\"prevIT"+contadorPreV+"\" class=\"mx-auto\"><\/div>";
+strVar += "              <div class=\"mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde la pregunta de acuerdo a la imagen \">";
 strVar += "              <\/div>";
-  
+strVar += "            <div class=\"mb-3\">";
+strVar += "              <label for=\"formGroupExampleInput\" class=\"form-label\">Pregunta<\/label>";
+strVar += "              <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Escriba la pregunta\">";
+strVar += "            <\/div>";
+strVar += "            <div class=\"mb-3\">";
+strVar += "              <label for=\"formGroupExampleInput2\" class=\"form-label\">Respuesta<\/label>";
+strVar += "              <input required type=\"text\" class=\"form-control respuesta \" placeholder=\"Escriba la respuesta\">";
+strVar += "            <\/div>";
+strVar += "            <div class=\"editar\" role=\"group\" aria-label=\"Basic mixed styles example\" float=\"left\" align=\"left\">";
+strVar += "              <br>";
+strVar += "              <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\" align=\"left\">Quitar";
+strVar += "                Pregunta<\/button>";
+strVar += "            <\/div>";
+strVar += "          <\/div>";
+strVar += "        <\/div>";
+strVar += "      <\/div>";
+strVar += "    <\/div>";
+
 
 insertor.insertAdjacentHTML("beforeend",strVar);
 previsualizarIT();
 contadorPreV++;
+numeracionPregunta++;
 }
+
 function previsualizarIT(){
   var idFile="imgIT"+contadorPreV;
   var idpreView="prevIT"+contadorPreV;
@@ -976,26 +1091,49 @@ document.getElementById(idFile).onchange = function (e) {
 
 
 function preguntaMatematicas(){
+  contadorid++;
 
-  var strVar="";
-strVar += "    <div class=\"tipoM cuestionario row justify-content-center mt-5 pt-5\">";
-strVar += "            <div class=\"text-center\">";
-strVar += "              <h4>Pregunta de Matemáticas<\/h4>";
-strVar += "              <p class=\"text-primary\"><b>Instruciones: <\/b>   Si requiere escribir una fracción ingrese guion bajo\"_\" p. ej. 3_4 <\/p>";
-strVar += "             ";
-strVar += "            <\/div>";
-strVar += "                   <div class=\"col-md-7\">";
-strVar += "                        <label for=\"formGroupExampleInput\" class=\"form-label\">Expresión<\/label>";
-strVar += "                        <input type=\"text\" class=\"form-control pregunta\"  placeholder=\"Escriba la expresión a mostrar al alumno\">";
-strVar += "                   <\/div>";
-strVar += "                    <div class=\"editar col-md-7\" role=\"group\" aria-label=\"Basic mixed styles example\" float=\"left\" align=\"left\" >";
-strVar += "                      <br>";
-strVar += "                    <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\"align=\"left\">Quitar Pregunta<\/button>";
-strVar += "                    <\/div>";
+var strVar="";
+strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoM cuestionario justify-content-center mt-5 pt-5 nivel-Superior\">";
+strVar += "      <div class=\"container contenedorErrores\">";
+strVar += "      <\/div>";
+strVar += "      <div class=\"row\">";
+strVar += "        <div class=\"col-12\">";
+strVar += "          <div class=\"rounded-pill\">";
+strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
+strVar += "              style=\"width: 3rem; height:3rem; margin-left: 203px;\">";
+strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 15px;\">"+numeracionPregunta+"<\/p>";
+strVar += "            <\/a>";
 strVar += "          <\/div>";
+strVar += "          <div class=\"text-center\">";
+strVar += "            <h3>Pregunta de Matemáticas<\/h3>";
+strVar += "            <h4 class=\"text-primary\">Intrucciones<\/h4>";
+strVar += "            <p class=\"fs-5 justify-content-center text\">Si requiere escribir una fracción ingrese guion bajo\"_\" p. ej.";
+strVar += "              3_4";
+strVar += "            <\/p>";
+strVar += "";
+strVar += "          <\/div>";
+strVar += "               <div class=\"col-md-7 mb-4 text-center mx-auto\">";
+strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Resuelve la expresión \">";
+strVar += "              <\/div>";
+strVar += "          <div class=\"col-md-7\" style=\"margin: 0 auto;\">";
+strVar += "            <label for=\"formGroupExampleInput\" class=\"form-label\">Expresión<\/label>";
+strVar += "            <input type=\"text\" class=\"form-control pregunta\" placeholder=\"Escriba la expresión a mostrar al alumno\">";
+strVar += "          <\/div>";
+strVar += "          <div class=\"editar col-md-7\" role=\"group\" aria-label=\"Basic mixed styles example\" style=\"margin: 0 auto;\">";
+strVar += "            <br>";
+strVar += "            <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\" align=\"left\">Quitar Pregunta<\/button>";
+strVar += "          <\/div>";
+strVar += "        <\/div>";
+strVar += "      <\/div>";
+strVar += "    <\/div>";
+
 
 insertor.insertAdjacentHTML("beforeend",strVar);
+numeracionPregunta++;
 }
+
 
 function envioPreguntaRelacional(){
 
@@ -1009,8 +1147,13 @@ function envioPreguntaRelacional(){
     tipoHTML.value="tipoR";
     //inserción
     cuestionarios[i].appendChild(tipoHTML);
-    
+
+    var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;
+
+    //Obtención de las preguntas y respuestas
    var reactivos=cuestionarios[i].querySelectorAll("div.contenedorItem input.pregunta");
+
    for(j=0;j<reactivos.length;j++){
     var pregunta = cuestionarios[i].querySelectorAll("div.contenedorItem input.pregunta");
     pregunta[j].name="pregunta"+contador;
@@ -1024,8 +1167,87 @@ function envioPreguntaRelacional(){
  
 }
 
+function validarPreguntaRelacional(){
+
+  var i=0;
+  var cuestionarios=document.getElementsByClassName("tipoR");
+
+  
+  for(i=0;i<cuestionarios.length;i++){
+      var cuestionario=cuestionarios[i];
+      var elementosValidacion=[];
+      
+      var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
+      var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0].value;
+      var reactivos=cuestionario.querySelectorAll("div.contenedorItem input.pregunta");
+
+      for(j=0;j<reactivos.length;j++){
+        var pregunta = cuestionario.querySelectorAll("div.contenedorItem input.pregunta");
+        elementosValidacion.push(pregunta[j]);
+
+        var respuesta = cuestionario.querySelectorAll("div.contenedorItem input.respuesta");
+        elementosValidacion.push(respuesta[j]);
+
+      }
+
+      var errorHTML=cuestionario.querySelectorAll("div.Error")[0];
+     
+      var error=false;
+
+      
+      for(var k=0;k<elementosValidacion.length;k++){
+        var valorCampo=elementosValidacion[k].value
+        if(valorCampo.length==0){
+          
+        
+          error=true;
+          break;
+        
+        }
+      }
+
+     
+     
+      console.log(!instrucciones);
+    // Si hay errores y No hay mensaje
+    if( (error || !instrucciones) && (!errorHTML)){
+      //Escribe mensaje
+      var strVar="";
+          strVar += "      <div class=\" row justify-content-center mb-4\">";
+          strVar += "          <div class=\"Error fw-bold col-10 mx-auto p-3 m-1 text-center mb-3 border border-danger\">";
+          strVar += "            <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
+          strVar += "          <\/div>";
+          strVar += "        <\/div>";
+
+      contenedorErrores.insertAdjacentHTML("afterbegin",strVar);
+      
+      }
+
+      if( (!error && instrucciones) && errorHTML){
+        errorHTML.remove();
+      }
+    
+    
+      
+   
+  }
+ 
+}
 
 
+
+function mensaje(){
+  var MensajeRetro=document.getElementById("mensaje");
+  
+  MensajeRetro.classList.remove('retroActivado','retroEfin');
+  MensajeRetro.classList.remove('retroError');
+  MensajeRetro.classList.add('retroActivado');
+ 
+      setTimeout(function () {
+        MensajeRetro.classList.add('retroEfin');
+    }, 250);
+  
+}
 //Función para un envío clasificado de los tipos de preguntas
 function envioPreguntaAbierta(){
    
@@ -1042,17 +1264,126 @@ function envioPreguntaAbierta(){
     tipoHTML.value="tipoT";
     //inserción
     cuestionarios[i].appendChild(tipoHTML);
+
+    var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;    
+    
     
     var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
     pregunta[0].name="pregunta"+contador;
 
     var respuesta = cuestionarios[i].querySelectorAll("input.respuesta");
     respuesta[0].name="respuesta"+contador;
- 
+    
+  
     contador=contador+1;
     }
 
     
+}
+
+function validar(cuestionario,elementos){
+  console.log("EJECUTANDO VALIDACIÓN")
+  console.log(cuestionario);
+  console.log(cuestionario.children[0].className);
+  
+  var strRevision=cuestionario.children[0].querySelectorAll("div.Error")[0];
+  var error=false;
+
+
+  for(var i=0;i<elementos.length;i++){
+    var valorCampo=elementos[i].value
+    if(valorCampo==0){
+       
+     
+      error=true;
+      break;
+    }
+  }
+
+ // Si hay errores y No hay mensaje
+ if( error && (!strRevision)){
+   //Escribe mensaje
+  var strVar="";
+  strVar += "<div class=\"container\">";
+  strVar += "    <div class=\"  Error row justify-content-center \" >";
+  strVar += "      <div class=\" border border-danger fw-bold col-10 mx-auto  p-3 m-1 text-center text-danger\">";
+  strVar += "        Error: Faltan Campos por Rellenar";
+  strVar += "      <\/div>";
+  strVar += "    <\/div>";
+  strVar += "  <\/div>";
+  cuestionario.insertAdjacentHTML("afterbegin",strVar);
+   
+  }
+
+  if(!error && (strRevision)){
+    cuestionario.children[0].remove();
+  }
+
+
+  
+return error
+    
+}
+
+function validarPreguntaAbierta(){
+   
+  var i=0;
+  //Rastreo del div por su clase, que define el tipo de pregunta
+  var cuestionarios=document.getElementsByClassName("tipoT");
+  
+  //Clasificación de los elementos enviados para no tener conflictos en la request
+  for(i=0;i<cuestionarios.length;i++){
+        cuestionario=cuestionarios[i];
+
+        var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
+
+        var pregunta = cuestionario.querySelectorAll("input.pregunta")[0];
+
+        var respuesta = cuestionario.querySelectorAll("input.respuesta")[0];
+
+        var elementosValidacion=[pregunta,respuesta];
+        
+        var errorHTML=cuestionario.querySelectorAll("div.Error")[0];
+        var error=false;
+
+
+        for(var j=0;j<elementosValidacion.length;j++){
+          var valorCampo=elementosValidacion[j].value
+          if(valorCampo.length==0){
+            
+          
+            error=true;
+            break;
+          
+          }
+        }
+       
+
+      // Si hay errores y No hay mensaje
+      if( error && (!errorHTML)){
+        //Escribe mensaje
+        var strVar="";
+        strVar += " <div class=\" row justify-content-center \">";
+        strVar += "          <div class=\"Error fw-bold col-10 mx-auto p-3 m-1 text-center mb-3 border border-danger\">";
+        strVar += "            <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
+        strVar += "          <\/div>";
+        strVar += "        <\/div>";
+        
+        contenedorErrores.insertAdjacentHTML("afterbegin",strVar);
+        
+        }
+
+        if(!error && (errorHTML)){
+         errorHTML.remove();
+        }
+
+       
+
+        
+      }
+
+ 
 }
 
 function envioPreguntaOM(){
@@ -1088,7 +1419,10 @@ function envioPreguntaOM(){
         cuestionarios[i].appendChild(respuestaHTML);
 
         }
-        
+    
+    var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
+    
          //Se agrega el tipo de pregunta por medio de un elemento hidden
       var tipoHTML=contadorTipo();
       //Definición del tipo de pregunta
@@ -1101,13 +1435,143 @@ function envioPreguntaOM(){
       }
 }
 
+function validarPreguntaOM(){
+  
+  var i=0;
+    //Rastreo del div por su clase, que define el tipo de pregunta
+    var cuestionarios=document.getElementsByClassName("tipoOM");
+
+    for(i=0;i<cuestionarios.length;i++){
+      cuestionario=cuestionarios[i];
+      var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
+      //console.log(contenedorErrores);
+      var elementosValidacion=[];
+      //Selección de la pregunta que aparecerá para el alumno
+      var pregunta = cuestionario.querySelectorAll("div.pregunta input.pregunta")[0];
+      elementosValidacion.push(pregunta);
+
+      //Recolección de las opciones a mostrar
+      var reactivos=cuestionario.querySelectorAll("div.reactivos input.opcion");
+
+      for(j=0;j<reactivos.length;j++){
+      elementosValidacion.push(reactivos[j]);
+      }
+
+      //Recolección de la(s) respuesta(s)
+      var respuesta = cuestionario.querySelectorAll("div.bg-success input.opcion")[0];
+      
+      
+
+      var errorHTML=cuestionario.querySelectorAll("div.Error")[0];
+      var errorRespuesta=cuestionario.querySelectorAll("div.ErrorR")[0];
+      var error=false;
+
+      
+      for(var k=0;k<elementosValidacion.length;k++){
+       // console.log(elementosValidacion[k]);
+        var valorCampo=elementosValidacion[k].value
+        if(valorCampo.length==0){
+          
+        
+          error=true;
+          break;
+        
+        }
+      }
+      console.log("errorHTML");
+      console.log(errorHTML);
+      console.log("errorRespuesta");
+      console.log(errorRespuesta);
+
+      console.log("respuesta");
+      console.log(!respuesta);
+      console.log("errorHTML Boolean");
+      console.log(!errorRespuesta);
+
+      if(error && !errorHTML){
+        console.log("ejecutandose");
+        var strVar="";
+            strVar += "  <div class=\"Error container\">";
+            strVar += "          <div class=\" row justify-content-center\">";
+            strVar += "            <div class=\" fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+            strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
+            strVar += "            <\/div>";
+            strVar += "          <\/div>";
+            strVar += "        <\/div>";
+    contenedorErrores.insertAdjacentHTML("afterbegin",strVar);  
+  }
+
+  if(!error&& errorHTML){
+    errorHTML.remove()
+  }
+
+  
+  if(!respuesta && !errorRespuesta){
+    var strVar="";
+        strVar += "<div class=\" ErrorR container\">";
+        strVar += "          <div class=\" row justify-content-center mb-3\">";
+        strVar += "            <div class=\" fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+        strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: No has seleccionado una Respuesta<\/p>";
+        strVar += "            <\/div>";
+        strVar += "          <\/div>";
+        strVar += "        <\/div>";
+    contenedorErrores.insertAdjacentHTML("beforeend",strVar);
+  }
+  
+
+  if(respuesta && errorRespuesta){
+    errorRespuesta.remove();
+  }
+      /*
+      if(!error&& errorHTML){
+        errorHTML.remove()
+      }
+
+      if(error && !errorHTML){
+        console.log("ejecutandose");
+        var strVar="";
+            strVar += "  <div class=\"Error container\">";
+            strVar += "          <div class=\" row justify-content-center\">";
+            strVar += "            <div class=\" fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+            strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
+            strVar += "            <\/div>";
+            strVar += "          <\/div>";
+            strVar += "        <\/div>";
+    contenedorErrores.insertAdjacentHTML("afterbegin",strVar);  
+  }
+  
+
+      
+
+  if(!respuesta && !errorRespuesta){
+    var strVar="";
+        strVar += "<div class=\" ErrorR container\">";
+        strVar += "          <div class=\" row justify-content-center mb-3\">";
+        strVar += "            <div class=\"Error fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+        strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: No has seleccionado una Respuesta<\/p>";
+        strVar += "            <\/div>";
+        strVar += "          <\/div>";
+        strVar += "        <\/div>";
+    contenedorErrores.insertAdjacentHTML("beforeend",strVar);
+  }
+
+  if(respuesta && errorRespuesta){
+    errorRespuesta.remove();
+  }
+  */
+      }
+}
+
 function envioPreguntaIT(){
    
   var i=0;
   //Rastreo del div por su clase, que define el tipo de pregunta
   var cuestionarios=document.getElementsByClassName("tipoIT");
   
-  
+  /*
+   var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
+    */
   //Clasificación de los elementos enviados para no tener conflictos en la request
   for(i=0;i<cuestionarios.length;i++){
   
@@ -1117,6 +1581,11 @@ function envioPreguntaIT(){
   tipoHTML.value="tipoIT";
   //inserción
   cuestionarios[i].appendChild(tipoHTML);
+
+    
+   var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
+    
   
   //Captura de la imagen
   var imagen = cuestionarios[i].querySelectorAll("input.imgs");
@@ -1140,8 +1609,88 @@ function envioPreguntaIT(){
   }
 
   
+  
 }
 
+function validarPreguntaIT(){
+   
+  var i=0;
+  //Rastreo del div por su clase, que define el tipo de pregunta
+  var cuestionarios=document.getElementsByClassName("tipoIT");
+  
+  
+  //Clasificación de los elementos enviados para no tener conflictos en la request
+  for(i=0;i<cuestionarios.length;i++){
+  
+    cuestionario=cuestionarios[i];
+    var zonaMensaje=cuestionario.parentElement.parentElement.previousElementSibling;
+    console.log(zonaMensaje);
+    var contenedorError=zonaMensaje.querySelectorAll("div.Error")[0];
+    var ErrorImagen=zonaMensaje.querySelectorAll("div.ErrorI")[0];
+    
+  //Captura de la imagen
+  var imagen = cuestionario.querySelectorAll("input.imgs")[0];
+  var valorImagen=imagen.files[0];
+
+  var camposValidacion=[];
+    
+  var pregunta = cuestionario.querySelectorAll("input.pregunta")[0];
+  camposValidacion.push(pregunta);
+
+  var respuesta = cuestionario.querySelectorAll("input.respuesta")[0];
+  camposValidacion.push(respuesta);
+
+  var error=false;
+
+  for(var j=0;j<camposValidacion.length;j++){
+    var valorCampo=camposValidacion[j].value
+    if(valorCampo.length==0){
+      
+    
+      error=true;
+      break;
+    
+    }
+  }
+  
+  if(error && !contenedorError){
+        var strVar="";
+    strVar += "  <div class=\"Error container\">";
+    strVar += "          <div class=\" row justify-content-center\">";
+    strVar += "            <div class=\" fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+    strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
+    strVar += "            <\/div>";
+    strVar += "          <\/div>";
+    strVar += "        <\/div>";
+    zonaMensaje.insertAdjacentHTML("afterbegin",strVar);  
+  }
+  
+  console.log(!error );
+  console.log(contenedorError );
+
+  if(!error&& contenedorError){
+    contenedorError.remove()
+  }
+  if(!valorImagen && !ErrorImagen){
+    var strVar="";
+strVar += "<div class=\" ErrorI container\">";
+strVar += "          <div class=\" row justify-content-center mb-3\">";
+strVar += "            <div class=\"Error fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: No has seleccionado una Imagen<\/p>";
+strVar += "            <\/div>";
+strVar += "          <\/div>";
+strVar += "        <\/div>";
+    zonaMensaje.insertAdjacentHTML("beforeend",strVar);
+  }
+  
+  if(valorImagen && ErrorImagen){
+    ErrorImagen.remove();
+  }
+  
+  }
+
+  
+}
 
 function envioPreguntaMate(){
    
@@ -1149,6 +1698,7 @@ function envioPreguntaMate(){
   //Rastreo del div por su clase, que define el tipo de pregunta
   var cuestionarios=document.getElementsByClassName("tipoM");
   
+ 
   
   //Clasificación de los elementos enviados para no tener conflictos en la request
   for(i=0;i<cuestionarios.length;i++){
@@ -1161,7 +1711,10 @@ function envioPreguntaMate(){
   cuestionarios[i].appendChild(tipoHTML);
   
  
-
+     
+  var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0];
+    instrucciones.name="instrucciones"+contador;  
+    
 
   var pregunta = cuestionarios[i].querySelectorAll("input.pregunta");
   pregunta[0].name="pregunta"+contador;
@@ -1310,6 +1863,10 @@ function concatenacion(expresion,iteracion){
 
 function operacion(operador,numero1,expresion,iteracion){
 
+  //Hacer que la operación de multiplicación sea aceptada de varias maneras
+  if((operador=="*")||(operador=="x")||(operador=="X")){
+    operador="*";
+  }
   var resultadoOperacion={
     resultado:0,
     iteracion:0
@@ -1400,14 +1957,134 @@ function fraccion(numero,expresion,iteracion){
 }
 //----Terminan funciones para preguntas de Matemáticas
 
+function validarPreguntaMate(){
+   
+  var i=0;
+  //Rastreo del div por su clase, que define el tipo de pregunta
+  var cuestionarios=document.getElementsByClassName("tipoM");
+  
+  
+  
+  //Clasificación de los elementos enviados para no tener conflictos en la request
+  for(i=0;i<cuestionarios.length;i++){
+    var cuestionario=cuestionarios[i];
+    var contenedorError=cuestionario.querySelectorAll("div.contenedorErrores")[0];
+  var pregunta = cuestionario.querySelectorAll("input.pregunta")[0];
+    
+    var errorHTML=cuestionario.querySelectorAll("div.Error")[0];
+  var error=false
+  if(pregunta.value.length==0){
+    error=true;
+  }
+
+  if(error && !errorHTML){
+      var strVar="";
+  strVar += " <div class=\" row justify-content-center mb-3\">";
+  strVar += "          <div class=\"Error fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
+  strVar += "            <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
+  strVar += "          <\/div>";
+  strVar += "        <\/div>";
+    contenedorError.insertAdjacentHTML("afterbegin",strVar)
+  }
+
+}
+}
 
 
  
 function eliminar(obj){
-  obj.parentElement.parentElement.remove();
+  var objeto=obj
+  var criterio=-1;
+  while(criterio==-1){
+      objeto=objeto.parentElement
+      strClase=objeto.className;
+      criterio=strClase.search("nivel-Superior");
+  }
+ 
+  objeto.remove();
+  numeracionPregunta=numeracionPregunta-1;
 }
 
 
+
+//--------------VALIDACIONES------------//
+function validaciones(){
+
+  var revision={
+    error: false,
+    str:"Hay Campos sin llenar",
+  }
+  var intentos=document.getElementById("intentos");
+  var cuestionarios=document.getElementsByClassName("cuestionario")[0];
+  var nombreQuizz=document.getElementsByClassName("crearQ")[0];
+  console.log(typeof(intentos.value));
+  //Filtro para la vista de Docentes
+  var vista=document.getElementById("vista");
+  if(!vista){
+     
+      var Nivel=document.getElementById("nivel");
+      var Grado=document.getElementById("grados");
+      var Materia=document.getElementById("materias");
+      var Bloque=document.getElementById("bloques");
+      var Secuencia=document.getElementById("secuencias");
+      
+      if(Nivel.value=="Nivel"){
+        revision.error=true;
+        revision.str="No has definido el Nivel"
+        return revision;
+      }
+      if(Grado.value=="Grado"){
+        revision.error=true;
+        revision.str="No has definido el Grado"
+        return revision;
+      }
+      if(Materia.value=="Materia"){
+        revision.error=true;
+        revision.str="No has definido la Materia"
+        return revision;
+      }
+      if(Bloque.value=="Bloque"){
+        revision.error=true;
+        revision.str="No has definido el Bloque"
+        return revision;
+      }
+      if(Secuencia.value=="Secuencias"){
+        revision.error=true;
+        revision.str="No has definido la Secuencia"
+        return revision;
+      }
+  }
+   if(!cuestionarios){
+    revision.error=true;
+    revision.str="No hay preguntas en este Quizz"
+   }
+
+   
+
+   if(nombreQuizz.value.length==0){
+    revision.error=true;
+    revision.str="No has definido el nombre del Quizz";
+    return revision;
+  }
+
+   return revision;
+  }
+
+  function mensaje(strMensaje){
+    console.log(strMensaje);
+    
+    var MensajeRetro=document.getElementById("mensaje");
+    MensajeRetro.textContent=strMensaje;
+
+    MensajeRetro.classList.remove('retroActivado','retroEfin');
+    MensajeRetro.classList.remove('retroError');
+    MensajeRetro.classList.add('retroActivado');
+   
+        setTimeout(function () {
+          MensajeRetro.classList.add('retroEfin');
+      }, 250);
+    
+  }
 // Envío Final de todos los elementos
 function envioQuizz(){
   
@@ -1428,14 +2105,51 @@ function envioQuizz(){
     envioPreguntaIT();
   var formulario=document.getElementById("formularioQuizz");
 
+  /*--------Apartado para Enviar la Pregunta Drag----
   var datosEnvio=new FormData(formulario);
  
   enviarPreguntaDrag(datosEnvio);
   
   var request = new XMLHttpRequest();
   request.open("POST", "/editores/crear");
-  request.send(datosEnvio);
+  request.send(datosEnvio);-----------*/
+  formulario.submit();
+}
+
+function setNumeroPreguntas(numero){
+  numeracionPregunta=numero
+}
+
+function crearQuizz(){
   
-    //document.getElementById("formularioQuizz").submit();
+
+  
+  
+  
+  validarPreguntaRelacional();
+  validarPreguntaOM();
+  validarPreguntaAbierta();
+  validarPreguntaIT();
+  validarPreguntaMate();
+  
+    var validacion=validaciones();
+   
+    var errores=document.getElementsByClassName("Error")[0];
+    var erroresRespuesta=document.getElementsByClassName("ErrorR")[0];
+    var erroresImagen=document.getElementsByClassName("ErrorI")[0];
+    if(errores ||erroresRespuesta || erroresImagen||validacion.error){
+      mensaje(validacion.str);
+    }
+    else{
+     
+      envioQuizz();
+      var formulario=document.getElementById("formularioQuizz");
+        document.getElementById("malla").style.display="block";
+        document.getElementById("msgE").style.display="block";
+        setTimeout(function () {
+          location.reload();
+      }, 1500);
+      formulario.reset();
+    }
     
 }
