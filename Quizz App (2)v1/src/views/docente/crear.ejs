@@ -36,14 +36,18 @@
 
     @media (max-width: 1280px){
       .responsivePG{
-        margin-left: 80px;
+        margin-left: 30px;
       } 
     }
 
     @media (max-width: 1024px){
       .responsivePG{
         margin-left: 0;
+        margin: 0;
       } 
+      .lienzo{
+        margin-top: 25px;
+      }
     }
     @media (max-width: 768px){
       .responsivePG{
@@ -153,8 +157,8 @@
           title="Da click aqui para creaa una pregunta de matematicas" delay="0" tabindex="0" class="d-inline-block">
           <a onclick="preguntaMatematicas(), sumahref(this.id)" class="btn w3-bar-item w3-button" id="ref5">Insertar Pregunta de Matemáticas</a>
         </span>
-        <span data-bs-placement="top" data-bs-toggle="tooltip" 
-          title="Da click aqui para crear tu pregunta arrrastrable" delay="0" tabindex="0" class="d-inline-block">
+        <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable" 
+        delay="0" tabindex="0" class="d-inline-block">
           <button id="btn2" class="btn2 btn w3-bar-item w3-button" onclick="preguntaArrastrar()"><a id="ref6"
               onclick="sumahref(this.id)">Insertar Pregunta Arrastrable</a></button>
         </span>
@@ -207,14 +211,14 @@
 
       }
     }
-    function desabilitado() {
+  /*   function desabilitado() {
       document.getElementById("btn1").disabled = true;
       document.getElementById("btn2").disabled = true;
     }
     function habilitar() {
       document.getElementsById("btn1").disabled = false;
       document.getElementById("btn2").disabled = false;
-    }
+    } */
   </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>

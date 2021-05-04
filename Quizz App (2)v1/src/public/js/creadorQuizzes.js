@@ -606,7 +606,7 @@ function previsualizarDraw(){
         strVar += "            <p class=\"fs-5 justify-content-center text\">Coloca cada elemento que se te solicita abajo y lo podrás visualizar e ir armando en el recuadro azul de la derecha.<\/p>";
         strVar += "          <\/div>";
         strVar += "        <div class=\"row responsivePG\">";
-        strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-12 col-sm-12\">";
+        strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-4 col-sm-12\">";
         strVar += "          <div class=\"rounded-pill\">";
         strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
         strVar += "              style=\"width: 3rem; height:3rem; margin-left: 10px;\">";
@@ -653,7 +653,7 @@ function previsualizarDraw(){
         strVar += "           <!--  <button class=\"btn btn-primary fs-5 mt-5\" onclick=enviarPreguntaDrag()>Enviando Drag<\/button> -->";
         strVar += "          <\/div>";
         strVar += "          <!-- Comienza Lienzo -->";
-        strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-12 col-sm-12 pl-3\">";
+        strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-6 col-sm-12 pl-3\">";
         strVar += "            <div class=\"lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
         strVar += "              <div class=\"col-12\">";
         strVar += "  ";
