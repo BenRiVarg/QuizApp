@@ -1411,7 +1411,14 @@ function envioQuizz(){
   var request = new XMLHttpRequest();
   request.open("POST", "/editores/crear");
   request.send(datosEnvio);
-  
-    //document.getElementById("formularioQuizz").submit();
+  request.onreadystatechange = function (aEvt) {
+    if (request.readyState == 4) {
+       if(request.status == 200)
+        console.log(request.responseText);
+       else
+        console.log("No se ha recibido nada");
+    }
+  };
+  //document.getElementById("formularioQuizz").submit();
     
 }
