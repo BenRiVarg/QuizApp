@@ -1137,13 +1137,8 @@ router.get('/cuarto', (req, res) => {
 
 router.get('/cuarto2', async (req, res) => {
   var quizz=await Quizz.findById("605825f7d1f34c36c4e3dfd6").lean();
-  var alumno="Boomer"
-  var materia="PruebaD"
-  var clavesCuestionarios=[];
-  for(var i=0;i<quizz.cuestionario.length;i++){
-    clavesCuestionarios.push(i);
-  }
-  res.render('alumnos/Quizz', {quizz,clavesCuestionarios,idAlumno:alumno,materia});
+  
+  res.render('alumnos/examen', {quizz});
 })
 
 router.get('/plantillaRevision',(req, res)=>{

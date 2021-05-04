@@ -28,27 +28,11 @@
     <h1>Hola Alumno</h1>
     <p>Contendrá la información de todos los examenes para realizar, mostrado por algún filtro(materia, grado etc)</p>
     <p>Y opciones para ir a dicho examen</p>
-
+    <a href="cuarto2"> pruebaD</a>
     <% for (var i = 0; i<materias.length; i++) {%>
-      <% switch (materias[i].materia) {
-
-        case "español" : %>
-        <h1 style="color: #CE002B"><%= materias[i].materia %></h1>
-       
-                <% break; 
-
-        case "química" : %>
-        <h1 style="color:#A06600"><%= materias[i].materia %></h1>
+      
         
-                <% break;
-        case "Development" : %>
-        <h1><%= materias[i].materia %></h1>
-        
-                <% break;  
-         } 
-         
-        %>
-           
+          
                 <table>
             <% for (var j = 0; j<materias[i].registros.length; j++) {%>
 
