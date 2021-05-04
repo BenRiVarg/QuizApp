@@ -1,13 +1,15 @@
-
-//Tamaño Imágenes=1000*600
-
+//Configuración para detener el Quizz
+var myCarousel = document.querySelector('#carouselExampleControlsNoTouching');
+    var carousel = new bootstrap.Carousel(myCarousel, {
+  interval: 2000,
+  wrap: false,
+  pause: true
+    });
 
 var formulario=document.getElementById("quizz");
-//Nos aseguramos de no estar guardando otros valores
-//formulario.reset()
 
-var impedimento=1
-console.log(impedimento);
+
+
 //Variable para recuperar las respuestas del alumno
 var respuestasAlumnoD=[];
 var retornable=document.getElementsByClassName("retornable")[0];
@@ -287,5 +289,4 @@ function enviarQuizz(){
     envioRespuestasMate();
     tomarTiempo();
     formulario.submit();
-    impedimento++;
 }

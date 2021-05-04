@@ -959,7 +959,6 @@ router.get('/alumnos/revision/:id', async (req, res) => {
 
 router.get('/alumnos/examen/:id/alumno/:idAlumno/materia/:materia', async (req, res) => {
 
-
   const idAlumno = req.params.idAlumno;
   const quizz = await Quizz.findById(req.params.id);
   //Optimización de Cuestionarios//
@@ -1138,7 +1137,7 @@ router.get('/cuarto', (req, res) => {
 router.get('/cuarto2', async (req, res) => {
   var quizz=await Quizz.findById("605825f7d1f34c36c4e3dfd6").lean();
   
-  res.render('alumnos/examen', {quizz});
+  res.render('cuartoPruebas2', {quizz});
 })
 
 router.get('/plantillaRevision',(req, res)=>{

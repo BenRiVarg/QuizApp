@@ -85,21 +85,23 @@ var preguntaInicial=document.getElementsByClassName("active")[0];
   var preguntaFinal=document.getElementsByClassName("pregunta-Final")[0];
   var cambioPregunta=new sound("/sonidos/cambio_pregunta.mp3");
   cambioPregunta.sound.volume=1;
+
 function getTotal(valor){
   var totalPreguntas=Number.parseInt(valor);
   cambioProgreso=100/totalPreguntas
-  progreso=cambioProgreso;
   cambioProgreso=Math.round(cambioProgreso)+1;
-  $("#bar").css("width", cambioProgreso + "%");
+  $("#bar").css("width", progreso + "%");
+  progreso=cambioProgreso;
 
 }
 
+//Función para aumentar la barra de progreso
  function barra() {
    var preguntaPrevia=document.getElementsByClassName("active")[0];//.children[0];
 
    if(preguntaPrevia==preguntaFinal){
-     progreso=cambioProgreso;
-    $("#bar").css("width", cambioProgreso + "%");
+     progreso=100;
+    $("#bar").css("width", progreso + "%");
    }
    else{
 
@@ -111,11 +113,19 @@ function getTotal(valor){
   cambioPregunta.play();
 }
  
- var progreso = 0;
+//Función para decrecer la barra de progreso 
  function barraM() {
+   console.log(progreso)
   var preguntaPrevia=document.getElementsByClassName("active")[0];//.children[0];
 
+  //Variable para detectar el final del Quizz
+  var semiFinal=document.getElementsByClassName("active")[0].previousElementSibling;
+//
   if(preguntaPrevia==preguntaInicial){
+    progreso=0;
+    $("#bar").css("width", progreso + "%");
+  }
+  else if(semiFinal==preguntaFinal){
     progreso=100;
     $("#bar").css("width", progreso + "%");
   }
