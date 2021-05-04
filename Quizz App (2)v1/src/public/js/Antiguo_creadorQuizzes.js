@@ -1413,10 +1413,16 @@ function envioQuizz(){
   request.send(datosEnvio);
   request.onreadystatechange = function (aEvt) {
     if (request.readyState == 4) {
-       if(request.status == 200)
+       if(request.status == 200){
         console.log(request.responseText);
+        var nuevoQID=request.responseText;
+        var link="/visualizar/"+nuevoQID;
+        console.log(link)
+    //    window.location.replace = link;
+  //      res.redirect(link);
+       }
        else
-        console.log("No se ha recibido nada");
+        {console.log("No se ha recibido nada");}
     }
   };
   //document.getElementById("formularioQuizz").submit();
