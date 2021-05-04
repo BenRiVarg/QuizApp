@@ -142,7 +142,7 @@
           title="Da click aqui para crear una pregunta de opcion multiple" delay="0" tabindex="0"
           class="d-inline-block">
           <a onclick="preguntaOM(), sumahref(this.id)" class="w3-bar-item w3-button btn" id="ref3">Insertar Pregunta
-            Opción Múltiple</a></button>
+            Opción Múltiple</a>
         </span>
         <span data-bs-placement="top" data-bs-toggle="tooltip"
           title="Da click aqui para crear una pregunta de con imagen" delay="0" tabindex="0" class="d-inline-block">
@@ -153,14 +153,15 @@
           title="Da click aqui para creaa una pregunta de matematicas" delay="0" tabindex="0" class="d-inline-block">
           <a onclick="preguntaMatematicas(), sumahref(this.id)" class="btn w3-bar-item w3-button" id="ref5">Insertar Pregunta de Matemáticas</a>
         </span>
-        <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable"
-          delay="0" tabindex="0" class="d-inline-block">
-          <a onclick="preguntaArrastrar(), sumahref(this.id)" id="ref6" class="btn w3-bar-item w3-button">Insertar Pregunta Arrastrable</a>
+        <span data-bs-placement="top" data-bs-toggle="tooltip" 
+          title="Da click aqui para crear tu pregunta arrrastrable" delay="0" tabindex="0" class="d-inline-block">
+          <button id="btn2" class="btn2 btn w3-bar-item w3-button" onclick="preguntaArrastrar()"><a id="ref6"
+              onclick="sumahref(this.id)">Insertar Pregunta Arrastrable</a></button>
         </span>
     </nav>
   </div>
 
-  </div>
+  
   <script>
 
     var contadorhref = 0;
@@ -197,23 +198,22 @@
         ref5.setAttribute("href", '#preg' + contadorhref);
 
       } else if (id === "ref6") {
-
         var ref6 = document.getElementById("ref6");
         contadorhref++;
-        ref6.setAttribute("href", '#preg' + contadorhref)
+        ref6.setAttribute("href", '#preg' + contadorhref);
 
       } else {
-        console.log("error de link")
+        console.log("error de link");
 
       }
     }
     function desabilitado() {
       document.getElementById("btn1").disabled = true;
-
+      document.getElementById("btn2").disabled = true;
     }
     function habilitar() {
       document.getElementsById("btn1").disabled = false;
-
+      document.getElementById("btn2").disabled = false;
     }
   </script>
 

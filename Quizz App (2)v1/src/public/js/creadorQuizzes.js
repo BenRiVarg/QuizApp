@@ -596,10 +596,15 @@ function previsualizarDraw(){
 
       function preguntaArrastrar() {
         contadorid++;
+        
                 var strVar="";
-        strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoAr cuestionario\">";
+        strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoAr cuestionario justify-content-center mt-5 pt-5 nivel-Superior\">";
         strVar += "    <div class=\" mt-3\">";  
-        strVar += "        <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
+        strVar += "          <div class=\"text-center mb-5 mt-5\">";
+        strVar += "            <h3>Pregunta Arrastrable<\/h3>";
+        strVar += "            <h4 class=\"text-primary\">Intrucciones<\/h4>";
+        strVar += "            <p class=\"fs-5 justify-content-center text\">Coloca cada elemento que se te solicita abajo y lo podrás visualizar e ir armando en el recuadro azul de la derecha.<\/p>";
+        strVar += "          <\/div>";
         strVar += "        <div class=\"row responsivePG\">";
         strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-12 col-sm-12\">";
         strVar += "          <div class=\"rounded-pill\">";
@@ -662,7 +667,8 @@ function previsualizarDraw(){
         strVar += "  <\/div>";
 
         
-      insertor.insertAdjacentHTML("beforeend",strVar);   
+      insertor.insertAdjacentHTML("beforeend",strVar);  
+      numeracionPregunta++;
 
       previsualizarDraw();
       ActivarLienzo();
