@@ -1135,9 +1135,8 @@ router.get('/cuarto', (req, res) => {
 });
 
 router.get('/cuarto2', async (req, res) => {
-  var quizz=await Quizz.findById("605825f7d1f34c36c4e3dfd6").lean();
   
-  res.render('cuartoPruebas2', {quizz});
+  res.render('antiguoCreador');
 })
 
 router.get('/plantillaRevision',(req, res)=>{
