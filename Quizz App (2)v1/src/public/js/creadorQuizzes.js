@@ -234,11 +234,23 @@ function cuadros() {
   activarReactivo();
 }
 
+function flechaAbajo(){
+  var strVar = "";
+  var cantidad = document.querySelector("#caFle").value;
+  for (var i = 0; i < cantidad; i++) {
+    strVar += '<img class="flecha arriba elementoDrag" id="fdi"'+contadorIDrag+'" src="/img/flechav.png" alt="">';
+    contadorIDrag++
+  }
+  var lienzo=document.getElementById("lienzo0");
+  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
+  arrastrable();
+}
+
 function flechaHoDerecha() {
   var strVar = "";
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
-    strVar += '<img class=" flecha imagenes elementoDrag" id="fid'+contadorIDrag+'"src="/img/flecha.png" alt="">';
+    strVar += '<img class=" flecha hor elementoDrag" id="fid'+contadorIDrag+'"src="/img/flechah.png" alt="">';
     contadorIDrag++
    
   }
@@ -265,7 +277,7 @@ function flechaDiaDerecha() {
   var cantidad = document.querySelector("#caFle").value;
   for (var i = 0; i < cantidad; i++) {
     strVar +=
-      '<img class="flecha diagonal elementoDrag" id="fsd'+contadorIDrag+'" src="/img/flechadiaderecha.png" alt="">';
+      '<img class="flecha diagonal elementoDrag" id="fsd'+contadorIDrag+'" src="/img/diagonalderinvertida2.png" width="90px;" alt="">';
     contadorIDrag++
     }
 
@@ -586,60 +598,69 @@ function previsualizarDraw(){
         contadorid++;
                 var strVar="";
         strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoAr cuestionario\">";
-        strVar += "    <div class=\"row mt-3\">";
-        strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
-        strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
-        strVar += "        <div class=\"row\">";
-        strVar += "          <div class=\"col-lg-6 centrado\">";
+        strVar += "    <div class=\" mt-3\">";  
+        strVar += "        <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
+        strVar += "        <div class=\"row responsivePG\">";
+        strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-12 col-sm-12\">";
+        strVar += "          <div class=\"rounded-pill\">";
+        strVar += "            <a class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
+        strVar += "              style=\"width: 3rem; height:3rem; margin-left: 10px;\">";
+        strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 17px;\">"+numeracionPregunta+"<\/p>";
+        strVar += "            <\/a>";
+        strVar += "          <\/div>";
         strVar += "            <div class=\"mt-5\">";
         strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
-        strVar += "              <input id=\"L-file\" type=\"file\"  class=\"form-control imgs\"  name=\"imgs\" accept=\"image\/*\">";
-        strVar += "              <div class=\"mt-3\">";
+        strVar += "              <input id=\"L-file\" type=\"file\" class=\"form-control imgs\" accept=\"image\/*\" name=\"imgs\">";
+        strVar += "              <div class=\"mt-3 text-center\">";
         strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
         strVar += "                <div class=\"mb-3\">";
-        strVar += "                  <input id=\"caRe\" type=\"number\"  placeholder=\"Cantidad:\" class=\"form-control\">";
+        strVar += "                  <input id=\"caRe\" type=\"number\" placeholder=\"Cantidad:\" class=\"form-control\">";
         strVar += "                <\/div>";
         strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"cuadros()\">Crear<\/button>";
         strVar += "              <\/div>";
         strVar += "              <h4 class=\"text-dark mb-3 mt-3\">Escribe las palabras que quieras agregar:<\/h4>";
-        strVar += "              <div class=\"mb-3\">";
-        strVar += "                <input id=\"palabra\" type=\"text\"  placeholder=\"Coloca las palabras:\" class=\"form-control\">";
+        strVar += "              <div class=\"mb-3 text-center\">";
+        strVar += "                <input id=\"palabra\" type=\"text\" placeholder=\"Coloca las palabras:\" class=\"form-control\">";
+        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mt-3\" onclick=\"palabras()\">Crear<\/button>";
         strVar += "              <\/div>";
-        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"palabras()\">Crear<\/button>";
-        strVar += "              <div class=\"mt-2\">";
+        strVar += "              <div class=\"mt-2 text-center\">";
         strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de flechas:<\/h4>";
         strVar += "                <div class=\"mb-3\">";
-        strVar += "                  <input id=\"caFle\" type=\"number\"  placeholder=\"Cantidad:\" class=\"form-control\">";
+        strVar += "                  <input id=\"caFle\" type=\"number\" placeholder=\"Cantidad:\" class=\"form-control\">";
         strVar += "                <\/div>";
         strVar += "                <h4 class=\"text-dark mb-3\">Tipos de flecha:<\/h4>";
-        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoDerecha()\"><i";
-        strVar += "                    class=\"fas fa-arrow-right fa-lg\"><\/i><\/button>";
-        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoIzquierda()\"><i";
-        strVar += "                    class=\"fas fa-arrow-left fa-lg\"><\/i><\/button>";
-        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerecha()\"><i";
-        strVar += "                    class=\"fas fa-location-arrow fa-lg\"><\/i><\/button>";
+        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoDerecha()\"><img";
+        strVar += "                    src=\"\/img\/flechas\/flechaDerecha.png\" style=\"width: 40px !important;\" height=\"25px;\"";
+        strVar += "                    alt=\"Flecha derecha\"><\/button>";
+        strVar += "                ";
+        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerecha()\"><img";
+        strVar += "                    src=\"\/img\/flechas\/lateralderechaarriba.png\" style=\"width: 28px !important;\" height=\"34px;\"";
+        strVar += "                    alt=\"lateral derecha arriba\"><\/button>";
+        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaAbajo()\"><img";
+        strVar += "                    src=\"\/img\/flechas\/flechaAbajo.png\" style=\"width: 20px !important;\" height=\"34px;\"";
+        strVar += "                    alt=\"Flecha abajo\"><\/button>";
+        strVar += "                    <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerechaInv()\"><img";
+        strVar += "                        src=\"\/img\/flechas\/lateralderechaabajo.png\" style=\"width: 30px !important;\" height=\"30px;\"";
+        strVar += "                        alt=\"Lateral derecha abajo\"><\/button>";
         strVar += "              <\/div>";
-        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierda()\"><i";
-        strVar += "                  class=\"fas fa-location-arrow fa-rotate-270 fa-lg\"><\/i><\/button>";
-        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerechaInv()\"><i";
-        strVar += "                  class=\"fas fa-location-arrow fa-rotate-90 fa-lg\"><\/i><\/button>";
-        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierdaInv()\"><i";
-        strVar += "                  class=\"fas fa-location-arrow fa-rotate-180 fa-lg\"><\/i><\/button>";
+        strVar += "  ";
         strVar += "            <\/div>";
+        strVar += "           <!--  <button class=\"btn btn-primary fs-5 mt-5\" onclick=enviarPreguntaDrag()>Enviando Drag<\/button> -->";
+        strVar += "          <\/div>";
+        strVar += "          <!-- Comienza Lienzo -->";
+        strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-12 col-sm-12 pl-3\">";
+        strVar += "            <div class=\"lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
+        strVar += "              <div class=\"col-12\">";
+        strVar += "  ";
+        strVar += "              <\/div>";
         strVar += "            <\/div>";
         strVar += "          <\/div>";
-        strVar += "          <!--Comienza Lienzo-->";
-        strVar += "          <div class=\"col-lg-6 lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
-        strVar += "            <div class=\"col-12\">";
-        strVar += "             ";
-        strVar += "            <\/div>";
-        strVar += "          <\/div>";
-        strVar += "          <!-- Termina Lienzo-->";
+        strVar += "          <!-- Termina Lienzo -->";
         strVar += "        <\/div>";
         strVar += "      <\/div>";
         strVar += "    <\/div>";
-        strVar += "    <\/div>";
         strVar += "  <\/div>";
+
         
       insertor.insertAdjacentHTML("beforeend",strVar);   
 
