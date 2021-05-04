@@ -346,10 +346,8 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   }
 
   console.log(req.body);
-  console.log("----------------");
-  //var mensaje="Esto es tan hermoso AJAX";
-  res.send(cuestionario);
-  /*
+  
+  
     //guardado en la BD
     var nuevoQuizz= await Quizz.create( 
       {
@@ -370,9 +368,13 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     
     );
        
-    var link="/visualizar/"+nuevoQuizz.id;
-    res.redirect(link);
-    */
+    console.log("----------------");
+  //var mensaje="Esto es tan hermoso AJAX";
+  res.send(nuevoQuizz.id);
+
+    /*var link="/visualizar/"+nuevoQuizz.id;
+    res.redirect(link);*/
+    
 
    res.end();
   

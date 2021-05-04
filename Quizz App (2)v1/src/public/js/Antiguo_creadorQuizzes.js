@@ -1418,7 +1418,7 @@ function envioQuizz(){
         var nuevoQID=request.responseText;
         var link="/visualizar/"+nuevoQID;
         console.log(link)
-    //    window.location.replace = link;
+        window.location.replace(link);
   //      res.redirect(link);
        }
        else
