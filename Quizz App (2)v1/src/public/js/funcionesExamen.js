@@ -268,7 +268,7 @@ function activarReactivo(){
         }
         return resultado;
     }
-
+    arrastrable();
     function arrastrable() {
         $(".elementoDrag").draggable({
           revert: "invalid",
