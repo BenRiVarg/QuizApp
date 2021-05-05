@@ -225,13 +225,13 @@ img {
   height: 360px;
 }
 
-.img-fluid {
+/* .img-fluid {
   width: 1020px !important;
   height: 308px !important;
   margin: 0 auto;
   background-size: cover;
   max-width: 90% !important;
-}
+} */
 
 .botonNum {
   margin-left: 63px;
