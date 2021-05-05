@@ -202,40 +202,7 @@ router.post('/administrador/borrar', (req, res) => {
 
 router.get('/verify/:token', async (req, res) => {
   var Quizzes= await Quizz.find({},{"nombreQuizz": 1, "_id": 1,"contestado": 1}).lean();
-/*
-  var Registro= await Registros.find({quizz:Quizzes[0]._id}).lean();
-  var contestado=false;
-  if(Registro.length>0){
-    contestado=true;
-  }
-  var registro={
-    id:Quizzes[0]._id,
-    nombre: Quizzes[0].nombreQuizz,
-    contestado: contestado
-  }
-  */
-  /*
-  var quizz;
-  var datosQuizz=[];
- 
-  for( quizz in Quizzes){
-    var QuizzAnalizado=Quizzes[quizz];
-    var Registro= await Registros.find({quizz:Quizzes[0]._id}).lean();
-    var contestado=false;
-    if(Registro.length>0){
-      contestado=true;
-    }
-    var registro={
-      id:Quizzes[0]._id,
-      nombre: Quizzes[0].nombreQuizz,
-      contestado: contestado
-    }
 
-    datosQuizz.push(registro);
-  }
-  
-  console.log(datosQuizz);
-  */
   res.render('editor/index', { Quizzes });
 
 });
@@ -1031,7 +998,7 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   
   var examencalificado = await Revisor.revisar(idAlumno, req);
   //console.log(examencalificado);
-  /*
+  
   var nuevoIntento= await Registros.create(examencalificado);
   
   
@@ -1044,8 +1011,8 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
   console.log(respuestaAlumnoElegida[0].calificacion);
   res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 
- */
- res.end();
+ 
+ //res.end();
 });
 
 

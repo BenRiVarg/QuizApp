@@ -176,7 +176,7 @@ img {
   /* Borde del boton */
   letter-spacing: 2px;
   /* Espacio entre letras */
-  background-color: #00f1b0;
+  background-color: #53c3c4;
   /* Color de fondo */
   padding: 18px 5px;
   /* Relleno del boton */
@@ -189,7 +189,7 @@ img {
 }
 
 .btn-flotante:hover {
-  background-color: #00e215;
+  background-color: #86d6f3;
   color: #ffffff;
   /* Color de fondo al pasar el cursor */
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
