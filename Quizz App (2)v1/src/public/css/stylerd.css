@@ -227,9 +227,10 @@ img {
 
 .img-fluid {
   width: 1020px !important;
-  height: 358px;
+  height: 308px !important;
   margin: 0 auto;
   background-size: cover;
+  max-width: 90% !important;
 }
 
 .botonNum {
