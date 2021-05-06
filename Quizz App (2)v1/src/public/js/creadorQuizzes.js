@@ -605,6 +605,10 @@ function previsualizarDraw(){
         strVar += "            <h4 class=\"text-primary\">Intrucciones<\/h4>";
         strVar += "            <p class=\"fs-5 justify-content-center text\">Coloca cada elemento que se te solicita abajo y lo podrás visualizar e ir armando en el recuadro azul de la derecha.<\/p>";
         strVar += "          <\/div>";
+        strVar += "               <div class=\"col-md-7 mb-4 text-center mx-auto\">";
+        strVar += "                <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones para el Alumno<\/label>";
+        strVar += "                <input type=\"text\" class=\"form-control instrucciones\" placeholder=\"Instrucciones para el alumno\" value=\"Responde lo que se te solicita\">";
+        strVar += "              <\/div>";
         strVar += "        <div class=\"row responsivePG\">";
         strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-4 col-sm-12\">";
         strVar += "          <div class=\"rounded-pill\">";
@@ -652,16 +656,23 @@ function previsualizarDraw(){
         strVar += "            <\/div>";
         strVar += "           <!--  <button class=\"btn btn-primary fs-5 mt-5\" onclick=enviarPreguntaDrag()>Enviando Drag<\/button> -->";
         strVar += "          <\/div>";
+        
         strVar += "          <!-- Comienza Lienzo -->";
         strVar += "          <div class=\"col-xs-12 col-lg-5 col-md-6 col-sm-12 pl-3\">";
-        strVar += "            <div class=\"lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
-        strVar += "              <div class=\"col-12\">";
-        strVar += "  ";
+        strVar += "<button type=\"button\" class=\"btn btn-danger\">Eliminar elementos del lienzo<\/button>";
+        strVar += "            <div class=\"lienzo shadow mt-3 mb-5\" id=\"lienzo0\">";
+        strVar += "              <div class=\"col-12 container\">";
+        strVar += "  ";         
         strVar += "              <\/div>";
         strVar += "            <\/div>";
         strVar += "          <\/div>";
         strVar += "          <!-- Termina Lienzo -->";
         strVar += "        <\/div>";
+        strVar += "            <div class=\"editar text-center\" role=\"group\" aria-label=\"Basic mixed styles example\" float=\"left\" align=\"left\">";
+        strVar += "              <br>";
+        strVar += "              <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar";
+        strVar += "                Pregunta<\/button>";
+        strVar += "            <\/div>";
         strVar += "      <\/div>";
         strVar += "    <\/div>";
         strVar += "  <\/div>";

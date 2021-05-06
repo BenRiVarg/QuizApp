@@ -28,36 +28,51 @@
       width: 95px;
       height: 22px;
     }
-    @media (max-width: 1600px){
-      .responsivePG{
+
+    @media (max-width: 1600px) {
+      .responsivePG {
         margin-left: 150px;
-      } 
+      }
     }
 
-    @media (max-width: 1280px){
-      .responsivePG{
+    @media (max-width: 1280px) {
+      .responsivePG {
         margin-left: 30px;
-      } 
+      }
     }
 
-    @media (max-width: 1024px){
-      .responsivePG{
+    @media (max-width: 1024px) {
+      .responsivePG {
         margin-left: 0;
         margin: 0;
-      } 
-      .lienzo{
+      }
+
+      .lienzo {
         margin-top: 25px;
       }
     }
-    @media (max-width: 768px){
-      .responsivePG{
+
+    @media (max-width: 768px) {
+      .responsivePG {
         margin: 8px;
-      } 
-      .lienzo{
+      }
+
+      .lienzo {
         margin-left: 68px;
       }
     }
-   
+    .contenedorIMG{
+      position: absolute; /* top: 205px; left: 165px; */
+      width: 584px;
+      height: 250px;
+      margin: 0 auto;
+      line-height: 524px;
+    }
+    .contenedorIMG img{
+      margin: 0 auto;
+      padding: 0 auto;
+      width: 380px;
+    }
   </style>
 </head>
 
@@ -155,17 +170,34 @@
         </span>
         <span data-bs-placement="top" data-bs-toggle="tooltip"
           title="Da click aqui para creaa una pregunta de matematicas" delay="0" tabindex="0" class="d-inline-block">
-          <a onclick="preguntaMatematicas(), sumahref(this.id)" class="btn w3-bar-item w3-button" id="ref5">Insertar Pregunta de Matemáticas</a>
+          <a onclick="preguntaMatematicas(), sumahref(this.id)" class="btn w3-bar-item w3-button" id="ref5">Insertar
+            Pregunta de Matemáticas</a>
         </span>
-        <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable" 
-        delay="0" tabindex="0" class="d-inline-block">
+        <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable"
+          delay="0" tabindex="0" class="d-inline-block">
           <button id="btn2" class="btn2 btn w3-bar-item w3-button" onclick="preguntaArrastrar()"><a id="ref6"
               onclick="sumahref(this.id)">Insertar Pregunta Arrastrable</a></button>
         </span>
     </nav>
+
   </div>
 
-  
+  <div class=" text-center">
+    <!-- Comienza Lienzo -->
+    <div class="col-xs-12 col-lg-5 col-md-6 col-sm-12 pl-3">
+      <button type="button" class="btn btn-danger">Eliminar elementos del lienzo</button>
+      <div class="lienzo shadow mt-3 mb-5" id="lienzo0">
+        <div class="contenedorIMG">
+          <img src="/img/noche.jpg" class="img-PLienzo img-fluid" alt="" style="">
+        
+        </div>
+      </div>
+    </div>
+      <!-- Termina Lienzo -->
+  </div>
+
+
+
   <script>
 
     var contadorhref = 0;
@@ -212,13 +244,13 @@
       }
     }
   /*   function desabilitado() {
-      document.getElementById("btn1").disabled = true;
-      document.getElementById("btn2").disabled = true;
-    }
-    function habilitar() {
-      document.getElementsById("btn1").disabled = false;
-      document.getElementById("btn2").disabled = false;
-    } */
+            document.getElementById("btn1").disabled = true;
+            document.getElementById("btn2").disabled = true;
+          }
+          function habilitar() {
+            document.getElementsById("btn1").disabled = false;
+            document.getElementById("btn2").disabled = false;
+          } */
   </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
