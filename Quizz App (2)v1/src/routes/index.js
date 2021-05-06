@@ -368,7 +368,6 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     
     );
        
-    console.log("----------------");
   //var mensaje="Esto es tan hermoso AJAX";
   res.send(nuevoQuizz.id);
 
@@ -376,7 +375,7 @@ router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
     res.redirect(link);*/
     
 
-   res.end();
+   //res.end();
   
 });
 

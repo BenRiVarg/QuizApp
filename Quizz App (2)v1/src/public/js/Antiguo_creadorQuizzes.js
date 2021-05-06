@@ -1419,12 +1419,10 @@ function envioQuizz(){
         var link="/visualizar/"+nuevoQID;
         console.log(link)
         window.location.replace(link);
-  //      res.redirect(link);
        }
        else
         {console.log("No se ha recibido nada");}
     }
   };
-  //document.getElementById("formularioQuizz").submit();
     
 }
