@@ -345,6 +345,14 @@ function calificarR(respuestaAlumno, respuestaBD, preguntaBD) {
 
 //Calificacion de Respuestas de Opción Multiple
 function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
+	
+	//Variable para guaradar las preguntas de una respuesta pero sin espacios y en minusculas
+	var igualacionPDB=[];
+
+	for(var p=0;p<preguntaBD.length;p++){
+		var pregunta=igualacion(preguntaBD[p]);
+		igualacionPDB.push(pregunta);
+	}
 	var resultado={
 		respuestasAlumno:[],
 		revision: [],
@@ -363,21 +371,38 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 
 
 		else{
-			respuestaAlumno=igualacion(respuestaAlumno);
-			respuestaBD=igualacion(respuestaBD[0]);
+			//Variables para borrar espacios en blancos y mayusculas de las respuestas
+			var igualacionRAlumno=igualacion(respuestaAlumno);
+			var igualacionRBD=igualacion(respuestaBD[0]);
 
-			
-			if(respuestaAlumno==respuestaBD){
+			/*
+			console.log("RESPUESTAS");
+			console.log(" - - -");
+			console.log(respuestaAlumno)
+			console.log(respuestaBD[0])
+			*/
+
+			if(igualacionRAlumno==igualacionRBD){
 				resultado.revision.push(true);
 				//Guardamos la iteración de la respuesta  para poder dar retroalimentación
-				var iteracionRespuesta=preguntaBD.indexOf(respuestaAlumno);
-
+				/*
+				console.log("Busqueda del Indice");
+			console.log(" - - -");
+			console.log(respuestaAlumno)
+			console.log(preguntaBD)
+				*/
+				var iteracionRespuesta=igualacionPDB.indexOf(igualacionRAlumno);
+				/*
+				console.log("Iteración");
+				console.log(preguntaBD);
+				console.log(iteracionRespuesta);
+				*/
 				//Guardamos la clave del array de respuestasBD que el alumno respondió
 				resultado.respuestasAlumno.push(iteracionRespuesta);
 
 			}
 			else{
-				var iteracionRespuesta=preguntaBD.indexOf(respuestaAlumno);
+				var iteracionRespuesta=igualacionPDB.indexOf(igualacionRAlumno);
 				resultado.respuestasAlumno.push(iteracionRespuesta);
 				resultado.revision.push(false);
 			}
@@ -411,9 +436,11 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 					if(respuestaIteracion==respuestaBDI){
 						resultado.revision.push(true);
 
+						/*
 						console.log("respuestaBD[j]");
 						console.log(respuestaBD[j]);
-						var iteracionRespuesta=preguntaBD.indexOf(respuestaAlumno[i]);
+						*/
+						var iteracionRespuesta=igualacionPDB.indexOf(respuestaAlumno[i]);
 						resultado.respuestasAlumno.push(iteracionRespuesta);
 						break;
 					}
@@ -421,7 +448,7 @@ function calificarOM(respuestaAlumno,preguntaBD,respuestaBD,opcion){
 						//Si ya no hay más respuestas correctas posibles
 						if(j==(respuestaBD.length-1)){
 							
-							var iteracionRespuesta=preguntaBD.indexOf(respuestaAlumno[i]);
+							var iteracionRespuesta=igualacionPDB.indexOf(respuestaAlumno[i]);
 							resultado.respuestasAlumno.push(iteracionRespuesta);
 							resultado.revision.push(false);
 						}
