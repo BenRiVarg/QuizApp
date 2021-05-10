@@ -1142,7 +1142,7 @@ router.get('/cuarto', (req, res) => {
 
 router.get('/cuarto2', async (req, res) => {
   
-  res.render('cuartoPruebas2');
+  res.render('antiguoCreador');
 })
 
 router.get('/plantillaRevision',(req, res)=>{
