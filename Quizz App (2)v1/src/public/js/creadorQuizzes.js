@@ -329,7 +329,7 @@ function flechaDiaIzquierdaInv() {
 }
 
 
-
+ActivarLienzo();
 function ActivarLienzo(){
   //Eventos ligados a clase lienzo
   $(".lienzo").droppable({
