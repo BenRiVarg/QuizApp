@@ -109,8 +109,12 @@ img {
 }
 
 :root {
-  --altolienzo: 600px;
-  --ancholienzo: 700px !important;
+  --altolienzo: 500px;
+  --ancholienzo: 500px;
+}
+
+.centroIMG {
+  margin-top: 150px;
 }
 
 .lienzo {
@@ -309,5 +313,21 @@ img {
     margin-left: 540px;
     width: 250px !important;
     margin-bottom: 25px;
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  .replica {
+    width: auto;
+    height: auto;
+  }
+  .contenedorimg {
+    height: 160px;
+  }
+  .img-lienzo {
+    width: 30px !important;
+    height: 58px;
+    margin: 0 auto;
+    background-size: cover;
   }
 }
