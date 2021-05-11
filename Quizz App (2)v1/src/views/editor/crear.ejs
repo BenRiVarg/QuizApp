@@ -13,6 +13,67 @@
   <link rel="stylesheet" type="text/css" href="/css/editoresCrear.css">
 
   <title>Crear Examen</title>
+  <style>
+    .diagonal {
+      height: 90px;
+      width: 70px;
+    }
+
+    .arriba {
+      width: 21px;
+      height: 61px;
+    }
+
+    .hor {
+      width: 95px;
+      height: 22px;
+    }
+
+    @media (max-width: 1600px) {
+      .responsivePG {
+        margin-left: 150px;
+      }
+    }
+
+    @media (max-width: 1280px) {
+      .responsivePG {
+        margin-left: 30px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .responsivePG {
+        margin-left: 0;
+        margin: 0;
+      }
+
+      .lienzo {
+        margin-top: 25px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .responsivePG {
+        margin: 8px;
+      }
+
+      .lienzo {
+        margin-left: 68px;
+      }
+    }
+    .contenedorIMG{
+      position: absolute; /* top: 205px; left: 165px; */
+      width: 584px;
+      height: 250px;
+      margin: 0 auto;
+      line-height: 524px;
+    }
+    .contenedorIMG img{
+      margin: 0 auto;
+      padding: 0 auto;
+      width: 380px;
+    }
+  </style>
 </head>
 
 <body data-spy="scroll" data-target="#insercion" data-offset="50" >
@@ -136,7 +197,11 @@
         <div class="col-xs-12 col-lg-5 col-md-6 col-sm-12 pl-3"><button type="button" class="btn btn-danger">Eliminar
             elementos del lienzo</button>
           <div class="lienzo shadow mt-3 mb-5 " id="lienzo0">
-            <div class="col-12 container"> </div>
+            <div class="contenedorIMG">
+              <img src="/img/noche.jpg" class="img-PLienzo img-fluid" >
+            
+            </div>
+            <!--<div class="col-12 container"> </div>-->
           </div>
         </div> <!-- Termina Lienzo -->
       </div>
