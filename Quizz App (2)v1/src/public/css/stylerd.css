@@ -109,8 +109,12 @@ img {
 }
 
 :root {
-  --altolienzo: 600px;
-  --ancholienzo: 700px !important;
+  --altolienzo: 500px;
+  --ancholienzo: 500px;
+}
+
+.centroIMG {
+  margin-top: 150px;
 }
 
 .lienzo {
