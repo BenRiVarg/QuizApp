@@ -83,6 +83,10 @@ img {
   
 }
 
+.centroIMG{
+  line-height: 25px;
+}
+
 .replica {
   position: relative;
   display: inline-block;
@@ -182,7 +186,8 @@ img {
 
 .img-fluid {
   width: 320px !important;
-  height: 358px;
+  height: 318px;
   margin: 0 auto;
+  margin-top: 84px;
   background-size: cover;
 }
