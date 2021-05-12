@@ -129,6 +129,7 @@ img {
   width: var(--ancholienzo);
   height: var(--altolienzo);
   background-color: #99ffcc;
+  z-index: 0;
 }
 
 .radio {

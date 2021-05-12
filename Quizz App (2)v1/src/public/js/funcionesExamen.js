@@ -231,7 +231,7 @@ function envioRespuestasMate(){
         }
     }
 }
-
+/*
 //Función para detectar ids y contenido de lo que cae en un reactivo
 function activarReactivo(){
     $(".reactivo").droppable({
@@ -270,6 +270,8 @@ function activarReactivo(){
         }
         return resultado;
     }
+    */
+    /*
     arrastrable();
     function arrastrable() {
         $(".elementoDrag").draggable({
@@ -277,6 +279,7 @@ function activarReactivo(){
           cursor: "move",
         });
       }
+      */
 
 function tomarTiempo(){
    var tiempo=document.getElementById("cronometro").textContent;

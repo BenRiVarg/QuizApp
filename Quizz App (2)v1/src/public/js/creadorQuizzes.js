@@ -448,7 +448,7 @@ function flechaDiaDerechaInv(obj) {
     arrastrable();
   }
 }
-
+/*
 function flechaDiaIzquierdaInv() {
   var strVar = "";
   var cantidad = document.querySelector("#caFle").value;
@@ -463,7 +463,7 @@ function flechaDiaIzquierdaInv() {
   //lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
 }
-
+*/
 
 ActivarLienzo();
 function ActivarLienzo(){
