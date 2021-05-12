@@ -24,7 +24,12 @@ var lienzo={
 
             }
             //Simulación de un solo lienzo
-objetosDrag[0]=lienzo;
+//objetosDrag[0]=lienzo;
+//Variable global para dar ids que nunca se repitan para los elementos de las Preguntas Drag
+var contadorIDrag=0;
+//Variable exclusiva para los ids de los lienzos
+var idLienzo=0
+//-------------------------------------//
 //Función para nombrar los tipos de preguntas, y agregarles un contador para que no se pierdan en la request
 function contadorTipo(){
     tipo="tipo"+contador;
@@ -109,33 +114,63 @@ function colorido(){
 
 //pregunta arrastrable//
 //---------Comienzan Funciones Drag--------//
-//Variable global para dar ids que nunca se repitan para las preguntas drag
-var contadorIDrag=0;
-function palabras() {
-  var strVar = "";
-  var palabra = document.querySelector("#palabra").value;
-  var palabraPartida = palabra.split(" ");
-  var list = document.getElementsByClassName("palabraid");
-  /* var x = $("#palabra").val(); */
 
-  /* palab.push(palabra); */
-
-  /* el ciclo for lo utilizo para saber cuantas son las veces que va a inyectar la etiqueta con la palabra */
-  for (var i = 0; i < palabraPartida.length; i++) {
-    var id="drag"+contadorIDrag;
-    strVar += '<div id=\"'+id+'\" class="palabraid text-dark fw-bold text-center elementoDrag" style=\"width:100px;\">';
-    strVar += "" + palabraPartida[i] + " </div>";
-
-    contadorIDrag++;
+//Función para que las preguntas drag encuentren su propio contenedor y puedan encontrar su lienzo
+function buscarLienzo(obj){
+  var clase=obj.className;
+  //cuando encuentre esta clase, significa que encontró su contenedor superior
+  var criterio=clase.search("tipoAr")
+  while(criterio==-1){
+     obj=obj.parentElement;
+     clase=obj.className;
+     criterio=clase.search("tipoAr")
   }
 
+  var lienzo=obj.querySelector("div.lienzo");
 
-  var espacioLienzo=document.getElementById("lienzo0").children[0];//.innerHTML = strVar;
-  espacioLienzo.insertAdjacentHTML("beforeend",strVar);   
+  var resultado={
+    contenedor: obj,
+    lienzo:lienzo
+  }
+  return resultado
+}
+function palabras(obj) {
+  var preguntaContenedora=buscarLienzo(obj);
+  var contenedor=preguntaContenedora.contenedor;
+  var lienzo= preguntaContenedora.lienzo;
+  var inputCantidad = contenedor.querySelector("input.palabrasCNT");
+  var palabra=inputCantidad.value;
+  //Si el usuario no ha especificado Cantidad
+  if(palabra.length==0){
 
-  arrastrable();
+    var PlaceHolder=inputCantidad.placeholder;
+    inputCantidad.placeholder="Define las palabras a Insertar"
+     inputCantidad.style.borderColor="red";
+
+  setTimeout(function () {
+    inputCantidad.placeholder=PlaceHolder;
+    inputCantidad.style.borderColor="black";
+}, 3000);
+  }
+  else{   //Creación de las palabras de acuerdo al input
+     var strVar = "";
+      var palabraPartida = palabra.split(" ");
+      /* el ciclo for lo utilizo para saber cuantas son las veces que va a inyectar la etiqueta con la palabra */
+    for (var i = 0; i < palabraPartida.length; i++) {
+      var id="drag"+contadorIDrag;
+      strVar += '<div id=\"'+id+'\" class=\"palabraDrag  fw-bold text-center elementoDrag\" style=\"width:100px;\">';
+      strVar += "" + palabraPartida[i] + " </div>";
+
+      contadorIDrag++;
+    }
+    //var espacioLienzo=document.getElementById("lienzo0").children[0];//.innerHTML = strVar;
+    lienzo.insertAdjacentHTML("afterBegin",strVar);   
+
+    arrastrable();
+  }
 }
 
+/*
 function comprobarDrag(event) {
   var arr = [];
   var countOfItems = 0;
@@ -159,7 +194,7 @@ function comprobarDrag(event) {
       //if div with class name 'someclass' is greater than the required no of div
       if ($("div.someclass").length > countOfItems) {
         document.getElementById("tituloR").innerHTML = "Respuestas:";
-        /*  var count = false; */
+     
         $.each(arr, function (i, obj) {
           if (obj.val == "drag1" && obj.key == "cuadro1") {
             document.getElementById("demo").innerHTML = "¡Correcto!";
@@ -212,41 +247,114 @@ function comprobarDrag(event) {
     },
   });
 }
-
+*/
+//Función para dar la funcionalidad Drag a cada Elemento
 function arrastrable() {
-  console.log("Activandose");
   $(".elementoDrag").draggable({
     revert: "invalid",
     cursor: "move",
   });
 }
 
-function cuadros() {
-  var cantidad = document.querySelector("#caRe").value;
+//Función para crear los cuadros reactivos. Parametro de entrada obj botón para crear los recuadros
+function cuadros(obj) {
+  var preguntaContenedora=buscarLienzo(obj);
   
-  for (var i = 0; i < cantidad; i++) {
-    var strVar = '  <div id="recuadro' + contadorIDrag + '" class="div1 recuadro elementoDrag reactivo"></div>';
-    var lienzo = document.getElementById("lienzo0");
-    lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
-    contadorIDrag++;
+  var contenedor=preguntaContenedora.contenedor;
+  var lienzo= preguntaContenedora.lienzo;
+  var inputCantidad = contenedor.querySelector("input.caRe")//.value;//document.querySelector("#caRe").value;
+  
+  var cantidad=inputCantidad.value;
+  //Si el usuario no ha especificado Cantidad
+  if(cantidad.length==0){
+
+    var PlaceHolder=inputCantidad.placeholder;
+    inputCantidad.placeholder="Selecciona una Cantidad"
+     inputCantidad.style.borderColor="red";
+
+  setTimeout(function () {
+    inputCantidad.placeholder=PlaceHolder;
+    inputCantidad.style.borderColor="black";
+}, 3000);
   }
-  arrastrable();
-  activarReactivo();
+  else{
+    var idRecuadro;
+    for (var i = 0; i < cantidad; i++) {
+      idRecuadro="reactivo"+contadorIDrag;
+      var strVar = '  <div id=\"'+idRecuadro+'\" class=\" recuadro elementoDrag reactivo\"><\/div>';
+      lienzo.insertAdjacentHTML("afterBegin", strVar);
+     // lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
+      contadorIDrag++;
+    }
+    arrastrable();
+    activarReactivo();
+  }
+  
 }
 
-function flechaHoDerecha() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar += '<img class=" flecha imagenes elementoDrag" id="fid'+contadorIDrag+'"src="/img/flecha.png" alt="">';
-    contadorIDrag++
-   
+function flechaAbajo(obj){
+  var preguntaContenedora=buscarLienzo(obj);
+  
+  var contenedor=preguntaContenedora.contenedor;
+  var lienzo= preguntaContenedora.lienzo;
+  var inputCantidad = contenedor.querySelector("input.caFle")//.value;//document.querySelector("#caRe").value;
+  
+  var cantidad=inputCantidad.value;
+  //Si el usuario no ha especificado Cantidad
+  if(cantidad.length==0){
+
+    var PlaceHolder=inputCantidad.placeholder;
+    inputCantidad.placeholder="Selecciona una Cantidad"
+     inputCantidad.style.borderColor="red";
+
+  setTimeout(function () {
+    inputCantidad.placeholder=PlaceHolder;
+    inputCantidad.style.borderColor="black";
+}, 3000);
   }
-  var lienzo=document.getElementById("lienzo0");
-  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
-  arrastrable();
+  else{//Inserción de flechas según el input
+    var strVar="";
+    for (var i = 0; i < cantidad; i++) {
+      strVar += '<img class="flecha arriba elementoDrag" id="fdo"'+contadorIDrag+'" src="/img/flechav.png" alt="">';
+      contadorIDrag++
+    }
+    lienzo.insertAdjacentHTML("afterBegin", strVar);
+    arrastrable();
+  }
 }
 
+function flechaHoDerecha(obj) {
+  var preguntaContenedora=buscarLienzo(obj);
+  
+  var contenedor=preguntaContenedora.contenedor;
+  var lienzo= preguntaContenedora.lienzo;
+  var inputCantidad = contenedor.querySelector("input.caFle")//.value;//document.querySelector("#caRe").value;
+  
+  var cantidad=inputCantidad.value;
+  //Si el usuario no ha especificado Cantidad
+  if(cantidad.length==0){
+
+    var PlaceHolder=inputCantidad.placeholder;
+    inputCantidad.placeholder="Selecciona una Cantidad"
+     inputCantidad.style.borderColor="red";
+
+  setTimeout(function () {
+    inputCantidad.placeholder=PlaceHolder;
+    inputCantidad.style.borderColor="black";
+}, 3000);
+  }
+  else{//Inserción de flechas según el input
+    var strVar="";
+    for (var i = 0; i < cantidad; i++) {
+      strVar += '<img class=" flecha hor elementoDrag" id="fid'+contadorIDrag+'"src="/img/flechah.png" alt="">';
+      contadorIDrag++
+     
+    }
+    lienzo.insertAdjacentHTML("afterBegin", strVar);
+    arrastrable();
+  }
+}
+/*
 function flechaHoIzquierda() {
   var strVar = "";
   var cantidad = document.querySelector("#caFle").value;
@@ -255,25 +363,45 @@ function flechaHoIzquierda() {
     contadorIDrag++
   }
   var lienzo=document.getElementById("lienzo0");
-  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
+  lienzo.insertAdjacentHTML("beforeend", strVar);
+  //lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
   
 }
+*/
+function flechaDiaDerecha(obj) {
+  var preguntaContenedora=buscarLienzo(obj);
+  
+  var contenedor=preguntaContenedora.contenedor;
+  var lienzo= preguntaContenedora.lienzo;
+  var inputCantidad = contenedor.querySelector("input.caFle")//.value;//document.querySelector("#caRe").value;
+  
+  var cantidad=inputCantidad.value;
+  //Si el usuario no ha especificado Cantidad
+  if(cantidad.length==0){
 
-function flechaDiaDerecha() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar +=
-      '<img class="flecha diagonal elementoDrag" id="fsd'+contadorIDrag+'" src="/img/flechadiaderecha.png" alt="">';
-    contadorIDrag++
-    }
+    var PlaceHolder=inputCantidad.placeholder;
+    inputCantidad.placeholder="Selecciona una Cantidad"
+     inputCantidad.style.borderColor="red";
 
-  var lienzo=document.getElementById("lienzo0");
-  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
-  arrastrable();
+  setTimeout(function () {
+    inputCantidad.placeholder=PlaceHolder;
+    inputCantidad.style.borderColor="black";
+}, 3000);
+  }
+  else{//Inserción de flechas según el input
+    var strVar="";
+    for (var i = 0; i < cantidad; i++) {
+      strVar +=
+        '<img class="flecha diagonal elementoDrag" id="fsd'+contadorIDrag+'" src="/img/diagonalderinvertida2.png" width="90px;" alt="">';
+      contadorIDrag++
+      } 
+    lienzo.insertAdjacentHTML("afterBegin", strVar);
+    arrastrable();
+  }
 }
 
+/*
 function flechaDiaIzquierda() {
   var strVar = "";
   var cantidad = document.querySelector("#caFle").value;
@@ -284,22 +412,41 @@ function flechaDiaIzquierda() {
     }
 
   var lienzo=document.getElementById("lienzo0");
-  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
+  lienzo.insertAdjacentHTML("beforeend", strVar);
+  //lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
 }
+*/
+function flechaDiaDerechaInv(obj) {
+  var preguntaContenedora=buscarLienzo(obj);
+  
+  var contenedor=preguntaContenedora.contenedor;
+  var lienzo= preguntaContenedora.lienzo;
+  var inputCantidad = contenedor.querySelector("input.caFle")//.value;//document.querySelector("#caRe").value;
+  
+  var cantidad=inputCantidad.value;
+  //Si el usuario no ha especificado Cantidad
+  if(cantidad.length==0){
 
-function flechaDiaDerechaInv() {
-  var strVar = "";
-  var cantidad = document.querySelector("#caFle").value;
-  for (var i = 0; i < cantidad; i++) {
-    strVar +=
-      '<img class="flecha diagonal elementoDrag" id="fad'+contadorIDrag+'" src="/img/diagonalderinvertida.png" alt="">';
-      contadorIDrag++;
-    }
+    var PlaceHolder=inputCantidad.placeholder;
+    inputCantidad.placeholder="Selecciona una Cantidad"
+     inputCantidad.style.borderColor="red";
 
-  var lienzo=document.getElementById("lienzo0");
-  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
-  arrastrable();
+  setTimeout(function () {
+    inputCantidad.placeholder=PlaceHolder;
+    inputCantidad.style.borderColor="black";
+}, 3000);
+  }
+  else{//Inserción de flechas según el input
+    var strVar="";
+    for (var i = 0; i < cantidad; i++) {
+      strVar +=
+        '<img class="flecha diagonal elementoDrag" id="fad'+contadorIDrag+'" src="/img/diagonalderinvertida.png" alt="">';
+        contadorIDrag++;
+      }
+    lienzo.insertAdjacentHTML("afterBegin", strVar);
+    arrastrable();
+  }
 }
 
 function flechaDiaIzquierdaInv() {
@@ -312,12 +459,13 @@ function flechaDiaIzquierdaInv() {
     }
 
   var lienzo=document.getElementById("lienzo0");
-  lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
+  lienzo.insertAdjacentHTML("beforeend", strVar);
+  //lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
   arrastrable();
 }
 
 
-
+ActivarLienzo();
 function ActivarLienzo(){
   //Eventos ligados a clase lienzo
   $(".lienzo").droppable({
@@ -331,7 +479,6 @@ function ActivarLienzo(){
       coordenadaleft=posicionelemento.left;
 
       var objetoHTML=elemento[0];
-      
       var datos={
         
         operacion: "reposicion",
@@ -341,10 +488,10 @@ function ActivarLienzo(){
             left: coordenadaleft
           }
       }
-
+      //console.log(datos);
       //Revisamos la clase que tiene el objeto que se mueve para guardarlo de cierta manera
       var strCriterio=objetoHTML.className
-      console.log(strCriterio);
+     // console.log(strCriterio);
       if(strCriterio.search("recuadro")!=-1){
         datos.tipoElemento="recuadro";
       }
@@ -353,10 +500,10 @@ function ActivarLienzo(){
         
       }
       var strlienzo=this.id;
-      var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
+      var LienzoID=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
       
      
-      construirObjLienzo(espacioObj,datos);
+      construirObjLienzo(LienzoID,datos);
 
     }
   });
@@ -371,10 +518,11 @@ $(".reactivo").droppable({
     elemento=elemento[0];
     event.stopPropagation();
     //Variable para detectar el id del lienzo al que pertenece el elemento 
-    var strlienzo=this.parentElement.parentElement.id;
-
+    var strlienzo=this.parentElement.id;
+    //console.log(strlienzo);
+    
     //Variable para llamar al espacio del objeto del lienzo
-    var espacioObj=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
+    var lienzoID=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
 
     
 
@@ -396,20 +544,19 @@ $(".reactivo").droppable({
       respuesta: respuesta,
     }
 
-    construirObjLienzo(espacioObj,datos)
-
+    construirObjLienzo(lienzoID,datos)
+    
   }
 });
 }
 
 
-function construirObjLienzo(espacioObj,datos){
+function construirObjLienzo(lienzoID,datos){
   
-  var objLienzo=objetosDrag[espacioObj];
+  var objLienzo=objetosDrag[lienzoID];
   var operacion=datos.operacion;
   switch(operacion){
     case "preg-res":
-      //Escribir(objLienzo,(datos.pregunta.id),datos,"pregunta","respuesta");
       
       var x;
 
@@ -511,140 +658,138 @@ function construirObjLienzo(espacioObj,datos){
   console.log(objLienzo);
   
 }
-
+previsualizarDraw()
+//Función para crear las funciones preview
 function previsualizarDraw(){
-    //Función para crear las funciones preview
-    document.getElementById("L-file").onchange = function (e) {
-      // Creamos el objeto de la clase FileReader
-      let reader = new FileReader();
+    
+   var filesDrag= document.getElementsByClassName("L-file");
 
-      // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-      reader.readAsDataURL(e.target.files[0]);
+   for(var f=0;f<filesDrag.length;f++){
+     var objHTML=filesDrag[f];
+      objHTML.onchange = function (e) {
+        var preguntaContenedora=buscarLienzo(this);
+        var lienzo=preguntaContenedora.lienzo;
+        let reader = new FileReader();
 
-      // Le decimos que cuando este listo ejecute el código interno
-      reader.onload = function () {
-        let preview = document.getElementById("lienzo0"),
-          image = document.createElement("img");
-        image.src = reader.result;
+        // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+        reader.readAsDataURL(e.target.files[0]);
 
-            
-        var imageDatos = new Image();
-        imageDatos.src = reader.result;
-        imageDatos.id="image"+contadorIDrag;
+            // Le decimos que cuando este listo ejecute el código interno
+            reader.onload = function () {
+              let preview = lienzo.querySelector("div.contenedorIMG2");
+                image = document.createElement("IMG");
+              image.src = reader.result;
+              image.className="img-PLienzo img-fluid";
+              image.id="image"+contadorIDrag;
+              /*
+                    var datos={
+                      tipoElemento: "img",
+                      operacion: "reposicion",
+                      
+                      coordenadas:
+                        { id: image.id,
+                         
+                        }
+                        
+                    }
+              //Obtención del valor del lienzo en el cual se guardaraá la información
+              var idLienzo=Number.parseInt(lienzo.id.substr((lienzo.id.length-1),lienzo.id.length));
 
-
-        var IDimagen=imageDatos.id;
-        imageDatos.onload = function() {
-            // access image size here 
-            console.log("Resultado de la función")
-          
-            //Espacio centrado en base al tamaño del lienzo
-            var leftAjustado= Math.round((580-this.width)/2);
-            var topAjustado= Math.round((550-this.height)/2);
-            
-       
-            
-
-            imageDatos.style.position="absolute";
-            imageDatos.style.top=topAjustado+"px";
-            imageDatos.style.left=leftAjustado+"px";
-            imageDatos.className="img-PLienzo"
-
-            var datos={
-              tipoElemento: "img",
-              operacion: "reposicion",
-              coordenadas:
-                { id: IDimagen,
-                  top: topAjustado,
-                  left: leftAjustado
-                }
-            }
-            
-            construirObjLienzo(0,datos);
-        }
-
+              construirObjLienzo(idLienzo,datos);
+               --------------------- No necesita enviar sus datos---------------------
+              */
+              //Si ya hay una imagen
+              if(preview.children[0]){
+                preview.children[0].remove()
+                preview.appendChild(image)
+              }
+              else{
+                preview.children[0].appendChild(image);
+              }
+              contadorIDrag++;
+          }
+      }
+  }
         
-      
-        //preview.innerHTML = "";
-
-        //Si ya hay una imagen
-        if(preview.children[1]){
-          preview.children[1].remove()
-          preview.appendChild(imageDatos)
-        }
-        else{
-          preview.appendChild(imageDatos);
-        }
-        
-      };
-    };
 }
 
 //----Terminan funciones Drag--------//
 
       function preguntaArrastrar() {
         contadorid++;
-                var strVar="";
-        strVar += "<div id=\"preg"+(contadorid)+"\" class=\"tipoAr cuestionario\">";
-        strVar += "    <div class=\"row mt-3\">";
-        strVar += "      <h1 class=\"text-center mt-5\">Crear exámen Drag<\/h1>";
-        strVar += "      <div class=\"col-lg-12 sm-12 text-center\">";
-        strVar += "        <div class=\"row\">";
-        strVar += "          <div class=\"col-lg-6 centrado\">";
-        strVar += "            <div class=\"mt-5\">";
-        strVar += "              <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4>";
-        strVar += "              <input id=\"L-file\" type=\"file\"  class=\"form-control imgs\"  name=\"imgs\" accept=\"image\/*\">";
-        strVar += "              <div class=\"mt-3\">";
-        strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
-        strVar += "                <div class=\"mb-3\">";
-        strVar += "                  <input id=\"caRe\" type=\"number\"  placeholder=\"Cantidad:\" class=\"form-control\">";
-        strVar += "                <\/div>";
-        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"cuadros()\">Crear<\/button>";
-        strVar += "              <\/div>";
-        strVar += "              <h4 class=\"text-dark mb-3 mt-3\">Escribe las palabras que quieras agregar:<\/h4>";
-        strVar += "              <div class=\"mb-3\">";
-        strVar += "                <input id=\"palabra\" type=\"text\"  placeholder=\"Coloca las palabras:\" class=\"form-control\">";
-        strVar += "              <\/div>";
-        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"palabras()\">Crear<\/button>";
-        strVar += "              <div class=\"mt-2\">";
-        strVar += "                <h4 class=\"text-dark mb-3\">Coloca la cantidad de flechas:<\/h4>";
-        strVar += "                <div class=\"mb-3\">";
-        strVar += "                  <input id=\"caFle\" type=\"number\"  placeholder=\"Cantidad:\" class=\"form-control\">";
-        strVar += "                <\/div>";
-        strVar += "                <h4 class=\"text-dark mb-3\">Tipos de flecha:<\/h4>";
-        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoDerecha()\"><i";
-        strVar += "                    class=\"fas fa-arrow-right fa-lg\"><\/i><\/button>";
-        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaHoIzquierda()\"><i";
-        strVar += "                    class=\"fas fa-arrow-left fa-lg\"><\/i><\/button>";
-        strVar += "                <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerecha()\"><i";
-        strVar += "                    class=\"fas fa-location-arrow fa-lg\"><\/i><\/button>";
-        strVar += "              <\/div>";
-        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierda()\"><i";
-        strVar += "                  class=\"fas fa-location-arrow fa-rotate-270 fa-lg\"><\/i><\/button>";
-        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaDerechaInv()\"><i";
-        strVar += "                  class=\"fas fa-location-arrow fa-rotate-90 fa-lg\"><\/i><\/button>";
-        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaDiaIzquierdaInv()\"><i";
-        strVar += "                  class=\"fas fa-location-arrow fa-rotate-180 fa-lg\"><\/i><\/button>";
-        strVar += "            <\/div>";
-        strVar += "            <\/div>";
-        strVar += "          <\/div>";
-        strVar += "          <!--Comienza Lienzo-->";
-        strVar += "          <div class=\"col-lg-6 lienzo shadow mt-5 mb-5\" id=\"lienzo0\">";
-        strVar += "            <div class=\"col-12\">";
-        strVar += "             ";
-        strVar += "            <\/div>";
-        strVar += "          <\/div>";
-        strVar += "          <!-- Termina Lienzo-->";
-        strVar += "        <\/div>";
+        var strVar="";
+        strVar += "<div id=\"preg1"+(contadorid)+"\" class=\"tipoAr cuestionario justify-content-center mt-5 pt-5 nivel-Superior\">";
+        strVar += "    <div class=\" mt-3\">";
+        strVar += "      <div class=\"text-center mb-5 mt-5\">";
+        strVar += "        <h3>Pregunta Arrastrable<\/h3>";
+        strVar += "        <h4 class=\"text-primary\">Intrucciones<\/h4>";
+        strVar += "        <p class=\"fs-5 justify-content-center text\">Coloca cada elemento que se te solicita abajo y lo podrás visualizar e";
+        strVar += "          ir armando en el recuadro azul de la derecha.<\/p>";
         strVar += "      <\/div>";
-        strVar += "    <\/div>";
+        strVar += "      <div class=\"col-md-7 mb-4 text-center mx-auto\"> <label for=\"formGroupExampleInput\" class=\"form-label\">Instrucciones";
+        strVar += "          para el Alumno<\/label> <input type=\"text\" class=\"form-control instrucciones\"";
+        strVar += "          placeholder=\"Instrucciones para el alumno\" value=\"Responde lo que se te solicita\"> <\/div>";
+        strVar += "      <div class=\"row responsivePG\">";
+        strVar += "        <div class=\"col-xs-12 col-lg-5 col-md-4 col-sm-12\">";
+        strVar += "          <div class=\"rounded-pill\"> <a";
+        strVar += "              class=\"position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1\"";
+        strVar += "              style=\"width: 3rem; height:3rem; margin-left: 10px;\">";
+        strVar += "              <p class=\"fs-4\" style=\"padding-top: 4px; padding-left: 17px;\">"+numeracionPregunta+"<\/p>";
+        strVar += "            <\/a> <\/div>";
+        strVar += "          <div class=\"mt-5\">";
+        strVar += "            <h4 class=\"text-center mb-4\">Busca la imagen que quieras agregar:<\/h4> <input  type=\"file\"";
+        strVar += "              class=\"form-control imgs L-file\" accept=\"image\/*\" name=\"imgs\">";
+        strVar += "            <div class=\"mt-3 text-center\">";
+        strVar += "              <h4 class=\"text-dark mb-3\">Coloca la cantidad de recuadros:<\/h4>";
+        strVar += "              <div class=\"mb-3\"> <input  type=\"number\" placeholder=\"Cantidad:\" class=\"form-control caRe\" min=\"0\"> <\/div>";
+        strVar += "              <button type=\"button\" class=\"btn btn-primary fw-bold\" onclick=\"cuadros(this)\">Crear<\/button>";
+        strVar += "            <\/div>";
+        strVar += "            <h4 class=\"text-dark mb-3 mt-3\">Escribe las palabras que quieras agregar:<\/h4>";
+        strVar += "            <div class=\"mb-3 text-center\"> <input type=\"text\" placeholder=\"Coloca las palabras:\"";
+        strVar += "                class=\"form-control palabrasCNT\"> <button type=\"button\" class=\"btn btn-primary fw-bold mt-3\"";
+        strVar += "                onclick=\"palabras(this)\">Crear<\/button> <\/div>";
+        strVar += "            <div class=\"mt-2 text-center\">";
+        strVar += "              <h4 class=\"text-dark mb-3\">Coloca la cantidad de flechas:<\/h4>";
+        strVar += "              <div class=\"mb-3\"> <input  type=\"number\" placeholder=\"Cantidad:\" class=\"form-control caFle\"> <\/div>";
+        strVar += "              <h4 class=\"text-dark mb-3\">Tipos de flecha:<\/h4> <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\"";
+        strVar += "                onclick=\"flechaHoDerecha(this)\"><img src=\"\/img\/flechas\/flechaDerecha.png\" style=\"width: 40px !important;\"";
+        strVar += "                  alt=\"Flecha derecha\" height=\"25px;\"><\/button> <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\"";
+        strVar += "                onclick=\"flechaDiaDerecha(this)\"><img src=\"\/img\/flechas\/lateralderechaarriba.png\"";
+        strVar += "                  style=\"width: 28px !important;\" alt=\"lateral derecha arriba\" height=\"34px;\"><\/button> <button";
+        strVar += "                type=\"button\" class=\"btn btn-primary fw-bold mb-3\" onclick=\"flechaAbajo(this)\"><img";
+        strVar += "                  src=\"\/img\/flechas\/flechaAbajo.png\" style=\"width: 20px !important;\" alt=\"Flecha abajo\"";
+        strVar += "                  height=\"34px;\"><\/button> <button type=\"button\" class=\"btn btn-primary fw-bold mb-3\"";
+        strVar += "                onclick=\"flechaDiaDerechaInv(this)\"><img src=\"\/img\/flechas\/lateralderechaabajo.png\"";
+        strVar += "                  style=\"width: 30px !important;\" alt=\"Lateral derecha abajo\" height=\"30px;\"><\/button>";
+        strVar += "            <\/div>";
+        strVar += "          <\/div> ";
+        strVar += "        <\/div> <!-- Comienza Lienzo -->";
+        strVar += "        <div class=\"col-xs-12 col-lg-5 col-md-6 col-sm-12 pl-3\"><button type=\"button\" class=\"btn btn-danger\">Eliminar";
+        strVar += "            elementos del lienzo<\/button>";
+        strVar += "          <div class=\"lienzo shadow mt-3 mb-5 \" id=\"lienzo"+idLienzo+"\">";
+        strVar += "            <div class=\"contenedorIMG2\">";
+        strVar += "            <!-- <img src=\"\/img\/noche.jpg\" class=\"img-PLienzo img-fluid\" >--> ";
+        strVar += "              <img src=\"\/img\/hapy.jpeg\" class=\"img-PLienzo img-fluid\" >";
+        strVar += "            <\/div>";
+        strVar += "            <!--<div class=\"col-12 container\"> <\/div>-->";
+        strVar += "          <\/div>";
+        strVar += "        <\/div> <!-- Termina Lienzo -->";
+        strVar += "      <\/div>";
+        strVar += "      <div class=\"editar text-center\" role=\"group\" aria-label=\"Basic mixed styles example\" float=\"left\" align=\"left\"> <br>";
+        strVar += "        <button type=\"button\" class=\"btn btn-danger\" onclick=\"eliminar(this)\">Quitar Pregunta<\/button> <\/div>";
         strVar += "    <\/div>";
         strVar += "  <\/div>";
+        
         
       insertor.insertAdjacentHTML("beforeend",strVar);   
 
       previsualizarDraw();
       ActivarLienzo();
+
+      //Creación de la plataforma para dar soporte al lienzo
+      objetosDrag.push(lienzo);
+      idLienzo++;
+      numeracionPregunta++
       }
 
       function preguntaRelacional(){
@@ -1769,6 +1914,7 @@ function enviarPreguntaDrag(datosRequest){
   }
   */
  var lienzos=objetosDrag.length;
+ datosRequest.append("lienzos",lienzos);
  var tiposAr=document.getElementsByClassName("tipoAr");
 
  for(var j=0;j<tiposAr.length;j++){
@@ -1778,17 +1924,17 @@ function enviarPreguntaDrag(datosRequest){
 
    var NombreImagen=imagen[0].files[0].name;
 
-   var objetoLienzo=objetosDrag[0];
-   var coordenadasImg=objetoLienzo.img;
+   var objetoLienzo=objetosDrag[j];
+   //var coordenadasImg=objetoLienzo.img;
    var preguntas=objetoLienzo.pregunta;
    var flechas=objetoLienzo.flecha;
    var respuestas=objetoLienzo.respuesta;
    
    var imagen={
     nombre: NombreImagen,
-    coordenadas: coordenadasImg 
+   // coordenadas: coordenadasImg 
    } 
-
+   //Array para enviar por la request y almacenar en la BD
    var pregunta=[];
    pregunta[0]=imagen;
    pregunta[1]=preguntas;
@@ -1804,7 +1950,6 @@ function enviarPreguntaDrag(datosRequest){
   console.log(lienzoRequestI)
   //Construcción de los datos para la Request
   var clavelienzo="lienzo"+j
-  datosRequest.append("lienzos",lienzos);
   datosRequest.append(clavelienzo,lienzoRequestI);
   
  }
@@ -2081,15 +2226,27 @@ function envioQuizz(){
     envioPreguntaIT();
   var formulario=document.getElementById("formularioQuizz");
 
-  /*--------Apartado para Enviar la Pregunta Drag----
+  
   var datosEnvio=new FormData(formulario);
  
   enviarPreguntaDrag(datosEnvio);
-  
   var request = new XMLHttpRequest();
   request.open("POST", "/editores/crear");
-  request.send(datosEnvio);-----------*/
-  formulario.submit();
+  request.send(datosEnvio);
+  request.onreadystatechange = function (aEvt) {
+    if (request.readyState == 4) {
+       if(request.status == 200){
+        console.log(request.responseText);
+        var nuevoQID=request.responseText;
+        var link="/visualizar/"+nuevoQID;
+        console.log(link)
+        window.location.replace(link);
+       }
+       else
+        {console.log("No se ha recibido nada");}
+    }
+  };
+ // formulario.submit();
 }
 
 function setNumeroPreguntas(numero){

@@ -103,8 +103,7 @@
     clear: both;
     display: table;
   }
-  
-  
+
   /* Add Zoom Animation */
   .animate {
     -webkit-animation: animatezoom 0.3s;
@@ -223,8 +222,10 @@
   width: 170px;
 }
 
-.palabraid {
-  z-index: 1;
+.palabraDrag {
+  position: absolute;
+  color: white;
+  z-index: 2;
 }
 
 /*--- Estilo de la Pregunta Drag ----*/
@@ -259,6 +260,7 @@
 }
 
 .recuadro {
+  position: absolute;
   width: 100px;
   height: 50px;
   background-color: black;
