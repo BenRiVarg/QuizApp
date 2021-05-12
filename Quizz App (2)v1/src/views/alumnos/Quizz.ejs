@@ -378,7 +378,7 @@
                                                           <% var iteracionLienzo=i%>
                                                             <div class="col">
                                         
-                                                              <img id="<%= quizz.cuestionario[i].pregunta[0].coordenadas[0].id%>"
+                                                              <img 
                                                                 src="/image/<%= quizz.cuestionario[i].pregunta[0].nombre %>"
                                                                 class="img-fluid img-replica">
                                                             </div>
@@ -499,15 +499,6 @@
         for (var r = 0; r < preguntasAr.length; r++) {
           var replica = preguntasAr[r].querySelectorAll("div.replica")[0];
           insertorReplica = replica.children[0]
-
-
-          //Reacomodo de Imagen
-          var idImagen = "<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].id %>"
-          var imagen = document.getElementById(idImagen);
-
-          imagen.style.top = "<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].top %>" + "px";
-          imagen.style.left = "<%-  quizz.cuestionario[iteracionLienzo].pregunta[0].coordenadas[0].left %>" + "px";
-
 
           var reactivos =<% -JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[1]) %>;//"<%-  JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[1]) %>";
           var flechas =<% -JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[2]) %>;
