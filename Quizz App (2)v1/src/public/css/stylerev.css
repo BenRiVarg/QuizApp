@@ -3,10 +3,7 @@
     width: 250px;
     margin: 0 auto !important;
   }
-  html h1,
-  h2,
-  h3,
-  h4 {
+  html h1, h2, h3, h4 {
     color: Black;
   }
   .grid-contenedor {
@@ -15,8 +12,7 @@
     margin: 50px;
   }
   body {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif, Helvetica, sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif, Helvetica, sans-serif;
   }
   * {
     box-sizing: border-box;
@@ -87,13 +83,11 @@
     font-size: 35px;
     font-weight: bold;
   }
-  .cancelbtn,
-  .signupbtn {
+  .cancelbtn, .signupbtn {
     float: left;
     width: 50%;
   }
-  .close:hover,
-  .close:focus {
+  .close:hover, .close:focus {
     color: red;
     cursor: pointer;
   }
@@ -117,21 +111,18 @@
   }
   .bg-success {
     background-color: #486f99 !important;
-}
-  .cal{
+  }
+  .cal {
     margin-left: 50px;
   }
-  .cor{
-    color:#258d19;
+  .cor {
+    color: #258d19;
   }
   img {
     width: 250px;
     margin: 0 auto !important;
   }
-  html h1,
-  h2,
-  h3,
-  h4 {
+  html h1, h2, h3, h4 {
     color: Black;
   }
   .grid-contenedor {
@@ -140,8 +131,7 @@
     margin: 50px;
   }
   body {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif, Helvetica, sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif, Helvetica, sans-serif;
   }
   * {
     box-sizing: border-box;
@@ -212,13 +202,11 @@
     font-size: 35px;
     font-weight: bold;
   }
-  .cancelbtn,
-  .signupbtn {
+  .cancelbtn, .signupbtn {
     float: left;
     width: 50%;
   }
-  .close:hover,
-  .close:focus {
+  .close:hover, .close:focus {
     color: red;
     cursor: pointer;
   }
@@ -246,7 +234,6 @@
   .cal {
     margin-left: 50px;
   }
-
   .time {
     margin-left: 80%;
   }
@@ -325,6 +312,7 @@
 }
 
 /*---------Comienza Estilo  Crear Drag---*/
+
 .div1 {
   margin: 5px;
   width: 90px;
@@ -344,8 +332,14 @@
   height: 440px;
 }
 
+.img-drag {
+  width: 323px;
+  height: 292px;
+  margin-top: 123px !important;
+}
+
 .contenedor {
-  width: 70px;
+  /*  width: 70px; */
   margin: 0 auto;
 }
 
@@ -378,6 +372,7 @@
 }
 
 /*--- Estilo de la Pregunta Drag ----*/
+
 :root {
   --altolienzo: 550px;
   --ancholienzo: 580px;
@@ -404,7 +399,7 @@
 }
 
 .img-replica {
-  position: absolute;
+  /* position: absolute; */
   z-index: 0;
 }
 
@@ -437,4 +432,20 @@
 
 .centrado {
   margin: 0 auto;
+}
+
+@media only screen and (max-width: 780px) {
+  .replica {
+    width: auto;
+    height: auto;
+  }
+  .contenedorimg {
+    height: 160px;
+  }
+  .img-lienzo {
+    width: 30px !important;
+    height: 58px;
+    margin: 0 auto;
+    background-size: cover;
+  }
 }
