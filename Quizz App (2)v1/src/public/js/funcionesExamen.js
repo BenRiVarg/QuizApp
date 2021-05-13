@@ -16,8 +16,27 @@ var arrayLR=[];
 var respuestasAlumnoD = [];
 
 
+/*
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  this.sound.volume=0.3;
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
 
-
+  this.reload= function(){
+    this.sound.load();
+  }
+} 
+*/
 matematicas();
 contadorItemsMultiples();
 matematicas();
@@ -240,9 +259,40 @@ function envioRespuestasMate(){
 }
 
 /*--------------Funciones Pregunta Drag--------------*/
+
+
+//-------------Sonidos-------------//
+var  drag=new sound("/sonidos/drag.mp3");
+drag.sound.playbackRate=2;
+var drop=new sound("/sonidos/drop.mp3");
+drag.sound.playbackRate=2;
+var rechazo=new sound("/sonidos/rechazoDrag.mp3");
+//--------------------------------
 //Variable para reconocer el contenedor de palabras del que se están sacando los arrastrables
 var contenedorPalabras
 
+//Función para encontrar la casilla original del contenedor de Palabras en una pregunta Drag en especifico
+function buscarCP(obj){
+  //buscamos alguno de los dos posibles ids que contienen el valor de la iteración del lienzo
+  while(true){
+    var criterio1=obj.id.search("contPal")!=-1;//si en su ID encuentra conPal
+    var criterio2=obj.id.search("lienzo")!=-1;//si en su ID encuentra lienzo
+    if(criterio1 ||criterio2){
+      break;
+    }
+    else{
+      obj=obj.parentElement;
+    }
+    
+  }
+  //Reconstruimos el id
+  var iteracionLienzo=obj.id.substr((obj.id.length-1),obj.id.length);
+  var idCP="contPal"+iteracionLienzo;
+
+  //Y asignamos el contenedorPalabras correcto
+   contenedorPalabras=document.getElementById(idCP);
+
+}
 
 function activarDragQuizz(){
   var i=0;
@@ -262,19 +312,19 @@ function activarItemDrag(obj){
   obj.setAttribute('draggable', 'true');
 
   addEvent(obj, 'dragstart', function (e) {
-      console.log('dragstart');
-      contenedorPalabras=this.parentElement
+     // console.log('dragstart');
+      buscarCP(this);
+     // contenedorPalabras=this.parentElement
       e.dataTransfer.effectAllowed = 'copy';
 
       //TODO fails on desktop safari because drag is immediately aborted
 //                this.style.display = "none";
 
-      console.log('setting data: ' + this.id);
+      //console.log('setting data: ' + this.id);
 
       e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
   });
 
-  //contadorDrag=contadorDrag+1;
 
 
 }
@@ -290,14 +340,12 @@ function activarItemsDrop(){
   //
   
   addEvent(reactivo, 'ondrop', function (e) {
-    //console.log('Drop');
     e.preventDefault();
     e.stopPropagation(); // stop it here to prevent it bubble up
 
 });
 
   addEvent(reactivo, 'dragenter', function (e) {
-     // console.log('apperture dragenter');
 
       e.preventDefault();
       e.stopPropagation(); // stop it here to prevent it bubble up
@@ -305,16 +353,13 @@ function activarItemsDrop(){
   });
 
   addEvent(reactivo, 'dragover', function (e) {
-     // console.log('apperture dragover');
 
       e.preventDefault(); // allows us to drop
       e.stopPropagation(); // stop it here to prevent it bubble up
 
-     // e.dataTransfer.dropEffect = 'copy';
   });
 
   addEvent(reactivo, 'dragexit', function (e) {
-    //  console.log('apperture dragexit');
 
       e.stopPropagation(); // stop it here to prevent it bubble up
 
@@ -322,11 +367,9 @@ function activarItemsDrop(){
   });
 
   addEvent(reactivo, 'dragleave', function (e) {
-    //  console.log('apperture dragleave');
 
       e.stopPropagation(); // stop it here to prevent it bubble up
 
-    //  bin.classList.remove('in');
   });
 
 
@@ -336,14 +379,15 @@ function activarItemsDrop(){
 //Función para dar soporte a los elemntos que enviarán a la request lo que contestó el alumno por lienzo
 function backLienzo(){
   var lienzos=document.getElementsByClassName("replica");
-  
+  var objLienzo={iteracion:0,
+                 respuestasA: []}
   for(var l=0;l<lienzos.length;l++){
 
-    arrayLR.push(respuestasAlumnoD);
+    arrayLR.push(objLienzo);
   }
 
 }
-//Función para procesar como tratar los elementos que concatenacion
+//Función para procesar como se comportan los elementos cuando caen
 //e es el evento
 //ItemDrop es el elemento en el que va a caer un arrastrable
 function drop(e,itemDrop){
@@ -353,12 +397,11 @@ function drop(e,itemDrop){
   console.log(itemDrop);
   */
 
- console.log("Not Trolls");
+ console.log("Contenedor Palabras Selecto");
  console.log(contenedorPalabras);
   //Captura del lienzo en el que se estan haciendo los eventos
-  //var lienzo =itemDrop.parentElement.parentElement.id;
-  var lienzo=itemDrop.parentElement.id;
-
+  var lienzoID=itemDrop.parentElement.id;
+  var lienzo=Number.parseInt(lienzoID.substr((lienzoID.length-1),lienzoID.length));
   e.preventDefault();
   e.stopPropagation(); 
   //la variable el es el arrastrable que se mueve
@@ -374,6 +417,7 @@ function drop(e,itemDrop){
       
         //El arrastrable se mueve de su casilla original a una casilla limpia
         if(itemDrop.children[0].id.length==0){
+          console.log(lienzo);
            //Copia de todos los elementos que se soltarán
           itemDrop.children[0].innerHTML=el.innerHTML;
           itemDrop.children[0].id=el.id;
@@ -382,7 +426,6 @@ function drop(e,itemDrop){
           el.remove();
         }
         else{ //El arrastrable, va a una casilla ocupada
-          //console.log("Del contenedor original a casilla ocupada")
           validarRespuesta(lienzo,el,itemDrop);
           sobreEscrituraArrastrable(el,itemDrop);
         }
@@ -394,8 +437,8 @@ function drop(e,itemDrop){
            
           }
           else{
-            //Sobreescritura: un Elemento arrastrable cae sobre una casilla ocupada
-            //console.log("Sobreescritura")
+            //Sobreescritura: un Elemento arrastrable posicionado en un reactivo cae sobre una casilla ocupada
+            console.log("caso 2")
             validarRespuesta(lienzo,el,itemDrop);
             sobreEscrituraArrastrable(el,itemDrop);
           
@@ -404,11 +447,7 @@ function drop(e,itemDrop){
           
         }
        
-        /*
-        var strVar="";
-        strVar += "  <div class=\"reactivoDrop\" id=\"valor\"  ondrop=\"drop(event,this)\">";
-        strVar += "                                <div class=\"contenidoDrop\">Texto<\/div>";
-        */
+      
       activarItemDrag(itemDrop.children[0]);
       
       
@@ -423,7 +462,6 @@ function trasladoArrastrable(el,itemDrop){
 
   //Capatura del antiguo  reactivo
   antiguoContenedor=el.parentElement;
-  //console.log(antiguoContenedor);
   //Destrucción del antiguo Elemento
   el.remove();
   
@@ -437,27 +475,26 @@ function trasladoArrastrable(el,itemDrop){
 
 function sobreEscrituraArrastrable(el,itemDrop){
   //Sobreescritura: un Elemento arrastrable cae sobre una casilla ocupada
-  console.log("Sobreescritura")
+ // console.log("Sobreescritura")
   var arrastrableSobrescrito=itemDrop.children[0];
-  /*
-  console.log(arrastrableSobrescrito.id);
-  console.log(arrastrableSobrescrito.textContent);
-  */
+  
   //Reconstrucción del elemento para volver al cuadro original
   var strVar="";
-  strVar += " <div id=\""+arrastrableSobrescrito.id+"\" class=\"text-light fw-bold text-center respuesta-reactivo elementoDrag\">"+arrastrableSobrescrito.textContent+"<\/div>";
+  
+  strVar += " <div id=\""+arrastrableSobrescrito.id+"\"";
+strVar += "class=\"text-light  text-center respuesta-reactivo elementoDrag border border-light\"";
+strVar += "style=\"width: 140px; margin: 0 auto;\">";
+strVar += "   <p class=\"fw-bold\" style=\"font-size: 22px;\">";
+strVar += ""+arrastrableSobrescrito.textContent+"";
+strVar += " <\/p>";
+strVar += "   <\/div>";
+
   contenedorPalabras.insertAdjacentHTML("afterbegin",strVar);
   activarDragQuizz();
-  /*
-  var elementoRenacido=document.getElementById(arrastrableSobrescrito.id);
-  console.log("Renacido")
-  console.log(elementoRenacido);
-  */
-  //activarItemDrag(elementoRenacido);
 
   trasladoArrastrable(el,itemDrop);
 }
-
+//Función para construir los elementos que se van a enviar por la request
 function validarRespuesta(lienzo,el,itemDrop){
 
   console.log("validarRespuesta");
@@ -500,6 +537,10 @@ function validarRespuesta(lienzo,el,itemDrop){
   
 }
   
+}
+
+function enviarPreguntaDrag(dataForm){
+  console.log(arrayLR);
 }
 /*--------------Terminan funciones Pregunta Drag--------------*/
 /*
@@ -562,5 +603,28 @@ function tomarTiempo(){
 function enviarQuizz(){
     envioRespuestasMate();
     tomarTiempo();
-    formulario.submit();
+
+    var datosEnvio=new FormData(formulario);
+ 
+  enviarPreguntaDrag(datosEnvio);
+  var request = new XMLHttpRequest();
+  request.open("POST", "/alumnos/correccion");
+  request.send(datosEnvio);
+  request.onreadystatechange = function (aEvt) {
+    if (request.readyState == 4) {
+       if(request.status == 200){
+        console.log(request.responseText);
+        /*
+        var nuevoQID=request.responseText;
+        var link="/visualizar/"+nuevoQID;
+        console.log(link)
+        window.location.replace(link);
+        */
+       }
+       else
+        {console.log("No se ha recibido nada");}
+    }
+  };
+
 }
+    

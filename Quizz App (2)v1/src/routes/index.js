@@ -986,29 +986,7 @@ router.get('/alumnos/examen/:id/alumno/:idAlumno/materia/:materia', async (req, 
 
 
 });
-/*
-router.get('/alumnos/examen/:id/alumno/:idAlumno', async (req, res) => {
 
-
-  const idAlumno = req.params.idAlumno;
-  const quizz = await Quizz.findById(req.params.id);
-  var contadorCuestionarios=quizz.cuestionario.length;
-  
-  var clavesCuestionarios=[];
-  for(var i=0;i<contadorCuestionarios;i++){
-    clavesCuestionarios.push(i);
-  }
-
-  //Variable para mostrar los cuestionarios en un orden diferente a los alumnos
-  clavesCuestionarios=Funciones.shuffle(clavesCuestionarios);
-
-  console.log(clavesCuestionarios);
-  res.render('alumnos/Quizz', { quizz,clavesCuestionarios, idAlumno });
-
-
-
-
-});*/
 
 router.get('/alumnos/examen/:id', async (req, res) => {
 
@@ -1028,8 +1006,8 @@ router.get('/alumnos/respuestas', (req, res) => {
 
 });
 
-router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
-  var idAlumno = req.params.idAlumno;
+router.post('/alumnos/correccion', async (req, res) => {
+  var idAlumno = "Pendiente";
   
   console.log(req.body)
   
@@ -1051,8 +1029,30 @@ router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
  */
  res.end();
 });
+/*
+router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
+  var idAlumno = req.params.idAlumno;
+  
+  console.log(req.body)
+  
+  var examencalificado = await Revisor.revisar(idAlumno, req);
+  //console.log(examencalificado);
+  /*
+  var nuevoIntento= await Registros.create(examencalificado);
+  
+  
+  //Recuperamos el quizz que contestó
+ var quizz = await Quizz.findById(nuevoIntento.quizz);
+  console.log(nuevoIntento.respuestas[0].respuestaA);
+  respuestaAlumnoElegida=[nuevoIntento];
+  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  console.log("Ejecutandose");
+  console.log(respuestaAlumnoElegida[0].calificacion);
+  res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 
-
+ */
+// res.end();
+//});
 
 
 //----------Cuarto de pruebas------------///
