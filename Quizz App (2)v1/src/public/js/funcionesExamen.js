@@ -12,9 +12,6 @@ var formulario=document.getElementById("quizz");
 
 //Variable para enviar los datos que un alumno contesta en un lienzo Drag por la request
 var arrayLR=[];
-//Variable para recuperar las respuestas del alumno
-var respuestasAlumnoD = [];
-
 
 /*
 function sound(src) {
@@ -378,6 +375,13 @@ function activarItemsDrop(){
 }
 //Función para dar soporte a los elemntos que enviarán a la request lo que contestó el alumno por lienzo
 function backLienzo(){
+  /*--BackLienzo controla los elementos que se envían por la request de la
+  pregunta Drag 
+   manipula la variable arrayLR que tiene en sus espacios un conjunto de objetos
+   que tienen la iteración de la pregunta y las respuestas para esa iteración (implicitamente vinculado al cuetionario que contesta)
+  
+  ---*/
+
   var lienzos=document.getElementsByClassName("replica");
   var objLienzo={iteracion:0,
                  respuestasA: []}
@@ -497,6 +501,7 @@ strVar += "   <\/div>";
 //Función para construir los elementos que se van a enviar por la request
 function validarRespuesta(lienzo,el,itemDrop){
 
+ 
   console.log("validarRespuesta");
   console.log("___________________");
   
@@ -512,18 +517,38 @@ function validarRespuesta(lienzo,el,itemDrop){
   console.log(arrayLR)
   console.log(lienzo);
   if (!BuscarRespuesta(lienzo,respuesta.id_pregunta, respuesta)) {
+
+    //Busqueda del objeto en base a la iteración
+    var l;
+    for(l in arrayLR){
+      if(arrayLR[l].iteracion==lienzo){
+        var objLienzo=arrayLR[l]
+        break;
+      }
+    }
+
     console.log("Escribiendo");
-    arrayLR[lienzo].push(respuesta);
+    objLienzo.respuestasA.push(respuesta);
+    //arrayLR[lienzo].push(respuesta);
   }
-  console.log(arrayLR[0]);
+  //console.log(arrayLR[0]);
   //BuscarRespuesta(lienzo,respuesta.id_pregunta, respuesta)
 
   
   function BuscarRespuesta(lienzo,id_buscado, respuesta) {
+    var l;
+    for(l in arrayLR){
+      if(arrayLR[l].iteracion==lienzo){
+        var objLienzo=arrayLR[l]
+        break;
+      }
+    }
+    /*
     var arrayLienzo=arrayLR[lienzo];
     console.log(arrayLienzo);
-    
+    */
   var resultado = false
+  /*
   for (x in arrayLienzo) {
     if (id_buscado == arrayLienzo[x].id_pregunta) {
       console.log("Sobreescribiendo")
@@ -533,13 +558,23 @@ function validarRespuesta(lienzo,el,itemDrop){
     }
     
   }
+  */
+ for (x in objLienzo) {
+  if (id_buscado == objLienzo[x].id_pregunta) {
+    console.log("Sobreescribiendo")
+    objLienzo[x].respuestasA=respuesta
+    resultado = true
+    break;
+  }
+  
+}
   return resultado;
   
 }
   
 }
 
-function enviarPreguntaDrag(dataForm){
+function enviarPreguntaDrag(){
   console.log(arrayLR);
 }
 /*--------------Terminan funciones Pregunta Drag--------------*/

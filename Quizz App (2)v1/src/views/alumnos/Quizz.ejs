@@ -450,7 +450,6 @@
 
                                           <input type="hidden" autocomplete="off" name="cuestionario<%= i %>"
                                             value="<%= quizz.cuestionario[i]._id %>">
-                                          <!--Termina Pregunta IT-->
 
                                         </div>
                                         <% break; case "tipoAr" : %>
@@ -538,6 +537,9 @@
                                           </div>
                                           <!--Termina P Texto-->
                                         </div>
+                                        <input type="hidden" autocomplete="off" name="cuestionario<%= i %>"
+                                        value="<%= quizz.cuestionario[i]._id %>">
+
                                           <% break } %>
                                             <% } %>
                                             <div class="carousel-item">
