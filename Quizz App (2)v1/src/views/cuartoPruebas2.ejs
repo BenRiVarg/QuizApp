@@ -4,332 +4,361 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta http-equiv="cache-control" content="no-cache" />
+      <!--Estilos de Editores Crear-->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
-      
-          <style>
-            * {
-                font-family: Arial;
-            }
-            .move {
-                
-                position: relative;
-                display:inline-block;
-                border:2px solid blue;
-                border-radius:  50%;
-                padding: 10px 30px;
-                overflow: hidden;
-                text-decoration: none;
-                width:50px;
-                
-            }
-            .move:link, .move:visited {
-                color: blue;
-            }
-            .move:hover {
-                color: white;
-            }
-            .move:after {
-                content: " ";
-                position:absolute;
-                background-color: blue;
-                transition: all 0.15s;
-                z-index: -1;
-            }
-         
-            .moveRight {
-                text-align: right;
-            }
-            .moveRight:after {
-                top:0;
-                left:0;
-                height:100%;
-                width:0;
-            }
-            .moveRight:before {
-                content:'';
-                position:absolute;
-                right:10px;
-                font-size: 24px;
-                top:4px;
-            }
-            .moveRight:hover:after {
-                transition: all 0.15s;
-                width:100%;
-            }
-            .moveLeft:after {
-                top:0;
-                left:100%;
-                height:100%;
-                width:100%;
-            }
-            .moveLeft:before {
-                content:'';
-                position:absolute;
-                left:10px;
-                font-size: 24px;
-                top:4px;
-            }
-            .moveLeft:hover:after {
-                transition: all 0.15s;
-                left:0;
-            }
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/editoresCrear.css">
+  
+    <title>Crear Examen</title>
+    <style>
+      .diagonal {
+        height: 90px;
+        width: 70px;
+      }
+  
+      .arriba {
+        width: 21px;
+        height: 61px;
+      }
+  
+      .hor {
+        width: 95px;
+        height: 22px;
+      }
+  
+      @media (max-width: 1600px) {
+        .responsivePG {
+          margin-left: 150px;
+        }
+      }
+  
+      @media (max-width: 1280px) {
+        .responsivePG {
+          margin-left: 30px;
+        }
+      }
+  
+      @media (max-width: 1024px) {
+        .responsivePG {
+          margin-left: 0;
+          margin: 0;
+        }
+  
+        .lienzo {
+          margin-top: 25px;
+        }
+      }
+  
+      @media (max-width: 768px) {
+        .responsivePG {
+          margin: 8px;
+        }
+  
+        .lienzo {
+          margin-left: 68px;
+        }
+      }
+      .contenedorIMG{
+        position: absolute; /* top: 205px; left: 165px; */
+        width: 584px;
+        height: 250px;
+        margin: 0 auto;
+        line-height: 524px;
+      }
+      .contenedorIMG img{
+        margin: 0 auto;
+        padding: 0 auto;
+        width: 380px;
+      }
+  
+      .contenedorIMG2{
+        position: absolute; /* top: 205px; left: 165px; */
+        width: 584px;
+        height: 250px;
+        margin: 0 auto;
+        line-height: 524px;
+      }
+        .contenedorIMG2 img{
+        padding: 0;
+        margin: 0 auto;
+        width: 380px;
+        margin-left: 103px !important;
+  
+      }
+    </style>
+    <!--Terminan Estilos Editores Crear-->
+    <!--Empieza estilo Quizz-->
+      <style>
+         .reactivoDrop {
+  position: absolute;
+  width: 100px;
+  height: 50px;
 
-            /*-----------------Apartado DRAG RESPONSIVO-----------------------*/
-            .L-responsive{
-              background-color: purple;
-              width:200px;
-              height: 250px;
-            }
+    z-index: 4;
+  }
 
-            .L-responsive2{
-              background-color: cyan;
-              width: 400px;
-              height: 500px;
-            }
-            .sandwich{
-              position:relative;
-              top: 250px;
-              left: 200px;
-              width: 100px;
-              height: 50px;
-              background-color:black;
-            }
-            </style>
-            <script src="https://kit.fontawesome.com/c35e85c3bd.js" crossorigin="anonymous"></script>
+  .contenidoDrop {
+    position: absolute;
+    color: white;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    padding-top: 10px;
+    z-index: 3;
+  }
+
+  .cajaDrop {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 2;
+  }
+      </style>
+      <!--Termina Estilo Quizz-->
     </head>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">QuizApp</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Help</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">FAQ</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      
 
 <body>
-  <div class="container">
-    <div class="row ">
-      <div class="col-12">
-        <div class="row">
-          <div class=" border border-dark L-responsive">
-            <div class="sandwich"></div>
+ <!--Empieza Nueva Pregunta Drag-->
+ <div id="preg1" class="tipoAr cuestionario justify-content-center mt-5 pt-5 nivel-Superior">
+  <div class=" mt-3">
+    <div class="text-center mb-5 mt-5">
+      <h3>Pregunta Arrastrable</h3>
+      <h4 class="text-primary">Intrucciones</h4>
+      <p class="fs-5 justify-content-center text">Coloca cada elemento que se te solicita abajo y lo podrás visualizar e
+        ir armando en el recuadro azul de la derecha.</p>
+    </div>
+    <div class="col-md-7 mb-4 text-center mx-auto"> <label for="formGroupExampleInput" class="form-label">Instrucciones
+        para el Alumno</label> <input type="text" class="form-control instrucciones"
+        placeholder="Instrucciones para el alumno" value="Responde lo que se te solicita"> </div>
+    <div class="row responsivePG">
+      <div class="col-xs-12 col-lg-5 col-md-4 col-sm-12">
+        <div class="rounded-pill"> <a
+            class="position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1"
+            style="width: 3rem; height:3rem; margin-left: 10px;">
+            <p class="fs-4" style="padding-top: 4px; padding-left: 17px;">1</p>
+          </a> </div>
+        <div class="mt-5">
+          <h4 class="text-center mb-4">Busca la imagen que quieras agregar:</h4> <input  type="file"
+            class="form-control imgs L-file" accept="image/*" name="imgs">
+          <div class="mt-3 text-center">
+            <h4 class="text-dark mb-3">Coloca la cantidad de recuadros:</h4>
+            <div class="mb-3"> <input  type="number" placeholder="Cantidad:" class="form-control caRe" min="0"> </div>
+            <button type="button" class="btn btn-primary fw-bold" onclick="cuadros(this)">Crear</button>
           </div>
-
-          <div class=" border border-dark L-responsive2">
-            <div class="sandwich"></div>
+          <h4 class="text-dark mb-3 mt-3">Escribe las palabras que quieras agregar:</h4>
+          <div class="mb-3 text-center"> <input type="text" placeholder="Coloca las palabras:"
+              class="form-control palabrasCNT"> <button type="button" class="btn btn-primary fw-bold mt-3"
+              onclick="palabras(this)">Crear</button> </div>
+          <div class="mt-2 text-center">
+            <h4 class="text-dark mb-3">Coloca la cantidad de flechas:</h4>
+            <div class="mb-3"> <input  type="number" placeholder="Cantidad:" class="form-control caFle"> </div>
+            <h4 class="text-dark mb-3">Tipos de flecha:</h4> <button type="button" class="btn btn-primary fw-bold mb-3"
+              onclick="flechaHoDerecha(this)"><img src="/img/flechas/flechaDerecha.png" style="width: 40px !important;"
+                alt="Flecha derecha" height="25px;"></button> <button type="button" class="btn btn-primary fw-bold mb-3"
+              onclick="flechaDiaDerecha(this)"><img src="/img/flechas/lateralderechaarriba.png"
+                style="width: 28px !important;" alt="lateral derecha arriba" height="34px;"></button> <button
+              type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaAbajo(this)"><img
+                src="/img/flechas/flechaAbajo.png" style="width: 20px !important;" alt="Flecha abajo"
+                height="34px;"></button> <button type="button" class="btn btn-primary fw-bold mb-3"
+              onclick="flechaDiaDerechaInv(this)"><img src="/img/flechas/lateralderechaabajo.png"
+                style="width: 30px !important;" alt="Lateral derecha abajo" height="30px;"></button>
           </div>
+        </div> 
+      </div> <!-- Comienza Lienzo -->
+      <div class="col-xs-12 col-lg-5 col-md-6 col-sm-12 pl-3"><button type="button" class="btn btn-danger">Eliminar
+          elementos del lienzo</button>
+        <div class="lienzo shadow mt-3 mb-5 " id="lienzo0">
+          <div class="contenedorIMG2">
+          <!-- <img src="/img/noche.jpg" class="img-PLienzo img-fluid" >--> 
+            <img src="/img/hapy.jpeg" class="img-PLienzo img-fluid" >
+          </div>
+          <!--<div class="col-12 container"> </div>-->
         </div>
-      </div>
+      </div> <!-- Termina Lienzo -->
     </div>
+    <div class="editar text-center" role="group" aria-label="Basic mixed styles example" float="left" align="left"> <br>
+      <button type="button" class="btn btn-danger" onclick="eliminar(this)">Quitar Pregunta</button> </div>
   </div>
-
-    <!-- Comienza Pregunta Drag  -->
-    <div class="row mt-3">
-      <h1 class="text-center mt-5">Crear exámen Drag</h1>
-      <div class="col-lg-12 sm-12 text-center">
-        <div class="col-lg-12 ">
-          <div class="mt-5">
-            <h4 class="text-center mb-4">Busca la imagen que quieras agregar:</h4>
-            <form action="" id="form1" method="get" class="mt-3">
-              <input id="file" type="file" id="file-upload" class="form-control" style="width : 700px; margin: 0 auto;"
-                accept="image/*">
-            </form>
-            <div class="mt-3">
-              <h4 class="text-dark mb-3">Coloca la cantidad de recuadros:</h4>
-              <div class="mb-3">
-                <input id="caRe" type="number" placeholder="Cantidad:" class="form-control" style="width : 700px; margin: 0 auto;">
-              </div>
-              <button type="button" class="btn btn-primary fw-bold" onclick="cuadros()">Crear</button>
-            </div>
-            <h4 class="text-dark mb-3 mt-3">Escribe las palabras que quieras agregar:</h4>
-            <div class="mb-3">
-              <input id="palabra" type="text" placeholder="Coloca las palabras:" class="form-control"
-                style="width : 700px; margin: 0 auto;">
-            </div>
-            <button type="button" class="btn btn-primary fw-bold" onclick="palabras()">Crear</button>
-            <div class="mt-2">
-              <h4 class="text-dark mb-3">Coloca la cantidad de flechas:</h4>
-              <div class="mb-3">
-                <input id="caFle" type="number" placeholder="Cantidad:" class="form-control"
-                  style="width : 700px; margin: 0 auto;">
-              </div>
-              <h4 class="text-dark mb-3">Tipos de flecha:</h4>
-              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaHoDerecha()"><i class="fas fa-arrow-right fa-lg"></i></button>
-              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaHoIzquierda()"><i class="fas fa-arrow-left fa-lg"></i></button>
-              <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaDerecha()"><i class="fas fa-location-arrow fa-lg"></i></button>
-            </div>
-            <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaIzquierda()"><i class="fas fa-location-arrow fa-rotate-270 fa-lg"></i></button>
-            <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaDerechaInv()"><i class="fas fa-location-arrow fa-rotate-90 fa-lg"></i></button>
-            <button type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaDiaIzquierdaInv()"><i class="fas fa-location-arrow fa-rotate-180 fa-lg"></i></button>
-          </div>
-          <!-- imagen -->
-          <div class="visualizacion container">
-            <hr>
-            <div id="titulop"></div>
-            <div id="preview"></div>
-            <!-- palabras -->
-            <div id="palabras" class="contenedor mt-5"></div>
-            <div id="cuadros" class="row text-center"></div>
-
-            <div id="flechasHoDer" class="text-center">
-            </div>
-            <div id="flechasHoIz" class="text-center">
-            </div>
-            <div id="flechasDiaDer" class="text-center">
-            </div>
-            <div id="flechasDiaIz" class="text-center">
-            </div>
-            <div id="flechasDiaDerInv" class="text-center">
-            </div>
-            <div id="flechasDiaIzInv" class="text-center">
-            </div>
-            <div id="displayNone" class="mt-2 ">
-              <h4 id="tituloR" class="text-dark"></h4>
-              <div id="demo" type="hidden" class="respuestaDrag text-dark">
-              </div>
-              <div id="demo2" type="hidden" class="respuestaDrag text-dark">
-              </div>
-              <div id="demo3" type="hidden" class="respuestaDrag text-dark">
-              </div>
-              <div id="demo4" type="hidden" class="respuestaDrag text-dark">
-              </div>
-              <div id="demo5" type="hidden" class="respuestaDrag text-dark">
-              </div>
-            </div>
-          </div>
-          </br>
-        </div>
-
-      </div>
-    </div>
-    </div>
-    <!--Termina Pregunta Drag-->
-  
- 
-  
-
-  
-  
-
-  <div class=" d-flex justify-content-center">
-    <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
-      
-      <div class="card-body border border-1 ">
-        <h4 class="display-7" >Pregunta para el alumno</h4><br>
-        
-                    <div class="lienzo row mx-auto" id="lienzo0">
-                     
-                    <div class="col-12">
-                      <div id="palabra0" class="elementoDrag">Contenido1</div>
-                      <div id="palabra1" class="elementoDrag">Contenido2</div>
-                      <img class=" flecha diagonal elementoDrag" id="fsi0" src="/img/flechadigaiz.png" alt="">
-                      <div class="recuadro reactivo elementoDrag"  id="recuadro0" ></div>
-                      <img src="/img/hapy.jpeg" class=" imagen img-fluid elementoDrag" alt="Perrito de la Victoria">
-                    </div>
-
-                  </div>
-      </div>
-    </div>
-  </div>
- 
-
+  <!--Botones que no forman parte-->
   <Button class="mt-5"onclick="enviarPreguntaDrag();">Enviar Drag</Button>
   
-  <Button  class="mt-5" onclick="wtf();">Replicar</Button>
-  <p id="prueba" >prueba</p>
-  <div class=" d-flex justify-content-center">
-    <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10" >
-      
-      <div class="card-body border border-1 ">
-        <h4 class="display-7" >Pregunta para el alumno</h4><br>
-                  <div class="replica row mx-auto">
-                    <div class="col-12">
-                      <div class="recuadro elementoReplica" id="r0" ></div>
-                      <img class=" diagonal elementoReplica" id="fsi"src="/img/flechadigaiz.png" alt="">
-                      <img src="/img/hapy.jpeg" class="img-fluid" alt="Perrito de la Victoria">
-                    </div>
+  <Button  class="mt-5" onclick="replica();">Replicar</Button>
+</div>
 
+
+   <!--Visualización Quizz-->
+   <div class="carousel-item active">
+    <div class="d-flex justify-content-center ">
+      <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
+  
+        <div class="card-body border border-1 ">
+          <!---->
+          <div class="contanier-fluid ml-0 tipoAr">
+  
+            <h4 class="text-center text-light">Coloca las palabras en el lugar correcto.</h4><br>
+  
+            <div class="row mt-3">
+              <div class="col sm-12  text-center">
+  
+                <div class="col-sm-12">
+  
+                 
+                  <!--Sustituto-->
+                  <div class="lienzo shadow mt-3 mb-5 " id="lienzoR">
+                    <div class="contenedorIMG2">
+                    <!-- <img src="/img/noche.jpg" class="img-PLienzo img-fluid" >--> 
+                      <img src="/img/hapy.jpeg" class="img-PLienzo img-fluid" >
+                    </div>
+                    <!--<div class="col-12 container"> </div>-->
                   </div>
+                </div> <!-- Termina Lienzo -->
+                  <!--Termina Sustituto-->
+                  <!--Antigua Replica-->
+                  <!--
+                  <div class="replica row mx-auto" id="lienzoR">
+                   
+                  
+                      <div class="col">
+                        
+                        <img src="/img/hapy.jpeg" class="img-PLienzo img-fluid" >
+                    
+                      </div>
+  
+                  </div>
+                
+                </div>
+              </div>
+            -->
+              <!--Termina Antigua Replica-->
+  
+            </div>
+            <div class="row mx-auto" style="margin: 0 auto; justify-content: center;">
+              <div class="col-lg-9 col-md-6 col-sm-6 text-center contenedor-palabras mt-5">
+                <div class="bg-primary py-3 shadow bg-body rounded-3 border border-dark">
+                  <h3 class="text-light mb-3">Palabras:</h3>
+                  <div class="contenedor contenedorPalabras" id="contPal">
+                    <p class="display-4">Contenedor Palabras</p>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!---->
+        </div>
       </div>
     </div>
+    <!--Termina P Texto-->
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-    <footer>
-    <div class="container" align="center" >
-        <div>
-            anterior
-            <a href="#" class='move moveLeft'>
-                <
-            </a>
-             
-            <a href="#" class='move moveRight'>
-                >
-            </a>
-            siguiente
-        </div>
-    </div>
-    <p id="demo"></p>
-    </footer>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
-    integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
-    crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   <!-- Termina Visualización Quizz-->
+<!--Scripts Editores Crear-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
   <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
   <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-  
-  <script>
-    
-    var myCarousel = document.querySelector('#carouselExampleControlsNoTouching');
-    var carousel = new bootstrap.Carousel(myCarousel, {
-  interval: 2000,
-  wrap: false,
-  pause: true
-    })
-    
-   // carousel.pause();
-   // console.log(myCarousel);
+  <script src="/js/creadorQuizzes_Debugg.js" type="text/javascript"></script>
+<!--Terminan Scripts Editores Crear-->  
+<!--Scripts para el Quizz-->
+<script>
+  function replica(){
 
-  </script>
- <!--
-  <script>
-     arrastrable();
-  activarReactivo();
-  function wtf(){
-    document.getElementById("prueba").textContent="Activandose";
+    var ojetoBack=objetosDrag[0]
+    var reactivos=ojetoBack.pregunta;
+    var flechas =ojetoBack.flecha;
+    //console.log(reactivos);
+    var replica=document.getElementById("lienzoR");
+    var x;
+    var numero=0;
+    for( x in reactivos){
+
+                /*---------------Simulación de ids dinamicos-------*/
+                var id="simulacion"+numero;
+                numero++;
+                /*----------------------*/
+          var strVar="";
+
+
+          strVar += "  <div class=\"reactivoDrop\" id=\""+id+"\"  ondrop=\"drop(event,this)\">";
+          strVar += "                                <div class=\"contenidoDrop\">Texto<\/div>";
+          strVar += "                                <div class=\"recuadro cajaDrop\"><\/div>";
+          strVar += "                              <\/div>";
+            
+          replica.insertAdjacentHTML("afterBegin",strVar);
+
+          var reactivo=document.getElementById(id);
+          console.log(reactivo);
+            
+
+
+          reactivo.style.top=reactivos[x].top+"px";
+          reactivo.style.left=reactivos[x].left+"px";
+          //insertorReplica.appendChild(reactivo);
+          }
+    
+          for (y in flechas) {
+
+            //Obtención de los Datos para ver que tipo de Flecha es
+            var claveFlecha = flechas[y].id
+            var tipoFlecha = claveFlecha.substr(0, 3);
+            var imagenFlecha = document.createElement("IMG");
+            switch (tipoFlecha) {
+              case "fdo":
+                imagenFlecha.src = "/img/flechav.png";
+                imagenFlecha.className = "flecha arriba imagenes";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+              case "fid":
+                imagenFlecha.src = "/img/flechah.png";
+                imagenFlecha.className = "flecha hor imagenes";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+                /*
+              case "fdi":
+                imagenFlecha.src = "/img/flechaHoIz.png.png";
+                imagenFlecha.className = "flecha imagenes";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+              case "fsi":
+                imagenFlecha.src = "/img/flechadigaiz.png";
+                imagenFlecha.className = "flecha diagonal";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+                */
+              case "fsd":
+                imagenFlecha.src = "/img/diagonalderinvertida2.png";
+                imagenFlecha.className = "flecha diagonal";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+                /*
+              case "fai":
+                imagenFlecha.src = "/img/diagonalizinvertida.png";
+                imagenFlecha.className = "flecha diagonal";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+                */
+              case "fad":
+                imagenFlecha.src = "/img/diagonalderinvertida.png";
+                imagenFlecha.className = "flecha diagonal";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+
+            }
+            replica.appendChild(imagenFlecha);
+            }
   }
-  </script>
-  -->
+</script>
+<!--Terminan Scripts para el Quizz-->
 </body>
 </html>

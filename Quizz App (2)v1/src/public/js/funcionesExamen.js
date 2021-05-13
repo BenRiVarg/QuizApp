@@ -10,9 +10,16 @@ var formulario=document.getElementById("quizz");
 
 
 
+//Variable para enviar los datos que un alumno contesta en un lienzo Drag por la request
+var arrayLR=[];
 //Variable para recuperar las respuestas del alumno
-var respuestasAlumnoD=[];
-var retornable=document.getElementsByClassName("retornable")[0];
+var respuestasAlumnoD = [];
+
+
+
+
+matematicas();
+contadorItemsMultiples();
 matematicas();
 contadorItemsMultiples();
 
@@ -231,6 +238,270 @@ function envioRespuestasMate(){
         }
     }
 }
+
+/*--------------Funciones Pregunta Drag--------------*/
+//Variable para reconocer el contenedor de palabras del que se están sacando los arrastrables
+var contenedorPalabras
+
+
+function activarDragQuizz(){
+  var i=0;
+  var arrastrables=document.querySelectorAll(".elementoDrag");
+  for(i;i<arrastrables.length;i++){
+      var elemento=arrastrables[i];
+      /*elemento.setAttribute('id', ("itemDragQuizz"+contadorDrag));*/
+    activarItemDrag(elemento);
+
+
+  }
+
+}
+function activarItemDrag(obj){
+    
+        
+  obj.setAttribute('draggable', 'true');
+
+  addEvent(obj, 'dragstart', function (e) {
+      console.log('dragstart');
+      contenedorPalabras=this.parentElement
+      e.dataTransfer.effectAllowed = 'copy';
+
+      //TODO fails on desktop safari because drag is immediately aborted
+//                this.style.display = "none";
+
+      console.log('setting data: ' + this.id);
+
+      e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
+  });
+
+  //contadorDrag=contadorDrag+1;
+
+
+}
+
+function activarItemsDrop(){
+  var i=0;
+  var reactivosDrop=document.getElementsByClassName("reactivoDrop");
+
+  
+  for(i;i<reactivosDrop.length;i++){
+  var reactivo=reactivosDrop[i];
+  
+  //
+  
+  addEvent(reactivo, 'ondrop', function (e) {
+    //console.log('Drop');
+    e.preventDefault();
+    e.stopPropagation(); // stop it here to prevent it bubble up
+
+});
+
+  addEvent(reactivo, 'dragenter', function (e) {
+     // console.log('apperture dragenter');
+
+      e.preventDefault();
+      e.stopPropagation(); // stop it here to prevent it bubble up
+
+  });
+
+  addEvent(reactivo, 'dragover', function (e) {
+     // console.log('apperture dragover');
+
+      e.preventDefault(); // allows us to drop
+      e.stopPropagation(); // stop it here to prevent it bubble up
+
+     // e.dataTransfer.dropEffect = 'copy';
+  });
+
+  addEvent(reactivo, 'dragexit', function (e) {
+    //  console.log('apperture dragexit');
+
+      e.stopPropagation(); // stop it here to prevent it bubble up
+
+      //bin.classList.remove('in');
+  });
+
+  addEvent(reactivo, 'dragleave', function (e) {
+    //  console.log('apperture dragleave');
+
+      e.stopPropagation(); // stop it here to prevent it bubble up
+
+    //  bin.classList.remove('in');
+  });
+
+
+  
+  }
+}
+//Función para dar soporte a los elemntos que enviarán a la request lo que contestó el alumno por lienzo
+function backLienzo(){
+  var lienzos=document.getElementsByClassName("replica");
+  
+  for(var l=0;l<lienzos.length;l++){
+
+    arrayLR.push(respuestasAlumnoD);
+  }
+
+}
+//Función para procesar como tratar los elementos que concatenacion
+//e es el evento
+//ItemDrop es el elemento en el que va a caer un arrastrable
+function drop(e,itemDrop){
+  /*
+  console.log("Función Drop");
+  console.log("Oyente");
+  console.log(itemDrop);
+  */
+
+ console.log("Not Trolls");
+ console.log(contenedorPalabras);
+  //Captura del lienzo en el que se estan haciendo los eventos
+  //var lienzo =itemDrop.parentElement.parentElement.id;
+  var lienzo=itemDrop.parentElement.id;
+
+  e.preventDefault();
+  e.stopPropagation(); 
+  //la variable el es el arrastrable que se mueve
+  var el = document.getElementById(e.dataTransfer.getData('Text'));
+  /*
+  console.log("Elemento que cae")
+  console.log(el);
+  console.log(el.parentElement.className);
+  */
+  
+      //Los arrastarbles van de la casilla original a una casilla Drop 
+      if (el.parentElement.className!="reactivoDrop"){
+      
+        //El arrastrable se mueve de su casilla original a una casilla limpia
+        if(itemDrop.children[0].id.length==0){
+           //Copia de todos los elementos que se soltarán
+          itemDrop.children[0].innerHTML=el.innerHTML;
+          itemDrop.children[0].id=el.id;
+
+          validarRespuesta(lienzo,el,itemDrop);
+          el.remove();
+        }
+        else{ //El arrastrable, va a una casilla ocupada
+          //console.log("Del contenedor original a casilla ocupada")
+          validarRespuesta(lienzo,el,itemDrop);
+          sobreEscrituraArrastrable(el,itemDrop);
+        }
+        }
+        else{  //El arrastrable se mueve a otra casilla Drop Limpia
+          if(itemDrop.children[0].id.length==0){
+            validarRespuesta(lienzo,el,itemDrop);
+            trasladoArrastrable(el,itemDrop);
+           
+          }
+          else{
+            //Sobreescritura: un Elemento arrastrable cae sobre una casilla ocupada
+            //console.log("Sobreescritura")
+            validarRespuesta(lienzo,el,itemDrop);
+            sobreEscrituraArrastrable(el,itemDrop);
+          
+          }
+         
+          
+        }
+       
+        /*
+        var strVar="";
+        strVar += "  <div class=\"reactivoDrop\" id=\"valor\"  ondrop=\"drop(event,this)\">";
+        strVar += "                                <div class=\"contenidoDrop\">Texto<\/div>";
+        */
+      activarItemDrag(itemDrop.children[0]);
+      
+      
+
+      
+}
+
+function trasladoArrastrable(el,itemDrop){
+  //Copia de todos los elementos que se soltarán
+  itemDrop.children[0].innerHTML=el.innerHTML;
+  itemDrop.children[0].id=el.id;
+
+  //Capatura del antiguo  reactivo
+  antiguoContenedor=el.parentElement;
+  //console.log(antiguoContenedor);
+  //Destrucción del antiguo Elemento
+  el.remove();
+  
+  if(antiguoContenedor.className!="contenedorPalabras"){
+  //Inserción de un elemento Limpio
+  var strVar="";
+  strVar += "<div class=\"contenidoDrop\"><\/div>";
+  antiguoContenedor.insertAdjacentHTML("afterbegin",strVar);
+  }
+}
+
+function sobreEscrituraArrastrable(el,itemDrop){
+  //Sobreescritura: un Elemento arrastrable cae sobre una casilla ocupada
+  console.log("Sobreescritura")
+  var arrastrableSobrescrito=itemDrop.children[0];
+  /*
+  console.log(arrastrableSobrescrito.id);
+  console.log(arrastrableSobrescrito.textContent);
+  */
+  //Reconstrucción del elemento para volver al cuadro original
+  var strVar="";
+  strVar += " <div id=\""+arrastrableSobrescrito.id+"\" class=\"text-light fw-bold text-center respuesta-reactivo elementoDrag\">"+arrastrableSobrescrito.textContent+"<\/div>";
+  contenedorPalabras.insertAdjacentHTML("afterbegin",strVar);
+  activarDragQuizz();
+  /*
+  var elementoRenacido=document.getElementById(arrastrableSobrescrito.id);
+  console.log("Renacido")
+  console.log(elementoRenacido);
+  */
+  //activarItemDrag(elementoRenacido);
+
+  trasladoArrastrable(el,itemDrop);
+}
+
+function validarRespuesta(lienzo,el,itemDrop){
+
+  console.log("validarRespuesta");
+  console.log("___________________");
+  
+  var respuesta = {
+    id_respuesta: el.id,
+    contenido: el.textContent,
+    id_pregunta: itemDrop.id
+  }
+
+ // console.log(respuesta);
+  console.log("Debug")
+  console.log("_______________");
+  console.log(arrayLR)
+  console.log(lienzo);
+  if (!BuscarRespuesta(lienzo,respuesta.id_pregunta, respuesta)) {
+    console.log("Escribiendo");
+    arrayLR[lienzo].push(respuesta);
+  }
+  console.log(arrayLR[0]);
+  //BuscarRespuesta(lienzo,respuesta.id_pregunta, respuesta)
+
+  
+  function BuscarRespuesta(lienzo,id_buscado, respuesta) {
+    var arrayLienzo=arrayLR[lienzo];
+    console.log(arrayLienzo);
+    
+  var resultado = false
+  for (x in arrayLienzo) {
+    if (id_buscado == arrayLienzo[x].id_pregunta) {
+      console.log("Sobreescribiendo")
+      respuestasAlumnoD[x] = respuesta
+      resultado = true
+      break;
+    }
+    
+  }
+  return resultado;
+  
+}
+  
+}
+/*--------------Terminan funciones Pregunta Drag--------------*/
 /*
 //Función para detectar ids y contenido de lo que cae en un reactivo
 function activarReactivo(){
