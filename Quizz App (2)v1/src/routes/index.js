@@ -1006,53 +1006,20 @@ router.get('/alumnos/respuestas', (req, res) => {
 
 });
 
-router.post('/alumnos/correccion', async (req, res) => {
-  var idAlumno = "Pendiente";
-  
-  console.log(req.body)
-  
-  var examencalificado = await Revisor.revisar(idAlumno, req);
-  //console.log(examencalificado);
-  /*
-  var nuevoIntento= await Registros.create(examencalificado);
-  
-  
-  //Recuperamos el quizz que contestó
- var quizz = await Quizz.findById(nuevoIntento.quizz);
-  console.log(nuevoIntento.respuestas[0].respuestaA);
-  respuestaAlumnoElegida=[nuevoIntento];
-  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
-  console.log("Ejecutandose");
-  console.log(respuestaAlumnoElegida[0].calificacion);
-  res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 
- */
- res.end();
+router.post('/alumnos/correccion',upload.array(), async (req,res)=>{
+
+  console.log(req.body);
+  
+  var examencalificado = await Revisor.revisar(req.alumno, req);
+  //console.log(examencalificado);
+
+  /*
+  
+  */ 
+  res.send("Troll law");
 });
-/*
-router.post('/alumnos/correccion/alumno/:idAlumno', async (req, res) => {
-  var idAlumno = req.params.idAlumno;
-  
-  console.log(req.body)
-  
-  var examencalificado = await Revisor.revisar(idAlumno, req);
-  //console.log(examencalificado);
-  /*
-  var nuevoIntento= await Registros.create(examencalificado);
-  
-  
-  //Recuperamos el quizz que contestó
- var quizz = await Quizz.findById(nuevoIntento.quizz);
-  console.log(nuevoIntento.respuestas[0].respuestaA);
-  respuestaAlumnoElegida=[nuevoIntento];
-  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
-  console.log("Ejecutandose");
-  console.log(respuestaAlumnoElegida[0].calificacion);
-  res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
 
- */
-// res.end();
-//});
 
 
 //----------Cuarto de pruebas------------///

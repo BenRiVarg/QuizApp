@@ -193,7 +193,9 @@
     </div>
   </div>
  <!-- <form action="/alumnos/correccion/alumno/<%=idAlumno%>" method="POST" id="quizz">-->
-  <form action="/alumnos/correccion/" method="POST" id="quizz"></form>
+  <!--<form  action="/alumnos/correccion/" method="POST" id="quizz">-->
+    <form id="quizz" >
+      <input type="hidden" name="alumno" value="<%=idAlumno %>">
     <input type="hidden" name="quizz" autocomplete="off" value="<%= quizz._id %>">
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="true" data-bs-interval="false" >
 
@@ -458,7 +460,7 @@
                                 <div class="contenidoDrop">Texto</div>
                                 <div class="cajaDrop"></div>
                               </div>
-                            -->
+                            -->         <% var pDrag=true %>
                                         <div class="carousel-item <%= activo %>">
                                           <!--P Texto-->
                                           <div class="d-flex justify-content-center ">
@@ -537,21 +539,20 @@
                                           </div>
                                           <!--Termina P Texto-->
                                         </div>
-                                        <input type="hidden" autocomplete="off" name="cuestionario<%= i %>"
+                                       <input type="hidden" autocomplete="off" name="cuestionario<%= i %>"
                                         value="<%= quizz.cuestionario[i]._id %>">
-
+                                      
                                           <% break } %>
                                             <% } %>
                                             <div class="carousel-item">
                                               <div class="d-flex justify-content-center ">
                                                 <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
-                        
+                                                <!--  <input type="submit" value="envio Prueba">-->
                                                   <div class="card-body border border-1 ">
-                                                    <h2 style="color: seashell;">Hasta aqui termina el quizz,</h2>
                                                     <h2 style="color: seashell;">envía tus respuestas con el botón de abajo</h2>
                                                     <h2 style="color: seashell;">¡suerte!</h2>
                                                     <div class="btn-flotante">
-                                                      <button type="button" onclick="enviarPreguntaDrag()" class="btn fw-bold  Enviar" value="Enviar Respuestas"><h5> Enviar
+                                                      <button type="button" onclick="enviarQuizz()" class="btn fw-bold  Enviar" value="Enviar Respuestas"><h5> Enviar
                                                        respuestas</h5></button> 
                                                     </div>
                                                           </div>
@@ -605,10 +606,9 @@
   <script src="/js/funcionesExamen.js" type="text/javascript"></script>
   <script src="/js/scriptsQuizz.js"></script>
 
-  <h1><%= iteracionLienzo %></h1>
   <!--Invalidadndo campos si no existe ninguna pregunta Drag-->
 
-  <% if (true) { %>
+  <% if (pDrag) { %>
     <script>
       backLienzo();
       var preguntasAr = document.getElementsByClassName("tipoAr");

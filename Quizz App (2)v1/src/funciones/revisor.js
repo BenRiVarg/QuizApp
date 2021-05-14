@@ -172,11 +172,17 @@ exports.revisar = async function (alumno, req) {
 
 				break;
 			case "tipoM":
-				console.log("listo para calificar Mate");
 				var resultado = calificarM(respuestaAlumno, cuestionarioAcalificar.respuesta[0]);
 				console.log("Calificacion M: " + resultado)
 
-				calificacionPorCuestionario.push(resultado);
+				calificacionPorCuestionario.push(resultado,cuestionarioAcalificar.respuesta);
+				break;
+			case "tipoAr":
+				var resultado=calificarPD(respuestaAlumno,cuestionarioAcalificar.respuesta)
+				console.log("CalificarPDrag");
+				console.log(resultado.revision)
+				calificacionPorCuestionario.push(resultado.revision);
+				respuestaAlumno=resultado.respuestaAP;
 				break;
 
 		}
@@ -191,7 +197,7 @@ exports.revisar = async function (alumno, req) {
 		iteracionCalificacion = iteracionCalificacion + 1;
 	}
 
-
+	//Comienza el sistema de calificaciones
 	for (var i = 0; i < calificacionPorCuestionario.length; i++) { // ciclo que recorre la cantidad de cuestionarios por examen
 		var aciertos = 0;// variable de numeros de aciertos por cuestionario
 		var calificacionCuestionario = 0; // aqui se guardara la calificacion del cuestionario
@@ -243,6 +249,60 @@ exports.revisar = async function (alumno, req) {
 
 
 //////////////FUNCIONES DE APOLLO/////////
+
+
+//Calificacion de RespuestasDrag
+function calificarPD(respuestaAlumno,respuestasBD){
+var resultado={
+	revision: [],
+	//Variable para enviar una respuesta de Alumno ajustada
+	respuestaAP:[]
+}
+
+respuestaAlumno=JSON.parse(respuestaAlumno);
+//console.log(respuestaAlumno);
+var x;
+//Objeto para hacer más sencillo la revisión de la pregunta
+var objetoRespuestas={};
+//Construcción del objeto
+for(x in respuestaAlumno){
+	var clave=igualacion(respuestaAlumno[x].id_pregunta);
+	objetoRespuestas[clave]=igualacion(respuestaAlumno[x].id_respuesta);
+}
+
+
+var y
+for (y in respuestasBD){
+	//obtenemos la clave de la pregunta de la respuesta correcta
+	var claveReactivo=igualacion(respuestasBD[y].id_pregunta);
+	//después la respuesta del Alumno
+	var resAlumno=objetoRespuestas[claveReactivo];
+	//Si no contestó
+	if(!resAlumno){
+		//console.log("vacía");
+		var respuestaVacia={contenido:"",id_pregunta:claveReactivo};
+		respuestaAlumno.push(respuestaVacia);
+		resultado.revision.push(0)
+	}
+	else{
+	
+	//console.log("--Evaluacion--");
+	var evaluacion=resAlumno==respuestasBD[y].id_respuesta;
+	resultado.revision.push(evaluacion);
+	}
+	
+}
+resultado.respuestaAP=respuestaAlumno;
+return resultado;
+
+/*
+console.log("_______________________");
+console.log(resultado.revision);
+console.log("respuestaAlumno");
+console.log(respuestaAlumno);
+*/
+}
+
 
 //Calificacion de Respuestas de Mate
 function calificarM(respuestaAlumno, respuestaBD) {

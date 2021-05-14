@@ -6,9 +6,7 @@ var myCarousel = document.querySelector('#carouselExampleControlsNoTouching');
   pause: true
     });
 
-var formulario=document.getElementById("quizz");
-
-
+    var formulario=document.getElementById("quizz");
 
 //Variable para enviar los datos que un alumno contesta en un lienzo Drag por la request
 var arrayLR=[];
@@ -259,11 +257,13 @@ function envioRespuestasMate(){
 
 
 //-------------Sonidos-------------//
+/*
 var  drag=new sound("/sonidos/drag.mp3");
 drag.sound.playbackRate=2;
 var drop=new sound("/sonidos/drop.mp3");
 drag.sound.playbackRate=2;
 var rechazo=new sound("/sonidos/rechazoDrag.mp3");
+*/
 //--------------------------------
 //Variable para reconocer el contenedor de palabras del que se están sacando los arrastrables
 var contenedorPalabras
@@ -400,9 +400,10 @@ function drop(e,itemDrop){
   console.log("Oyente");
   console.log(itemDrop);
   */
-
+/*
  console.log("Contenedor Palabras Selecto");
  console.log(contenedorPalabras);
+ */
   //Captura del lienzo en el que se estan haciendo los eventos
   var lienzoID=itemDrop.parentElement.id;
   var lienzo=Number.parseInt(lienzoID.substr((lienzoID.length-1),lienzoID.length));
@@ -421,29 +422,29 @@ function drop(e,itemDrop){
       
         //El arrastrable se mueve de su casilla original a una casilla limpia
         if(itemDrop.children[0].id.length==0){
-          console.log(lienzo);
+          //console.log(lienzo);
            //Copia de todos los elementos que se soltarán
           itemDrop.children[0].innerHTML=el.innerHTML;
           itemDrop.children[0].id=el.id;
 
-          validarRespuesta(lienzo,el,itemDrop);
+          validarRespuesta(lienzo,el,itemDrop,false);
           el.remove();
         }
         else{ //El arrastrable, va a una casilla ocupada
-          validarRespuesta(lienzo,el,itemDrop);
+          validarRespuesta(lienzo,el,itemDrop,true);
           sobreEscrituraArrastrable(el,itemDrop);
         }
         }
-        else{  //El arrastrable se mueve a otra casilla Drop Limpia
+        else{  //El arrastrable se mueve de una casillaDrop a otra casilla Drop Limpia
           if(itemDrop.children[0].id.length==0){
-            validarRespuesta(lienzo,el,itemDrop);
+            validarRespuesta(lienzo,el,itemDrop,true);
             trasladoArrastrable(el,itemDrop);
            
           }
           else{
             //Sobreescritura: un Elemento arrastrable posicionado en un reactivo cae sobre una casilla ocupada
             console.log("caso 2")
-            validarRespuesta(lienzo,el,itemDrop);
+            validarRespuesta(lienzo,el,itemDrop,true);
             sobreEscrituraArrastrable(el,itemDrop);
           
           }
@@ -499,83 +500,130 @@ strVar += "   <\/div>";
   trasladoArrastrable(el,itemDrop);
 }
 //Función para construir los elementos que se van a enviar por la request
-function validarRespuesta(lienzo,el,itemDrop){
-
- 
-  console.log("validarRespuesta");
-  console.log("___________________");
-  
-  var respuesta = {
-    id_respuesta: el.id,
-    contenido: el.textContent,
-    id_pregunta: itemDrop.id
-  }
-
- // console.log(respuesta);
-  console.log("Debug")
-  console.log("_______________");
-  console.log(arrayLR)
-  console.log(lienzo);
-  if (!BuscarRespuesta(lienzo,respuesta.id_pregunta, respuesta)) {
-
-    //Busqueda del objeto en base a la iteración
-    var l;
-    for(l in arrayLR){
-      if(arrayLR[l].iteracion==lienzo){
-        var objLienzo=arrayLR[l]
-        break;
-      }
-    }
-
-    console.log("Escribiendo");
-    objLienzo.respuestasA.push(respuesta);
-    //arrayLR[lienzo].push(respuesta);
-  }
-  //console.log(arrayLR[0]);
-  //BuscarRespuesta(lienzo,respuesta.id_pregunta, respuesta)
-
-  
-  function BuscarRespuesta(lienzo,id_buscado, respuesta) {
-    var l;
-    for(l in arrayLR){
-      if(arrayLR[l].iteracion==lienzo){
-        var objLienzo=arrayLR[l]
-        break;
-      }
-    }
-    /*
-    var arrayLienzo=arrayLR[lienzo];
-    console.log(arrayLienzo);
+function validarRespuesta(lienzo,el,itemDrop,opcion){
+    /*--Opcion: 
+    false Solo se va a Escribir o sobreEscribir
+    true Se deben desvincular elementos
     */
-  var resultado = false
-  /*
-  for (x in arrayLienzo) {
-    if (id_buscado == arrayLienzo[x].id_pregunta) {
-      console.log("Sobreescribiendo")
-      respuestasAlumnoD[x] = respuesta
-      resultado = true
-      break;
-    }
-    
-  }
-  */
- for (x in objLienzo) {
-  if (id_buscado == objLienzo[x].id_pregunta) {
-    console.log("Sobreescribiendo")
-    objLienzo[x].respuestasA=respuesta
-    resultado = true
-    break;
-  }
+ 
+      console.log("validarRespuesta");
+      console.log("___________________");
+
+      console.log(lienzo)
+      //Quitar Espacios en blanco
+      var contenido=(el.textContent).replace(/^\s+|\s+$/gm,'');
+      var respuesta = {
+        id_respuesta: el.id,
+        contenido: contenido,
+        id_pregunta: itemDrop.id
+      }
+
+      if(opcion){
+        desvincular(lienzo,respuesta.id_respuesta);
+      }
+      BuscarRespuesta(lienzo,respuesta.id_pregunta, respuesta);
+
+
   
-}
-  return resultado;
-  
-}
   
 }
 
-function enviarPreguntaDrag(){
+function BuscarRespuesta(lienzo,id_buscado, respuesta) {
+  console.log("FBuscarRespuesta");
+  console.log("__________")
+  var l;
+  var x;
+  //Busqueda del espacio en arrayLR que le corresponde a la itreacion =lienzo
+  for(l in arrayLR){
+          //Si encuentra la iteracion
+          if(arrayLR[l].iteracion==lienzo){
+            console.log("iteracion Encontrada");
+            var respuestasObjeto=arrayLR[l].respuestasA;
+            console.log(id_buscado);
+            //console.log(respuestasObjeto);
+            var x;
+            if(respuestasObjeto.length==0){
+              console.log("Primera Inserción")
+              arrayLR[l].respuestasA.push(respuesta);
+            }
+            else{
+
+                for (x in respuestasObjeto) {
+                      console.log(x);
+                      console.log(respuestasObjeto.length);
+                      var criterio1=id_buscado == respuestasObjeto[x].id_pregunta;
+                      var criterio2= x==(respuestasObjeto.length-1);
+                      console.log("_______________");
+                      console.log(respuestasObjeto[x].id_pregunta);
+                      console.log("_______________");
+                      if (criterio1) {
+                        resultado=true
+                        console.log("Sobreescribiendo")
+                        arrayLR[l].respuestasA[x]=respuesta
+                        break;
+                      }
+                      console.log(!criterio1);
+                      console.log(criterio2);
+                      if(!criterio1 && criterio2){
+                        console.log("Escribiendo");
+                         arrayLR[l].respuestasA.push(respuesta);
+                      }
+
+                  }
+                  /*
+                  console.log(x);
+                  console.log(x==respuestasObjeto.length)
+                  if(x==respuestasObjeto.length){
+                    console.log("Escribiendo");
+                    arrayLR[l].respuestasA.push(respuesta);
+                  }
+                  */
+                  //break;
+             }
+             console.log(arrayLR[l]);
+             break;
+        }
+       
+
+    }
+   
+  }
+
+  //Función para destruir elementos del objeto arrayLR cuando ya estaban asignados
+  function desvincular(lienzo,id_buscado){
+    var l;
+  var x;
+  //Busqueda del espacio en arrayLR que le corresponde a la itreacion =lienzo
+  for(l in arrayLR){
+            //Si encuentra la iteracion
+            if(arrayLR[l].iteracion==lienzo){
+              var respuestasObjeto=arrayLR[l].respuestasA;
+            
+                for (x in respuestasObjeto) {
+                  if(respuestasObjeto[x].id_respuesta==id_buscado){
+                     respuestasObjeto[x].id_respuesta="";
+                     respuestasObjeto[x].contenido="";
+                    //var resultado=respuestasObjeto[x].id_respuesta
+                    break;
+                  }
+                }
+                console.log("desvinculado"+id_buscado);
+                //console.log(resultado);
+                break;
+          }
+        }
+  }
+
+function enviarRespuestasDrag(datosRequest){
   console.log(arrayLR);
+
+  console.log("Envío")
+  console.log("_____________")
+  for(x in arrayLR){
+    var claveRespuesta="respuesta"+arrayLR[x].iteracion;
+    var respuesta=JSON.stringify(arrayLR[x].respuestasA);
+    datosRequest.append(claveRespuesta,respuesta);
+  }
 }
 /*--------------Terminan funciones Pregunta Drag--------------*/
 /*
@@ -636,30 +684,53 @@ function tomarTiempo(){
 }
 
 function enviarQuizz(){
-    envioRespuestasMate();
-    tomarTiempo();
-
-    var datosEnvio=new FormData(formulario);
- 
-  enviarPreguntaDrag(datosEnvio);
+  
+  //console.log(formulario);
+  envioRespuestasMate();
+  tomarTiempo();
+  //console.log(formulario);
+  
+  var datosEnvio=new FormData(document.getElementById("quizz"));
+   var prueba=datosEnvio.getAll('cuestionario0');
+  console.log(prueba);
+  
+  enviarRespuestasDrag(datosEnvio);
   var request = new XMLHttpRequest();
   request.open("POST", "/alumnos/correccion");
   request.send(datosEnvio);
+  
+ /*
+ const data = new FormData(document.getElementById('quizz'));
+fetch('/editores/troll', {
+   method: 'POST',
+   body: data
+}).then(function(response) {
+  if(response.ok) {
+      return response.text()
+  } else {
+      throw "Error en la llamada Ajax";
+  }
+
+});
+
+*/
+  
   request.onreadystatechange = function (aEvt) {
     if (request.readyState == 4) {
        if(request.status == 200){
         console.log(request.responseText);
-        /*
-        var nuevoQID=request.responseText;
-        var link="/visualizar/"+nuevoQID;
-        console.log(link)
-        window.location.replace(link);
-        */
+        
+        //var nuevoQID=request.responseText;
+        //var link="/visualizar/"+nuevoQID;
+        //console.log(link)
+        //window.location.replace(link);
+        
        }
        else
         {console.log("No se ha recibido nada");}
     }
   };
+  
 
 }
     
