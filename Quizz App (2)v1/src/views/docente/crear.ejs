@@ -13,6 +13,70 @@
   <link rel="stylesheet" type="text/css" href="/css/editoresCrear.css">
 
   <title>Crear Examen</title>
+  <style>
+    .diagonal {
+      height: 90px;
+      width: 70px;
+    }
+  
+    .arriba {
+      width: 21px;
+      height: 61px;
+    }
+  
+    .hor {
+      width: 95px;
+      height: 22px;
+    }
+  
+    @media (max-width: 1600px) {
+      .responsivePG {
+        margin-left: 150px;
+      }
+    }
+  
+    @media (max-width: 1280px) {
+      .responsivePG {
+        margin-left: 30px;
+      }
+    }
+  
+    @media (max-width: 1024px) {
+      .responsivePG {
+        margin-left: 0;
+        margin: 0;
+      }
+  
+      .lienzo {
+        margin-top: 25px;
+      }
+    }
+  
+    @media (max-width: 768px) {
+      .responsivePG {
+        margin: 8px;
+      }
+  
+      .lienzo {
+        margin-left: 68px;
+      }
+    }
+  
+    .contenedorIMG {
+      position: absolute;
+      /* top: 205px; left: 165px; */
+      width: 584px;
+      height: 250px;
+      line-height: 524px;
+      margin-left: 103px !important;
+    }
+  
+    .contenedorIMG img {
+      padding: 0;
+      margin: 0 auto;
+      width: 380px;
+    }
+  </style>
 </head>
 
 <body data-spy="scroll" data-target="#insercion" data-offset="50" >
@@ -100,69 +164,67 @@
       <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para creaa una pregunta de matematicas" delay="0" tabindex="0" class="d-inline-block" >
         <a onclick="preguntaMatematicas(), sumahref(this.id)" class="btn w3-bar-item w3-button" id="ref5" onclick="sumahref(this.id)" >Insertar Pregunta de Matemáticas</a>
       </span>
-      <!--
-      <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable" delay="0" tabindex="0" class="d-inline-block" >
-        <buton onclick="preguntaArrastrar()" class="w3-bar-item w3-button" ><a id="ref6" class="" onclick="sumahref(this.id)" >Inserta Pregunta Arrastrable</a></button>
+      <span data-bs-placement="top" data-bs-toggle="tooltip" title="Da click aqui para crear tu pregunta arrrastrable"
+        delay="0" tabindex="0" class="d-inline-block">
+        <button id="btn2" class="btn2 btn w3-bar-item w3-button" onclick="preguntaArrastrar()"><a id="ref6"
+            onclick="sumahref(this.id)">Insertar Pregunta Arrastrable</a></button>
       </span>
-    -->
     </nav>
   </div>
   
-  </div>
   <script>
 
-    var contadorhref=0;
-    function sumahref(id){
+    var contadorhref = 0;
+    function sumahref(id) {
 
-      if (id==="ref") {
+      if (id === "ref") {
         var ref = document.getElementById("ref");
         contadorhref++;
-        ref.setAttribute("href",'#preg'+contadorhref);
-        
-        
-      }else if (id=="ref2") {
-        
-          var ref2 = document.getElementById("ref2");
-          contadorhref++;
-          ref2.setAttribute("href",'#preg'+contadorhref);
-          
-      }else if (id==="ref3") {
-        
-          var ref3 = document.getElementById("ref3");
-          contadorhref++;
-          ref3.setAttribute("href",'#preg'+contadorhref);
-          
-      }else if (id==="ref4"){
-        
+        ref.setAttribute("href", '#preg' + contadorhref);
+
+
+      } else if (id == "ref2") {
+
+        var ref2 = document.getElementById("ref2");
+        contadorhref++;
+        ref2.setAttribute("href", '#preg' + contadorhref);
+
+      } else if (id === "ref3") {
+
+        var ref3 = document.getElementById("ref3");
+        contadorhref++;
+        ref3.setAttribute("href", '#preg' + contadorhref);
+
+      } else if (id === "ref4") {
+
         var ref4 = document.getElementById("ref4");
         contadorhref++;
-        ref4.setAttribute("href",'#preg'+contadorhref);
-        
+        ref4.setAttribute("href", '#preg' + contadorhref);
 
-      }else if (id==="ref5"){
+
+      } else if (id === "ref5") {
         var ref5 = document.getElementById("ref5");
         contadorhref++;
-        ref5.setAttribute("href",'#preg'+contadorhref);
-        
-      }else if (id==="ref6"){
+        ref5.setAttribute("href", '#preg' + contadorhref);
 
+      } else if (id === "ref6") {
         var ref6 = document.getElementById("ref6");
         contadorhref++;
-        ref6.setAttribute("href",'#preg'+contadorhref)
-        
-      }else{
-        console.log("error de link")
-        
+        ref6.setAttribute("href", '#preg' + contadorhref);
+
+      } else {
+        console.log("error de link");
+
       }
     }
-    function desabilitado(){
-    document.getElementById("btn1").disabled = true;
-    
-  }
-    function habilitar(){
-    document.getElementsById("btn1").disabled = false;
-    
-  }
+    /*   function desabilitado() {
+              document.getElementById("btn1").disabled = true;
+              document.getElementById("btn2").disabled = true;
+            }
+            function habilitar() {
+              document.getElementsById("btn1").disabled = false;
+              document.getElementById("btn2").disabled = false;
+            } */
   </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
