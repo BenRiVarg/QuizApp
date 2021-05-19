@@ -14,15 +14,7 @@ var errores;
 var objetosDrag=[];
 var contadorid = 0 ;
 var numeracionPregunta=1;
-var lienzo={
-            id:0,
-            img:[],
-            pregunta:[],
-            respuesta:[],
-            flecha:[]
 
-
-            }
             //Simulación de un solo lienzo
 //objetosDrag[0]=lienzo;
 //Variable global para dar ids que nunca se repitan para los elementos de las Preguntas Drag
@@ -114,7 +106,18 @@ function colorido(){
 
 //pregunta arrastrable//
 //---------Comienzan Funciones Drag--------//
+function backDrag(){
+  var lienzo={
+    id:0,
+    img:[],
+    pregunta:[],
+    respuesta:[],
+    flecha:[]
 
+
+    }
+    objetosDrag.push(lienzo);
+}
 //Función para que las preguntas drag encuentren su propio contenedor y puedan encontrar su lienzo
 function buscarLienzo(obj){
   var clase=obj.className;
@@ -502,7 +505,7 @@ function ActivarLienzo(){
       var strlienzo=this.id;
       var LienzoID=Number.parseInt(strlienzo.slice((strlienzo.length-1),(strlienzo.length)));
       
-     
+      console.log(LienzoID);
       construirObjLienzo(LienzoID,datos);
 
     }
@@ -554,6 +557,7 @@ $(".reactivo").droppable({
 function construirObjLienzo(lienzoID,datos){
   
   var objLienzo=objetosDrag[lienzoID];
+  console.log(objLienzo);
   var operacion=datos.operacion;
   switch(operacion){
     case "preg-res":
@@ -717,6 +721,7 @@ function previsualizarDraw(){
 
       function preguntaArrastrar() {
         contadorid++;
+        backDrag();
         var strVar="";
         strVar += "<div id=\"preg1"+(contadorid)+"\" class=\"tipoAr cuestionario justify-content-center mt-5 pt-5 nivel-Superior\">";
         strVar += "    <div class=\" mt-3\">";
@@ -787,7 +792,7 @@ function previsualizarDraw(){
       ActivarLienzo();
 
       //Creación de la plataforma para dar soporte al lienzo
-      objetosDrag.push(lienzo);
+      // objetosDrag.push(lienzo);
       idLienzo++;
       numeracionPregunta++
       }
@@ -959,47 +964,7 @@ function quitarReactivoRelacional(obj){
 
 
 
-///+++++++---------------Funcion de Examen------------++++++++//
-function dibujarLienzo(){
-  console.log("Dibujando LIenzo");
-  var lienzo=objetosDrag[0];
 
-  var pregunta=lienzo.pregunta;
-  var flechas=lienzo.flecha;
-
-  for(x in pregunta){
-    
-    var id_recuadro=pregunta[x].id;
-    var id_simulacion="r"+id_recuadro.slice((id_recuadro.length-1),(id_recuadro.length))
-    var recuadro=document.getElementById(id_simulacion);
-    recuadro.style.top=pregunta[x].top+"px";
-    recuadro.style.left=pregunta[x].left+"px";
-    console.log(pregunta[x]);
-  }
-
-  for(y in flechas){
-    
-    var id_flecha=flechas[y].id;
-    var id_simulacion="fsi";
-    var flecha=document.getElementById("fsi");
-    
-    flecha.style.top=flechas[y].top+"px";
-    flecha.style.left=flechas[y].left+"px";
-    console.log(flecha);
-    
-  }
-
-   /*
-        var flechastr=objetoHTML.id;
-        //Recortamos el id para saber que tipo de flecha es
-        flechastr=flechastr.substr(0,(flechastr.length-1))
-        console.log(flechastr)
-        datos.tipoFlecha=flechastr;
-        */
-  //console.log(pregunta)
-}
-
-/*-----------Termina Funciones de la Pregunta Drag----------*/
 
 
 function preguntaOM(){

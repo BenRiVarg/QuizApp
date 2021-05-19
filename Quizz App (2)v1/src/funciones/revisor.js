@@ -222,7 +222,7 @@ exports.revisar = async function (alumno, req) {
 	//----------TODO CORRECTO---------------
 	//asignamos un alumno para el registro
 	examencalificado.calificacion = calificacionGlobal; // se agrega la calificacion al objeto que se almacenara en la base de datos
-	examencalificado.alumno = alumno;
+	examencalificado.alumno = req.body.alumno;
 	examencalificado.quizz = quizz._id;
 	examencalificado.tiempo=req.body.tiempo;
 	examencalificado.respuestas = cuestionariosCalificados;

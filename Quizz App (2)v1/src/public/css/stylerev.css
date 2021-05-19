@@ -3,7 +3,10 @@
     width: 250px;
     margin: 0 auto !important;
   }
-  html h1, h2, h3, h4 {
+  html h1,
+  h2,
+  h3,
+  h4 {
     color: Black;
   }
   .grid-contenedor {
@@ -12,7 +15,8 @@
     margin: 50px;
   }
   body {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif, Helvetica, sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif, Helvetica, sans-serif;
   }
   * {
     box-sizing: border-box;
@@ -83,11 +87,13 @@
     font-size: 35px;
     font-weight: bold;
   }
-  .cancelbtn, .signupbtn {
+  .cancelbtn,
+  .signupbtn {
     float: left;
     width: 50%;
   }
-  .close:hover, .close:focus {
+  .close:hover,
+  .close:focus {
     color: red;
     cursor: pointer;
   }
@@ -122,7 +128,10 @@
     width: 250px;
     margin: 0 auto !important;
   }
-  html h1, h2, h3, h4 {
+  html h1,
+  h2,
+  h3,
+  h4 {
     color: Black;
   }
   .grid-contenedor {
@@ -131,7 +140,8 @@
     margin: 50px;
   }
   body {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif, Helvetica, sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif, Helvetica, sans-serif;
   }
   * {
     box-sizing: border-box;
@@ -202,11 +212,13 @@
     font-size: 35px;
     font-weight: bold;
   }
-  .cancelbtn, .signupbtn {
+  .cancelbtn,
+  .signupbtn {
     float: left;
     width: 50%;
   }
-  .close:hover, .close:focus {
+  .close:hover,
+  .close:focus {
     color: red;
     cursor: pointer;
   }
@@ -433,6 +445,39 @@
 .centrado {
   margin: 0 auto;
 }
+
+/*-----------Sandwich de los reactivos Drag-----------*/
+.contenedorRecuadro {
+  /*position:absolute;*/
+  width: 100px;
+  height: 50px;
+}
+
+.contenidoRecuadro {
+  position: absolute;
+  color: white;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  padding-top: 10px;
+  z-index: 3;
+}
+
+.recuadroBien {
+  background-color: #53c3c4;
+  /*position: absolute;*/
+  width: 100px;
+  height: 50px;
+  z-index: 2;
+}
+.recuadroMal {
+  background-color: #ee6785;
+  /*  position: absolute;*/
+  width: 100px;
+  height: 50px;
+  z-index: 2;
+}
+/*------------------------------------------*/
 
 @media only screen and (max-width: 780px) {
   .replica {

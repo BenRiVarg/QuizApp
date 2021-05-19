@@ -1012,12 +1012,20 @@ router.post('/alumnos/correccion',upload.array(), async (req,res)=>{
   console.log(req.body);
   
   var examencalificado = await Revisor.revisar(req.alumno, req);
-  //console.log(examencalificado);
+  console.log("________________");
+  console.log(examencalificado);
 
+  var nuevoIntento= await Registros.create(examencalificado);
   /*
-  
-  */ 
-  res.send("Troll law");
+  var quizz = await Quizz.findById(nuevoIntento.quizz);
+  console.log(nuevoIntento.respuestas[0].respuestaA);
+  respuestaAlumnoElegida=[nuevoIntento];
+  console.log(respuestaAlumnoElegida[0].respuestas[0].respuestaA);
+  console.log("Ejecutandose");
+  console.log(respuestaAlumnoElegida[0].calificacion);
+  res.render('alumnos/revisionRespuestas',{ quizz,respuestaAlumnoElegida});
+  */
+  res.send(nuevoIntento._id);
 });
 
 
@@ -1107,7 +1115,7 @@ router.get('/cuarto', (req, res) => {
 
 router.get('/cuarto2', async (req, res) => {
   
-  res.render('cuartoPruebas2');
+  res.render('laboratorioDrag');
 })
 
 router.get('/plantillaRevision',(req, res)=>{

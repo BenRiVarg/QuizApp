@@ -11,7 +11,7 @@ var myCarousel = document.querySelector('#carouselExampleControlsNoTouching');
 //Variable para enviar los datos que un alumno contesta en un lienzo Drag por la request
 var arrayLR=[];
 
-/*
+
 function sound(src) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
@@ -31,7 +31,7 @@ function sound(src) {
     this.sound.load();
   }
 } 
-*/
+
 matematicas();
 contadorItemsMultiples();
 matematicas();
@@ -257,13 +257,13 @@ function envioRespuestasMate(){
 
 
 //-------------Sonidos-------------//
-/*
+
 var  drag=new sound("/sonidos/drag.mp3");
 drag.sound.playbackRate=2;
 var drop=new sound("/sonidos/drop.mp3");
 drag.sound.playbackRate=2;
 var rechazo=new sound("/sonidos/rechazoDrag.mp3");
-*/
+
 //--------------------------------
 //Variable para reconocer el contenedor de palabras del que se están sacando los arrastrables
 var contenedorPalabras
@@ -312,6 +312,7 @@ function activarItemDrag(obj){
      // console.log('dragstart');
       buscarCP(this);
      // contenedorPalabras=this.parentElement
+
       e.dataTransfer.effectAllowed = 'copy';
 
       //TODO fails on desktop safari because drag is immediately aborted
@@ -348,27 +349,29 @@ function activarItemsDrop(){
       e.stopPropagation(); // stop it here to prevent it bubble up
 
   });
-
+  
   addEvent(reactivo, 'dragover', function (e) {
 
       e.preventDefault(); // allows us to drop
       e.stopPropagation(); // stop it here to prevent it bubble up
 
   });
+  
 
   addEvent(reactivo, 'dragexit', function (e) {
-
+      e.preventDefault();
       e.stopPropagation(); // stop it here to prevent it bubble up
 
       //bin.classList.remove('in');
   });
 
+  
   addEvent(reactivo, 'dragleave', function (e) {
-
+      e.preventDefault();
       e.stopPropagation(); // stop it here to prevent it bubble up
 
   });
-
+  
 
   
   }
@@ -395,6 +398,8 @@ function backLienzo(){
 //e es el evento
 //ItemDrop es el elemento en el que va a caer un arrastrable
 function drop(e,itemDrop){
+  e.preventDefault();
+  e.stopPropagation();
   /*
   console.log("Función Drop");
   console.log("Oyente");
@@ -407,8 +412,7 @@ function drop(e,itemDrop){
   //Captura del lienzo en el que se estan haciendo los eventos
   var lienzoID=itemDrop.parentElement.id;
   var lienzo=Number.parseInt(lienzoID.substr((lienzoID.length-1),lienzoID.length));
-  e.preventDefault();
-  e.stopPropagation(); 
+
   //la variable el es el arrastrable que se mueve
   var el = document.getElementById(e.dataTransfer.getData('Text'));
   /*

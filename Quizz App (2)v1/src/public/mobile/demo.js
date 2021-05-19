@@ -4,7 +4,11 @@
 
 var addEvent = (function () {
   if (document.addEventListener) {
+    console.log("entrando")
     return function (el, type, fn) {
+      console.log(el);
+      console.log(type);
+      console.log(fn);
       if (el && el.nodeName || el === window) {
         el.addEventListener(type, fn, false);
       } else if (el && el.length) {
@@ -18,7 +22,7 @@ var addEvent = (function () {
  else {
     return function (el, type, fn) {
       if (el && el.nodeName || el === window) {
-        el.attachEvent('on' + type, function () { return fn.call(el, window.event); });
+        el.attachEvent('on' + type, function () { return fn.call(el, window.event.preventDefault()); });
       } else if (el && el.length) {
         for (var i = 0; i < el.length; i++) {
           addEvent(el[i], type, fn);
