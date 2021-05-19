@@ -183,6 +183,7 @@ exports.revisar = async function (alumno, req) {
 				console.log(resultado.revision)
 				calificacionPorCuestionario.push(resultado.revision);
 				respuestaAlumno=resultado.respuestaAP;
+				resultado=resultado.revision;
 				break;
 
 		}
@@ -267,9 +268,12 @@ var objetoRespuestas={};
 //Construcción del objeto
 for(x in respuestaAlumno){
 	var clave=igualacion(respuestaAlumno[x].id_pregunta);
-	objetoRespuestas[clave]=igualacion(respuestaAlumno[x].id_respuesta);
+	var respuestaI=igualacion(respuestaAlumno[x].id_respuesta);
+	var obj={contenido:respuestaAlumno[x].contenido
+		,respuesta:respuestaI};
+	objetoRespuestas[clave]=obj;
 }
-
+//console.log(objetoRespuestas)
 
 var y
 for (y in respuestasBD){
@@ -277,30 +281,37 @@ for (y in respuestasBD){
 	var claveReactivo=igualacion(respuestasBD[y].id_pregunta);
 	//después la respuesta del Alumno
 	var resAlumno=objetoRespuestas[claveReactivo];
+
 	//Si no contestó
 	if(!resAlumno){
 		//console.log("vacía");
 		var respuestaVacia={contenido:"",id_pregunta:claveReactivo};
-		respuestaAlumno.push(respuestaVacia);
-		resultado.revision.push(0)
+		resultado.respuestaAP.push(respuestaVacia);
+		resultado.revision.push(false)
 	}
 	else{
 	
 	//console.log("--Evaluacion--");
-	var evaluacion=resAlumno==respuestasBD[y].id_respuesta;
+	var resAP={contenido:resAlumno.contenido,
+				id_pregunta:claveReactivo,
+				id_respuesta:resAlumno.respuesta};
+
+	var evaluacion=resAlumno.respuesta==respuestasBD[y].id_respuesta;
+	resultado.respuestaAP.push(resAP);
 	resultado.revision.push(evaluacion);
 	}
 	
 }
-resultado.respuestaAP=respuestaAlumno;
+	
+//console.log("_______________________");
+//console.log(resultado.revision);
+//console.log("respuestaAlumno");
+//console.log(resultado.respuestaAP);
+
+
 return resultado;
 
-/*
-console.log("_______________________");
-console.log(resultado.revision);
-console.log("respuestaAlumno");
-console.log(respuestaAlumno);
-*/
+
 }
 
 

@@ -504,71 +504,6 @@
                                                                   </div>
                                                                 </div>
                                                                 <!--P Imagen-->
-                                                                
-                                                                  <!--P Drag-->
-                                                                  <div class="d-flex justify-content-center">
-                                                                    <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
-                                                                      <div class="card-body border border-1 fondor">
-                                                                        <div class="row">
-                                                                          <div class="contanier-fluid ml-0 tipoAr">
-                                                                  
-                                                                            <h4 class="text-center text-dark">Coloca las palabras en el lugar correcto.</h4><br>
-                                                                  
-                                                                            <div class="row mt-3">
-                                                                              <div class="col sm-12  text-center">
-                                                                  
-                                                                                <div class="col-sm-12">
-                                                                  
-                                                                                  <!--Lienzo-->
-                                                                                  <div class="replica row mx-auto" id="<%= i %>">
-                                                                                    <% var iteracionLienzo=i%>
-                                                                                      <div class="col">
-                                                                  
-                                                                                        <img src="/img/prueba.jpg" class="img-drag img-replica">
-                                                                                      </div>
-                                                                  
-                                                                                  </div>
-                                                                                  <!--Lienzo-->
-                                                                                </div>
-                                                                              </div>
-                                                                  
-                                                                  
-                                                                            </div>
-                                                                            <div class="row mx-auto" style="margin: 0 auto; justify-content: center;">
-                                                                              <div class="col-lg-9 col-md-6 col-sm-6 text-center contenedor-palabras mt-5">
-                                                                                <div class="bg-primary py-3 shadow bg-body rounded-3 border border-dark">
-                                                                                  <h3 class="text-light mb-3">Palabras:</h3>
-                                                                                  <div class="contenedor">
-                                                                                    <%var respuestas=quizz.cuestionario[i].respuesta %>
-                                                                                      <% respuestas.forEach (function (respuesta){ %>
-                                                                  
-                                                                                        <div id="<%= respuesta.id_respuesta %>"
-                                                                                          class="text-light  text-center respuesta-reactivo elementoDrag bien"
-                                                                                          style="width: 140px; margin: 0 auto;">
-                                                                                          <p class="fw-bold" style="font-size: 22px;">
-                                                                                            nariz
-                                                                                          </p>
-                                                                                        </div>
-                                                                                        <div id="<%= respuesta.id_respuesta %>"
-                                                                                          class="text-light  text-center respuesta-reactivo elementoDrag bien"
-                                                                                          style="width: 140px; margin: 0 auto;">
-                                                                                          <p class="fw-bold" style="font-size: 22px;">
-                                                                                            boca
-                                                                                          </p>
-                                                                                        </div>
-                                                                                        
-                                                                                        <% }); %>
-                                                                  
-                                                                                  </div>
-                                                                                </div>
-                                                                              </div>
-                                                                            </div>
-                                                                          </div>
-                                                                        </div>
-                                                                      </div>
-                                                                    </div>
-                                                                  </div>
-                                                                  <!--Termina PDrag-->
 
                                                                 <%}else { %>
                                                                   <!--P Imagen-->
@@ -605,75 +540,7 @@
                                                                   </div>
                                                                   <!--P Imagen-->
 
-                                                                  <!--P Imagen-->
-                                                                  <div class="d-flex justify-content-center">
-                                                                    <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
-                                                                      <div class="card-body border border-1 fondor">
-                                                                        <div class="row">
-                                                                        <div class="contanier-fluid ml-0 tipoAr">
-                                                                        
-                                                                          <h4 class="text-center text-dark">Coloca las palabras en el lugar correcto.</h4><br>
-                                                                        
-                                                                          <div class="row mt-3">
-                                                                            <div class="col sm-12  text-center">
-                                                                        
-                                                                              <div class="col-sm-12">
-                                                                        
-                                                                                <!--Lienzo-->
-                                                                                <div class="replica row mx-auto" id="<%= i %>">
-                                                                                  <% var iteracionLienzo=i%>
-                                                                                 
-                                                                                    <div class="col">
-                                                                                      <div class="recuadro text-light" style="background-color: #ee6785; margin-top: 35px;"><p style="padding-top: 8px;">nariz</p> </div>
-                                                                                      <img src="/img/diagonalderinvertida.png" style="margin-bottom: 35px !important; height: 65px; width: 45px;" alt="">
-                                                                                      <img src="/img/prueba.jpg" class="img-drag img-replica">
-                                                                                      <img src="/img/diagonalderinvertida2.png" style="height: 65px; width: 45px;" alt="">  
-                                                                                      <div class="recuadro text-light" style="background-color: #53c3c4; margin-top: 38px;"><p style="padding-top: 8px;">boca</p> </div>
-                                                                                    </div>
-                                                                                 
-                                                                        
-                                                                                </div>
-                                                                                <!--Lienzo-->
-                                                                              </div>
-                                                                            </div>
-                                                                        
-                                                                        
-                                                                          </div>
-                                                                          <div class="row mx-auto" style="margin: 0 auto; justify-content: center;">
-                                                                            <div class="col-lg-9 col-md-6 col-sm-6 text-center contenedor-palabras mt-5">
-                                                                              <div class="bg-primary py-3 shadow bg-body rounded-3 border border-dark">
-                                                                                <h3 class="text-light mb-3">Palabras:</h3>
-                                                                                <div class="contenedor">
-                                                                                  <%var respuestas=quizz.cuestionario[i].respuesta %>
-                                                                                    <% respuestas.forEach (function (respuesta){ %>
-                                                                        
-                                                                                      <div id="<%= respuesta.id_respuesta %>"
-                                                                                        class="text-light  text-center respuesta-reactivo elementoDrag mal"
-                                                                                        style="width: 140px; margin: 0 auto;">
-                                                                                        <p class="fw-bold" style="font-size: 22px;">
-                                                                                          nariz
-                                                                                        </p>
-                                                                                      </div>
-                                                                                      <div id="<%= respuesta.id_respuesta %>"
-                                                                                        class="text-light  text-center respuesta-reactivo elementoDrag mal"
-                                                                                        style="width: 140px; margin: 0 auto;">
-                                                                                        <p class="fw-bold" style="font-size: 22px;">
-                                                                                          boca
-                                                                                        </p>
-                                                                                      </div>
-                                                                        
-                                                                                      <% }); %>
-                                                                        
-                                                                                </div>
-                                                                              </div>
-                                                                            </div>
-                                                                          </div>
-                                                                        </div>
-                                                                        </div>
-                                                                      </div>
-                                                                    </div>
-                                                                  </div>
-                                                                  <!--P Imagen-->
+                                                               
 
                                                                   <% } %>
                                                                     <% break; case "tipoM" : %>
@@ -755,17 +622,7 @@
                                                                               <% break; case "tipoAr" : %>
 
                                                                               <% var pDrag=true %>    
-                                                                                                 
-                                                                                                       
-
-                                                                                <div class="d-flex justify-content-center">
-                                                                                  <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
-                                                                                    <div class="card-body border border-1 fondor">
-
-                                                                                    </div>
-                                                                                  </div>
-                                                                                </div>
-
+                                                                       
                                                                                   <!--P Drag-->
                                                                                   <div class="d-flex justify-content-center">
                                                                                     <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10 bg-success">
@@ -782,7 +639,8 @@
                                                                                   
                                                                                                   <!--Lienzo-->
                                                                                                   <div class="replica row mx-auto" id="<%= i %>">
-                                                                                                            <!------Creacion de los recuadros con retroalimentación-->
+                                                                                                            <!------Plantilla para la retroalimentación de reactivos-->
+                                                                                                            <!--
                                                                                                     <div class="contenedorRecuadro" id="valor"  >
                                                                                                       <div class="contenidoRecuadro">Texto</div>
                                                                                                       <div class="recuadroBien"></div>
@@ -793,15 +651,24 @@
                                                                                                       <div class="contenidoRecuadro">Texto</div>
                                                                                                       <div class="recuadroMal"></div>
                                                                                                     </div>
-                                                                                                    
+                                                                                                  -->
                                                                                                     <% var respuestas= respuestaAlumnoElegida[0].respuestas[i].respuestaA%>
-                                                                                                    <% respuestas.forEach (function (respuesta){ %>
-                                                                                                      <div class="contenedorRecuadro" id="valor"  >
-                                                                                                        <div class="contenidoRecuadro"><%= respuesta.contenido %></div>
-                                                                                                        <div class="recuadroBien"></div>
-                                                                                                      </div>
-                                                                                                      
-                                                                                                      <% }); %>      
+                                                                                                    <% var revision= respuestaAlumnoElegida[0].respuestas[i].revision%>
+                                                                                                    <%for(var d=0;d<=revision.length-1;d++){%>
+                                                                                                      <%
+                                                                                                      if(revision[d]){%>
+                                                                                                        <div class="contenedorRecuadro" id="<%= respuestas[d].id_pregunta %>"  >
+                                                                                                          <div class="contenidoRecuadro"><%= respuestas[d].contenido %></div>
+                                                                                                          <div class="recuadroBien"></div>
+                                                                                                        </div>
+                                                                                                      <%}
+                                                                                                      else{%>
+                                                                                                        <div class="contenedorRecuadro" id="<%= respuestas[d].id_pregunta %>"  >
+                                                                                                          <div class="contenidoRecuadro"><%= respuestas[d].contenido %></div>
+                                                                                                          <div class="recuadroMal"></div>
+                                                                                                        </div>
+                                                                                                      <%}%>
+                                                                                                      <%}%>
                                                                                                    <!----- ---------->
                                                                                                     <% var iteracionLienzo=i%>
                                                                                                       <div class="col">
@@ -821,7 +688,28 @@
                                                                                                 <div class="bg-primary py-3 shadow bg-body rounded-3 border border-dark">
                                                                                                   <h3 class="text-light mb-3">Palabras:</h3>
                                                                                                   <div class="contenedor">
-                                                                                                    <%var respuestas=quizz.cuestionario[i].respuesta %>
+                                                                                                    <%for(var d=0;d<=revision.length-1;d++){%>
+                                                                                                      <%
+                                                                                                      if(revision[d]){%>
+                                                                                                        <div 
+                                                                                                        class="text-light  text-center bien"
+                                                                                                        style="width: 140px; margin: 0 auto;">
+                                                                                                        <p class="fw-bold" style="font-size: 22px;">
+                                                                                                          <%= respuestas[d].contenido %>
+                                                                                                        </p>
+                                                                                                      </div>
+                                                                                                      <%}
+                                                                                                      else{%>
+                                                                                                        <div 
+                                                                                                        class="text-light  text-center  mal"
+                                                                                                        style="width: 140px; margin: 0 auto;">
+                                                                                                        <p class="fw-bold" style="font-size: 22px;">
+                                                                                                          <%= respuestas[d].contenido %>
+                                                                                                        </p>
+                                                                                                      </div>
+                                                                                                      <%}%>
+                                                                                                      <%}%>
+                                                                                               
                                                                                                     <!--
                                                                                                       <% respuestas.forEach (function (respuesta){ %>
                                                                                   
@@ -1050,16 +938,9 @@
             <script>
               respuestaAlumnoElegida[0].respuestas[i].respuestaA
 
-              var iteracion=0;
               var reactivos =<%- JSON.stringify(quizz.cuestionario[0].pregunta[1]) %>;
               var flechas =<%- JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[2]) %>;
-              //Respuestas del Alumno de la iteracion.
-              var resAI=<%- JSON.stringify(respuestaAlumnoElegida[0].respuestas[iteracion].respuestaA) %>;
-              //revision de la iteración
-              var revI=<%- JSON.stringify(respuestaAlumnoElegida[0].respuestas[iteracion].revision) %>;
-
-              console.log(resAI);
-              console.log(revI);
+            
 
             </script>
             <% } %>
