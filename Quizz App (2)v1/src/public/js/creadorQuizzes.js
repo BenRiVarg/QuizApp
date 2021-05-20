@@ -15,8 +15,7 @@ var objetosDrag=[];
 var contadorid = 0 ;
 var numeracionPregunta=1;
 
-            //Simulación de un solo lienzo
-//objetosDrag[0]=lienzo;
+           
 //Variable global para dar ids que nunca se repitan para los elementos de las Preguntas Drag
 var contadorIDrag=0;
 //Variable exclusiva para los ids de los lienzos
@@ -106,6 +105,9 @@ function colorido(){
 
 //pregunta arrastrable//
 //---------Comienzan Funciones Drag--------//
+
+//Simulación de un solo lienzo
+backDrag()
 function backDrag(){
   var lienzo={
     id:0,
@@ -281,13 +283,40 @@ function cuadros(obj) {
 }, 3000);
   }
   else{
+    //Inserción en el lienzo con cantidad
     var idRecuadro;
+    var lienzoID=lienzo.id;
+    //Numero para ingresar en el objeto correcto
+    var identificadorObjeto=Number.parseInt(lienzoID.substr((lienzoID.length-1),lienzoID.length));
+
+  
+
+    
     for (var i = 0; i < cantidad; i++) {
       idRecuadro="reactivo"+contadorIDrag;
       var strVar = '  <div id=\"'+idRecuadro+'\" class=\" recuadro elementoDrag reactivo\"><\/div>';
       lienzo.insertAdjacentHTML("afterBegin", strVar);
      // lienzo.children[0].insertAdjacentHTML("beforeend", strVar);
       contadorIDrag++;
+
+      //Apartado para construir los objetos Lienzo
+      var pregunta={
+        id:idRecuadro
+      }
+  
+      var respuesta={
+        id_respuesta: "",
+        contenido:"",
+        id_pregunta:idRecuadro
+      }
+  
+      var datos={
+        operacion: "preg-res",
+        pregunta: pregunta,
+        respuesta: respuesta,
+      }
+
+      construirObjLienzo(identificadorObjeto,datos)
     }
     arrastrable();
     activarReactivo();
@@ -296,6 +325,7 @@ function cuadros(obj) {
 }
 
 function flechaAbajo(obj){
+  console.log(contadorIDrag);
   var preguntaContenedora=buscarLienzo(obj);
   
   var contenedor=preguntaContenedora.contenedor;
@@ -318,7 +348,7 @@ function flechaAbajo(obj){
   else{//Inserción de flechas según el input
     var strVar="";
     for (var i = 0; i < cantidad; i++) {
-      strVar += '<img class="flecha arriba elementoDrag" id="fdo"'+contadorIDrag+'" src="/img/flechav.png" alt="">';
+      strVar += '<img class=\"flecha arriba elementoDrag\" id=\"fdo'+contadorIDrag+'\" src="/img/flechav.png" alt="">';
       contadorIDrag++
     }
     lienzo.insertAdjacentHTML("afterBegin", strVar);
@@ -1608,43 +1638,7 @@ function validarPreguntaOM(){
   if(respuesta && errorRespuesta){
     errorRespuesta.remove();
   }
-      /*
-      if(!error&& errorHTML){
-        errorHTML.remove()
-      }
-
-      if(error && !errorHTML){
-        console.log("ejecutandose");
-        var strVar="";
-            strVar += "  <div class=\"Error container\">";
-            strVar += "          <div class=\" row justify-content-center\">";
-            strVar += "            <div class=\" fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
-            strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
-            strVar += "            <\/div>";
-            strVar += "          <\/div>";
-            strVar += "        <\/div>";
-    contenedorErrores.insertAdjacentHTML("afterbegin",strVar);  
-  }
-  
-
       
-
-  if(!respuesta && !errorRespuesta){
-    var strVar="";
-        strVar += "<div class=\" ErrorR container\">";
-        strVar += "          <div class=\" row justify-content-center mb-3\">";
-        strVar += "            <div class=\"Error fw-bold col-10 mx-auto p-1 m-1 text-center mb-3 border border-danger\">";
-        strVar += "              <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: No has seleccionado una Respuesta<\/p>";
-        strVar += "            <\/div>";
-        strVar += "          <\/div>";
-        strVar += "        <\/div>";
-    contenedorErrores.insertAdjacentHTML("beforeend",strVar);
-  }
-
-  if(respuesta && errorRespuesta){
-    errorRespuesta.remove();
-  }
-  */
       }
 }
 
@@ -1871,6 +1865,76 @@ function envioPreguntaMate(){
 
   
 }
+
+function validarPreguntaDrag(){
+
+  var i=0;
+  var cuestionarios=document.getElementsByClassName("tipoAr");
+
+  
+  for(i=0;i<cuestionarios.length;i++){
+      var cuestionario=cuestionarios[i];
+      var instruccion=cuestionario.querySelector("input.instrucciones");
+      console.log(instruccion);
+  }
+      /*
+      var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
+      var instrucciones=cuestionarios[i].querySelectorAll("div input.instrucciones")[0].value;
+      var reactivos=cuestionario.querySelectorAll("div.contenedorItem input.pregunta");
+
+      for(j=0;j<reactivos.length;j++){
+        var pregunta = cuestionario.querySelectorAll("div.contenedorItem input.pregunta");
+        elementosValidacion.push(pregunta[j]);
+
+        var respuesta = cuestionario.querySelectorAll("div.contenedorItem input.respuesta");
+        elementosValidacion.push(respuesta[j]);
+
+      }
+
+      var errorHTML=cuestionario.querySelectorAll("div.Error")[0];
+     
+      var error=false;
+
+      
+      for(var k=0;k<elementosValidacion.length;k++){
+        var valorCampo=elementosValidacion[k].value
+        if(valorCampo.length==0){
+          
+        
+          error=true;
+          break;
+        
+        }
+      }
+
+     
+     
+      console.log(!instrucciones);
+    // Si hay errores y No hay mensaje
+    if( (error || !instrucciones) && (!errorHTML)){
+      //Escribe mensaje
+      var strVar="";
+          strVar += "      <div class=\" row justify-content-center mb-4\">";
+          strVar += "          <div class=\"Error fw-bold col-10 mx-auto p-3 m-1 text-center mb-3 border border-danger\">";
+          strVar += "            <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: Faltan Campos por Rellenar<\/p>";
+          strVar += "          <\/div>";
+          strVar += "        <\/div>";
+
+      contenedorErrores.insertAdjacentHTML("afterbegin",strVar);
+      
+      }
+
+      if( (!error && instrucciones) && errorHTML){
+        errorHTML.remove();
+      }
+    
+    
+      
+   
+  }
+ */
+}
+
 
 function enviarPreguntaDrag(datosRequest){
   /*

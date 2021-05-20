@@ -1115,7 +1115,7 @@ router.get('/cuarto', (req, res) => {
 
 router.get('/cuarto2', async (req, res) => {
   
-  res.render('laboratorioDrag');
+  res.render('cuartoPruebas2');
 })
 
 router.get('/plantillaRevision',(req, res)=>{
