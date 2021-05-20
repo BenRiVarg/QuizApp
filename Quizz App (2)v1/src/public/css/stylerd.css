@@ -229,9 +229,9 @@ img {
 .img-fluid {
   margin: 0 auto;
   display: block;
-  margin-top: 115px;
+  margin-top: 144px;
   width: 398px !important;
-  height: 299px;
+  height: 250px;
   /* margin: 0 auto; */
   background-size: cover;
 }
