@@ -489,9 +489,23 @@
                                                         <!---->
 
                                                         <!--Antigua Replica-->
-                                                        <div class="replica row mx-auto" id="lienzo<%= i %>">
-                                                         
-                                                          <% var iteracionLienzo=i %>
+                                                        <div class="replica row mx-auto" id="replica<%= i %>">
+                                                          <% var reactivos=quizz.cuestionario[i].pregunta[1] %>
+                                                          <%  reactivos.forEach (function (reactivo){ %>
+                                                              <div class="reactivoDrop" id="<%=reactivo.id%>"  ondrop="drop(event,this)">
+                                                                <div class="contenidoDrop"></div>
+                                                                <div class="cajaDrop"></div>
+                                                              </div>
+                                                            <%});%>
+                                                          <!--INserción reactivos-->
+                                                          <!--
+                                                          <div class="reactivoDrop" id="<%= quizz.cuestionario[i].pregunta[1][0].id%>"  ondrop="drop(event,this)">
+                                                            <div class="contenidoDrop"></div>
+                                                            <div class="cajaDrop"></div>
+                                                          </div>
+                                                        -->
+                                                          <!--Termina insercion-->
+
                                                             <div class="col">
                                                               
                                                               <img 
@@ -609,140 +623,114 @@
   <% if (pDrag) { %>
     <script>
       backLienzo();
-      var preguntasAr = document.getElementsByClassName("tipoAr");
+      //var preguntasAr = document.getElementsByClassName("tipoAr");
+      var cuestionarios =<%- JSON.stringify(quizz.cuestionario) %>;
+      var reactivo;
+      for(var i=0;i<cuestionarios.length; i++){
+        if(cuestionarios[i].tipo=="tipoAr"){
+         
+          var reactivos=cuestionarios[i].pregunta[1];
+          var flechas =cuestionarios[i].pregunta[2];
 
-      var replica = preguntasAr[0].querySelectorAll("div.replica")[0];
-      var reactivos =<%- JSON.stringify(quizz.cuestionario[0].pregunta[1]) %>;
-      var flechas =<%- JSON.stringify(quizz.cuestionario[iteracionLienzo].pregunta[2]) %>;
-      for( x in reactivos){
+          var lienzoReplica=cuestionarios[i].pregunta[1].parentElement;
+          for( x in reactivos){
 
-        var strVar="";
-        //------strVar += "  <div class=\"reactivoDrop\" id=\""+reactivos[x].id+"\"  ondrop=\"drop(event,this)\">";
-        /*
-          strVar += "<div class=\"reactivoDrop\" id=\""+reactivos[x].id+"\"  ondrop=\"drop(event,this)\">";
-        strVar += "    <div><\/div>";
-        strVar += "  <\/div>";
-        */
-
-     //   strVar += "  <div class=\"reactivoDrop\" id=\""+reactivos[x].id+"\"  ondrop=\"drop(event,this)\">";
-        strVar += "  <div class=\"reactivoDrop\" id=\""+reactivos[x].id+"\"  >";
-        strVar += "                                <div class=\"contenidoDrop\">Texto<\/div>";
-        strVar += "                                <div class=\"recuadro cajaDrop\"><\/div>";
-        strVar += "                              <\/div>";
-          
-        replica.insertAdjacentHTML("afterBegin",strVar);
-
-        var reactivo=document.getElementById(reactivos[x].id);
-          /*
-        var reactivo=document.createElement("DIV");
-        reactivo.id=reactivos[x].id;
-        reactivo.className="reactivoDrop";
-        */
-
-
-        reactivo.style.top=reactivos[x].top+"px";
-        reactivo.style.left=reactivos[x].left+"px";
-        //insertorReplica.appendChild(reactivo);
-        }
-      
-        for (y in flechas) {
-
-          //Obtención de los Datos para ver que tipo de Flecha es
-          var claveFlecha = flechas[y].id
-          var tipoFlecha = claveFlecha.substr(0, 3);
-          var imagenFlecha = document.createElement("IMG");
-          switch (tipoFlecha) {
-            case "fdo":
-              imagenFlecha.src = "/img/flechav.png";
-              imagenFlecha.className = "flecha arriba imagenes";
-              imagenFlecha.style.top = flechas[y].top + "px";
-              imagenFlecha.style.left = flechas[y].left + "px";
-              break;
-            case "fid":
-              imagenFlecha.src = "/img/flechah.png";
-              imagenFlecha.className = "flecha hor imagenes";
-              imagenFlecha.style.top = flechas[y].top + "px";
-              imagenFlecha.style.left = flechas[y].left + "px";
-              break;
-              /*
-            case "fdi":
-              imagenFlecha.src = "/img/flechaHoIz.png.png";
-              imagenFlecha.className = "flecha imagenes";
-              imagenFlecha.style.top = flechas[y].top + "px";
-              imagenFlecha.style.left = flechas[y].left + "px";
-              break;
-            case "fsi":
-              imagenFlecha.src = "/img/flechadigaiz.png";
-              imagenFlecha.className = "flecha diagonal";
-              imagenFlecha.style.top = flechas[y].top + "px";
-              imagenFlecha.style.left = flechas[y].left + "px";
-              break;
-              */
-            case "fsd":
-              imagenFlecha.src = "/img/diagonalderinvertida2.png";
-              imagenFlecha.className = "flecha diagonal";
-              imagenFlecha.style.top = flechas[y].top + "px";
-              imagenFlecha.style.left = flechas[y].left + "px";
-              break;
-              /*
-            case "fai":
-              imagenFlecha.src = "/img/diagonalizinvertida.png";
-              imagenFlecha.className = "flecha diagonal";
-              imagenFlecha.style.top = flechas[y].top + "px";
-              imagenFlecha.style.left = flechas[y].left + "px";
-              break;
-              */
-            case "fad":
-              imagenFlecha.src = "/img/diagonalderinvertida.png";
-              imagenFlecha.className = "flecha diagonal";
-              imagenFlecha.style.top = flechas[y].top + "px";
-              imagenFlecha.style.left = flechas[y].left + "px";
-              break;
-
+            reactivo=document.getElementById(reactivos[x].id);
+            reactivo.style.top=reactivos[x].top+"px";
+            reactivo.style.left=reactivos[x].left+"px";
+            //console.log(reactivo);
+            //Extracción del lienzo donde se está trabajando por iteración
+            if(x==0){
+              lienzoReplica=reactivo.parentElement;
+            }
           }
-          replica.appendChild(imagenFlecha);
-        }
+         // console.log(lienzoReplica);
 
+          for (y in flechas) {
+
+              //Obtención de los Datos para ver que tipo de Flecha es
+              var claveFlecha = flechas[y].id
+              var tipoFlecha = claveFlecha.substr(0, 3);
+              var imagenFlecha = document.createElement("IMG");
+              switch (tipoFlecha) {
+                case "fdo":
+                  imagenFlecha.src = "/img/flechav.png";
+                  imagenFlecha.className = "flecha arriba imagenes";
+                  imagenFlecha.style.top = flechas[y].top + "px";
+                  imagenFlecha.style.left = flechas[y].left + "px";
+                  break;
+                case "fid":
+                  imagenFlecha.src = "/img/flechah.png";
+                  imagenFlecha.className = "flecha hor imagenes";
+                  imagenFlecha.style.top = flechas[y].top + "px";
+                  imagenFlecha.style.left = flechas[y].left + "px";
+                  break;
+                  /*
+                case "fdi":
+                  imagenFlecha.src = "/img/flechaHoIz.png.png";
+                  imagenFlecha.className = "flecha imagenes";
+                  imagenFlecha.style.top = flechas[y].top + "px";
+                  imagenFlecha.style.left = flechas[y].left + "px";
+                  break;
+                case "fsi":
+                  imagenFlecha.src = "/img/flechadigaiz.png";
+                  imagenFlecha.className = "flecha diagonal";
+                  imagenFlecha.style.top = flechas[y].top + "px";
+                  imagenFlecha.style.left = flechas[y].left + "px";
+                  break;
+                  */
+                case "fsd":
+                  imagenFlecha.src = "/img/diagonalderinvertida2.png";
+                  imagenFlecha.className = "flecha diagonal";
+                  imagenFlecha.style.top = flechas[y].top + "px";
+                  imagenFlecha.style.left = flechas[y].left + "px";
+                  break;
+                  /*
+                case "fai":
+                  imagenFlecha.src = "/img/diagonalizinvertida.png";
+                  imagenFlecha.className = "flecha diagonal";
+                  imagenFlecha.style.top = flechas[y].top + "px";
+                  imagenFlecha.style.left = flechas[y].left + "px";
+                  break;
+                  */
+                case "fad":
+                  imagenFlecha.src = "/img/diagonalderinvertida.png";
+                  imagenFlecha.className = "flecha diagonal";
+                  imagenFlecha.style.top = flechas[y].top + "px";
+                  imagenFlecha.style.left = flechas[y].left + "px";
+                  break;
+
+              }
+              lienzoReplica.appendChild(imagenFlecha);
+              }
+
+        }
+      }
+     
+      /*
+      for(var i=0;i<preguntasAr.length; i++){
+        pregunta=preguntasAr[i];
+
+        //Obtención de los ids de las replicas
+        var idReplica=pregunta.querySelectorAll("div.replica")[0].id;
+        var iteracion=Number.parseInt(idReplica.slice((idReplica.length-1),idReplica.length));
+        var cuestionarios =<%- JSON.stringify(quizz.cuestionario) %>;
+        console.log(cuestionarios[0].tipo);
+      }
+      */
         activarDragQuizz(); //arrastrable();
         activarItemsDrop();//activarReactivo();
     </script>
     <% } %>
+
+    
       <script>
         var QuizzTotales = "<%- quizz.cuestionario.length %>";
         getTotal(QuizzTotales);
 
       </script>
-      <!--
-      <script>
-        var cookies = document.cookie;
-        var session = window.sessionStorage;
-        var local = window.localStorage;
-        var formularios = document.forms;
-
-        console.log("Galletas");
-        console.log(cookies);
-        console.log("Session");
-        console.log(session);
-        console.log("local")
-        console.log(local);
-        console.log(formularios);
-      // window.location.hash = "no-back-button";
-      //    window.location.hash = "Again-No-back-button";//esta linea es necesaria para chrome
-      //    window.onhashchange = function () { window.location.hash = "no-back-button"; } 
-      </script>
-      -->
-      <script>
-        /*  if (window.performance.navigation.type == 1) {
-             if (confirm('Desea Actualizar ? ')) {
-               location.href = "http://localhost:8443/alumnos/examen/5febb0a7e9f19b27bd271788";
-             }
-             else {
-               alert('Correcto');
-             }
-           } */
-
-
-      </script>
+    
+   
 </body>
 
 </html>

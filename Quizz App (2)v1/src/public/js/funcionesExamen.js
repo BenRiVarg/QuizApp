@@ -497,13 +497,22 @@ function backLienzo(){
   ---*/
 
   var lienzos=document.getElementsByClassName("replica");
+
+  console.log("BackLIenzo");
+  console.log("_____________________");
+
+
   var objLienzo={iteracion:0,
                  respuestasA: []}
-  for(var l=0;l<lienzos.length;l++){
 
+  for(var l=0;l<lienzos.length;l++){
+    var lienzoID=lienzos[l].id;
+    iteracion=Number.parseInt(lienzoID.slice((lienzoID.length-1),lienzoID.length));
+
+    var objLienzo={iteracion:iteracion,
+                  respuestasA: []};
     arrayLR.push(objLienzo);
   }
-
 }
 //Función para procesar como se comportan los elementos cuando caen
 //e es el evento
@@ -559,7 +568,6 @@ function validarRespuesta(lienzo,el,itemDrop,opcion){
       console.log("validarRespuesta");
       console.log("___________________");
 
-      console.log(lienzo)
       //Quitar Espacios en blanco
       var contenido=(el.textContent).replace(/^\s+|\s+$/gm,'');
       var respuesta = {
@@ -574,7 +582,7 @@ function validarRespuesta(lienzo,el,itemDrop,opcion){
       BuscarRespuesta(lienzo,respuesta.id_pregunta, respuesta);
 
 
-  
+  console.log(arrayLR);
   
 }
 
@@ -583,6 +591,8 @@ function BuscarRespuesta(lienzo,id_buscado, respuesta) {
   console.log("__________")
   var l;
   var x;
+  console.log(lienzo);
+  console.log(arrayLR);
   //Busqueda del espacio en arrayLR que le corresponde a la itreacion =lienzo
   for(l in arrayLR){
           //Si encuentra la iteracion

@@ -1875,7 +1875,12 @@ function validarPreguntaDrag(){
   for(i=0;i<cuestionarios.length;i++){
       var cuestionario=cuestionarios[i];
       var instruccion=cuestionario.querySelector("input.instrucciones");
-      console.log(instruccion);
+
+      var imagen=cuestionario.querySelectorAll("input.imgs")[0];
+      var valorImagen=imagen.files[0];
+
+      var lienzoID=cuestionaro.querySelectorAll("div.lienzo")[0].id;
+      console.log(lienzoID);
   }
       /*
       var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
