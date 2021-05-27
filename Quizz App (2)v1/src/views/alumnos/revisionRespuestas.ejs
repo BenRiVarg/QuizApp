@@ -13,6 +13,102 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Revision</title>
+  <style>
+    .content {
+    padding-top: 6%;
+    vertical-align: middle;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+      .responsivePG {
+        margin: 8px;
+      }
+
+      .lienzo {
+        margin-left: 68px;
+      }
+    }
+    .contenedorIMG{
+      position: absolute; /* top: 205px; left: 165px; */
+      width: 584px;
+      height: 250px;
+      margin: 0 auto;
+      line-height: 524px;
+    }
+    .contenedorIMG img{
+      margin: 0 auto;
+      padding: 0 auto;
+      width: 380px;
+    }
+
+    .contenedorIMG2{
+      position: absolute; /* top: 205px; left: 165px; */
+      width: 584px;
+      height: 250px;
+      margin: 0 auto;
+      line-height: 524px;
+    }
+      .contenedorIMG2 img{
+      padding: 0;
+      margin: 0 auto;
+      width: 380px;
+      margin-left: 103px !important;
+
+    }
+
+  .reactivoDrop {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+
+  /*
+  background-color: blue;
+  opacity: 0.2; */
+
+  z-index: 4;
+}
+
+.contenidoDrop {
+  position: absolute;
+  color: white;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  padding-top: 10px;
+  z-index: 3;
+}
+
+.cajaDrop {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 2;
+}
+
+.diagonal {
+      height: 90px;
+      width: 70px;
+    }
+    
+   .arriba {
+      width: 48px;
+      height: 61px;
+    }
+    
+
+    .hor {
+      width: 95px;
+      height: 22px;
+    }
+
+    .flecha {
+      position: absolute;
+      z-index: 2;
+    }
+  </style>
 </head>
 
 <body style="background-color: #c4d2e7;">
@@ -675,7 +771,10 @@
                                                                                   
                                                                                                         <img src="/img/prueba.jpg" class="img-drag img-replica">
                                                                                                       </div>
-                                                                                  
+                                                                                                      <img src="/img/diagonalderinvertida.png" alt="">
+                                                                                                      <img src="/img/diagonalderinvertida2.png" alt="">
+                                                                                                      <img src="/img/flechav.png" alt="">
+                                                                                                      <img src="/img/flechah.png" alt="">
                                                                                                   </div>
                                                                                                   <!--Lienzo-->
                                                                                                 </div>
