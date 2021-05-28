@@ -498,9 +498,7 @@ function backLienzo(){
 
   var lienzos=document.getElementsByClassName("replica");
 
-  console.log("BackLIenzo");
-  console.log("_____________________");
-
+  
 
   var objLienzo={iteracion:0,
                  respuestasA: []}
@@ -778,12 +776,13 @@ fetch('/editores/troll', {
   request.onreadystatechange = function (aEvt) {
     if (request.readyState == 4) {
        if(request.status == 200){
-        console.log(request.responseText);
+        console.log(JSON.parse(request.responseText));
         
-        //var nuevoQID=request.responseText;
-        //var link="/visualizar/"+nuevoQID;
+        //ID de la nueva Revisión
+        var nuevoRID=JSON.parse(request.responseText);
+        var link="/alumnos/revision/"+nuevoRID;
         //console.log(link)
-        //window.location.replace(link);
+        window.location.replace(link);
         
        }
        else

@@ -623,7 +623,6 @@
   <% if (pDrag) { %>
     <script>
       backLienzo();
-      //var preguntasAr = document.getElementsByClassName("tipoAr");
       var cuestionarios =<%- JSON.stringify(quizz.cuestionario) %>;
       var reactivo;
       for(var i=0;i<cuestionarios.length; i++){
@@ -644,7 +643,6 @@
               lienzoReplica=reactivo.parentElement;
             }
           }
-         // console.log(lienzoReplica);
 
           for (y in flechas) {
 
@@ -665,34 +663,14 @@
                   imagenFlecha.style.top = flechas[y].top + "px";
                   imagenFlecha.style.left = flechas[y].left + "px";
                   break;
-                  /*
-                case "fdi":
-                  imagenFlecha.src = "/img/flechaHoIz.png.png";
-                  imagenFlecha.className = "flecha imagenes";
-                  imagenFlecha.style.top = flechas[y].top + "px";
-                  imagenFlecha.style.left = flechas[y].left + "px";
-                  break;
-                case "fsi":
-                  imagenFlecha.src = "/img/flechadigaiz.png";
-                  imagenFlecha.className = "flecha diagonal";
-                  imagenFlecha.style.top = flechas[y].top + "px";
-                  imagenFlecha.style.left = flechas[y].left + "px";
-                  break;
-                  */
+                 
                 case "fsd":
                   imagenFlecha.src = "/img/diagonalderinvertida2.png";
                   imagenFlecha.className = "flecha diagonal";
                   imagenFlecha.style.top = flechas[y].top + "px";
                   imagenFlecha.style.left = flechas[y].left + "px";
                   break;
-                  /*
-                case "fai":
-                  imagenFlecha.src = "/img/diagonalizinvertida.png";
-                  imagenFlecha.className = "flecha diagonal";
-                  imagenFlecha.style.top = flechas[y].top + "px";
-                  imagenFlecha.style.left = flechas[y].left + "px";
-                  break;
-                  */
+              
                 case "fad":
                   imagenFlecha.src = "/img/diagonalderinvertida.png";
                   imagenFlecha.className = "flecha diagonal";
@@ -707,17 +685,7 @@
         }
       }
      
-      /*
-      for(var i=0;i<preguntasAr.length; i++){
-        pregunta=preguntasAr[i];
-
-        //Obtención de los ids de las replicas
-        var idReplica=pregunta.querySelectorAll("div.replica")[0].id;
-        var iteracion=Number.parseInt(idReplica.slice((idReplica.length-1),idReplica.length));
-        var cuestionarios =<%- JSON.stringify(quizz.cuestionario) %>;
-        console.log(cuestionarios[0].tipo);
-      }
-      */
+     
         activarDragQuizz(); //arrastrable();
         activarItemsDrop();//activarReactivo();
     </script>

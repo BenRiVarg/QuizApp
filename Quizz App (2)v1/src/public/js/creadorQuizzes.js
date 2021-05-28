@@ -604,6 +604,7 @@ function construirObjLienzo(lienzoID,datos){
         }
       }
       if (preguntaExistente){
+        console.log(x)
         //SobreEscritura de Datos
         console.log("Sobreescribiendo");
         objLienzo.respuesta[x]=datos.respuesta;
@@ -1879,8 +1880,19 @@ function validarPreguntaDrag(){
       var imagen=cuestionario.querySelectorAll("input.imgs")[0];
       var valorImagen=imagen.files[0];
 
-      var lienzoID=cuestionaro.querySelectorAll("div.lienzo")[0].id;
-      console.log(lienzoID);
+      var lienzoID=cuestionario.querySelectorAll("div.lienzo")[0].id;
+      var id=Number.parseInt(lienzoID.slice(lienzoID.length-1,lienzoID.length));
+
+      var objLienzo=objetosDrag[id];
+
+      //variable para conocer la respuesta de cada recuadros
+      var respuestas=objLienzo.respuesta;
+
+      var r;
+      //validar objeto Drag
+      for(r in respuestas){
+      console.log(respuestas[r].contenido.length==0);
+      }
   }
       /*
       var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
