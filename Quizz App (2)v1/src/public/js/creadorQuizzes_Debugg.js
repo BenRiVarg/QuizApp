@@ -676,6 +676,10 @@ function previsualizarDraw(){
             // Le decimos que cuando este listo ejecute el código interno
             reader.onload = function () {
               let preview = lienzo.querySelector("div.contenedorIMG2");
+              ///// Espacio para replica Debugg
+              var espacioReplica=document.getElementById("replica");
+              console.log(espacioReplica);
+              //
                 image = document.createElement("IMG");
               image.src = reader.result;
               image.className="img-PLienzo img-fluid";
@@ -702,8 +706,17 @@ function previsualizarDraw(){
                 preview.children[0].remove()
                 preview.appendChild(image)
               }
+             
               else{
-                preview.children[0].appendChild(image);
+                preview.children[0].appendChild(images);
+              }
+              var clon=image.cloneNode(false);
+              if(espacioReplica.children[0]){
+                espacioReplica.children[0].remove()
+                espacioReplica.appendChild(clon)
+              }
+              else{
+                espacioReplica.children[0].appendChild(clon);
               }
               contadorIDrag++;
           }
