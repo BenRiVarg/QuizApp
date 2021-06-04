@@ -1,125 +1,379 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Drag Mobile</title>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta http-equiv="cache-control" content="no-cache" />
+      <!--Estilos de Editores Crear-->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/editoresCrear.css">
+  
+    <title>Crear Examen</title>
+    <style>
+      .diagonal {
+        height: 90px;
+        width: 70px;
+      }
+  
+      .arriba {
+        width: 21px;
+        height: 61px;
+      }
+  
+      .hor {
+        width: 95px;
+        height: 22px;
+      }
+  
+      @media (max-width: 1600px) {
+        .responsivePG {
+          margin-left: 150px;
+        }
+      }
+  
+      @media (max-width: 1280px) {
+        .responsivePG {
+          margin-left: 30px;
+        }
+      }
+  
+      @media (max-width: 1024px) {
+        .responsivePG {
+          margin-left: 0;
+          margin: 0;
+        }
+  
+        .lienzo {
+          margin-top: 25px;
+        }
+      }
+  
+      @media (max-width: 768px) {
+        .responsivePG {
+          margin: 8px;
+        }
+  
+        .lienzo {
+          margin-left: 68px;
+        }
+      }
+      .contenedorIMG{
+        position: absolute; /* top: 205px; left: 165px; */
+        width: 584px;
+        height: 250px;
+        margin: 0 auto;
+        line-height: 524px;
+      }
+      .contenedorIMG img{
+        margin: 0 auto;
+        padding: 0 auto;
+        width: 380px;
+      }
+  
+      .contenedorIMG2{
+        position: absolute; /* top: 205px; left: 165px; */
+        width: 584px;
+        height: 250px;
+        margin: 0 auto;
+        line-height: 524px;
+      }
+        .contenedorIMG2 img{
+        padding: 0;
+        margin: 0 auto;
+        width: 380px;
+        margin-left: 103px !important;
+  
+      }
 
-  <style>
-    .droptarget {
-      float: left; 
-      width: 100px; 
-      height: 35px;
-      margin: 15px;
-      padding: 10px;
-      border: 1px solid #aaaaaa;
-    }
+      .contenedorIMG3{
+        position: absolute; /* top: 205px; left: 165px; */
+        width: 584px;
+        height: 250px;
+        margin: 0 auto;
+        line-height: 524px;
+      }
+
+       .contenedorIMG3 img{
+        
+        padding: 0;
+        margin: 0 auto;
+        width: 380px;  
+      }
     </style>
-    <script src="/mobile/index.min.js"></script>
-    <script src="/mobile/mobile.js"></script>
-    <script src="/mobile/scroll-behaviour.min.js"></script>
+    <!--Terminan Estilos Editores Crear-->
+    <!--Empieza estilo Quizz-->
+      <style>
+         .reactivoDrop {
+  position: absolute;
+  width: 100px;
+  height: 50px;
 
-    <link rel="stylesheet" href="/mobile/default.css">
-    <link rel="stylesheet" href="/mobile/icons.css">
-    <link rel="stylesheet" href="/mobile/debug.css">
-</head>
+    z-index: 4;
+  }
+
+  .contenidoDrop {
+    position: absolute;
+    color: white;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    padding-top: 10px;
+    z-index: 3;
+  }
+
+  .cajaDrop {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 2;
+  }
+      </style>
+      <!--Termina Estilo Quizz-->
+    </head>
+      
+
 <body>
-
-<p>Drag the p element back and forth between the two rectangles:</p>
-
-<div class="droptarget" id="inicial">
-  <p draggable="true" id="dragtarget">Drag me!</p>
+ <!--Empieza Nueva Pregunta Drag-->
+ <div id="preg1" class="tipoAr cuestionario justify-content-center mt-5 pt-5 nivel-Superior">
+  <div class=" mt-3">
+    <div class="text-center mb-5 mt-5">
+      <h3>Pregunta Arrastrable</h3>
+      <h4 class="text-primary">Intrucciones</h4>
+      <p class="fs-5 justify-content-center text">Coloca cada elemento que se te solicita abajo y lo podrás visualizar e
+        ir armando en el recuadro azul de la derecha.</p>
+    </div>
+    <div class="col-md-7 mb-4 text-center mx-auto"> <label for="formGroupExampleInput" class="form-label">Instrucciones
+        para el Alumno</label> <input type="text" class="form-control instrucciones"
+        placeholder="Instrucciones para el alumno" value="Responde lo que se te solicita"> </div>
+    <div class="row responsivePG">
+      <div class="col-xs-12 col-lg-5 col-md-4 col-sm-12">
+        <div class="rounded-pill"> <a
+            class="position-absolute top-0 start-0 translate-middle bg-primary rounded-pill text-light shadow border-1"
+            style="width: 3rem; height:3rem; margin-left: 10px;">
+            <p class="fs-4" style="padding-top: 4px; padding-left: 17px;">1</p>
+          </a> </div>
+        <div class="mt-5">
+          <h4 class="text-center mb-4">Busca la imagen que quieras agregar:</h4> <input  type="file"
+            class="form-control imgs L-file" accept="image/*" name="imgs">
+          <div class="mt-3 text-center">
+            <h4 class="text-dark mb-3">Coloca la cantidad de recuadros:</h4>
+            <div class="mb-3"> <input  type="number" placeholder="Cantidad:" class="form-control caRe" min="0"> </div>
+            <button type="button" class="btn btn-primary fw-bold" onclick="cuadros(this)">Crear</button>
+          </div>
+          <h4 class="text-dark mb-3 mt-3">Escribe las palabras que quieras agregar:</h4>
+          <div class="mb-3 text-center"> <input type="text" placeholder="Coloca las palabras:"
+              class="form-control palabrasCNT"> <button type="button" class="btn btn-primary fw-bold mt-3"
+              onclick="palabras(this)">Crear</button> </div>
+          <div class="mt-2 text-center">
+            <h4 class="text-dark mb-3">Coloca la cantidad de flechas:</h4>
+            <div class="mb-3"> <input  type="number" placeholder="Cantidad:" class="form-control caFle"> </div>
+            <h4 class="text-dark mb-3">Tipos de flecha:</h4> <button type="button" class="btn btn-primary fw-bold mb-3"
+              onclick="flechaHoDerecha(this)"><img src="/img/flechas/flechaDerecha.png" style="width: 40px !important;"
+                alt="Flecha derecha" height="25px;"></button> <button type="button" class="btn btn-primary fw-bold mb-3"
+              onclick="flechaDiaDerecha(this)"><img src="/img/flechas/lateralderechaarriba.png"
+                style="width: 28px !important;" alt="lateral derecha arriba" height="34px;"></button> <button
+              type="button" class="btn btn-primary fw-bold mb-3" onclick="flechaAbajo(this)"><img
+                src="/img/flechas/flechaAbajo.png" style="width: 20px !important;" alt="Flecha abajo"
+                height="34px;"></button> <button type="button" class="btn btn-primary fw-bold mb-3"
+              onclick="flechaDiaDerechaInv(this)"><img src="/img/flechas/lateralderechaabajo.png"
+                style="width: 30px !important;" alt="Lateral derecha abajo" height="30px;"></button>
+          </div>
+        </div> 
+      </div> <!-- Comienza Lienzo -->
+      <div class="col-xs-12 col-lg-5 col-md-6 col-sm-12 pl-3"><button type="button" class="btn btn-danger">Eliminar
+          elementos del lienzo</button>
+        <div class="lienzo shadow mt-3 mb-5 " id="lienzo0">
+          <div class="contenedorIMG2">
+          <!-- <img src="/img/noche.jpg" class="img-PLienzo img-fluid" >--> 
+            <img src="/img/prueba3.jpg" class="img-PLienzo img-fluid" >
+          </div>
+          <!--<div class="col-12 container"> </div>-->
+        </div>
+      </div> <!-- Termina Lienzo -->
+    </div>
+    <div class="editar text-center" role="group" aria-label="Basic mixed styles example" float="left" align="left"> <br>
+      <button type="button" class="btn btn-danger" onclick="eliminar(this)">Quitar Pregunta</button> </div>
+  </div>
+  <!--Botones que no forman parte-->
+  <Button class="mt-5"onclick="enviarPreguntaDrag();">Enviar Drag</Button>
+  
+  <Button  class="mt-5" onclick="replica();">Replicar</Button>
 </div>
 
-<div class="droptarget" id="final"></div>
 
-<p style="clear:both;"><strong>Note:</strong> drag events are not supported in Internet Explorer 8 and earlier versions or Safari 5.1 and earlier versions.</p>
-
-<p id="demo"></p>
-
+   <!--Visualización Quizz-->
+   <div class="carousel-item active">
+    <div class="d-flex justify-content-center ">
+      <div class="card shadow-lg p-3 my-3 bg-body rounded text-center col-sm-10 col-lg-10">
+  
+        <div class="card-body border border-1 ">
+          <!---->
+          <div class="contanier-fluid ml-0 tipoAr">
+  
+            <h4 class="text-center text-light">Coloca las palabras en el lugar correcto.</h4><br>
+  
+            <div class="row mt-3">
+              <div class="col sm-12  text-center">
+  
+                <div class="col-sm-12">
+  
+                 
+                  <!--Sustituto-->
+                  <div class="lienzo shadow mt-3 mb-5 " id="lienzoR">
+                    <div class="contenedorIMG3" id="replica">
+                    <!-- <img src="/img/noche.jpg" class="img-PLienzo img-fluid" >--> 
+                      <img src="/img/prueba3.jpg" class="img-PLienzo img-fluid" >
+                    </div>
+                    <!--<div class="col-12 container"> </div>-->
+                  </div>
+                </div> <!-- Termina Lienzo -->
+                  <!--Termina Sustituto-->
+                  <!--Antigua Replica-->
+                  <!--
+                  <div class="replica row mx-auto" id="lienzoR">
+                   
+                  
+                      <div class="col">
+                        
+                        <img src="/img/hapy.jpeg" class="img-PLienzo img-fluid" >
+                    
+                      </div>
+  
+                  </div>
+                
+                </div>
+              </div>
+            -->
+              <!--Termina Antigua Replica-->
+  
+            </div>
+            <div class="row mx-auto" style="margin: 0 auto; justify-content: center;">
+              <div class="col-lg-9 col-md-6 col-sm-6 text-center contenedor-palabras mt-5">
+                <div class="bg-primary py-3 shadow bg-body rounded-3 border border-dark">
+                  <h3 class="text-light mb-3">Palabras:</h3>
+                  <div class="contenedor contenedorPalabras" id="contPal">
+                    <p class="display-4">Contenedor Palabras</p>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!---->
+        </div>
+      </div>
+    </div>
+    <!--Termina P Texto-->
+  </div>
+   <!-- Termina Visualización Quizz-->
+<!--Scripts Editores Crear-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script src="/js/creadorQuizzes_Debugg.js" type="text/javascript"></script>
+<!--Terminan Scripts Editores Crear-->  
+<!--Scripts para el Quizz-->
 <script>
+  function replica(){
 
-function sound(src) {
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  this.sound.volume=0.3;
-  document.body.appendChild(this.sound);
-  this.play = function(){
-    this.sound.play();
-  }
-  this.stop = function(){
-    this.sound.pause();
-  }
+    var ojetoBack=objetosDrag[0]
+    var reactivos=ojetoBack.pregunta;
+    var flechas =ojetoBack.flecha;
+    //console.log(reactivos);
+    var replica=document.getElementById("lienzoR");
+    var x;
+    var numero=0;
+    for( x in reactivos){
 
-  this.reload= function(){
-    this.sound.load();
-  }
-} 
+                /*---------------Simulación de ids dinamicos-------*/
+                var id="simulacion"+numero;
+                numero++;
+                /*----------------------*/
+          var strVar="";
 
-//-------------Sonidos-------------//
 
-var  drag=new sound("/sonidos/drag.mp3");
-drag.sound.playbackRate=2;
-var drop=new sound("/sonidos/drop.mp3");
-drag.sound.playbackRate=2;
-var rechazo=new sound("/sonidos/rechazoDrag.mp3");
+          strVar += "  <div class=\"reactivoDrop\" id=\""+id+"\"  ondrop=\"drop(event,this)\">";
+          strVar += "                                <div class=\"contenidoDrop\">Texto<\/div>";
+          strVar += "                                <div class=\"recuadro cajaDrop\"><\/div>";
+          strVar += "                              <\/div>";
+            
+          replica.insertAdjacentHTML("afterBegin",strVar);
 
-//--------------------------------
+          var reactivo=document.getElementById(id);
+          console.log(reactivo);
+            
 
-  var casillaInicial=document.getElementById("inicial");
-  console.log(casillaInicial);
 
-  var casillaFinal=document.getElementById("final");
-  console.log(casillaFinal);
-  //var casillaFinal==document.querySelector("div.droptarget")[1];
-
-  casillaInicial.addEventListener("dragstart", function(event) {
-    // The dataTransfer.setData() method sets the data type and the value of the dragged data
-    event.dataTransfer.setData("Text", event.target.id);
+          reactivo.style.top=reactivos[x].top+"px";
+          reactivo.style.left=reactivos[x].left+"px";
+          //insertorReplica.appendChild(reactivo);
+          }
     
-    // Output some text when starting to drag the p element
-    document.getElementById("demo").innerHTML = "Started to drag the p element.";
-    
-    // Change the opacity of the draggable element
-    event.target.style.opacity = "0.4";
-  });
+          for (y in flechas) {
 
-   // When the draggable p element enters the droptarget, change the DIVS's border style
-   casillaFinal.addEventListener("dragenter", function(event) {
-     event.preventDefault();
-     event.stopPropagation();
-    if ( event.target.className == "droptarget" ) {
-      event.target.style.border = "3px dotted red";
-    }
-  });
+            //Obtención de los Datos para ver que tipo de Flecha es
+            var claveFlecha = flechas[y].id
+            var tipoFlecha = claveFlecha.substr(0, 3);
+            var imagenFlecha = document.createElement("IMG");
+            switch (tipoFlecha) {
+              case "fdo":
+                imagenFlecha.src = "/img/flechav.png";
+                imagenFlecha.className = "flecha arriba imagenes";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+              case "fid":
+                imagenFlecha.src = "/img/flechah.png";
+                imagenFlecha.className = "flecha hor imagenes";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+                /*
+              case "fdi":
+                imagenFlecha.src = "/img/flechaHoIz.png.png";
+                imagenFlecha.className = "flecha imagenes";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+              case "fsi":
+                imagenFlecha.src = "/img/flechadigaiz.png";
+                imagenFlecha.className = "flecha diagonal";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+                */
+              case "fsd":
+                imagenFlecha.src = "/img/diagonalderinvertida2.png";
+                imagenFlecha.className = "flecha diagonal";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+                /*
+              case "fai":
+                imagenFlecha.src = "/img/diagonalizinvertida.png";
+                imagenFlecha.className = "flecha diagonal";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
+                */
+              case "fad":
+                imagenFlecha.src = "/img/diagonalderinvertida.png";
+                imagenFlecha.className = "flecha diagonal";
+                imagenFlecha.style.top = flechas[y].top + "px";
+                imagenFlecha.style.left = flechas[y].left + "px";
+                break;
 
-  
-  casillaFinal.addEventListener("dragover", function(event) {
-    event.preventDefault();
-  });
-  
-  
-  casillaFinal.addEventListener("dragleave", function(event) {
-    if ( event.target.className == "droptarget" ) {
-      event.target.style.border = "";
-    }
-  });
-
-  casillaFinal.addEventListener("drop", function(event) {
-    event.preventDefault();
-    console.log(event.target);
-    if ( event.target.className == "droptarget" ) {
-      document.getElementById("demo").style.color = "";
-      event.target.style.border = "";
-      var data = event.dataTransfer.getData("Text");
-      event.target.appendChild(document.getElementById(data));
-    }
-  });
-
-  </script>
-  
+            }
+            replica.appendChild(imagenFlecha);
+            }
+  }
+</script>
+<!--Terminan Scripts para el Quizz-->
 </body>
 </html>

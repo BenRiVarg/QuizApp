@@ -547,6 +547,7 @@ $(".reactivo").droppable({
   drop: function (event, ui) {
 
     console.log("Detectando ID");
+    console.log("________________");
     elemento=ui.draggable;
     elemento=elemento[0];
     event.stopPropagation();
@@ -587,14 +588,24 @@ $(".reactivo").droppable({
 function construirObjLienzo(lienzoID,datos){
   
   var objLienzo=objetosDrag[lienzoID];
-  console.log(objLienzo);
   var operacion=datos.operacion;
   switch(operacion){
     case "preg-res":
-      
+      //////Revisamos primero si una respuesta ya está vinculada a algún elemento 
+     
+      var respuestasOL=objLienzo.respuesta;
+      var r;
+      for(r in respuestasOL){
+       
+        //Si encuentra la respuesta en otro elemento , desvincula el antiguo elemento
+        if(respuestasOL[r].id_respuesta==datos.respuesta.id_respuesta){
+          respuestasOL[r].id_respuesta="";
+          respuestasOL[r].contenido="";
+        }
+      }
       var x;
 
-      //Si ya existe el elemento
+      //Si ya existe el elemento con el mismo id de pregunta
       var preguntaExistente
       for(x in objLienzo.pregunta){
         var preguntaI=objLienzo.pregunta[x]
@@ -604,7 +615,6 @@ function construirObjLienzo(lienzoID,datos){
         }
       }
       if (preguntaExistente){
-        console.log(x)
         //SobreEscritura de Datos
         console.log("Sobreescribiendo");
         objLienzo.respuesta[x]=datos.respuesta;
@@ -1874,8 +1884,9 @@ function validarPreguntaDrag(){
 
   
   for(i=0;i<cuestionarios.length;i++){
+      //Revisión de los elementos que hay que enviar/////////
       var cuestionario=cuestionarios[i];
-      var instruccion=cuestionario.querySelector("input.instrucciones");
+      var instruccion=cuestionario.querySelector("input.instrucciones").value;
 
       var imagen=cuestionario.querySelectorAll("input.imgs")[0];
       var valorImagen=imagen.files[0];
@@ -1886,13 +1897,72 @@ function validarPreguntaDrag(){
       var objLienzo=objetosDrag[id];
 
       //variable para conocer la respuesta de cada recuadros
+      var preguntas=objLienzo.pregunta;
+      var flechas=objLienzo.flecha;
       var respuestas=objLienzo.respuesta;
 
+      var p;
       var r;
+      var f;
+
+      var mensajeEV="";
+      var errorEX=false;
+      if(flechas.length==0){
+        mensajeEV+="No hay flechas definidas o posicionadas. ";
+        errorEX=true;
+      }
+      if(preguntas.length==0){
+        mensajeEV+="No hay rectivos definidos. ";
+        errorEX=true;
+      }
+      
+      for(p in preguntas){
+        // Si existen recuadros y no estan ponsicionados
+        if(preguntas.length!=0 && !preguntas[p].top){
+          //console.log("ERROR cuadros sin mover");
+          mensajeEV+="Hay reactivos sin posicionar  ";
+          errorEX=true;
+        }
+      }
+      if(errorEX){
+      console.log(mensajeEV);
+      }
+
+      var errorCont=false
       //validar objeto Drag
       for(r in respuestas){
-      console.log(respuestas[r].contenido.length==0);
+        //Si hay reactivos y no hay respuestas
+      if(preguntas.length!=0 && respuestas[r].contenido.length==0){
+        console.log("ERROR Reactivos sin contenido");
+        errorCont=true;
+        break;
       }
+      }
+      //console.log(errorCont);
+
+      ////////////////////Inserción de los mensajes HTML//////////////
+      var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
+      var errorHTML=cuestionario.querySelectorAll("div.Error")[0];
+      console.log(errorHTML);
+      if(errorHTML){errorHTML.remove();}
+      var msgHTML=""
+      if( instruccion.length==0){msgHTML+="No has definido la Instrucción."}
+      if(!valorImagen){msgHTML+=" No has definido la Imagen."}
+
+      console.log("Debugg")
+      console.log(!errorHTML);
+      if( (instruccion.length==0 || !valorImagen) && !errorHTML){
+        //Escribe mensaje
+        var strVar="";
+            strVar += "      <div class=\" row justify-content-center mb-4\">";
+            strVar += "          <div class=\"Error fw-bold col-10 mx-auto p-3 m-1 text-center mb-3 border border-danger\">";
+            strVar += "            <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: "+msgHTML+"<\/p>";
+            strVar += "          <\/div>";
+            strVar += "        <\/div>";
+  
+        contenedorErrores.insertAdjacentHTML("afterbegin",strVar);
+        
+        }
   }
       /*
       var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
