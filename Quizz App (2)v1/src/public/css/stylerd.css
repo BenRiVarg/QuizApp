@@ -165,12 +165,11 @@ img {
 }
 
 .btn-flotante {
-  font-size: 20px;
+  font-size: 15px;
   /* Cambiar el tamaño de la tipografia */
   text-transform: uppercase;
   /* Texto en mayusculas */
-  font-weight: bold;
-  /* Fuente en negrita o bold */
+  
   color: black;
   /* Color del texto */
   border-radius: 5px;
@@ -187,6 +186,7 @@ img {
   transition: all 300ms ease 0ms;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   z-index: 99;
+  cursor: pointer;
 }
 
 .btn-flotante:hover {
@@ -229,9 +229,9 @@ img {
 .img-fluid {
   margin: 0 auto;
   display: block;
-  margin-top: 144px;
-  width: 398px !important;
-  height: 250px;
+  margin-top: 156px;
+  width: 380px !important;
+  height: 213.75px;
   /* margin: 0 auto; */
   background-size: cover;
 }
