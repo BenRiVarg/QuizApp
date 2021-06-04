@@ -257,7 +257,7 @@ router.get('/editores/crear', async (req, res) => {
 
 router.post('/editores/crear',upload.array('imgs'), async (req,res)=>{
   var imagenes=req.files;
-
+  console.log(imagenes);
   
   
   //console.log(req.body.nivel);

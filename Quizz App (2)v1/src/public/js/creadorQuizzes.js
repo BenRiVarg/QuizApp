@@ -814,7 +814,6 @@ function previsualizarDraw(){
         strVar += "            elementos del lienzo<\/button>";
         strVar += "          <div class=\"lienzo shadow mt-3 mb-5 \" id=\"lienzo"+idLienzo+"\">";
         strVar += "            <div class=\"contenedorIMG2\">";
-        strVar += "            <!-- <img src=\"\/img\/noche.jpg\" class=\"img-PLienzo img-fluid\" >--> ";
         strVar += "              <img src=\"\/img\/hapy.jpeg\" class=\"img-PLienzo img-fluid\" >";
         strVar += "            <\/div>";
         strVar += "            <!--<div class=\"col-12 container\"> <\/div>-->";
@@ -1944,7 +1943,7 @@ function validarPreguntaDrag(){
       var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
       var errorHTML=cuestionario.querySelectorAll("div.Error")[0];
       console.log(errorHTML);
-      if(errorHTML){errorHTML.remove();}
+      //if(errorHTML){errorHTML.remove();}
       var msgHTML=""
       if( instruccion.length==0){msgHTML+="No has definido la Instrucción."}
       if(!valorImagen){msgHTML+=" No has definido la Imagen."}
@@ -1956,13 +1955,31 @@ function validarPreguntaDrag(){
         var strVar="";
             strVar += "      <div class=\" row justify-content-center mb-4\">";
             strVar += "          <div class=\"Error fw-bold col-10 mx-auto p-3 m-1 text-center mb-3 border border-danger\">";
-            strVar += "            <p class=\"text-danger fs-5 at-2 py-3\" style=\"line-height: 5px;\">Error: "+msgHTML+"<\/p>";
+            strVar += "            <p class=\"text-danger fs-5 at-2 py-3 mensaje\" style=\"line-height: 5px;\">Error: "+msgHTML+"<\/p>";
             strVar += "          <\/div>";
             strVar += "        <\/div>";
   
         contenedorErrores.insertAdjacentHTML("afterbegin",strVar);
         
         }
+        
+        //Si existe un mensaje de error tomar ciertas acciones
+        console.log("--------------Criterio------------");
+        console.log(typeof(errorHTML));
+
+        if(typeof(errorHTML)!="undefined") {
+          var espacioMensaje=errorHTML.querySelectorAll("p.mensaje")[0];
+        //Si aún existe el mensaje de error , actualizar el mensaje de que falta(instrucción o imagen)
+        if((espacioMensaje)){
+          console.log("Entrando");
+          espacioMensaje.textContent="Error: "+msgHTML;
+        }
+
+        if((instruccion.length!=0)&&(valorImagen)){
+          console.log("Existen ambos elementos");
+        }
+      }
+        
   }
       /*
       var contenedorErrores=cuestionario.querySelectorAll("div.contenedorErrores")[0];
