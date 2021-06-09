@@ -13,6 +13,7 @@ body {
 
 .figure {
   display: flex;
+  width: 1248px;
 }
 
 .figure h6 {
@@ -125,7 +126,7 @@ img {
 
 .replica {
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
   width: var(--ancholienzo);
   height: var(--altolienzo);
   background-color: #99ffcc;
@@ -150,7 +151,7 @@ img {
 
 .time {
   float: right;
-  width: 50%;
+  width: 22%;
 }
 
 /* .row{

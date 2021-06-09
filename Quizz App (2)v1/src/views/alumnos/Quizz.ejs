@@ -119,9 +119,15 @@
     .botonAcomodo2{
       position: fixed; padding-left: 1370px;
     }
-      .responsivePG {
-          margin-left: 150px;
-        }
+    .responsivePG {
+      margin-left: 150px;
+    }
+    .tituloQuizz{
+      margin-left: 378px;
+    }
+    .time{
+      padding-left: 267px;
+    }
   }
 
 
@@ -134,7 +140,13 @@
     }
     .responsivePG {
           margin-left: 30px;
-        }
+    }
+    .tituloQuizz{
+      margin-left: 238px;
+    }
+     .time{
+      padding-left: 114px;
+    }
   }
 
   @media (min-width: 1100px) and (max-width: 1270px){
@@ -235,30 +247,26 @@
 
 <body style="background-color:#FFE8CD">
   <div class="col ">
-    <div class="figure" style="margin-right: 473px !important;">
+    <div class="figure" >
       <h6>
         <%= materia %>
       </h6>
-    </div>
-  </div>
-  <div class="container text-center">
-    <h1 class="display-4 mt-3">
-      <%= quizz.nombreQuizz %>
-    </h1>
-  </div>
-  <input type="hidden" autocomplete="off" name="tiempo" value="">
-  <div class="container text-right">
-    <div class="time">
-      <div style="width: 500px; margin: 0 auto;">
-        <h1 class="text-center mt-2">Tiempo:</h1>
-        <p id="cronometro" class="temporizador"></p>
+      <h1 class="display-4 mt-2 tituloQuizz">
+        <%= quizz.nombreQuizz %>
+      </h1>
+      <div class="time">
+        <div style="width: 200px; margin: 0 auto;">
+          <h1 class="text-center mt-2">Tiempo:</h1>
+          <p id="cronometro" class="temporizador"></p>
+        </div>
       </div>
     </div>
   </div>
+  <input type="hidden" autocomplete="off" name="tiempo" value="">
  <!-- <form action="/alumnos/correccion/alumno/<%=idAlumno%>" method="POST" id="quizz">-->
   <!--<form  action="/alumnos/correccion/" method="POST" id="quizz">-->
     <form id="quizz" >
-      <input type="hidden" name="alumno" value="<%=idAlumno %>">
+    <input type="hidden" name="alumno" value="<%=idAlumno %>">
     <input type="hidden" name="quizz" autocomplete="off" value="<%= quizz._id %>">
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="true" data-bs-interval="false" >
 
@@ -555,31 +563,53 @@
                                                         <!---->
 
                                                         <!--Antigua Replica-->
-                                                        <div class="replica row mx-auto" id="replica<%= i %>">
-                                                          <% var reactivos=quizz.cuestionario[i].pregunta[1] %>
-                                                          <%  reactivos.forEach (function (reactivo){ %>
-                                                              <div class="reactivoDrop" id="<%=reactivo.id%>"  ondrop="drop(event,this)">
-                                                                <div class="contenidoDrop"></div>
-                                                                <div class="cajaDrop"></div>
-                                                              </div>
-                                                            <%});%>
-                                                          <!--INserción reactivos-->
-                                                          <!--
-                                                          <div class="reactivoDrop" id="<%= quizz.cuestionario[i].pregunta[1][0].id%>"  ondrop="drop(event,this)">
-                                                            <div class="contenidoDrop"></div>
-                                                            <div class="cajaDrop"></div>
-                                                          </div>
-                                                        -->
-                                                          <!--Termina insercion-->
-
-                                                            <div class="col">
-                                                              
-                                                              <img 
-                                                                src="/image/<%= quizz.cuestionario[i].pregunta[0].nombre %>"
-                                                                class="img-fluid img-replica">
+                                                        <div class="row">
+                                                          <div class="col-md-4 col-sm-6 text-center contenedor-palabras mt-5" style="padding-top: 80px;">
+                                                            <div class="bg-primary py-3 shadow bg-body rounded-3 border border-dark">
+                                                              <h3 class="text-light mb-3">Palabras:</h3>
+                                                              <div class="contenedor contenedorPalabras" id="contPal<%= i %>">
+                                                                <%var respuestas=quizz.cuestionario[i].respuesta %>
+                                                                  <% respuestas.forEach (function (respuesta){ %>
                                                           
+                                                                    <div id="<%= respuesta.id_respuesta %>"
+                                                                      class="text-light  text-center respuesta-reactivo elementoDrag border border-light"
+                                                                      style="width: 140px; margin: 0 auto;">
+                                                                      <p class="fw-bold" style="font-size: 22px;">
+                                                                        <%= respuesta.contenido %>
+                                                                      </p>
+                                                                    </div>
+                                                          
+                                                                    <% }); %>
+                                                          
+                                                              </div>
                                                             </div>
-                                        
+                                                          </div>
+                                                          
+                                                          <!-- aqui va el codigo -->
+                                                          <div class="replica" id="replica<%= i %>">
+                                                            <% var reactivos=quizz.cuestionario[i].pregunta[1] %>
+                                                              <% reactivos.forEach (function (reactivo){ %>
+                                                                <div class="reactivoDrop" id="<%=reactivo.id%>" ondrop="drop(event,this)">
+                                                                  <div class="contenidoDrop"></div>
+                                                                  <div class="cajaDrop"></div>
+                                                                </div>
+                                                                <%});%>
+                                                                  <!--INserción reactivos-->
+                                                                  <!--
+                                                                                                                      <div class="reactivoDrop" id="<%= quizz.cuestionario[i].pregunta[1][0].id%>"  ondrop="drop(event,this)">
+                                                                                                                        <div class="contenidoDrop"></div>
+                                                                                                                        <div class="cajaDrop"></div>
+                                                                                                                      </div>
+                                                                                                                    -->
+                                                                  <!--Termina insercion-->
+                                                          
+                                                                  <div class="col">
+                                                          
+                                                                    <img src="/image/<%= quizz.cuestionario[i].pregunta[0].nombre %>" class="img-fluid img-replica">
+                                                          
+                                                                  </div>
+                                                          
+                                                          </div>
                                                         </div>
                                                       
                                                         <!--Lienzo-->
@@ -588,8 +618,8 @@
                                         
                                         
                                                   </div>
-                                                  <div class="row mx-auto" style="margin: 0 auto; justify-content: center;">
-                                                    <div class="col-lg-9 col-md-6 col-sm-6 text-center contenedor-palabras mt-5">
+                                                 <!--  <div class="row">
+                                                    <div class=" col-md-4 col-sm-6 text-center contenedor-palabras mt-5">
                                                       <div class="bg-primary py-3 shadow bg-body rounded-3 border border-dark">
                                                         <h3 class="text-light mb-3">Palabras:</h3>
                                                         <div class="contenedor contenedorPalabras" id="contPal<%= i %>">
@@ -609,7 +639,7 @@
                                                         </div>
                                                       </div>
                                                     </div>
-                                                  </div>
+                                                  </div> -->
                                                 </div>
                                                 <!---->
                                               </div>
